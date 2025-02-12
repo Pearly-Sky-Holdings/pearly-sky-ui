@@ -20,7 +20,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <Box sx={{ textAlign: 'center', p: 4 }}>
+    <Box sx={{ textAlign: 'center', p: 6 }}>
       
       {/* Header */}
       <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#002F6D', mb: 2 ,mt:5}}>

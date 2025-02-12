@@ -1,13 +1,12 @@
-import React from "react";
 import { Card, CardContent, Box, Typography } from "@mui/material";
-import girl from '../../assets/Girl_1_New.png'
+import { girl} from "../../config/images";
 
 export default function SecondPage() {
   return (
     <Box
       sx={{
         width: "100vw",
-        height: "100vh",
+        height: "70vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "start",
@@ -19,15 +18,16 @@ export default function SecondPage() {
       {/* Left Side - Card */}
       <Card
         sx={{
-          width: "60%",
-          height: "70%",
+          width: "50vw",
+          height: "62vh",
           borderRadius: "30px",
           backgroundColor: "#D3D3D3",
           display: "flex",
           justifyContent: "start",
           alignItems: "center",
-          // boxShadow: "3px 3px 10px rgba(0,0,0,0.2)",
-          marginRight: "0%", // Reduced margin to bring the right side closer
+          boxShadow: "3px 3px 10px rgba(0,0,0,0.5)",
+          marginRight: "0%",
+          marginLeft:"2%"
         }}
       >
         <CardContent>
@@ -41,26 +41,25 @@ export default function SecondPage() {
       <Box 
         sx={{ 
           position: "relative", 
-          width : "35%",
+          width : "43%",
           zIndex: 10, 
           display: "flex",
-          flexDirection: "column",
-          // alignItems: "flex-start"
+          flexDirection: "column"
         }}
       > 
       
         <Box 
           sx={{ 
             background: "white", 
-            borderRadius: "20px", 
+            borderRadius: "20px",
             p: 2, 
             color: "black",
             textAlign: "center", 
             boxShadow: "2px 2px 5px rgba(0,0,0,0.2)", 
-            marginBottom: "10px" ,
+            marginBottom: "-7%" ,
             alignItems: "flex-end",
             justifyContent:"flex-end",
-            marginLeft:'30%',
+            marginLeft:'38%',
             marginRight:'0'
           }}
         >
@@ -76,7 +75,7 @@ export default function SecondPage() {
         <img
           src={girl} 
           alt="Cleaning Lady"
-          style={{ width: "70%", height: "auto", position: "relative", zIndex: 10 ,alignItems:'start'}} 
+          style={{ width: "60%", height: "auto", position: "relative", zIndex: 10 ,alignItems:'start', marginBottom: "1%"}} 
         />      
       </Box>
     </Box>
