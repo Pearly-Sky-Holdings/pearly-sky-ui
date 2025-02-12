@@ -1,8 +1,24 @@
-import React from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { homePageImage1, homePageImage2, homePageImage3, homePageImage4 } from "../../config/images";
 
 export default function HomePage() {
+  const imagePairs = [
+    [homePageImage1, homePageImage2],
+    [homePageImage3, homePageImage4],
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % imagePairs.length);
+    }, 3000); // Change images every 3 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <Box sx={{ textAlign: 'center', p: 4 }}>
       
@@ -12,7 +28,7 @@ export default function HomePage() {
       </Typography>
 
       {/* Sub-description */}
-      <Typography variant="h6" sx={{ color: '#555', mb: 3, maxWidth: '600px', margin: 'auto' }}>
+      <Typography variant="h6" sx={{ color: '#555', mb: 3, maxWidth: '700px', margin: 'auto' }}>
         You are our most valued asset at PearlySky Company Pvt. Ltd. 
         We are committed to providing you with the best care and service.
       </Typography>
@@ -36,32 +52,35 @@ export default function HomePage() {
         Contact Us
       </Button>
 
-
       {/* Space */}
       <Box sx={{ height: 1 }} />
 
-      {/* Images*/}
+      {/* Images with Smooth Swap and Fixed Size */}
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt:5 }}>
-        <img
-          src="./images/homePageImage1.png" 
-          alt="homePageImage1"
-          style={{
-            width: '50%',              
-            borderRadius: '12px',
-            objectFit: 'contain', 
-          }}
-        />
-        <img
-          src="./images/homePageImage2.png" 
-          alt="homePageImage2"
-          style={{
-            width: '50%', 
-            borderRadius: '12px',
-            objectFit: 'contain', 
-          }}
-        />
+        {imagePairs[currentIndex].map((imgSrc, i) => (
+          <Box 
+            key={i} 
+            sx={{ 
+              width: '50%',
+              height: '400px', 
+              overflow: 'hidden', 
+              borderRadius: '12px',
+              boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
+            }}
+          >
+            <img
+              src={imgSrc}
+              alt={`homePageImage${i}`}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                transition: 'opacity 1s ease-in-out',
+              }}
+            />
+          </Box>
+        ))}
       </Box>
-
     </Box>
   );
 }

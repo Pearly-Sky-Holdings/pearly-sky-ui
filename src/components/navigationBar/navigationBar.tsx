@@ -7,10 +7,10 @@ import {
   Menu,
   MenuItem,
   Typography,
-  Select,
 } from "@mui/material";
 import { Link, useLocation } from "react-router-dom"; // Import useLocation
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"; // Dropdown icon
+import { companyLogo } from "../../config/images"; // Import company logo
 
 export default function NavigationBar() {
   const location = useLocation(); // Get current route
@@ -37,8 +37,8 @@ export default function NavigationBar() {
         <Box sx={{ display: "flex", alignItems: "center", marginLeft: "5%" }}>
           <Link to="/" style={{ textDecoration: "none", color: "white" }}>
             <img
-              src="./images/logo.png"
-              alt="homePageImage1"
+              src={companyLogo}
+              alt="logo"
               style={{ width: "40%" }}
             />
           </Link>
