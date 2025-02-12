@@ -14,7 +14,7 @@ export default function HomePage() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % imagePairs.length);
-    }, 3000); // Change images every 3 seconds
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);

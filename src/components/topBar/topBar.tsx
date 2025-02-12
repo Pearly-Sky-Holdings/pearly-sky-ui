@@ -1,10 +1,8 @@
 import { AppBar, Toolbar, Select, MenuItem, Box, IconButton } from "@mui/material";
 import { LinkedIn } from "@mui/icons-material";
-import { FaFacebookF } from "react-icons/fa";
-import { AiFillInstagram } from "react-icons/ai";
+import { FaFacebookF, FaYoutube } from "react-icons/fa";
+import { AiFillInstagram, AiFillTikTok } from "react-icons/ai";
 import { FaXTwitter } from "react-icons/fa6";
-import { FaYoutube } from "react-icons/fa";
-import { AiFillTikTok } from "react-icons/ai";
 import { useState } from "react";
 
 const countries = [
@@ -20,7 +18,7 @@ export default function TopBar() {
 
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "white", width: "100vw", left: 0, top: 0 }}>
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between", minHeight: "0.1vh", paddingY: "0.1vh" }}>
         
         {/* Left Side - Country Selector */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 1, marginLeft: "5%" }}>
@@ -57,7 +55,7 @@ export default function TopBar() {
         </Box>
 
         {/* Right Side - Social Media Links */}
-        <Box sx={{ display: "flex", gap: 2, marginRight: "5%" }}>
+        <Box sx={{ display: "flex", gap: 1.5, marginRight: "5%" }}>
           {[
             { icon: <FaFacebookF />, link: "https://facebook.com" },
             { icon: <AiFillInstagram />, link: "https://instagram.com" },
@@ -65,9 +63,9 @@ export default function TopBar() {
             { icon: <FaYoutube />, link: "https://youtube.com" },
             { icon: <AiFillTikTok />, link: "https://tiktok.com" },
             { icon: <LinkedIn />, link: "https://linkedin.com" }
-          ].map(({ icon, link }, index) => (
+          ].map(({ icon, link }) => (
             <IconButton
-              key={index}
+              key={link}
               component="a"
               href={link}
               target="_blank"
@@ -75,8 +73,8 @@ export default function TopBar() {
                 color: "#002F6D", 
                 backgroundColor: "#D3D3D3", 
                 borderRadius: "50%", 
-                width: 40, 
-                height: 40, 
+                width: 35, 
+                height: 35, 
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -84,7 +82,7 @@ export default function TopBar() {
                 "&:hover": { backgroundColor: "#BBDEFB" },
               }}
             >
-              <Box sx={{ fontSize: 20 }}>{icon}</Box> {/* Set consistent icon size */}
+              <Box sx={{ fontSize: 20 }}>{icon}</Box>
             </IconButton>
           ))}
         </Box>
