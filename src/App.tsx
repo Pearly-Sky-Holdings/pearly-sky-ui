@@ -1,5 +1,4 @@
-import React from 'react';
-import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import TopBar from "./components/topBar/topBar";
 import NavigationBar from "./components/navigationBar/navigationBar";
@@ -24,7 +23,6 @@ function App() {
   
 
   return (
-    <>
     <ThemeProvider theme={theme}>
       <TopBar />
       
@@ -40,8 +38,6 @@ function App() {
       </Routes>
     </Router>
     </ThemeProvider>
-      
-    </>
   );
 }
 
