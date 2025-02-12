@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import TopBar from "./components/topBar/topBar";
 import NavigationBar from "./components/navigationBar/navigationBar";
 import HomePage from "./pages/homePage/homePage";
+import SecondPage from './pages/secondPage/secondPage';
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
       <NavigationBar />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/secondPage" element={<SecondPage />} />
         {/* <Route path="/services" element={<ServicesPage />} />
         <Route path="/company" element={<CompanyPage />} />
         <Route path="/contact-us" element={<ContactUsPage />} />
