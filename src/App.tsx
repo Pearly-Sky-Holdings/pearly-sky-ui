@@ -35,8 +35,8 @@ function App() {
       <HomePage />
       <SecondPage />
       <OurServicePage />
-      <GalleryPage />
       <InformationPage/>
+      <GalleryPage />
       <Routes>
         {/* <Route path="/" element={<HomePage />} /> */}
         {/* <Route path="/services" element={<ServicesPage />} />

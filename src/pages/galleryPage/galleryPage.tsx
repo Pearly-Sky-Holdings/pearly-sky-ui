@@ -26,12 +26,12 @@ const Gallery = () => {
         <Box
           display="flex"
           justifyContent="space-around"
-          mt={2}
-          mb={10}
+          mt={6}
+          mb={8}
           bgcolor="white"
           textAlign="center"
-          pt={2}
-          pb={4}
+          pt={1}
+          pb={8}
           borderRadius={50}
           width="70%"
           height={35}
