@@ -6,6 +6,7 @@ import HomePage from "./pages/homePage/homePage";
 import SecondPage from './pages/secondPage/secondPage';
 import OurServicePage from './pages/ourServicePage/ourServicePage';
 import GalleryPage from './pages/galleryPage/galleryPage';
+import InformationPage from './pages/informationPage/informationPage';
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
       <SecondPage />
       <OurServicePage />
       <GalleryPage />
+      <InformationPage/>
       <Routes>
         {/* <Route path="/" element={<HomePage />} /> */}
         {/* <Route path="/services" element={<ServicesPage />} />
