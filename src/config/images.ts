@@ -24,3 +24,9 @@ export const eventService: string = "/images/service/eventService.png";
 export const poolService: string = "/images/service/poolService.png";
 export const pressureService: string = "/images/service/pressureService.png";
 
+export const galleryImage1: string = "/images/gallery/galleryImage1.png";
+export const galleryImage2: string = "/images/gallery/galleryImage2.png";
+export const galleryImage3: string = "/images/gallery/galleryImage3.png";
+export const galleryImage4: string = "/images/gallery/galleryImage4.png";
+export const galleryImage5: string = "/images/gallery/galleryImage5.png";
+
