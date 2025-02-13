@@ -121,7 +121,7 @@ const services = [
 
 export default function ServicesPage() {
   return (
-    <Box sx={{ textAlign: "center", py: 5, px: 10, backgroundColor: "#f8f8f8" }}>
+    <Box sx={{ textAlign: "center", py: 5, px: 10, backgroundColor: "" }}>
       <Typography variant="h4" sx={{ mb: 4, fontWeight: "bold", color: "#002F6D" }}>
         Our Services
       </Typography>
