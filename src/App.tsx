@@ -5,6 +5,7 @@ import NavigationBar from "./components/navigationBar/navigationBar";
 import HomePage from "./pages/homePage/homePage";
 import SecondPage from './pages/secondPage/secondPage';
 import OurServicePage from './pages/ourServicePage/ourServicePage';
+import InformationPage from './pages/informationPage/informationPage';
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
       <HomePage />
       <SecondPage />
       <OurServicePage />
+      <InformationPage/>
       <Routes>
         {/* <Route path="/" element={<HomePage />} /> */}
         {/* <Route path="/services" element={<ServicesPage />} />
