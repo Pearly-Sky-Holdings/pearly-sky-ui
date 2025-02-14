@@ -33,7 +33,7 @@ const ImageCarousel: React.FC = () => {
             key={index}
             src={img}
             alt="Showcase"
-            className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
+            className={`absolute top-0 left-0 w-full h-full object-contain transition-opacity duration-700 ease-in-out ${
               currentIndex === index ? "opacity-100" : "opacity-0"
             }`}
           />
