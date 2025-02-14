@@ -7,6 +7,8 @@ import SecondPage from './pages/secondPage/secondPage';
 import OurServicePage from './pages/ourServicePage/ourServicePage';
 import GalleryPage from './pages/galleryPage/galleryPage';
 import InformationPage from './pages/informationPage/informationPage';
+import TeamOfExpertsPage from './pages/teamOfExpertsPage/teamOfExpertsPage';
+import OurShowcasePage from './pages/ourShowCasePage/ourShowCasePage';
 
 function App() {
 
@@ -37,6 +39,8 @@ function App() {
       <OurServicePage />
       <InformationPage/>
       <GalleryPage />
+      <TeamOfExpertsPage/>
+      <OurShowcasePage/>
       <Routes>
         {/* <Route path="/" element={<HomePage />} /> */}
         {/* <Route path="/services" element={<ServicesPage />} />
