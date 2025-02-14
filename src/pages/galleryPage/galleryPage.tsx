@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Typography, Grid, Card, CardMedia, Container } from '@mui/material';
 import {
   galleryImage1,
@@ -8,14 +7,12 @@ import {
   galleryImage5,
 } from '../../config/images';
 
-// Progress data for the progress section
 const progressData = [
   { label: 'Assessment and Planning', value: 100 },
   { label: 'Execution', value: 95 },
   { label: 'Project Completion', value: 95 },
 ];
 
-// Array of gallery images
 const images = [galleryImage1, galleryImage2, galleryImage3, galleryImage4, galleryImage5];
 
 const Gallery = () => {
@@ -37,8 +34,8 @@ const Gallery = () => {
           height={35}
           boxShadow="2px 2px 5px rgba(198, 131, 131, 0.5)"
         >
-          {progressData.map((item, index) => (
-            <Box key={index} textAlign="center">
+          {progressData.map((item) => (
+            <Box key={item.label} textAlign="center">
               <Typography variant="h6" color="#008CDA" fontWeight="bold">
                 {item.value}%
               </Typography>
