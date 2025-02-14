@@ -7,6 +7,7 @@ import SecondPage from './pages/secondPage/secondPage';
 import OurServicePage from './pages/ourServicePage/ourServicePage';
 import GalleryPage from './pages/galleryPage/galleryPage';
 import InformationPage from './pages/informationPage/informationPage';
+import SectorPage from './pages/sectorPage/sectorPage';
 import TeamOfExpertsPage from './pages/teamOfExpertsPage/teamOfExpertsPage';
 import OurShowcasePage from './pages/ourShowCasePage/ourShowCasePage';
 
@@ -39,6 +40,7 @@ function App() {
       <OurServicePage />
       <InformationPage/>
       <GalleryPage />
+      <SectorPage />
       <TeamOfExpertsPage/>
       <OurShowcasePage/>
       <Routes>
