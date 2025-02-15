@@ -32,7 +32,7 @@ const Gallery = () => {
           borderRadius={50}
           width="70%"
           height={35}
-          boxShadow="2px 2px 5px rgba(198, 131, 131, 0.5)"
+          boxShadow="0px 4px 10px rgba(37, 150, 190, 0.5)"
         >
           {progressData.map((item) => (
             <Box key={item.label} textAlign="center">

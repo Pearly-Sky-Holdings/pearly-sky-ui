@@ -36,7 +36,17 @@ export const sectorImage3: string = "/images/sector/sectorImage3.png";
 export const sectorImage4: string = "/images/sector/sectorImage4.png";
 export const sectorImage5: string = "/images/sector/sectorImage5.png";
 
-export const footerImage1: string = "/images/footer/footerImage1.png";
+export const contactImage1: string = "/images/uiContactUs/ContactUs.png";
+
 export const footerImage2: string = "/images/footer/footerImage2.png";
 export const footerImage3: string = "/images/footer/footerImage3.png";
 export const footerImage4: string = "/images/footer/footerImage4.png";
+
+export const flagAustralia: string = "/images/flag/flagAustralia.png";
+export const flagUs: string = "/images/flag/flagUs.png";
+export const flagUk: string = "/images/flag/flagUk.png";
+export const flagSrilanka: string = "/images/flag/flagSrilanka.png";
+export const flagScotland: string = "/images/flag/flagScotland.png";
+export const flagItaly: string = "/images/flag/flagItaly.png";
+export const flagGermany: string = "/images/flag/flagGermany.png";
+export const flagFrace: string = "/images/flag/flagFrace.png";

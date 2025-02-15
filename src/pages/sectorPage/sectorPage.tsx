@@ -1,4 +1,5 @@
-import { Grid, Card, CardContent, Typography, CardMedia } from "@mui/material";
+import {Card, CardContent, Typography, CardMedia } from "@mui/material";
+import Grid from '@mui/material/Grid';
 import {
     sectorImage1,
     sectorImage2,

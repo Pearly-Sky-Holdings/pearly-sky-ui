@@ -1,8 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Button } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import {contactImage1} from "../../config/images";
 
 // Validation Schema
 const validationSchema = yup.object().shape({
@@ -10,10 +11,13 @@ const validationSchema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
   phone: yup
     .string()
-    .matches(/^[0-9]+$/, "Phone must be only digits")
+    .matches(/^\d+$/, "Phone must be only digits")
     .min(10, "Phone number must be at least 10 digits")
     .required("Phone number is required"),
-  message: yup.string().required("Message is required").min(10, "Message must be at least 10 characters"),
+  message: yup
+    .string()
+    .required("Message is required")
+    .min(10, "Message must be at least 10 characters"),
 });
 
 const UIContactUs: React.FC = () => {
@@ -34,19 +38,20 @@ const UIContactUs: React.FC = () => {
   };
 
   return (
-    <div className="w-full min-h-screen flex items-center justify-center bg-gray-100 px-4 py-10">
+    <div className="w-full min-h-screen-lg flex items-center justify-center bg-gray-100 px-4 py-10" st>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4  bg-white shadow-lg rounded-lg p-6 md:p-10 w-full">
         {/* Contact Form */}
         <div className="w-full">
-          <h2 className="text-4xl font-bold text-[#002F6D] mb-4">Get in Touch With Us</h2>
+          <h2 className="text-4xl font-bold text-[#002F6D] mb-4">
+            Get in Touch With Us
+          </h2>
           <p className="text-black  mb-6">
             Drop Pearly Sky Company Pvt Ltd regarding any of your queries.
           </p>
 
-          
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {/* Name */}
-            <div>              
+            <div>
               <input
                 type="text"
                 placeholder="Name"
@@ -57,7 +62,7 @@ const UIContactUs: React.FC = () => {
             </div>
 
             {/* Email */}
-            <div>              
+            <div>
               <input
                 type="email"
                 placeholder="Email"
@@ -68,7 +73,7 @@ const UIContactUs: React.FC = () => {
             </div>
 
             {/* Phone */}
-            <div>              
+            <div>
               <input
                 type="tel"
                 placeholder="Phone"
@@ -79,7 +84,7 @@ const UIContactUs: React.FC = () => {
             </div>
 
             {/* Message */}
-            <div>              
+            <div>
               <textarea
                 placeholder="Message"
                 {...register("message")}
@@ -89,29 +94,51 @@ const UIContactUs: React.FC = () => {
             </div>
 
             {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full h-10 bg-[#002F6D] text-white font-semibold py-5 px-6 rounded-xl hover:bg-blue-700 transition"
-              style={{fontSize:'15px'}}
-            >
-              Contact Us
-            </button>
+            <Button
+            sx={{
+              fontSize: "12px",
+              fontWeight: "bold",
+              backgroundColor: "#002F6D",
+              color: "white",
+              padding:"8px 8px",
+              paddingY:"",
+              width: "100%",
+              borderRadius: "12px",
+              "&:hover": { backgroundColor: "#008CDA" },
+            }}
+          >
+            Contact Us
+          </Button>
           </form>
         </div>
 
         {/* Image Section */}
         <div className="relative w-full h-full">
           <img
-            src="./images/uiContactUs/ContactUs.png"
+            src={contactImage1}
             alt="Customer Support"
             className="w-full h-full object-cover rounded-lg shadow-lg"
+            style={{
+              boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
+              transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",}}
           />
-          <button className="absolute h-10 w-30 top-5 left-5 bg-[#002F6D] text-white px-6 py-3  rounded-xl font-semibold"
-            style={{fontSize:'15px'}}>
-                <Link to="/contact" >
-                    Contact Us
-                </Link>            
-          </button>
+          <Button
+            className=""
+            sx={{
+              position: "absolute",
+              top: "20px",
+              left: "20px",
+              fontSize: "12px",
+              fontWeight: "bold",
+              backgroundColor: "#002F6D",
+              color: "white",
+              paddingX:"10px",
+              borderRadius: "12px",
+              "&:hover": { backgroundColor: "#008CDA" },
+            }}
+          >
+            Contact Us
+          </Button>
         </div>
       </div>
     </div>
