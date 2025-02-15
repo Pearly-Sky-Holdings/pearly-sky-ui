@@ -36,3 +36,7 @@ export const sectorImage3: string = "/images/sector/sectorImage3.png";
 export const sectorImage4: string = "/images/sector/sectorImage4.png";
 export const sectorImage5: string = "/images/sector/sectorImage5.png";
 
+export const footerImage1: string = "/images/footer/footerImage1.png";
+export const footerImage2: string = "/images/footer/footerImage2.png";
+export const footerImage3: string = "/images/footer/footerImage3.png";
+export const footerImage4: string = "/images/footer/footerImage4.png";

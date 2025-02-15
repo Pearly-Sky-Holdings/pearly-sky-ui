@@ -10,6 +10,7 @@ import InformationPage from './pages/informationPage/informationPage';
 import SectorPage from './pages/sectorPage/sectorPage';
 import TeamOfExpertsPage from './pages/teamOfExpertsPage/teamOfExpertsPage';
 import OurShowcasePage from './pages/ourShowCasePage/ourShowCasePage';
+import Footer from './pages/footerPage/footerPage';
 import UiContactUsPage from './pages/uiContactUsPage/uiContactUsPage';
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
       <TeamOfExpertsPage/>
       <OurShowcasePage/>
       <UiContactUsPage/>
+      <Footer />
       <Routes>
         {/* <Route path="/" element={<HomePage />} /> */}
         {/* <Route path="/services" element={<ServicesPage />} />
