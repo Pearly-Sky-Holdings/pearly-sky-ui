@@ -11,6 +11,7 @@ interface TeamCardProps {
 const TeamCard: React.FC<TeamCardProps> = ({ name, image, emailIcon, email }) => {
   return (
     <motion.div
+    style={{boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",}}
       className="bg-gradient-to-b from-[#002F6D] to-[#0D90C8] text-white rounded-3xl p-6 flex flex-col items-center h-100 shadow-lg"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}

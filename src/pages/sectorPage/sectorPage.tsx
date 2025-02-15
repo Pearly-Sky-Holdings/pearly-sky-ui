@@ -41,7 +41,7 @@ const OurSector = () => {
       <Typography variant="h4" gutterBottom style={{ fontWeight: "bold", color:"#002F6D" }}>
         Our Sector
       </Typography>
-      <Grid container spacing={2} justifyContent="center" height="70vh">
+      <Grid container spacing={2} justifyContent="center" height="70vh" marginBottom={10}>
         {sectors.map((sector, index) => (
           <Grid item xs={12} sm={6} md={4} lg={2.4} key={index}>
             <Card
@@ -51,7 +51,7 @@ const OurSector = () => {
                 display: "flex",
                 flexDirection: "column",
                 height: "77vh",
-                
+                boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
                 transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
               }}
             >

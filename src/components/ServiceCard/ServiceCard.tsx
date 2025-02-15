@@ -11,7 +11,7 @@ export default function ServiceCard({ service }: Readonly<{ service: Service }>)
     <Card
       sx={{
         borderRadius: "15px",
-        boxShadow: "0px 4px 10px rgba(224, 142, 142, 0.5)",
+        boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
         display: "flex",
         flexDirection: "column",
         height: "100%",

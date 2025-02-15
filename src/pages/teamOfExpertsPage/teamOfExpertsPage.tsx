@@ -32,7 +32,7 @@ const TeamOfExpertsPage: React.FC = () => {
       {/* Title Section */}
       <div className="text-center">
         <h2 className="text-3xl font-bold text-blue-900">Team of Experts</h2>
-        <p className="text-black font-black mt-5">
+        <p className="text-black font-semibold mt-5">
           Our team is working every day to build a better world & help ensure
           you get the best services.
         </p>
