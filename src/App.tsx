@@ -10,6 +10,7 @@ import InformationPage from './pages/informationPage/informationPage';
 import SectorPage from './pages/sectorPage/sectorPage';
 import TeamOfExpertsPage from './pages/teamOfExpertsPage/teamOfExpertsPage';
 import OurShowcasePage from './pages/ourShowCasePage/ourShowCasePage';
+import Footer from './pages/footerPage/footerPage';
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
       <SectorPage />
       <TeamOfExpertsPage/>
       <OurShowcasePage/>
+      <Footer />
       <Routes>
         {/* <Route path="/" element={<HomePage />} /> */}
         {/* <Route path="/services" element={<ServicesPage />} />
