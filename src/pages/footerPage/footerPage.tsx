@@ -27,7 +27,7 @@ const Footer = () => {
         <Box
             sx={{
                 color: 'white',
-                py: 6,
+                py: { xs: 4, md: 6 },
                 backgroundImage: 'linear-gradient(to bottom, #002F6D, #0D90C8)',
             }}
         >
@@ -35,8 +35,8 @@ const Footer = () => {
                 <Box
                     sx={{
                         display: 'grid',
-                        gridTemplateColumns: { xs: '1fr', md: '1.5fr 1fr 1fr 1fr' }, // Adjust space for the first section
-                        gap: { xs: 4, md: 4, lg: 16 },
+                        gridTemplateColumns: { xs: '1fr', md: '1.5fr 1fr 1fr 1fr' },
+                        gap: { xs: 3, md: 4, lg: 16 },
                     }}
                 >
                     {/* Company Info */}
@@ -45,11 +45,12 @@ const Footer = () => {
                             src={footerImage1}
                             alt="Pearly Sky"
                             style={{
-                                width: '200px',
+                                width: '100%',
+                                maxWidth: '200px',
                                 marginBottom: '1.5rem'
                             }}
                         />
-                        <Typography variant="body2" align={"justify"} sx={{ mb: 3, maxWidth: '400px', lineHeight: 1.6 }}>
+                        <Typography variant="body2" align="justify" sx={{ mb: 3, lineHeight: 1.6 }}>
                             Pearly Sky Cleaning offers professional, eco-friendly cleaning services
                             for homes, offices, and hotels across France. We focus on quality and
                             customer satisfaction, delivering tailored solutions to keep your space
@@ -63,7 +64,7 @@ const Footer = () => {
                             Home
                         </Typography>
                         <Stack spacing={2}>
-                            <Box sx={{ display: 'flex' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                 <Typography
                                     variant="body1"
                                     sx={{
@@ -135,11 +136,11 @@ const Footer = () => {
                                 sx={{
                                     bgcolor: 'rgba(255, 255, 255, 0.2)',
                                     '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.3)' },
-                                    width: 35,
-                                    height: 35,
+                                    width: { xs: 30, md: 35 },
+                                    height: { xs: 30, md: 35 },
                                 }}
                             >
-                                <FacebookIcon sx={{ fontSize: 20 }} />
+                                <FacebookIcon sx={{ fontSize: { xs: 16, md: 20 } }} />
                             </IconButton>
                             <IconButton
                                 color="inherit"
@@ -147,11 +148,11 @@ const Footer = () => {
                                 sx={{
                                     bgcolor: 'rgba(255, 255, 255, 0.2)',
                                     '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.3)' },
-                                    width: 40,
-                                    height: 40,
+                                    width: { xs: 30, md: 35 },
+                                    height: { xs: 30, md: 35 },
                                 }}
                             >
-                                <InstagramIcon sx={{ fontSize: 20 }} />
+                                <InstagramIcon sx={{ fontSize: { xs: 16, md: 20 } }} />
                             </IconButton>
                             <IconButton
                                 color="inherit"
@@ -159,11 +160,11 @@ const Footer = () => {
                                 sx={{
                                     bgcolor: 'rgba(255, 255, 255, 0.2)',
                                     '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.3)' },
-                                    width: 40,
-                                    height: 40,
+                                    width: { xs: 30, md: 35 },
+                                    height: { xs: 30, md: 35 },
                                 }}
                             >
-                                <TwitterIcon sx={{ fontSize: 20 }} />
+                                <TwitterIcon sx={{ fontSize: { xs: 16, md: 20 } }} />
                             </IconButton>
                             <IconButton
                                 color="inherit"
@@ -171,11 +172,11 @@ const Footer = () => {
                                 sx={{
                                     bgcolor: 'rgba(255, 255, 255, 0.2)',
                                     '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.3)' },
-                                    width: 40,
-                                    height: 40,
+                                    width: { xs: 30, md: 35 },
+                                    height: { xs: 30, md: 35 },
                                 }}
                             >
-                                <YouTubeIcon sx={{ fontSize: 20 }} />
+                                <YouTubeIcon sx={{ fontSize: { xs: 16, md: 20 } }} />
                             </IconButton>
                             <IconButton
                                 color="inherit"
@@ -183,11 +184,11 @@ const Footer = () => {
                                 sx={{
                                     bgcolor: 'rgba(255, 255, 255, 0.2)',
                                     '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.3)' },
-                                    width: 40,
-                                    height: 40,
+                                    width: { xs: 30, md: 35 },
+                                    height: { xs: 30, md: 35 },
                                 }}
                             >
-                                <GitHubIcon sx={{ fontSize: 20 }} />
+                                <GitHubIcon sx={{ fontSize: { xs: 16, md: 20 } }} />
                             </IconButton>
                         </Stack>
 
@@ -214,7 +215,7 @@ const Footer = () => {
                     </Box>
 
                     {/* QR Code */}
-                    <Box>
+                    <Box sx={{ display: 'flex', justifyContent: { xs: 'center', md: 'flex-start' } }}>
                         <img
                             src={footerImage2}
                             alt="QR Code"
