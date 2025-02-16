@@ -12,27 +12,42 @@ import {
   footerImage3,
   footerImage4,
   flagAustralia,
-  flagUs,
-  flagUk,
-  flagSrilanka,
-  flagScotland,
-  flagItaly,
-  flagGermany,
+  flagCanada,
+  flagFinland,
   flagFrace,
+  flagGermany,
+  flagItaly,
+  flagSaudiArabia,
+  flagScotland,
+  flagSrilanka,
+  flagUAE,
+  flagUk,
+  flagUs,
 } from "../../config/images.ts";
 
 const countries = [
-  { name: "Sri Lanka", flag: flagSrilanka },
-  { name: "United Kingdom", flag: flagUk },
   { name: "France", flag: flagFrace },
+  { name: "United Kingdom", flag: flagUk },
+  { name: "Sri Lanka", flag: flagSrilanka },
   { name: "Scotland", flag: flagScotland },
   { name: "Germany", flag: flagGermany },
   { name: "Australia", flag: flagAustralia },
+  { name: "United Arab Emirates", flag: flagUAE },
+  { name: "Canada", flag: flagCanada },
+  { name: "Finland", flag: flagFinland },
+  { name: "Saudi Arabia", flag: flagSaudiArabia },
   { name: "Italy", flag: flagItaly },
   { name: "United States", flag: flagUs },
-  { name: "Saudi Arabia", flag: "🇸🇦" },
-  { name: "Canada", flag: "🇨🇦" },
-  { name: "Finland", flag: "🇫🇮" },
+  { name: "Ireland", flag: "🇮🇪" },
+  { name: "Austria", flag: "🇦🇹" },
+  { name: "Netherlands", flag: "🇳🇱" },
+  { name: "Switzerland", flag: "🇨🇭" },
+  { name: "Qatar", flag: "🇶🇦" },
+  { name: "Denmark", flag: "🇩🇰" },
+  { name: "New Zealand", flag: "🇳🇿" },
+  { name: "Poland", flag: "🇵🇱" },
+  { name: "Luxembourg", flag: "🇱🇺" },
+  { name: "Portugal", flag: "🇵🇹" },
 ];
 
 const Footer = () => {
@@ -133,6 +148,7 @@ const Footer = () => {
               </Box>
               <Typography
                 variant="body1"
+                onClick={() => window.location.href = "/our-locations"}
                 sx={{
                   cursor: "pointer",
                   "&:hover": { opacity: 0.8 },
@@ -244,23 +260,28 @@ const Footer = () => {
         <Box
           sx={{
             mt: 2,
+            overflow: "hidden",
           }}
         >
           <Box
             sx={{
               display: "flex",
               gap: 6,
-              overflowX: "auto",
-              msOverflowStyle: "none",
-              scrollbarWidth: "none",
-              "&::-webkit-scrollbar": {
-                display: "none",
+              animation: "scroll 20s linear infinite",
+              "@keyframes scroll": {
+                "0%": {
+                  transform: "translateX(0%)",
+                },
+                "100%": {
+                  transform: "translateX(-100%)",
+                },
               },
             }}
           >
-            {countries.map((country) => (
+            {/* Duplicate the flags to create a seamless loop */}
+            {[...countries, ...countries].map((country, index) => (
               <Box
-                key={country.name}
+                key={index}
                 sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -269,8 +290,44 @@ const Footer = () => {
                   textAlign: "center",
                 }}
               >
-                <img src={country.flag} alt="Pearly Sky" style={{}} />
-                <Typography variant="body2" sx={{ color: "white" }}>
+                <Box
+                  sx={{
+                    width: "80px",
+                    height: "80px",
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    background: "rgba(255, 255, 255, 0.1)",
+                    backdropFilter: "blur(5px)",
+                    mb: 1,
+                    overflow: "hidden",
+                    border: "2px solid rgba(255, 255, 255, 0.2)",
+                    transition: "transform 0.3s ease",
+                    "&:hover": {
+                      transform: "scale(1.1)",
+                      background: "rgba(255, 255, 255, 0.15)",
+                    },
+                  }}
+                >
+                  <Typography 
+                    sx={{ 
+                      fontSize: "3.5rem",
+                      lineHeight: 1,
+                      transform: "scale(1.2)",
+                    }}
+                  >
+                    {country.flag}
+                  </Typography>
+                </Box>
+                <Typography 
+                  variant="body2" 
+                  sx={{ 
+                    color: "white",
+                    opacity: 0.9,
+                    fontWeight: 500,
+                  }}
+                >
                   {country.name}
                 </Typography>
               </Box>
@@ -289,7 +346,7 @@ const Footer = () => {
             color: "white",
             textTransform: "none",
           }}
-          style={{marginBottom:"-20px"}}
+          style={{ marginBottom: "-20px" }}
         >
           Copyright © 2024 pearly sky company pvt ltd. All rights reserved
         </Typography>

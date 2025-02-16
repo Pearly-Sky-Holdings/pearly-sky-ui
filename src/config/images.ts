@@ -50,3 +50,7 @@ export const flagScotland: string = "/images/flag/flagScotland.png";
 export const flagItaly: string = "/images/flag/flagItaly.png";
 export const flagGermany: string = "/images/flag/flagGermany.png";
 export const flagFrace: string = "/images/flag/flagFrace.png";
+export const flagCanada: string = "/images/flag/flagCanada.png";
+export const flagFinland: string = "/images/flag/flagFinland.png";
+export const flagSaudiArabia: string = "/images/flag/flagSaudiArabia.png";
+export const flagUAE: string = "/images/flag/flagUAE.png";

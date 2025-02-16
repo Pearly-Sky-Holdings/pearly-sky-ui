@@ -1,5 +1,5 @@
 import { ThemeProvider, createTheme } from '@mui/material';
-import { BrowserRouter as Router, Routes } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import TopBar from "./components/topBar/topBar";
 import NavigationBar from "./components/navigationBar/navigationBar";
 import HomePage from "./pages/homePage/homePage";
@@ -12,6 +12,7 @@ import TeamOfExpertsPage from './pages/teamOfExpertsPage/teamOfExpertsPage';
 import OurShowcasePage from './pages/ourShowCasePage/ourShowCasePage';
 import Footer from './pages/footerPage/footerPage';
 import UiContactUsPage from './pages/uiContactUsPage/uiContactUsPage';
+import OurLocations from "./pages/ourLocationPage/ourLocationPage.tsx";
 
 function App() {
 
@@ -29,34 +30,44 @@ function App() {
       },
     },
   });
-  
+
 
   return (
-    <ThemeProvider theme={theme}>
-      <TopBar />
-      
-      <Router>
-      <NavigationBar />
-      <HomePage />
-      <SecondPage />
-      <OurServicePage />
-      <InformationPage/>
-      <GalleryPage />
-      {/* <SectorPage /> */}
-      <TeamOfExpertsPage/>
-      <OurShowcasePage/>
-      <UiContactUsPage/>
-      <Footer />
-      <Routes>
-        {/* <Route path="/" element={<HomePage />} /> */}
-        {/* <Route path="/services" element={<ServicesPage />} />
-        <Route path="/company" element={<CompanyPage />} />
-        <Route path="/contact-us" element={<ContactUsPage />} />
-        <Route path="/careers" element={<CareersPage />} />
-        <Route path="/other-services" element={<OtherServicesPage />} /> */}
-      </Routes>
-    </Router>
-    </ThemeProvider>
+      <ThemeProvider theme={theme}>
+          <Router>
+              <TopBar />
+              <NavigationBar />
+              <Routes>
+                  {/* Main one-page scrollable site */}
+                  <Route
+                      path="/"
+                      element={
+                          <>
+                              <HomePage />
+                              <SecondPage />
+                              <OurServicePage />
+                              <InformationPage />
+                              <GalleryPage />
+                              <TeamOfExpertsPage />
+                              <OurShowcasePage />
+                              <UiContactUsPage />
+                              <Footer />
+                          </>
+                      }
+                  />
+                  {/* Standalone OurLocations page */}
+                  <Route
+                      path="/our-locations"
+                      element={
+                          <>
+                              <OurLocations />
+                              <Footer />
+                          </>
+                      }
+                  />
+              </Routes>
+          </Router>
+      </ThemeProvider>
   );
 }
 
