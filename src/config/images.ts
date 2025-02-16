@@ -36,6 +36,11 @@ export const sectorImage3: string = "/images/sector/sectorImage3.png";
 export const sectorImage4: string = "/images/sector/sectorImage4.png";
 export const sectorImage5: string = "/images/sector/sectorImage5.png";
 
+export const chooseClening1: string = "/images/chooseClening/chooseClening1.png";
+export const chooseClening2: string = "/images/chooseClening/chooseClening2.png";
+export const chooseClening3: string = "/images/chooseClening/chooseClening3.png";
+export const chooseClening4: string = "/images/chooseClening/chooseClening4.png";
+
 export const contactImage1: string = "/images/uiContactUs/ContactUs.png";
 
 export const footerImage2: string = "/images/footer/footerImage2.png";
@@ -49,4 +54,20 @@ export const flagSrilanka: string = "/images/flag/flagSrilanka.png";
 export const flagScotland: string = "/images/flag/flagScotland.png";
 export const flagItaly: string = "/images/flag/flagItaly.png";
 export const flagGermany: string = "/images/flag/flagGermany.png";
-export const flagFrace: string = "/images/flag/flagFrace.png";
+export const flagFrance: string = "/images/flag/flagFrance.png";
+export const flagCanada: string = "/images/flag/flagCanada.png";
+export const flagFinland: string = "/images/flag/flagFinland.png";
+export const flagSaudiArabia: string = "/images/flag/flagSaudiArabia.png";
+export const flagUAE: string = "/images/flag/flagUAE.png";
+export const flagNetherlands: string = "/images/flag/flagNetherlands.png";
+export const flagAustria: string = "/images/flag/flagAustria.png";
+export const flagBelgium: string = "/images/flag/flagBelgium.jpeg";
+export const flagDenmark: string = "/images/flag/flagDenmark.jpeg";  
+export const flagIreland: string = "/images/flag/flagIreland.jpeg";
+export const flagluxembourg: string = "/images/flag/flagLuxembourg.jpeg";
+export const flagNewZealand: string = "/images/flag/flagNewZealand.jpeg";
+export const flagPoland: string = "/images/flag/flagPoland.jpeg";
+export const flagPortugal: string = "/images/flag/flagPortugal.jpeg";
+export const flagQatar: string = "/images/flag/flagQatar.jpeg";
+export const flagSwitzerland: string = "/images/flag/flagSwitzerlands.jpeg";
+export const flagSpain: string = "/images/flag/flagSpain.jpeg";

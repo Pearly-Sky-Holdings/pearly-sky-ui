@@ -53,6 +53,7 @@ export default function NavigationBar() {
             { label: "Contact Us", path: "/contact-us" },
             { label: "Careers", path: "/careers" },
             { label: "Other Services", path: "/other-services", isDropdown: true },
+            { label: "Our Locations", path: "/our-locations" },
           ].map(({ label, path, isDropdown }) => (
             <Box key={label} sx={{ display: "flex", alignItems: "center" }}>
               {isDropdown ? (

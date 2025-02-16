@@ -38,7 +38,7 @@ const UIContactUs: React.FC = () => {
   };
 
   return (
-    <div className="w-full min-h-screen-lg flex items-center justify-center bg-gray-100 px-4 py-10" st>
+    <div className="w-full min-h-screen-lg flex items-center justify-center bg-gray-100 px-4 py-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4  bg-white shadow-lg rounded-lg p-6 md:p-10 w-full">
         {/* Contact Form */}
         <div className="w-full">

@@ -13,6 +13,8 @@ import OurShowcasePage from './pages/ourShowCasePage/ourShowCasePage';
 import Footer from './pages/footerPage/footerPage';
 import UiContactUsPage from './pages/uiContactUsPage/uiContactUsPage';
 import ContactUsPage from './pages/contactUsPage/contactUsPage';
+import OurLocations from "./pages/ourLocationPage/ourLocationPage.tsx";
+import CleanServices from './pages/cleanServices/cleanServices';
 
 function App() {
 
@@ -30,7 +32,7 @@ function App() {
       },
     },
   });
-  
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -46,6 +48,7 @@ function App() {
       {/* <SectorPage /> */}
       <TeamOfExpertsPage/>
       <OurShowcasePage/>
+      <CleanServices/>
       <UiContactUsPage/>
       <Footer />
       <Routes>
