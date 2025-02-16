@@ -1,5 +1,6 @@
 import React from "react";
 import TeamCard from "../../components/teamCard/teamCard";
+const emailIcon = "./images/teamExperts/email_icon.png";
 
 const teamMembers = [
   {
@@ -24,7 +25,6 @@ const teamMembers = [
   },
 ];
 
-const emailIcon = "./images/teamExperts/email_icon.png"; // Path to email icon image
 
 const TeamOfExpertsPage: React.FC = () => {
   return (
@@ -39,7 +39,7 @@ const TeamOfExpertsPage: React.FC = () => {
       </div>
 
       {/* Team Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 mt-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-10">
         {teamMembers.map((member, index) => (
           <TeamCard key={index} name={member.name} image={member.image} emailIcon={emailIcon}  email={member.email} />
         ))}

@@ -36,6 +36,11 @@ export const sectorImage3: string = "/images/sector/sectorImage3.png";
 export const sectorImage4: string = "/images/sector/sectorImage4.png";
 export const sectorImage5: string = "/images/sector/sectorImage5.png";
 
+export const chooseClening1: string = "/images/chooseClening/chooseClening1.png";
+export const chooseClening2: string = "/images/chooseClening/chooseClening2.png";
+export const chooseClening3: string = "/images/chooseClening/chooseClening3.png";
+export const chooseClening4: string = "/images/chooseClening/chooseClening4.png";
+
 export const contactImage1: string = "/images/uiContactUs/ContactUs.png";
 
 export const footerImage2: string = "/images/footer/footerImage2.png";

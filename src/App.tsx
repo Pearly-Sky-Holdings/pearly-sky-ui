@@ -12,6 +12,7 @@ import TeamOfExpertsPage from './pages/teamOfExpertsPage/teamOfExpertsPage';
 import OurShowcasePage from './pages/ourShowCasePage/ourShowCasePage';
 import Footer from './pages/footerPage/footerPage';
 import UiContactUsPage from './pages/uiContactUsPage/uiContactUsPage';
+import CleanServices from './pages/cleanServices/cleanServices';
 
 function App() {
 
@@ -45,6 +46,7 @@ function App() {
       {/* <SectorPage /> */}
       <TeamOfExpertsPage/>
       <OurShowcasePage/>
+      <CleanServices/>
       <UiContactUsPage/>
       <Footer />
       <Routes>
