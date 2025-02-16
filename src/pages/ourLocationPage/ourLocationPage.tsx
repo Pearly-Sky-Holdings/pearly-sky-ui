@@ -1,6 +1,33 @@
 import { useState } from 'react';
 import LocationCard from '../../components/Locations/LocationCart';
 
+import {
+    flagAustralia,
+    flagCanada,
+    flagFinland,
+    flagFrance,
+    flagGermany,
+    flagItaly,
+    flagSaudiArabia,
+    flagScotland,
+    flagSrilanka,
+    flagUAE,
+    flagUk,
+    flagUs,
+    flagNetherlands,
+    flagAustria,
+    flagluxembourg,
+    flagPortugal,
+    flagQatar,
+    flagDenmark,
+    flagIreland,
+    flagNewZealand,
+    flagPoland,
+    flagSpain,
+    flagSwitzerland,
+    flagBelgium,
+  
+  } from "../../config/images.ts";
 
 type Location = {
     id: string;
@@ -19,7 +46,7 @@ function OurLocations() {
         {
             id: 'france',
             name: 'France',
-            flag: '🇫🇷',
+            flag: flagFrance,
             email: 'info@ventilationholdings.com',
             address: '15 Rue Des Halles, 75001 Paris',
             serviceCities: [
@@ -30,7 +57,7 @@ function OurLocations() {
         {
             id: 'uk',
             name: 'United Kingdom',
-            flag: '🇬🇧',
+            flag: flagUk,
             email: 'uk@ventilationholdings.com',
             address: '10 Oxford Street, London',
             serviceCities: ['London', 'Manchester', 'Birmingham', 'Edinburgh']
@@ -38,7 +65,7 @@ function OurLocations() {
         {
             id: 'sl',
             name: 'Sri Lanka',
-            flag: '🇱🇰',
+            flag: flagSrilanka,
             email: 'us@ventilationholdings.com',
             address: '350 Fifth Avenue, New York',
             serviceCities: ['New York', 'Los Angeles', 'Chicago', 'Miami']
@@ -46,7 +73,7 @@ function OurLocations() {
         {
             id: 'scotland',
             name: 'Scotland',
-            flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+            flag: flagScotland,
             email: 'info@ventilationholdings.com',
             address: '15 Rue Des Halles, 75001 Paris',
             serviceCities: [
@@ -57,7 +84,7 @@ function OurLocations() {
         {
             id: 'germany',
             name: 'Germany',
-            flag: '🇩🇪',
+            flag: flagGermany,
             email: 'uk@ventilationholdings.com',
             address: '10 Oxford Street, London',
             serviceCities: ['London', 'Manchester', 'Birmingham', 'Edinburgh']
@@ -65,7 +92,7 @@ function OurLocations() {
         {
             id: 'australia',
             name: 'Australia',
-            flag: '🇦🇺',
+            flag: flagAustralia,
             email: 'us@ventilationholdings.com',
             address: '350 Fifth Avenue, New York',
             serviceCities: ['New York', 'Los Angeles', 'Chicago', 'Miami']
@@ -73,7 +100,7 @@ function OurLocations() {
         {
             id: 'uae',
             name: 'United Arab Emirates',
-            flag: '🇦🇪',
+            flag: flagUAE,
             email: 'info@ventilationholdings.com',
             address: '15 Rue Des Halles, 75001 Paris',
             serviceCities: [
@@ -84,7 +111,7 @@ function OurLocations() {
         {
             id: 'canada',
             name: 'Canada',
-            flag: '🇨🇦',
+            flag: flagCanada,
             email: 'uk@ventilationholdings.com',
             address: '10 Oxford Street, London',
             serviceCities: ['London', 'Manchester', 'Birmingham', 'Edinburgh']
@@ -92,7 +119,7 @@ function OurLocations() {
         {
             id: 'finland',
             name: 'Finland',
-            flag: '🇫🇮',
+            flag: flagFinland,
             email: 'us@ventilationholdings.com',
             address: '350 Fifth Avenue, New York',
             serviceCities: ['New York', 'Los Angeles', 'Chicago', 'Miami']
@@ -100,7 +127,7 @@ function OurLocations() {
         {
             id: 'saudi-arabia',
             name: 'Saudi Arabia',
-            flag: '🇸🇦',
+            flag: flagSaudiArabia,
             email: 'info@ventilationholdings.com',
             address: '15 Rue Des Halles, 75001 Paris',
             serviceCities: [
@@ -111,7 +138,7 @@ function OurLocations() {
         {
             id: 'italy',
             name: 'Italy',
-            flag: '🇮🇹',
+            flag: flagItaly,
             email: 'uk@ventilationholdings.com',
             address: '10 Oxford Street, London',
             serviceCities: ['London', 'Manchester', 'Birmingham', 'Edinburgh']
@@ -119,7 +146,7 @@ function OurLocations() {
         {
             id: 'potugal',
             name: 'Portugal',
-            flag: '🇵🇹',
+            flag: flagPortugal,
             email: 'us@ventilationholdings.com',
             address: '350 Fifth Avenue, New York',
             serviceCities: ['New York', 'Los Angeles', 'Chicago', 'Miami']
@@ -127,7 +154,7 @@ function OurLocations() {
         {
             id: 'us',
             name: 'United States',
-            flag: '🇺🇸',
+            flag: flagUs,
             email: 'info@ventilationholdings.com',
             address: '15 Rue Des Halles, 75001 Paris',
             serviceCities: [
@@ -138,7 +165,7 @@ function OurLocations() {
         {
             id: 'ireland',
             name: 'Ireland',
-            flag: '🇮🇪',
+            flag: flagIreland,
             email: 'uk@ventilationholdings.com',
             address: '10 Oxford Street, London',
             serviceCities: ['London', 'Manchester', 'Birmingham', 'Edinburgh']
@@ -146,7 +173,7 @@ function OurLocations() {
         {
             id: 'austria',
             name: 'Austria',
-            flag: '🇦🇹',
+            flag: flagAustria,
             email: 'us@ventilationholdings.com',
             address: '350 Fifth Avenue, New York',
             serviceCities: ['New York', 'Los Angeles', 'Chicago', 'Miami']
@@ -154,7 +181,7 @@ function OurLocations() {
         {
             id: 'netherlands',
             name: 'Netherlands',
-            flag: '🇳🇱',
+            flag: flagNetherlands,
             email: 'info@ventilationholdings.com',
             address: '15 Rue Des Halles, 75001 Paris',
             serviceCities: [
@@ -165,7 +192,7 @@ function OurLocations() {
         {
             id: 'switzerland',
             name: 'Switzerland',
-            flag: '🇨🇭',
+            flag: flagSwitzerland,
             email: 'uk@ventilationholdings.com',
             address: '10 Oxford Street, London',
             serviceCities: ['London', 'Manchester', 'Birmingham', 'Edinburgh']
@@ -173,7 +200,7 @@ function OurLocations() {
         {
             id: 'qatar',
             name: 'Qatar',
-            flag: '🇶🇦',
+            flag: flagQatar,
             email: 'us@ventilationholdings.com',
             address: '350 Fifth Avenue, New York',
             serviceCities: ['New York', 'Los Angeles', 'Chicago', 'Miami']
@@ -181,7 +208,7 @@ function OurLocations() {
         {
             id: 'denmark',
             name: 'Denmark',
-            flag: '🇩🇰',
+            flag: flagDenmark,
             email: 'info@ventilationholdings.com',
             address: '15 Rue Des Halles, 75001 Paris',
             serviceCities: [
@@ -192,7 +219,7 @@ function OurLocations() {
         {
             id: 'new-zealand',
             name: 'New Zealand',
-            flag: '🇳🇿',
+            flag: flagNewZealand,
             email: 'uk@ventilationholdings.com',
             address: '10 Oxford Street, London',
             serviceCities: ['London', 'Manchester', 'Birmingham', 'Edinburgh']
@@ -200,7 +227,7 @@ function OurLocations() {
         {
             id: 'poland',
             name: 'Poland',
-            flag: '🇵🇱',
+            flag: flagPoland,
             email: 'us@ventilationholdings.com',
             address: '350 Fifth Avenue, New York',
             serviceCities: ['New York', 'Los Angeles', 'Chicago', 'Miami']
@@ -208,7 +235,7 @@ function OurLocations() {
         {
             id: 'luxembourg',
             name: 'Luxembourg',
-            flag: '🇱🇺',
+            flag: flagluxembourg,
             email: 'info@ventilationholdings.com',
             address: '15 Rue Des Halles, 75001 Paris',
             serviceCities: [
@@ -216,6 +243,22 @@ function OurLocations() {
                 'Monaco', 'French Riviera', 'Rouen', 'Marseille'
             ]
         },
+        {
+            id: 'belgium',
+            name: 'Belgium',
+            flag: flagBelgium,
+            email: 'uk@ventilationholdings.com',
+            address: '10 Oxford Street, London',
+            serviceCities: ['London', 'Manchester', 'Birmingham', 'Edinburgh']    
+        },
+        {
+            id: 'spain',
+            name: 'Spain',
+            flag: flagSpain,
+            email: 'us@ventilationholdings.com',
+            address: '350 Fifth Avenue, New York',
+            serviceCities: ['New York', 'Los Angeles', 'Chicago', 'Miami']    
+        }
     ];
 
     // Split locations into two halves

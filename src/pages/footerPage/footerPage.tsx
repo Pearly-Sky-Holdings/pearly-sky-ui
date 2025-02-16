@@ -14,7 +14,7 @@ import {
   flagAustralia,
   flagCanada,
   flagFinland,
-  flagFrace,
+  flagFrance,
   flagGermany,
   flagItaly,
   flagSaudiArabia,
@@ -23,10 +23,23 @@ import {
   flagUAE,
   flagUk,
   flagUs,
+  flagNetherlands,
+  flagAustria,
+  flagluxembourg,
+  flagPortugal,
+  flagQatar,
+  flagDenmark,
+  flagIreland,
+  flagNewZealand,
+  flagPoland,
+  flagSpain,
+  flagSwitzerland,
+  flagBelgium,
+
 } from "../../config/images.ts";
 
 const countries = [
-  { name: "France", flag: flagFrace },
+  { name: "France", flag: flagFrance },
   { name: "United Kingdom", flag: flagUk },
   { name: "Sri Lanka", flag: flagSrilanka },
   { name: "Scotland", flag: flagScotland },
@@ -39,15 +52,18 @@ const countries = [
   { name: "Italy", flag: flagItaly },
   { name: "United States", flag: flagUs },
   { name: "Ireland", flag: "🇮🇪" },
-  { name: "Austria", flag: "🇦🇹" },
-  { name: "Netherlands", flag: "🇳🇱" },
-  { name: "Switzerland", flag: "🇨🇭" },
-  { name: "Qatar", flag: "🇶🇦" },
-  { name: "Denmark", flag: "🇩🇰" },
-  { name: "New Zealand", flag: "🇳🇿" },
-  { name: "Poland", flag: "🇵🇱" },
-  { name: "Luxembourg", flag: "🇱🇺" },
-  { name: "Portugal", flag: "🇵🇹" },
+  { name: "Austria", flag: flagAustria },
+  { name: "Netherlands", flag: flagNetherlands },
+  { name: "Switzerland", flag: flagSwitzerland },
+  { name: "Qatar", flag: flagQatar },
+  { name: "Denmark", flag: flagDenmark },
+  { name: "New Zealand", flag: flagNewZealand },
+  { name: "Poland", flag: flagPoland },
+  { name: "Luxembourg", flag: flagluxembourg },
+  { name: "Portugal", flag: flagPortugal },
+  { name: "Spain", flag: flagSpain },
+  { name: "Belgium", flag: flagBelgium },
+  { name: "Ireland", flag: flagIreland },
 ];
 
 const Footer = () => {
@@ -148,7 +164,7 @@ const Footer = () => {
               </Box>
               <Typography
                 variant="body1"
-                onClick={() => window.location.href = "/our-locations"}
+                onClick={() => (window.location.href = "/our-locations")}
                 sx={{
                   cursor: "pointer",
                   "&:hover": { opacity: 0.8 },
@@ -267,7 +283,7 @@ const Footer = () => {
             sx={{
               display: "flex",
               gap: 6,
-              animation: "scroll 20s linear infinite",
+              animation: "scroll 30s linear infinite",
               "@keyframes scroll": {
                 "0%": {
                   transform: "translateX(0%)",
@@ -310,19 +326,20 @@ const Footer = () => {
                     },
                   }}
                 >
-                  <Typography 
-                    sx={{ 
-                      fontSize: "3.5rem",
-                      lineHeight: 1,
-                      transform: "scale(1.2)",
+                  <img
+                    src={country.flag} // Use the image URL from the `countries` array
+                    alt={country.name}
+                    style={{
+                      width: "100%", // Ensure the image fills the container
+                      height: "100%", // Ensure the image fills the container
+                      objectFit: "cover", // Ensure the image covers the entire circle
+                      borderRadius: "50%", // Make the image fully rounded
                     }}
-                  >
-                    {country.flag}
-                  </Typography>
+                  />
                 </Box>
-                <Typography 
-                  variant="body2" 
-                  sx={{ 
+                <Typography
+                  variant="body2"
+                  sx={{
                     color: "white",
                     opacity: 0.9,
                     fontWeight: 500,
