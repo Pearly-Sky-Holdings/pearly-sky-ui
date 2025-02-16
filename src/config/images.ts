@@ -1,9 +1,9 @@
 export const companyLogo: string = "./images/logo.png";
 
-export const homePageImage1: string = "/images/homePageImage1.png";
-export const homePageImage2: string = "/images/homePageImage2.png";
-export const homePageImage3: string = "/images/homePageImage3.jpg";
-export const homePageImage4: string = "/images/homePageImage4.jpg";
+export const homePageImage1: string = "/images/home/homePageImage1.png";
+export const homePageImage2: string = "/images/home/homePageImage2.png";
+export const homePageImage3: string = "/images/home/homePageImage3.jpg";
+export const homePageImage4: string = "/images/home/homePageImage4.jpg";
 
 
 export const girl: string = "/images/Girl_1_New.png";
@@ -71,3 +71,9 @@ export const flagPortugal: string = "/images/flag/flagPortugal.jpeg";
 export const flagQatar: string = "/images/flag/flagQatar.jpeg";
 export const flagSwitzerland: string = "/images/flag/flagSwitzerlands.jpeg";
 export const flagSpain: string = "/images/flag/flagSpain.jpeg";
+
+
+
+// video
+export const homeVideo1: string = "/video/pearlysky-web-banner-video-new-1.mp4";
+

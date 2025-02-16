@@ -51,7 +51,7 @@ const countries = [
   { name: "Saudi Arabia", flag: flagSaudiArabia },
   { name: "Italy", flag: flagItaly },
   { name: "United States", flag: flagUs },
-  { name: "Ireland", flag: "🇮🇪" },
+  { name: "Ireland", flag: flagIreland },
   { name: "Austria", flag: flagAustria },
   { name: "Netherlands", flag: flagNetherlands },
   { name: "Switzerland", flag: flagSwitzerland },
@@ -183,9 +183,9 @@ const Footer = () => {
                 size="small"
                 sx={{
                   bgcolor: "rgba(255, 255, 255, 0.2)",
-                  "&:hover": { bgcolor: "rgba(255, 255, 255, 0.3)" },
-                  width: 35,
-                  height: 35,
+                  "&:hover": { bgcolor: "rgba(255, 255, 255, 0.5)", color: "blue"},
+                  width: 40,
+                  height: 40,
                 }}
               >
                 <FacebookIcon sx={{ fontSize: 20 }} />
@@ -195,7 +195,7 @@ const Footer = () => {
                 size="small"
                 sx={{
                   bgcolor: "rgba(255, 255, 255, 0.2)",
-                  "&:hover": { bgcolor: "rgba(255, 255, 255, 0.3)" },
+                  "&:hover": { bgcolor: "rgba(255, 255, 255, 0.5)", color: "pink" },
                   width: 40,
                   height: 40,
                 }}
@@ -207,7 +207,7 @@ const Footer = () => {
                 size="small"
                 sx={{
                   bgcolor: "rgba(255, 255, 255, 0.2)",
-                  "&:hover": { bgcolor: "rgba(255, 255, 255, 0.3)" },
+                  "&:hover": { bgcolor: "rgba(255, 255, 255, 0.3)", color: "blue" },
                   width: 40,
                   height: 40,
                 }}
@@ -219,7 +219,7 @@ const Footer = () => {
                 size="small"
                 sx={{
                   bgcolor: "rgba(255, 255, 255, 0.2)",
-                  "&:hover": { bgcolor: "rgba(255, 255, 255, 0.3)" },
+                  "&:hover": { bgcolor: "rgba(255, 255, 255, 0.3)",color: "red" },
                   width: 40,
                   height: 40,
                 }}
@@ -231,7 +231,7 @@ const Footer = () => {
                 size="small"
                 sx={{
                   bgcolor: "rgba(255, 255, 255, 0.2)",
-                  "&:hover": { bgcolor: "rgba(255, 255, 255, 0.3)" },
+                  "&:hover": { bgcolor: "rgba(255, 255, 255, 0.3)", color: "black" },
                   width: 40,
                   height: 40,
                 }}
@@ -308,8 +308,8 @@ const Footer = () => {
               >
                 <Box
                   sx={{
-                    width: "80px",
-                    height: "80px",
+                    width: "50px",
+                    height: "50px",
                     borderRadius: "50%",
                     display: "flex",
                     alignItems: "center",
@@ -327,13 +327,13 @@ const Footer = () => {
                   }}
                 >
                   <img
-                    src={country.flag} // Use the image URL from the `countries` array
+                    src={country.flag} 
                     alt={country.name}
                     style={{
-                      width: "100%", // Ensure the image fills the container
-                      height: "100%", // Ensure the image fills the container
-                      objectFit: "cover", // Ensure the image covers the entire circle
-                      borderRadius: "50%", // Make the image fully rounded
+                      width: "100%", 
+                      height: "100%",
+                      objectFit: "cover",
+                      borderRadius: "50%", 
                     }}
                   />
                 </Box>

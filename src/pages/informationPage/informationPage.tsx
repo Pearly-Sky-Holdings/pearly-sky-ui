@@ -1,4 +1,5 @@
 import React from "react";
+import { homePageImage1 } from "../../config/images.ts";
 
 const InformationPage: React.FC = () => {
   return (
@@ -8,7 +9,7 @@ const InformationPage: React.FC = () => {
         {/*Image */}
         <div className="mt-5">
           <img
-            src="./images/info_girl.png"
+            src={homePageImage1}
             alt="Company Info"
             className="w-full rounded-lg shadow-lg"
           />

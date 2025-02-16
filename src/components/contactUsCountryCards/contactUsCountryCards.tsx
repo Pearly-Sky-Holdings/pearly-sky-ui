@@ -53,6 +53,7 @@ const CountryCard: React.FC<CountryProps> = ({ name, hasOffice, mapSrc }) => {
           {mapSrc && (
             <iframe
               src={mapSrc}
+              title={`${name} Office Location`}
               style={{
                 width: "60%",
                 height: "250px",

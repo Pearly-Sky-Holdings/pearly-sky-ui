@@ -50,7 +50,7 @@ export default function NavigationBar() {
             { label: "Home", path: "/" },
             { label: "Services", path: "/services", isDropdown: true },
             { label: "Company", path: "/company" },
-            { label: "Contact Us", path: "/contact-us" },
+            { label: "Contact Us", path: "/contactUsPage" },
             { label: "Careers", path: "/careers" },
             { label: "Other Services", path: "/other-services", isDropdown: true },
             { label: "Our Locations", path: "/our-locations" },

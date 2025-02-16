@@ -1,9 +1,8 @@
 import React from "react";
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography, Box } from "@mui/material";
 import CountryCard from "../../components/contactUsCountryCards/contactUsCountryCards";
-import Navbar from "../../components/navigationBar/navigationBar";
-import TopBar from "../../components/topBar/topBar";
-import Footer from "../footerPage/footerPage";
+import { contactImage1 } from "../../config/images.ts";
+import Globe from "../../components/contactUsCountryCards/Globe";
 
 const countries = [
   { name: "France", hasOffice: true, mapSrc: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.716918665806!2d79.9947566!3d7.042516200000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2f9000149518b%3A0x4f4b14f553e8f46c!2sPearly%20Sky%20Company%20Private%20LTD!5e0!3m2!1sen!2slk!4v1739700229122!5m2!1sen!2slk" },
@@ -32,72 +31,64 @@ const countries = [
   { name: "Luxembourg", hasOffice: false },
 ];
 
-
-const mainCountries = countries.slice(0, countries.length - 6); 
-const lastSixCountries = countries.slice(-6); 
-
 const ContactUsPage: React.FC = () => {
+  const midPoint = Math.ceil(countries.length / 2);
+  const leftColumnCountries = countries.slice(0, midPoint);
+  const rightColumnCountries = countries.slice(midPoint);
+
   return (
-    <>
-      
-      <TopBar />
+    <Container sx={{ minHeight: "100vh", py: 5 }}>
+      <Typography variant="h4" align="center" fontWeight="bold" color="#002F6D" sx={{ mb: 3 }}>
+        Contact Us
+      </Typography>
 
-      
-      <Navbar />
-
-      
-      <Container sx={{ minHeight: "100vh", py: 5 }}>
-        <Typography variant="h4" align="center" fontWeight="bold" color="#002F6D" sx={{ mb: 3 }}>
-          Contact Us
-        </Typography>
-
-        <Grid container spacing={5}>
-          {/* Countries List */}
-          <Grid item xs={12} md={6}>
-            {mainCountries.map((country, index) => (
-              <CountryCard key={index} {...country} />
-            ))}
-          </Grid>
-
-          {/* Images Section  */}
-          <Grid item xs={12} md={6} container direction="column" spacing={3}>
-            <Grid item>
-              <img
-                src="./images/uiContactUs/ContactUs.png"
-                alt="Customer Support"
-                style={{
-                  width: "100%",
-                  borderRadius: "12px",
-                  boxShadow: "3px 3px 10px rgba(0,0,0,0.1)",
-                }}
-              />
-            </Grid>
-            <Grid item>
-              <img
-                src="./images/uiContactUs/glob.png"
-                alt="Global Presence"
-                style={{
-                  width: "63%",
-                  borderRadius: "12px",
-                  boxShadow: "3px 3px 10px rgba(0,0,0,0.1)",
-                }}
-              />
-            </Grid>
-
-            
-            <Grid item>
-              
-              {lastSixCountries.map((country, index) => (
-                <CountryCard key={index + mainCountries.length} {...country} />
-              ))}
-            </Grid>
-          </Grid>
+      {/* Images Section - Top Row */}
+      <Grid container spacing={3} sx={{ mb: 5 }}>
+        <Grid item xs={12} md={6} style={{ height: "60vh" }}>
+          <Box
+            component="img"
+            src={contactImage1}
+            alt="Customer Support"
+            sx={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              borderRadius: "12px",
+              boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
+              transition: "transform 0.3s ease-in-out, boxShadow 0.3s ease-in-out",
+              "&:hover": { transform: "scale(1.01)" },
+            }}
+          />
         </Grid>
-      </Container>
+        <Grid item xs={12} md={6} style={{ height: "60vh" }}>
+        <Box sx={{
+            width: "100%",
+            height: "100%",
+            borderRadius: "12px",
+            overflow: "hidden",
+            boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
+            transition: "transform 0.3s ease-in-out, boxShadow 0.3s ease-in-out",
+            "&:hover": { transform: "scale(1.01)" }
+          }}>
+            <Globe />
+          </Box>
+        </Grid>
+      </Grid>
 
-      
-      <Footer />
-    </>
+      {/* Countries List - Two Columns */}
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={6}>
+          {leftColumnCountries.map((country, index) => (
+            <CountryCard key={index} {...country} />
+          ))}
+        </Grid>
+        <Grid item xs={12} md={6}>
+          {rightColumnCountries.map((country, index) => (
+            <CountryCard key={index + midPoint} {...country} />
+          ))}
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 
