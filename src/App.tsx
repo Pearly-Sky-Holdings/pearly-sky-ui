@@ -1,5 +1,5 @@
 import { ThemeProvider, createTheme } from '@mui/material';
-import { BrowserRouter as Router, Routes } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import TopBar from "./components/topBar/topBar";
 import NavigationBar from "./components/navigationBar/navigationBar";
 import HomePage from "./pages/homePage/homePage";
@@ -12,6 +12,7 @@ import TeamOfExpertsPage from './pages/teamOfExpertsPage/teamOfExpertsPage';
 import OurShowcasePage from './pages/ourShowCasePage/ourShowCasePage';
 import Footer from './pages/footerPage/footerPage';
 import UiContactUsPage from './pages/uiContactUsPage/uiContactUsPage';
+import OurLocations from "./pages/ourLocationPage/ourLocationPage.tsx";
 import CleanServices from './pages/cleanServices/cleanServices';
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
       },
     },
   });
-  
+
 
   return (
     <ThemeProvider theme={theme}>
