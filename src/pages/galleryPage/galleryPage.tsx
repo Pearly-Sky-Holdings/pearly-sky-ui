@@ -1,4 +1,4 @@
-import { Box, Typography, Grid, Card, CardMedia, Container } from '@mui/material';
+import { Box, Typography, Grid, Card, CardMedia, Container, useMediaQuery, useTheme } from '@mui/material';
 import {
   galleryImage1,
   galleryImage2,
@@ -16,36 +16,39 @@ const progressData = [
 const images = [galleryImage1, galleryImage2, galleryImage3, galleryImage4, galleryImage5];
 
 const Gallery = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm')); 
+
   return (
-    <Container>
-      {/* Progress Section */}
-      <Box display="flex" justifyContent="center" textAlign="center">
-        <Box
-          display="flex"
-          justifyContent="space-around"
-          mt={6}
-          mb={8}
-          bgcolor="white"
-          textAlign="center"
-          pt={1}
-          pb={8}
-          borderRadius={50}
-          width="70%"
-          height={35}
-          boxShadow="0px 4px 10px rgba(37, 150, 190, 0.5)"
-        >
-          {progressData.map((item) => (
-            <Box key={item.label} textAlign="center">
-              <Typography variant="h6" color="#008CDA" fontWeight="bold">
-                {item.value}%
-              </Typography>
-              <Typography variant="body2" color="black">
-                {item.label}
-              </Typography>
-            </Box>
-          ))}
+    <Container style={{ marginTop: '5%' }}>
+      {!isMobile && (
+        <Box display="flex" justifyContent="center" textAlign="center">
+          <Box
+            display="flex"
+            justifyContent="space-around"
+            mb={8}
+            bgcolor="white"
+            textAlign="center"
+            pt={1}
+            pb={8}
+            borderRadius={50}
+            width="75%"
+            height={35}
+            boxShadow="0px 4px 10px rgba(37, 150, 190, 0.5)"
+          >
+            {progressData.map((item) => (
+              <Box key={item.label} textAlign="center">
+                <Typography variant="h6" color="#008CDA" fontWeight="bold">
+                  {item.value}%
+                </Typography>
+                <Typography variant="body2" color="black">
+                  {item.label}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
         </Box>
-      </Box>
+      )}
 
       {/* Gallery Section */}
       <Typography variant="h5" color="#003370" fontWeight="bold" align="center" mb={2}>

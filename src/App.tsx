@@ -11,7 +11,7 @@ import InformationPage from './pages/informationPage/informationPage';
 import TeamOfExpertsPage from './pages/teamOfExpertsPage/teamOfExpertsPage';
 import OurShowcasePage from './pages/ourShowCasePage/ourShowCasePage';
 import Footer from './pages/footerPage/footerPage';
-import UiContactUsPage from './pages/uiContactUsPage/uiContactUsPage';
+import UiContactUsPage from './pages/HomeContactUsPage/uiContactUsPage.tsx';
 import ContactUsPage from './pages/contactUsPage/contactUsPage';
 import OurLocations from "./pages/ourLocationPage/ourLocationPage.tsx";
 import CleanServices from './pages/cleanServices/cleanServices';
@@ -23,7 +23,7 @@ function App() {
       fontFamily: `'Poppins', sans-serif`,
     },
     palette: {
-      mode: 'light', // Ensures light mode
+      mode: 'light',
       text: {
         primary: 'rgba(3, 3, 3, 0.87)',
       },
@@ -35,32 +35,80 @@ function App() {
 
 
   return (
-    <ThemeProvider theme={theme}>
-      <TopBar />
+    // <ThemeProvider theme={theme}>
+    //   <TopBar />
       
-      <Router>
-      <NavigationBar />
-      <HomePage />
-      <SecondPage />
-      <OurServicePage />
-      <InformationPage/>
-      <GalleryPage />
-      {/* <SectorPage /> */}
-      <TeamOfExpertsPage/>
-      <OurShowcasePage/>
-      <CleanServices/>
-      <UiContactUsPage/>
-      <Footer />
-      <Routes>
-        <Route path="/contactUsPage" element={<ContactUsPage/>} />
-        {/* <Route path="/services" element={<ServicesPage />} />
-        <Route path="/company" element={<CompanyPage />} />
-        <Route path="/contact-us" element={<ContactUsPage />} />
-        <Route path="/careers" element={<CareersPage />} />
-        <Route path="/other-services" element={<OtherServicesPage />} /> */}
-      </Routes>
-    </Router>
-    </ThemeProvider>
+    //   <Router>
+    //   <NavigationBar />
+    //   <HomePage />
+    //   <SecondPage />
+    //   <OurServicePage />
+    //   <InformationPage/>
+    //   <GalleryPage />
+    //   {/* <SectorPage /> */}
+    //   <TeamOfExpertsPage/>
+    //   <OurShowcasePage/>
+    //   <CleanServices/>
+    //   <UiContactUsPage/>
+    //   <Footer />
+    //   <Routes>
+    //     <Route path="/contactUsPage" element={<ContactUsPage/>} />
+    //     {/* <Route path="/services" element={<ServicesPage />} />
+    //     <Route path="/company" element={<CompanyPage />} />
+    //     <Route path="/contact-us" element={<ContactUsPage />} />
+    //     <Route path="/careers" element={<CareersPage />} />
+    //     <Route path="/other-services" element={<OtherServicesPage />} /> */}
+    //   </Routes>
+    // </Router>
+    // </ThemeProvider>
+
+    <ThemeProvider theme={theme}>
+          <Router>
+              <TopBar />
+              <NavigationBar />
+              <Routes>
+                  {/* Main one-page scrollable site */}
+                  <Route
+                      path="/"
+                      element={
+                          <>
+                            <HomePage />
+                            <SecondPage />
+                            <OurServicePage />
+                            <InformationPage/>
+                            <GalleryPage />
+                            {/* <SectorPage /> */}
+                            <TeamOfExpertsPage/>
+                            <OurShowcasePage/>
+                            <CleanServices/>
+                            <UiContactUsPage/>
+                            <Footer />
+                          </>
+                      }
+                  />
+                  {/* Standalone OurLocations page */}
+                  <Route
+                      path="/our-locations"
+                      element={
+                          <>
+                              <OurLocations />
+                              <Footer />
+                          </>
+                      }
+                  />
+                  <Route
+                      path="/contactUsPage"
+                      element={
+                        <>
+                        <ContactUsPage />
+                        <Footer />
+                        </>
+                            
+                      }
+                  />
+              </Routes>
+          </Router>
+      </ThemeProvider>
   );
 }
 
