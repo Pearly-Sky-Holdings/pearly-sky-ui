@@ -1,9 +1,12 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, useTheme, useMediaQuery } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { homePageImage1, homePageImage2, homePageImage3, homePageImage4 } from "../../config/images";
 
 export default function HomePage() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const imagePairs = [
     [homePageImage1, homePageImage2],
     [homePageImage3, homePageImage4],
@@ -20,15 +23,38 @@ export default function HomePage() {
   }, []);
 
   return (
-    <Box sx={{ textAlign: 'center', p: 6 }}>
+    <Box sx={{ 
+      textAlign: 'center', 
+      p: isMobile ? 2 : 6,
+      width: '100%',
+      boxSizing: 'border-box'
+    }}>
       
       {/* Header */}
-      <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#002F6D', mb: 2 ,mt:5}}>
+      <Typography 
+        variant={isMobile ? "h5" : "h4"} 
+        sx={{ 
+          fontWeight: 'bold', 
+          color: '#002F6D', 
+          mb: 2,
+          mt: 5,
+          px: isMobile ? 2 : 0
+        }}
+      >
         Welcome to Pearly Sky Cleaning Services
       </Typography>
 
       {/* Sub-description */}
-      <Typography variant="h6" sx={{ color: '#555', mb: 3, maxWidth: '700px', margin: 'auto' }}>
+      <Typography 
+        variant={isMobile ? "body1" : "h6"} 
+        sx={{ 
+          color: '#555', 
+          mb: 3, 
+          maxWidth: '700px', 
+          margin: 'auto',
+          px: isMobile ? 2 : 0
+        }}
+      >
         You are our most valued asset at PearlySky Company Pvt. Ltd. 
         We are committed to providing you with the best care and service.
       </Typography>
@@ -42,9 +68,9 @@ export default function HomePage() {
           backgroundColor: '#002F6D', 
           borderRadius: '12px', 
           padding: '6px 20px',
-          fontSize: '16px',
+          fontSize: isMobile ? '14px' : '16px',
           textTransform: 'none',
-          marginTop:'3%',
+          marginTop: '3%',
           fontWeight: 'bold',
           '&:hover': { backgroundColor: '#125ea6' }, 
         }}
@@ -53,19 +79,28 @@ export default function HomePage() {
       </Button>
 
       {/* Space */}
-      <Box sx={{ height: 1 }} />
+      <Box sx={{ height: isMobile ? 2 : 1 }} />
 
       {/* Images with Smooth Swap and Fixed Size */}
-      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt:5 }}>
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: isMobile ? 'column' : 'row',
+        justifyContent: 'center', 
+        gap: 2, 
+        mt: 5,
+        px: isMobile ? 2 : 0
+      }}>
         {imagePairs[currentIndex].map((imgSrc, i) => (
           <Box 
             key={i} 
             sx={{ 
-              width: '50%',
-              height: '400px', 
+              width: isMobile ? '100%' : '50%',
+              height: isMobile ? '300px' : '400px',
               overflow: 'hidden', 
               borderRadius: '12px',
-              boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
+              transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+              boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
+              marginBottom: isMobile ? 2 : 0
             }}
           >
             <img
@@ -74,8 +109,9 @@ export default function HomePage() {
               style={{
                 width: '100%',
                 height: '100%',
+                transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+                boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
                 objectFit: 'cover',
-                transition: 'opacity 1s ease-in-out',
               }}
             />
           </Box>

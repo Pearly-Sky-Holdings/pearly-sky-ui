@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import ServiceList from "../../components/ServiceCard/ServiceList";
 import {
   regularService,
@@ -119,10 +119,29 @@ const services = [
   },
 ];
 
+
+
 export default function ServicesPage() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
-    <Box sx={{ textAlign: "center", py: 5, px: 10, backgroundColor: "" }}>
-      <Typography variant="h4" sx={{ mb: 4, fontWeight: "bold", color: "#002F6D" }}>
+    <Box sx={{ 
+      textAlign: "center", 
+      py: isMobile ? 3 : 5, 
+      px: isMobile ? 3 : 10,  // Reduced padding for mobile
+      width: '100%',
+      boxSizing: 'border-box'
+    }}>
+      <Typography 
+        variant={isMobile ? "h5" : "h4"} 
+        sx={{ 
+          mb: isMobile ? 3 : 4, 
+          fontWeight: "bold", 
+          color: "#002F6D",
+          px: isMobile ? 1 : 0
+        }}
+      >
         Our Services
       </Typography>
       <ServiceList services={services} />

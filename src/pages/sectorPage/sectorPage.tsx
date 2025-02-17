@@ -1,11 +1,11 @@
-import {Card, CardContent, Typography, CardMedia } from "@mui/material";
-import Grid from '@mui/material/Grid';
+import { Card, CardContent, Typography, CardMedia } from "@mui/material";
+import Grid from "@mui/material/Grid";
 import {
-    sectorImage1,
-    sectorImage2,
-    sectorImage3,
-    sectorImage4,
-    sectorImage5,
+  sectorImage1,
+  sectorImage2,
+  sectorImage3,
+  sectorImage4,
+  sectorImage5,
 } from "../../config/images";
 
 const sectors = [
@@ -38,37 +38,62 @@ const sectors = [
 
 const OurSector = () => {
   return (
-    <div style={{textAlign: "center" }}>
-      <Typography variant="h4" gutterBottom style={{ fontWeight: "bold", color:"#002F6D" }}>
+    <div style={{ textAlign: "center" }}>
+      <Typography
+        variant="h4"
+        gutterBottom
+        style={{ fontWeight: "bold", color: "#002F6D", paddingTop: "30px" }}
+      >
         Our Sector
       </Typography>
-      <Grid container spacing={2} justifyContent="center" height="70vh" marginBottom={10}>
+      <Grid
+        container
+        spacing={2}
+        justifyContent="center"
+        sx={{
+          marginBottom: { xs: 3, md: 4 }
+        }}
+      >
         {sectors.map((sector, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={2.4} key={index}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={4}
+            lg={2.4}
+            key={index}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
             <Card
               sx={{
-                maxWidth: 400,
+                maxWidth: { xs: 300, sm: 350, md: 400 },
                 borderRadius: 6,
                 display: "flex",
                 flexDirection: "column",
-                height: "77vh",
+                height: { xs: "60vh", sm: "70vh", md: "70vh" },
                 boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
                 transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+                "&:hover": {
+                  transform: "scale(1.01)",
+                  boxShadow: "0px 8px 10px rgba(37, 150, 190, 0.4)",
+                },
               }}
             >
               <CardMedia
                 component="img"
-                style={{borderTopLeftRadius: "100%", 
-                    borderTopRightRadius: "100%", 
-                    height: "53vh", 
-                    paddingLeft: "2vh", 
-                    paddingRight: "2vh",
-                    paddingTop: "3vh"}}
+                sx={{
+                  borderTopLeftRadius: "130%",
+                  borderTopRightRadius: "130%",
+                  height: { xs: "50%", sm: "70%" }, 
+                  objectFit: "cover",
+                  padding: { xs: "1vh", sm: "2vh", md: "3vh" },
+                  
+                }}
                 image={sector.image}
                 alt={sector.title}
-                sx={{
-                  objectFit: "cover",
-                }}
               />
               <CardContent
                 sx={{
@@ -76,15 +101,31 @@ const OurSector = () => {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
+                  padding: { xs: 1, sm: 1 },
                 }}
               >
                 <Typography
                   variant="h6"
-                  sx={{ fontWeight: "bold", color: "#0D47A1", paddingLeft: "10px", paddingRight: "10px" }}
+                  sx={{
+                    fontWeight: "bold",
+                    color: "#0D47A1",
+                    textAlign: "center",
+                  }}
                 >
                   {sector.title}
                 </Typography>
-                <Typography variant="body2" color="textSecondary">
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  sx={{
+                    textAlign: "center",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    display: "-webkit-box",
+                    WebkitLineClamp: 3, 
+                    WebkitBoxOrient: "vertical",
+                  }}
+                >
                   {sector.description}
                 </Typography>
               </CardContent>
