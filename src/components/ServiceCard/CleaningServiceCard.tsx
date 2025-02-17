@@ -1,7 +1,12 @@
-import React from "react";
 import { Card, CardContent, CardMedia, Typography, Box, Link } from "@mui/material";
 
-const CleaningServiceCard = ({ title, image, link }) => {
+interface CleaningServiceCardProps {
+  title: string;
+  image: string;
+  link: string;
+}
+
+const CleaningServiceCard = ({ title, image, link }: CleaningServiceCardProps) => {
   return (
     <Card
       sx={{
