@@ -23,6 +23,9 @@ export const laundryService: string = "/images/service/laundryService.png";
 export const eventService: string = "/images/service/eventService.png";
 export const poolService: string = "/images/service/poolService.png";
 export const pressureService: string = "/images/service/pressureService.png";
+export const SanitizationService: string = "/images/service/Sanitization & Disinfection.png";
+export const CarpetCleaningService: string = "/images/service/Carpet & Upholstery Cleaning.png";
+export const MoveInOutTransportService: string = "/images/service/MoveInOutTransportService.png";
 
 export const galleryImage1: string = "/images/gallery/galleryImage1.png";
 export const galleryImage2: string = "/images/gallery/galleryImage2.png";

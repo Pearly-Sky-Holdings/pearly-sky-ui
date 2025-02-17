@@ -34,6 +34,16 @@ const sectors = [
     description: "Elevating experiences in leisure and hospitality.",
     image: sectorImage5,
   },
+  {
+    title: "Commercial & Mixed Utilities",
+    description: "Building efficient spaces that power growth and innovation.",
+    image: sectorImage2,
+  },
+  {
+    title: "Hotels & Restaurants",
+    description: "Unforgettable stays and dining experiences await.",
+    image: sectorImage3,
+  },
 ];
 
 const OurSector = () => {
@@ -63,7 +73,6 @@ const OurSector = () => {
             lg={2.4}
             key={index}
             sx={{
-              display: "flex",
               justifyContent: "center",
             }}
           >
@@ -76,6 +85,17 @@ const OurSector = () => {
                 height: { xs: "60vh", sm: "70vh", md: "70vh" },
                 boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
                 transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+                              animation: "scroll 30s linear infinite",
+              "@keyframes scroll": {
+                "0%": {
+                  transform: "translateX(0%)",
+                },
+                "100%": {
+                  transform: "translateX(-100%)",
+                },
+              },
+              justifyContent: { xs: 'center', md: 'flex-start' },
+              flexWrap: { xs: 'nowrap', md: 'nowrap' },
                 "&:hover": {
                   transform: "scale(1.01)",
                   boxShadow: "0px 8px 10px rgba(37, 150, 190, 0.4)",

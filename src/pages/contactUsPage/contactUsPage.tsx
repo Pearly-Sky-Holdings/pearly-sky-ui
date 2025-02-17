@@ -66,10 +66,10 @@ const ContactUsPage: React.FC = () => {
             height: "100%",
             borderRadius: "12px",
             overflow: "hidden",
-            backgroundColor:"#95a5a6",
+            backgroundColor:"#ecf0f1",
             boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
             transition: "transform 0.3s ease-in-out, boxShadow 0.3s ease-in-out",
-            "&:hover": { transform: "scale(1.01)", backgroundColor: "#b2bec3"}
+            "&:hover": { transform: "scale(1.01)", backgroundColor: "#dfe6e9"}
           }}>
             <Globe />
           </Box>

@@ -352,6 +352,8 @@ const Footer = () => {
                     border: "2px solid rgba(255, 255, 255, 0.2)",
                     transition: "transform 0.3s ease",
                     "&:hover": {
+                      height: { xs: '40px', md: '52px' },
+                      width: { xs: '40px', md: '52px' },
                       transform: "scale(1.1)",
                       background: "rgba(255, 255, 255, 0.15)",
                     },
