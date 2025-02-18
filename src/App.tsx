@@ -16,6 +16,7 @@ import ContactUsPage from './pages/contactUsPage/contactUsPage';
 import OurLocations from "./pages/ourLocationPage/ourLocationPage.tsx";
 import CleanServices from './pages/cleanServices/cleanServices';
 import CircularProgress from '@mui/material/CircularProgress';
+import LoginPage from './pages/loginPage/looginPage.tsx';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -98,9 +99,18 @@ function App() {
               <>
                 <ContactUsPage />
                 <Footer />
-              </>
+              </>              
             }
           />
+          <Route
+            path="/login"
+            element={
+              <>
+                <LoginPage />
+                
+              </>              
+            }                       
+           />
         </Routes>
       </Router>
     </ThemeProvider>
