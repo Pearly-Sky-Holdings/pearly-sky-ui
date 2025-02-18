@@ -118,13 +118,9 @@ function App() {
                  <Route
                      path="/login"
                       element={
-                         <>
-                          <LoginPage />
-                
-                       </>              
+                          <LoginPage />          
                     }                       
                  />
-        </Routes>
               </Routes>
           </Router>
       </ThemeProvider>
