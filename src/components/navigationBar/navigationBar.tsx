@@ -80,13 +80,19 @@ export default function NavigationBar() {
                     open={Boolean(label === "Services" ? servicesAnchorEl : otherServicesAnchorEl)}
                     onClose={handleClose}
                   >
-                    {["Service 1", "Service 2"].map((service, index) => (
-                      <MenuItem key={index} onClick={handleClose}>
-                        <Link to={path} style={{ textDecoration: "none", color: "black" }}>
-                          {service}
-                        </Link>
-                      </MenuItem>
-                    ))}
+                    {label === "Services" ? (
+                      <>
+                        <MenuItem onClick={handleClose}>
+                          <Link to="/regular-basic-cleaning" style={{ textDecoration: "none", color: "black" }}>
+                            Regular Basic Cleaning
+                          </Link>
+                        </MenuItem>
+                      </>
+                    ) : (
+                      <>
+                        {/* Other services dropdown items */}
+                      </>
+                    )}
                   </Menu>
                 </>
               ) : (

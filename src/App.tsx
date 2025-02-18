@@ -15,6 +15,7 @@ import UiContactUsPage from './pages/HomeContactUsPage/uiContactUsPage.tsx';
 import ContactUsPage from './pages/contactUsPage/contactUsPage';
 import OurLocations from "./pages/ourLocationPage/ourLocationPage.tsx";
 import CleanServices from './pages/cleanServices/cleanServices';
+import RegularBasicCleaning from './pages/services/regularbasicCleaningPage.tsx';
 
 function App() {
 
@@ -101,6 +102,16 @@ function App() {
                       element={
                         <>
                         <ContactUsPage />
+                        <Footer />
+                        </>
+                            
+                      }
+                  />
+                  <Route
+                      path="/regular-basic-cleaning"
+                      element={
+                        <>
+                        <RegularBasicCleaning />
                         <Footer />
                         </>
                             
