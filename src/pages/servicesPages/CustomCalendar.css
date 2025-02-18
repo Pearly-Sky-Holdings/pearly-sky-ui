@@ -1,0 +1,112 @@
+.react-calendar {
+  width: 100%;
+  background-color: white;
+  border: none;
+  font-family: Arial, sans-serif;
+  line-height: 1.125em;
+}
+
+.react-calendar__navigation {
+  display: flex;
+  margin-bottom: 1em;
+}
+
+.react-calendar__navigation button {
+  min-width: 44px;
+  background: none;
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 8px;
+  color: #1e40af;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: #e0e7ff;
+}
+
+.react-calendar__month-view__weekdays {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.75em;
+  color: #1e40af;
+}
+
+.react-calendar__month-view__days__day {
+  padding: 8px;
+  background: none;
+  border-radius: 50%;
+  color: #1e40af;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: #1e40af;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #757575;
+}
+
+.react-calendar__tile {
+  max-width: 100%;
+  padding: 10px 6.6667px;
+  background: none;
+  text-align: center;
+  line-height: 16px;
+  border-radius: 50%;
+  margin: 2px;
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color: #e0e7ff;
+}
+
+.react-calendar__tile--now {
+  background: #e0e7ff;
+  color: #1e40af;
+}
+
+.react-calendar__tile--active {
+  background: #1e40af;
+  color: white;
+}
+
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background: #1e40af;
+}
+
+.react-calendar__tile--disabled {
+  background-color: #f0f0f0;
+  color: #757575;
+}
+
+
+
+
+
+/* scroll  */
+
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+    margin-left: 2px;
+    padding: 2px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(239, 239, 239, 1); /* Color of the track (rest of the bar) */
+    margin-left: 2px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(13, 144, 200, 1); /* Color of the scrollbar */
+    border-radius: 4px; /* Rounded corners */
+    margin-left: 2px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: darkblue; /* Color of the scrollbar on hover */
+  }

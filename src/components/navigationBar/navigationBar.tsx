@@ -162,15 +162,53 @@ export default function NavigationBar() {
                     }}
                   >
                     <Typography>{label}</Typography>
-                  </Link>
-                )}
-              </Box>
-            ))}
-          </Box>
-        )}
 
-        {/* Mobile Menu Drawer */}
-        {isMobile && <MobileDrawer />}
+                    <KeyboardArrowDownIcon
+                      sx={{
+                        color: "white", 
+                        fontSize: "20px", 
+                      }}
+                    />
+                  </IconButton>
+                  <Menu
+                    anchorEl={label === "Services" ? servicesAnchorEl : otherServicesAnchorEl}
+                    open={Boolean(label === "Services" ? servicesAnchorEl : otherServicesAnchorEl)}
+                    onClose={handleClose}
+                  >
+                    {label === "Services" ? (
+                      <>
+                        <MenuItem onClick={handleClose}>
+                          <Link to="/regular-basic-cleaning" style={{ textDecoration: "none", color: "black" }}>
+                            Regular Basic Cleaning
+                          </Link>
+                        </MenuItem>
+                      </>
+                    ) : (
+                      <>
+                        {/* Other services dropdown items */}
+                      </>
+                    )}
+                  </Menu>
+                </>
+              ) : (
+                <Link
+                  to={path}
+                  style={{
+                    textDecoration: "none",
+                    color: "white",
+                    padding: "0 10px",
+                    fontWeight: location.pathname === path ? "bold" : "normal", // Bold for active tab
+                    borderBottom: location.pathname === path ? "2px solid white" : "none", // Underline active tab
+                    transition: "border-bottom 0.3s",
+                  }}
+                >
+                  <Typography>{label}</Typography>
+                </Link>
+              )}
+            </Box>
+          ))}
+        </Box>
+
       </Toolbar>
     </AppBar>
   );

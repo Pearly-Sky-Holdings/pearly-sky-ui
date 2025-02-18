@@ -75,7 +75,27 @@ export const flagQatar: string = "/images/flag/flagQatar.jpeg";
 export const flagSwitzerland: string = "/images/flag/flagSwitzerlands.jpeg";
 export const flagSpain: string = "/images/flag/flagSpain.jpeg";
 
+//Regular Service
+export const regularService1: string = "/images/service/regularBasic/regularService-1.png";
+export const regularService2: string = "/images/service/regularBasic/regularService-2.png";
+export const regularService3: string = "/images/service/regularBasic/regularService-3.png";
+export const regularService4: string = "/images/service/regularBasic/regularService-4.png";
+export const regularService5: string = "/images/service/regularBasic/regularService-5.png";
+export const regularServiceEquipment1: string = "/images/service/regularBasic/equipments-1.png";
+export const regularServiceEquipment2: string = "/images/service/regularBasic/equipments-2.png";
+export const regularServiceEquipment3: string = "/images/service/regularBasic/equipments-3.png";
+export const regularServiceEquipment4: string = "/images/service/regularBasic/equipments-4.png";
 
+export const supportPayment1: string = "/images/service/regularBasic/supportPaymentMethods/supportPayment-1.png";
+export const supportPayment2: string = "/images/service/regularBasic/supportPaymentMethods/supportPayment-2.png";
+export const supportPayment3: string = "/images/service/regularBasic/supportPaymentMethods/supportPayment-3.png";
+export const supportPayment4: string = "/images/service/regularBasic/supportPaymentMethods/supportPayment-4.png";
+export const supportPayment5: string = "/images/service/regularBasic/supportPaymentMethods/supportPayment-5.png";
+export const supportPayment6: string = "/images/service/regularBasic/supportPaymentMethods/supportPayment-6.png";
+export const supportPayment7: string = "/images/service/regularBasic/supportPaymentMethods/supportPayment-7.png";
+export const supportPayment8: string = "/images/service/regularBasic/supportPaymentMethods/supportPayment-8.png";
+export const supportPayment9: string = "/images/service/regularBasic/supportPaymentMethods/supportPayment-9.png";
+export const supportPayment10: string = "/images/service/regularBasic/supportPaymentMethods/supportPayment-10.png";
 
 // video
 export const homeVideo1: string = "/video/pearlysky-web-banner-video-new-1.mp4";
