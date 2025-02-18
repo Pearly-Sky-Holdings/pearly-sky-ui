@@ -15,7 +15,7 @@ import UiContactUsPage from './pages/HomeContactUsPage/uiContactUsPage.tsx';
 import ContactUsPage from './pages/contactUsPage/contactUsPage';
 import OurLocations from "./pages/ourLocationPage/ourLocationPage.tsx";
 import CleanServices from './pages/cleanServices/cleanServices';
-import RegularBasicCleaning from './pages/services/regularbasicCleaningPage.tsx';
+import RegularBasicCleaning from './pages/servicesPages/regularbasicCleaningPage.tsx';
 
 function App() {
 
