@@ -15,6 +15,7 @@ import UiContactUsPage from './pages/HomeContactUsPage/uiContactUsPage.tsx';
 import ContactUsPage from './pages/contactUsPage/contactUsPage';
 import OurLocations from "./pages/ourLocationPage/ourLocationPage.tsx";
 import CleanServices from './pages/cleanServices/cleanServices';
+import RegularBasicCleaning from './pages/servicesPages/regularbasicCleaningPage.tsx';
 import CircularProgress from '@mui/material/CircularProgress';
 import LoginPage from './pages/loginPage/looginPage.tsx';
 
@@ -61,59 +62,72 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Router>
-        <TopBar />
-        <NavigationBar />
-        <Routes>
-          {/* Main one-page scrollable site */}
-          <Route
-            path="/"
-            element={
-              <>
-                <HomePage />
-                <SecondPage />
-                <OurServicePage />
-                <InformationPage/>
-                <GalleryPage />
-                <TeamOfExpertsPage />
-                <OurShowcasePage />
-                <CleanServices />
-                <UiContactUsPage />
-                <Footer />
-              </>
-            }
-          />
-          {/* Standalone OurLocations page */}
-          <Route
-            path="/our-locations"
-            element={
-              <>
-                <OurLocations />
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/contactUsPage"
-            element={
-              <>
-                <ContactUsPage />
-                <Footer />
-              </>              
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <>
-                <LoginPage />
+          <Router>
+              <TopBar />
+              <NavigationBar />
+              <Routes>
+                  {/* Main one-page scrollable site */}
+                  <Route
+                      path="/"
+                      element={
+                          <>
+                            <HomePage />
+                            <SecondPage />
+                            <OurServicePage />
+                            <InformationPage/>
+                            <GalleryPage />
+                            {/* <SectorPage /> */}
+                            <TeamOfExpertsPage/>
+                            <OurShowcasePage/>
+                            <CleanServices/>
+                            <UiContactUsPage/>
+                            <Footer />
+                          </>
+                      }
+                  />
+                  {/* Standalone OurLocations page */}
+                  <Route
+                      path="/our-locations"
+                      element={
+                          <>
+                              <OurLocations />
+                              <Footer />
+                          </>
+                      }
+                  />
+                  <Route
+                      path="/contactUsPage"
+                      element={
+                        <>
+                        <ContactUsPage />
+                        <Footer />
+                        </>
+                            
+                      }
+                  />
+                  <Route
+                      path="/regular-basic-cleaning"
+                      element={
+                        <>
+                        <RegularBasicCleaning />
+                        <Footer />
+                        </>
+                            
+                      }
+                  />
+                 <Route
+                     path="/login"
+                      element={
+                         <>
+                          <LoginPage />
                 
-              </>              
-            }                       
-           />
+                       </>              
+                    }                       
+                 />
         </Routes>
-      </Router>
-    </ThemeProvider>
+              </Routes>
+          </Router>
+      </ThemeProvider>
   );
 }
 
