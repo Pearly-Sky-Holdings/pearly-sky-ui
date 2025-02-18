@@ -154,7 +154,7 @@ function OurLocations() {
       flag: flagAustralia,
       email: "us@ventilationholdings.com",
       address: "Update soon",
-      serviceCities: ["Bruseels"],
+      serviceCities: ["Sydney"," Melbourne"," Brisbane","Perth"," Adelaide"],
     },
     {
       id: "uae",
@@ -163,16 +163,7 @@ function OurLocations() {
       email: "info@ventilationholdings.com",
       address: "Update soon",
       serviceCities: [
-        "Paris",
-        "Nice",
-        "Saint-Tropez",
-        "Antibes",
-        "Cannes",
-        "Lyon",
-        "Monaco",
-        "French Riviera",
-        "Rouen",
-        "Marseille",
+        "Dubai Abu","Dhabi","Sharjah","Ras Alkhaimah","Jebel Ali"
       ],
     },
     {
@@ -181,7 +172,7 @@ function OurLocations() {
       flag: flagCanada,
       email: "uk@ventilationholdings.com",
       address: "Update soon",
-      serviceCities: ["London", "Manchester", "Birmingham", "Edinburgh"],
+      serviceCities: ["Toronto","Montreal","Ottawa","Vancouver","Jebel Ali"],
     },
     {
       id: "finland",
@@ -189,7 +180,7 @@ function OurLocations() {
       flag: flagFinland,
       email: "us@ventilationholdings.com",
       address: "Update soon",
-      serviceCities: ["New York", "Los Angeles", "Chicago", "Miami"],
+      serviceCities: ["Helsinki","Oulu","Turku","Tampere"],
     },
     {
       id: "saudi-arabia",
@@ -198,16 +189,7 @@ function OurLocations() {
       email: "info@ventilationholdings.com",
       address: "Update soon",
       serviceCities: [
-        "Paris",
-        "Nice",
-        "Saint-Tropez",
-        "Antibes",
-        "Cannes",
-        "Lyon",
-        "Monaco",
-        "French Riviera",
-        "Rouen",
-        "Marseille",
+        "Riyadh Jeddah"       
       ],
     },
     {
@@ -216,7 +198,7 @@ function OurLocations() {
       flag: flagItaly,
       email: "uk@ventilationholdings.com",
       address: "Update soon",
-      serviceCities: ["London", "Manchester", "Birmingham", "Edinburgh"],
+      serviceCities: ["Rome","Venice","Florence","Milan","Naples"],
     },
     {
       id: "potugal",
@@ -224,7 +206,7 @@ function OurLocations() {
       flag: flagPortugal,
       email: "us@ventilationholdings.com",
       address: "Update soon",
-      serviceCities: ["New York", "Los Angeles", "Chicago", "Miami"],
+      serviceCities: ["Lisbon"],
     },
     {
       id: "us",
@@ -233,16 +215,7 @@ function OurLocations() {
       email: "info@ventilationholdings.com",
       address: "Update soon",
       serviceCities: [
-        "Paris",
-        "Nice",
-        "Saint-Tropez",
-        "Antibes",
-        "Cannes",
-        "Lyon",
-        "Monaco",
-        "French Riviera",
-        "Rouen",
-        "Marseille",
+        "New York"," Los Angeles"," Philadelphia","Houston"
       ],
     },
     {
@@ -251,7 +224,12 @@ function OurLocations() {
       flag: flagIreland,
       email: "uk@ventilationholdings.com",
       address: "Update soon",
-      serviceCities: ["London", "Manchester", "Birmingham", "Edinburgh"],
+      serviceCities: [
+        "Dublin",
+        "Belfast",
+        "Cork",
+        "Limerick",
+        "Galway"],
     },
     {
       id: "austria",
@@ -259,7 +237,11 @@ function OurLocations() {
       flag: flagAustria,
       email: "us@ventilationholdings.com",
       address: "Update soon",
-      serviceCities: ["New York", "Los Angeles", "Chicago", "Miami"],
+      serviceCities: [
+        "Vienna",
+        "Villach Innsbruck",
+        "Graz",
+        "Bregenz"],
     },
     {
       id: "netherlands",
@@ -268,16 +250,10 @@ function OurLocations() {
       email: "info@ventilationholdings.com",
       address: "Update soon",
       serviceCities: [
-        "Paris",
-        "Nice",
-        "Saint-Tropez",
-        "Antibes",
-        "Cannes",
-        "Lyon",
-        "Monaco",
-        "French Riviera",
-        "Rouen",
-        "Marseille",
+        "Amsterdam",
+        "Utrecht Rotterdam",
+        "Groningen",
+        "The Hague"
       ],
     },
     {
@@ -286,7 +262,10 @@ function OurLocations() {
       flag: flagSwitzerland,
       email: "uk@ventilationholdings.com",
       address: "Update soon",
-      serviceCities: ["London", "Manchester", "Birmingham", "Edinburgh"],
+      serviceCities: [
+        "Zurich",
+         "Geneva Basel",
+        "Bern Lausanne"],
     },
     {
       id: "qatar",
@@ -294,7 +273,11 @@ function OurLocations() {
       flag: flagQatar,
       email: "us@ventilationholdings.com",
       address: "Update soon",
-      serviceCities: ["New York", "Los Angeles", "Chicago", "Miami"],
+      serviceCities: [
+        "Al Wakrah",
+        "Doha",
+        "Al Rayyan",
+        "Dukhan"],
     },
     {
       id: "denmark",
@@ -303,16 +286,10 @@ function OurLocations() {
       email: "info@ventilationholdings.com",
       address: "Update soon",
       serviceCities: [
-        "Paris",
-        "Nice",
-        "Saint-Tropez",
-        "Antibes",
-        "Cannes",
-        "Lyon",
-        "Monaco",
-        "French Riviera",
-        "Rouen",
-        "Marseille",
+        "Helsinki",
+        "Oulu",
+        "Turku",
+        "Tampere"
       ],
     },
     {
@@ -321,7 +298,11 @@ function OurLocations() {
       flag: flagNewZealand,
       email: "uk@ventilationholdings.com",
       address: "Update soon",
-      serviceCities: ["London", "Manchester", "Birmingham", "Edinburgh"],
+      serviceCities: [
+        "Auckland",
+        "Hamilton",
+        "Wellington",
+        "Christchurch"],
     },
     {
       id: "poland",
@@ -329,7 +310,7 @@ function OurLocations() {
       flag: flagPoland,
       email: "us@ventilationholdings.com",
       address: "Update soon",
-      serviceCities: ["New York", "Los Angeles", "Chicago", "Miami"],
+      serviceCities: ["Warsaw"],
     },
     {
       id: "luxembourg",
@@ -338,16 +319,7 @@ function OurLocations() {
       email: "info@ventilationholdings.com",
       address: "Update soon",
       serviceCities: [
-        "Paris",
-        "Nice",
-        "Saint-Tropez",
-        "Antibes",
-        "Cannes",
-        "Lyon",
-        "Monaco",
-        "French Riviera",
-        "Rouen",
-        "Marseille",
+        "Luxembourg City"
       ],
     },
     {
@@ -364,7 +336,11 @@ function OurLocations() {
       flag: flagSpain,
       email: "us@ventilationholdings.com",
       address: "Update soon",
-      serviceCities: ["New York", "Los Angeles", "Chicago", "Miami"],
+      serviceCities: [
+        "Barcelona",
+        "Madrid",
+        "Palma",
+        "Granada"],
     },
   ];
 
