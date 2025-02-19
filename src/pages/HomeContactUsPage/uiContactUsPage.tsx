@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import {contactImage1} from "../../config/images";
+import { Link } from 'react-router-dom';
 
 // Validation Schema
 const validationSchema = yup.object().shape({
@@ -123,6 +124,9 @@ const UIContactUs: React.FC = () => {
               transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",}}
           />
           <Button
+          variant="contained"
+          component={Link}
+          to="/contactUsPage"
             className=""
             sx={{
               position: "absolute",

@@ -45,7 +45,7 @@ export default function NavigationBar() {
         </Box>
 
         {/* Right side: Navigation Items */}
-        <Box sx={{ display: "flex", alignItems: "center", marginRight: "5%", gap: 5 }}>
+        <Box sx={{ display: "flex", alignItems: "center", marginRight: "5%", gap: 3 }}>
           {[
             { label: "Home", path: "/" },
             { label: "Services", path: "/services", isDropdown: true },
@@ -85,6 +85,12 @@ export default function NavigationBar() {
                         <MenuItem onClick={handleClose}>
                           <Link to="/regular-basic-cleaning" style={{ textDecoration: "none", color: "black" }}>
                             Regular Basic Cleaning
+                          </Link>
+                        </MenuItem>
+
+                        <MenuItem onClick={handleClose}>
+                          <Link to="/one-time-cleaning" style={{ textDecoration: "none", color: "black" }}>
+                            one-time-cleaning
                           </Link>
                         </MenuItem>
                       </>

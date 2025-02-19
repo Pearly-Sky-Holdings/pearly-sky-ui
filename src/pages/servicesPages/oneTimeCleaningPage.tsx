@@ -422,7 +422,7 @@ function OneTimeCleaningPage() {
                   calendarType="iso8601"
                   prevLabel={<ChevronLeft className="w-5 h-5" />}
                   nextLabel={<ChevronRight className="w-5 h-5" />}
-                  formatMonthYear={(locale, date) => format(date, "MMMM yyyy")}
+                  formatMonthYear={(_, date) => format(date, "MMMM yyyy")}
                 />
               </div>
             </div>

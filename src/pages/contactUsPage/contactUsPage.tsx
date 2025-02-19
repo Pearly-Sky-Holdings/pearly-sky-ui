@@ -38,7 +38,8 @@ const ContactUsPage: React.FC = () => {
 
   return (
     <Container sx={{ minHeight: "100vh", py: 5 }}>
-      <Typography variant="h4" align="center" fontWeight="bold" color="#002F6D" sx={{ mb: 3 }}>
+      <Typography variant="h4" align="center" fontWeight="bold" color="#002F6D" sx={{ mb: 3 }} 
+      >
         Contact Us
       </Typography>
 
