@@ -100,3 +100,5 @@ export const supportPayment10: string = "/images/service/regularBasic/supportPay
 // video
 export const homeVideo1: string = "/video/pearlysky-web-banner-video-new-1.mp4";
 
+//one time cleaning
+export const OneTimeService1: string = "/images/service/oneTime/oneTimeCleaner.png";
