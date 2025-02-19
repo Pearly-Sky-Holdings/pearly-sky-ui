@@ -18,6 +18,7 @@ import CleanServices from './pages/cleanServices/cleanServices';
 import RegularBasicCleaning from './pages/servicesPages/regularbasicCleaningPage.tsx';
 import CircularProgress from '@mui/material/CircularProgress';
 import LoginPage from './pages/loginPage/looginPage.tsx';
+import CheckoutPage from './pages/checkoutPage/checkoutPage.tsx';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -119,6 +120,13 @@ function App() {
                      path="/login"
                       element={
                           <LoginPage />          
+                    }                       
+                 />
+
+                <Route
+                     path="/checkout"
+                      element={
+                          <CheckoutPage />          
                     }                       
                  />
               </Routes>
