@@ -42,7 +42,7 @@ export const sectorImage5: string = "/images/sector/sectorImage5.png";
 export const chooseClening1: string = "/images/chooseClening/chooseClening1.png";
 export const chooseClening2: string = "/images/chooseClening/chooseClening2.png";
 export const chooseClening3: string = "/images/chooseClening/chooseClening3.png";
-export const chooseClening4: string = "/images/chooseClening/chooseClening4.png";
+export const chooseClening4: string = "/images/home/homePageImage1.png";
 
 export const contactImage1: string = "/images/uiContactUs/ContactUs.png";
 
