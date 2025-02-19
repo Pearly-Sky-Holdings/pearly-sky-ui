@@ -19,6 +19,12 @@ import {
   regularService3,
   regularService4,
   regularService5,
+  regularService6,
+  regularService7,
+  regularService8,
+  regularService9,
+  regularService10,
+  regularService11,
   regularServiceEquipment1,
   regularServiceEquipment2,
   regularServiceEquipment3,
@@ -68,31 +74,92 @@ function OneTimeCleaningPage() {
       },
       {
         img: regularService3,
-        title: "Bedroom Cleaning",
+        title: "Kitchen Cleaning",
         features: [
-          "Dust all cleanable surfaces",
-          "Make the bed",
-          "Clean floor surfaces",
+          "Dust all available surfaces.",
+          "Wipe down the exterior of appliances and cabinets.",
+          "Clean floor surfaces."
         ],
       },
     ],
     [
       {
         img: regularService4,
-        title: "Bedroom Cleaning",
+        title: "Living Room Cleaning",
         features: [
-          "Dust all cleanable surfaces",
-          "Make the bed",
-          "Clean floor surfaces",
+          "Dust all accessible surfaces.",
+          "Clean the exterior of cabinets.",
+          "Clean floor surfaces."
         ],
       },
       {
         img: regularService5,
-        title: "Bedroom Cleaning",
+        title: "Bathroom Cleaning",
         features: [
-          "Dust all cleanable surfaces",
-          "Make the bed",
-          "Clean floor surfaces",
+          "Wash & sanitize the toilet, shower, tub, and sink.",
+          "Wipe down mirrors and glass surfaces.",
+          "Clean floor surfaces."
+        ],
+      },
+    ],
+    [
+      {
+        img: regularService6,
+        title: "Limescale Removal",
+        features: [
+          "Clean the balcony/terrace floor.",
+          "De-limescale & polish the shower cabin.",
+          "De-limescale & polish the sink area.",
+          "Remove limescale from other surfaces in the bathroom."
+        ],
+      },
+      {
+        img: regularService7,
+        title: "Fridge Cleaning",
+        features: [
+          "Clean the fridge door and handle with a damp cloth and mild soap.",
+          "Dust the back of the fridge and vacuum the condenser coils.",
+          "Check and clean the drip pan."
+        ],
+      },
+    ],
+    [
+      {
+        img: regularService8,
+        title: "Balcony Cleaning",
+        features: [
+          "Clean the balcony/terrace floor.",
+          "Clean railings.",
+          "Dust and wipe down outdoor furniture and fixtures."
+        ],
+      },
+      {
+        img: regularService9,
+        title: "Oven Cleaning",
+        features: [
+          "Cleaning the Oven Interior.",
+          "Cleaning Oven Racks and Trays.",
+          "Cleaning the Oven Door."
+        ],
+      },
+    ],
+    [
+      {
+        img: regularService10,
+        title: "Ironing",
+        features: [
+          "Iron the clothes.",
+          "Fold the clothes.",
+          "Place the clothes in the wardrobe."
+        ],
+      },
+      {
+        img: regularService11,
+        title: "After-Party Cleanup",
+        features: [
+          "Wash dishes & glassware.",
+          "Empty garbage cans.",
+          "Clean up vomit stains (ask for quotation)."
         ],
       },
     ],
