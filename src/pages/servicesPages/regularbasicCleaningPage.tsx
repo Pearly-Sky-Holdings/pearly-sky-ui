@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import { format } from "date-fns";
 import "react-calendar/dist/Calendar.css";
@@ -12,6 +13,8 @@ import TermsAndConditions from "../../components/termsAndConditions/termsAndCond
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
 
 import { getPackege } from "../../services/CleaningServices/index";
+import { saveRegulrService } from "../../services/CleaningServices/saveRegulrService";
+import dayjs from "dayjs";
 
 import {
   regularService1,
@@ -36,11 +39,15 @@ import {
 } from "../../config/images";
 import store from "../../store";
 function RegularBasicCleaningPage() {
+  const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
-  const packages = useSelector(
-    (state: any) => state.packagesSlice.package
+  const packages = useSelector((state: any) => state.packagesSlice.package);
+  const services = useSelector(
+    (state: any) => state.serviceDetailsSlice.service
   );
-  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [selectedServices, setSelectedServices] = useState<object[]>([]);
+  const [ovenQty, setOvenQty] = useState("0");
+  const [fridgeQty, setFridgeQty] = useState("0");
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
   const [propertySize, setPropertySize] = useState("");
@@ -49,10 +56,118 @@ function RegularBasicCleaningPage() {
   const [frequency, setFrequency] = useState("");
   const [acceptTerms1, setAcceptTerms1] = useState(false);
   const [acceptTerms2, setAcceptTerms2] = useState(false);
+  const [language, setLanguage] = useState("");
+  const [propertyType, setPropertyType] = useState("");
+  const [contactType, setContactType] = useState("");
+  const [selectedSolvent, setSelectedSolvent] = useState("");
+  const [selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
+  const [selectedEquipments, setSelectedEquipments] = useState<
+    Array<{ id: string; price: number }>
+  >([]);
+
+  const [checkedList, setCheckedList] = useState<String[]>([]);
+
+  const [priceBreakdown, setPriceBreakdown] = useState({
+    basePrice: 27.0,
+    serviceCosts: 0,
+    equipmentCosts: 0,
+    totalPrice: 27.0,
+  });
+
+  useEffect(() => {
+    setPriceBreakdown(calculateTotalPrice());
+  }, [selectedServices, selectedEquipments]);
 
   useEffect(() => {
     dispatch(getPackege());
-  }, [dispatch]);
+  }, []);
+
+  useEffect(() => {
+    if (services.data) {
+      console.log(services.data);
+    }
+  }, [services.data]);
+
+  const calculateTotalPrice = () => {
+    let basePrice = 27.0; // Base price
+    let serviceCosts = 0; // Total cost of selected services
+    let equipmentCosts = 0; // Total cost of selected equipment
+
+    // Calculate selected services prices
+    selectedServices.forEach((serviceId) => {
+      const service = packages.data.find(
+        (p: any) => p.package_id.toString() === serviceId
+      );
+      if (service) {
+        serviceCosts += parseFloat(service.price.replace("$", ""));
+      }
+    });
+
+    // Calculate selected equipment prices
+    selectedEquipments.forEach((equipment) => {
+      equipmentCosts += equipment.price;
+    });
+
+    // Calculate total price
+    const totalPrice = basePrice + serviceCosts + equipmentCosts;
+
+    return {
+      basePrice,
+      serviceCosts,
+      equipmentCosts,
+      totalPrice,
+    };
+  };
+  const handleEquipmentSelect = (equipment: any, selected: boolean) => {
+    if (selected) {
+      setSelectedEquipments([
+        ...selectedEquipments,
+        { id: equipment.id, price: equipment.price },
+      ]);
+    } else {
+      setSelectedEquipments(
+        selectedEquipments.filter((e) => e.id !== equipment.id)
+      );
+    }
+  };
+
+  const handleBookNow = () => {
+    if (!acceptTerms1 || !acceptTerms2) return;
+
+    const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
+
+    const serviceDetails = {
+      service_id: "1",
+      date,
+      time: selectedTime,
+      property_size: propertySize,
+      duration: parseInt(duration),
+      number_of_cleaners: Number(numCleaners),
+      frequency,
+      package_details: [
+        {
+          package_id: 1,
+          price: 3000.0,
+          qty: 2,
+        },
+        {
+          package_id: 2,
+          price: 500.0,
+          qty: 1,
+        },
+      ],
+      person_type: contactType,
+      language,
+      business_property: propertyType,
+      cleaning_solvents: selectedSolvent,
+      // equipmentOption: selectedEquipmentOption,
+      Equipment: selectedEquipments.map((e) => e.id).join(","),
+      price: calculateTotalPrice(),
+      note: document.querySelector("textarea")?.value || "",
+    };
+    console.log("Service Details:", serviceDetails);
+    navigate("/checkout", { state: { serviceDetails } });
+  };
 
   const imagePairs = [
     [
@@ -98,13 +213,13 @@ function RegularBasicCleaningPage() {
   ];
 
   const solvents = [
-    { value: "basic", label: "Basic Cleaning Solution" },
-    { value: "advanced", label: "Advanced Cleaning Solution" },
+    { value: "customer", label: "Provided by the Customer" },
+    { value: "company", label: "Request the Company" },
   ];
 
   const equipmentOptions = [
-    { value: "basic", label: "Basic Equipment Set" },
-    { value: "advanced", label: "Advanced Equipment Set" },
+    { value: "basic", label: "Provided by the Customer" },
+    { value: "advanced", label: "Request the Company" },
   ];
 
   const equipments = [
@@ -254,18 +369,29 @@ function RegularBasicCleaningPage() {
                 <input
                   type="checkbox"
                   className="hidden"
-                  checked={selectedServices.includes(
-                    service.package_id.toString()
-                  )}
+                  checked={checkedList.includes(service.package_id.toString())}
                   onChange={(e) => {
                     if (e.target.checked) {
                       setSelectedServices([
                         ...selectedServices,
+                        {
+                          id: service.package_id.toString(),
+                          price: service.price,
+                          qty:
+                            service.name === "Oven Cleaning"
+                              ? ovenQty
+                              : service.name === "Fridge Cleaning"
+                              ? fridgeQty
+                              : 0,
+                        },
+                      ]);
+                      setCheckedList([
+                        ...checkedList,
                         service.package_id.toString(),
                       ]);
                     } else {
-                      setSelectedServices(
-                        selectedServices.filter(
+                      setCheckedList(
+                        checkedList.filter(
                           (id) => id !== service.package_id.toString()
                         )
                       );
@@ -276,13 +402,13 @@ function RegularBasicCleaningPage() {
                 {/* Custom checkbox */}
                 <div
                   className={`w-5 h-5 border-2 border-gray-400 rounded flex items-center justify-center transition-colors ${
-                    selectedServices.includes(service.package_id.toString())
+                    checkedList.includes(service.package_id.toString())
                       ? "bg-blue-500 border-blue-500"
                       : "bg-white border-gray-400"
                   } ${service.status !== "active" ? "opacity-50" : ""}`}
                 >
                   {/* Checkmark icon */}
-                  {selectedServices.includes(service.package_id.toString()) && (
+                  {checkedList.includes(service.package_id.toString()) && (
                     <svg
                       className="w-3 h-3 text-white"
                       fill="none"
@@ -306,7 +432,21 @@ function RegularBasicCleaningPage() {
                   {service.price !== "0$" && (
                     <div className="mt-1 text-xs text-gray-500">
                       <span>{service.price}</span>
-                      <select className="ml-2 border rounded px-1 py-0.5 text-xs">
+                      <select
+                        className="ml-2 border rounded px-1 py-0.5 text-xs"
+                        value={
+                          service.name === "Oven Cleaning" ? ovenQty : fridgeQty
+                        }
+                        onChange={(e) => {
+                          if (service.name === "Oven Cleaning") {
+                            setOvenQty(e.target.value);
+                            console.log("oven", e.target.value);
+                          } else {
+                            setFridgeQty(e.target.value);
+                            console.log("fridge", e.target.value);
+                          }
+                        }}
+                      >
                         <option>No of pieces</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -332,6 +472,9 @@ function RegularBasicCleaningPage() {
           solvents={solvents}
           equipmentOptions={equipmentOptions}
           equipments={equipments}
+          onSolventChange={setSelectedSolvent}
+          onEquipmentOptionChange={setSelectedEquipmentOption}
+          onEquipmentSelect={handleEquipmentSelect}
         />
       </div>
 
@@ -356,7 +499,9 @@ function RegularBasicCleaningPage() {
                   calendarType="iso8601"
                   prevLabel={<ChevronLeft className="w-5 h-5" />}
                   nextLabel={<ChevronRight className="w-5 h-5" />}
-                  formatMonthYear={(locale, date) => format(date, "MMMM yyyy")}
+                  formatMonthYear={(locale, date) =>
+                    dayjs(date).format("MMMM YYYY")
+                  }
                 />
               </div>
             </div>
@@ -429,10 +574,10 @@ function RegularBasicCleaningPage() {
             </label>
             <select
               className="w-full border border-blue-900 rounded p-2 text-gray-400"
-              value={frequency}
-              onChange={(e) => setFrequency(e.target.value)}
+              value={propertyType}
+              onChange={(e) => setPropertyType(e.target.value)}
             >
-              <option value="">Select frequency</option>
+              <option value="">Select property</option>
               <option value="once">Home</option>
               <option value="weekly">Appartmnent</option>
               <option value="biweekly">Villa</option>
@@ -461,8 +606,8 @@ function RegularBasicCleaningPage() {
               </label>
               <select
                 className="w-full border border-blue-900 rounded p-2 text-gray-400"
-                value={frequency}
-                onChange={(e) => setFrequency(e.target.value)}
+                value={contactType}
+                onChange={(e) => setContactType(e.target.value)}
               >
                 <option value="">Select contact type</option>
                 <option value="owner">Owner</option>
@@ -476,8 +621,8 @@ function RegularBasicCleaningPage() {
               </label>
               <select
                 className="w-full border border-blue-900 rounded p-2 text-gray-400"
-                value={frequency}
-                onChange={(e) => setFrequency(e.target.value)}
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
               >
                 <option value="">Select language</option>
                 <option value="english">English</option>
@@ -546,25 +691,53 @@ function RegularBasicCleaningPage() {
           className="mb-6"
         />
 
-        {/* Price Summary */}
         <div className="pt-4 mb-6">
+          {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              General Cost{" "}
-              <span className="text-gray-400">(C$ 40.00 Per Hour)</span>
+              Base Cost <span className="text-gray-400">(C$ 27.00)</span>
             </span>
-            <span>C$40.00 X 1</span>
+            <span>C$27.00</span>
           </div>
+
+          {/* Selected Services Costs */}
+          {selectedServices.length > 0 && (
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
+              <span className="mb-2 md:mb-0">
+                Selected Services{" "}
+                <span className="text-gray-400">
+                  ({selectedServices.length} services)
+                </span>
+              </span>
+              <span>C${calculateTotalPrice().serviceCosts.toFixed(2)}</span>
+            </div>
+          )}
+
+          {/* Selected Equipment Costs */}
+          {selectedEquipments.length > 0 && (
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
+              <span className="mb-2 md:mb-0">
+                Selected Equipment{" "}
+                <span className="text-gray-400">
+                  ({selectedEquipments.length} items)
+                </span>
+              </span>
+              <span>C${calculateTotalPrice().equipmentCosts.toFixed(2)}</span>
+            </div>
+          )}
+
+          {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
             <span>Total</span>
-            <span>C$40.00</span>
+            <span>C${calculateTotalPrice().totalPrice.toFixed(2)}</span>
           </div>
         </div>
 
         {/* Book Now Button */}
         <button
           className="w-full mt-8 bg-blue-900 text-white py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          disabled={!acceptTerms1}
+          disabled={!acceptTerms1 || !acceptTerms2}
+          onClick={handleBookNow}
         >
           Book Now
         </button>
