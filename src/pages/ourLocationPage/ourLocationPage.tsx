@@ -57,6 +57,7 @@ function OurLocations() {
         "Lyon",
         "Bordeaux",
         "Toulouse",
+        "Toulon",
         "Montpellier",
         "Monte Carlo",
         "Strasbourg",
@@ -67,8 +68,7 @@ function OurLocations() {
         "Normandy",
         "Deauville",
         "Dieppe",
-        "Le Rochelle",
-        "Touliuse",
+        "La Rochelle",
         "Nantes",
         "Narbonne",
       ],
@@ -93,8 +93,7 @@ function OurLocations() {
         "Derby",
         "Southampton",
         "Liverpool",
-        "Kingston upon",
-        "Hull",
+        "Kingston upon Hull",        
         "Portsmouth",
         "Manchester",
         "Chester",
@@ -147,6 +146,14 @@ function OurLocations() {
       email: "uk@ventilationholdings.com",
       address: "Update soon",
       serviceCities: ["Berlin", "Hamburg", "Munich", "Cologne", "Frankfurt"],
+    },
+    {
+      id: "belgium",
+      name: "Belgium",
+      flag: flagBelgium,
+      email: "uk@ventilationholdings.com",
+      address: "Update soon",
+      serviceCities: ["Bruseels"],
     },
     {
       id: "australia",
@@ -239,7 +246,8 @@ function OurLocations() {
       address: "Update soon",
       serviceCities: [
         "Vienna",
-        "Villach Innsbruck",
+        "Villach ",
+        "Innsbruck",
         "Graz",
         "Bregenz"],
     },
@@ -251,7 +259,8 @@ function OurLocations() {
       address: "Update soon",
       serviceCities: [
         "Amsterdam",
-        "Utrecht Rotterdam",
+        "Utrecht" ,
+        "Rotterdam",
         "Groningen",
         "The Hague"
       ],
@@ -322,14 +331,7 @@ function OurLocations() {
         "Luxembourg City"
       ],
     },
-    {
-      id: "belgium",
-      name: "Belgium",
-      flag: flagBelgium,
-      email: "uk@ventilationholdings.com",
-      address: "Update soon",
-      serviceCities: ["Bruseels"],
-    },
+   
     {
       id: "spain",
       name: "Spain",

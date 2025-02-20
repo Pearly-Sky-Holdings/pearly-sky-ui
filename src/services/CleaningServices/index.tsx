@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../AxiosOrder";
 
 
-export const getPackege = createAsyncThunk('getPackeges', async (page, { rejectWithValue }) => {
+export const getPackege = createAsyncThunk('getPackeges', async (_, { rejectWithValue }) => {
     try {
         const { data } = await instance.get(`/api/getPackege`);
         return data;

@@ -5,10 +5,10 @@ import { contactImage1 } from "../../config/images.ts";
 import Globe from "../../components/contactUsCountryCards/Globe";
 
 const countries = [
-  { name: "France", hasOffice: true, mapSrc: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.716918665806!2d79.9947566!3d7.042516200000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2f9000149518b%3A0x4f4b14f553e8f46c!2sPearly%20Sky%20Company%20Private%20LTD!5e0!3m2!1sen!2slk!4v1739700229122!5m2!1sen!2slk" },
+  { name: "France", hasOffice: true, mapSrc: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.8965731406633!2d2.3461149!3d48.860182599999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66f6025fd8697%3A0xe4968cc599a43374!2sPearly%20Sky%20Cleaning%20Service%20Private%20Ltd!5e0!3m2!1sen!2slk!4v1740018065562!5m2!1sen!2slk"  },
   { name: "United Arab Emirates", hasOffice: true, mapSrc: "https://www.google.com/maps/embed?pb=VALID_GOOGLE_MAP_URL_HERE" },
-  { name: "United Kingdom", hasOffice: true, mapSrc: "https://www.google.com/maps/embed?pb=VALID_GOOGLE_MAP_URL_HERE" },
-  { name: "Sri Lanka", hasOffice: true, mapSrc: "https://www.google.com/maps/embed?pb=VALID_GOOGLE_MAP_URL_HERE" },
+  { name: "United Kingdom", hasOffice: true, mapSrc: "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d5085732.981617449!2d-0.141364!3d51.508298!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48760529dc531585%3A0xa9fbeb809edb727d!2s45%20Albemarle%20St%2C%20London%20W1S%204JL%2C%20UK!5e0!3m2!1sen!2slk!4v1740018343718!5m2!1sen!2slk"  },
+  { name: "Sri Lanka", hasOffice: true, mapSrc:"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.716918665806!2d79.9947566!3d7.042516200000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2f9000149518b%3A0x4f4b14f553e8f46c!2sPearly%20Sky%20Company%20Private%20LTD!5e0!3m2!1sen!2slk!4v1740018531225!5m2!1sen!2slk" },
   { name: "Scotland", hasOffice: false },
   { name: "Germany", hasOffice: false },
   { name: "Belgium", hasOffice: false },
@@ -38,7 +38,8 @@ const ContactUsPage: React.FC = () => {
 
   return (
     <Container sx={{ minHeight: "100vh", py: 5 }}>
-      <Typography variant="h4" align="center" fontWeight="bold" color="#002F6D" sx={{ mb: 3 }}>
+      <Typography variant="h4" align="center" fontWeight="bold" color="#002F6D" sx={{ mb: 3 }} 
+      >
         Contact Us
       </Typography>
 

@@ -83,7 +83,7 @@ export default function HomePage() {
       <Button
         variant="contained"
         component={Link}
-        to="/contact-us"
+        to="/contactUsPage"
         sx={{
           backgroundColor: '#002F6D', 
           borderRadius: '12px', 
