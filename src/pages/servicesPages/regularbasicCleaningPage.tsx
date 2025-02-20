@@ -11,7 +11,6 @@ import Carousel from "../../components/carouselSection/carousel";
 import EquipmentSection from "../../components/equipmentSection/equipmentSection";
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
-
 import { getPackege } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
 
@@ -21,12 +20,6 @@ import {
   regularService3,
   regularService4,
   regularService5,
-  regularService6,
-  regularService7,
-  regularService8,
-  regularService9,
-  regularService10,
-  regularService11,
   regularServiceEquipment1,
   regularServiceEquipment2,
   regularServiceEquipment3,
@@ -47,9 +40,7 @@ function RegularBasicCleaningPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const packages = useSelector((state: any) => state.packagesSlice.package);
-  const services = useSelector(
-    (state: any) => state.serviceDetailsSlice.service
-  );
+  const services = useSelector((state: any) => state.serviceDetailsSlice.service);
   const [selectedServices, setSelectedServices] = useState<object[]>([]);
   const [ovenQty, setOvenQty] = useState("0");
   const [fridgeQty, setFridgeQty] = useState("0");
@@ -72,17 +63,6 @@ function RegularBasicCleaningPage() {
 
   const [checkedList, setCheckedList] = useState<string[]>([]);
 
-  const [priceBreakdown, setPriceBreakdown] = useState({
-    basePrice: 27.0,
-    serviceCosts: 0,
-    equipmentCosts: 0,
-    totalPrice: 27.0,
-  });
-
-  useEffect(() => {
-    setPriceBreakdown(() => calculateTotalPrice());
-  }, [selectedServices, selectedEquipments]);
-
   useEffect(() => {
     dispatch(getPackege());
   }, []);
@@ -93,190 +73,122 @@ function RegularBasicCleaningPage() {
     }
   }, [services.data]);
 
+  
   const calculateTotalPrice = () => {
-    let basePrice = 27.0; // Base price
-    let serviceCosts = 0; // Total cost of selected services
-    let equipmentCosts = 0; // Total cost of selected equipment
+    let total = 27.0; // Base price
 
-    // Calculate selected services prices
+    // Add selected services prices
     selectedServices.forEach((serviceId) => {
       const service = packages.data.find(
         (p: any) => p.package_id.toString() === serviceId
       );
       if (service) {
-        serviceCosts += parseFloat(service.price.replace("$", ""));
+        total += parseFloat(service.price.replace("$", ""));
       }
     });
 
-    // Calculate selected equipment prices
     selectedEquipments.forEach((equipment) => {
-      equipmentCosts += equipment.price;
+      total += equipment.price;
     });
 
-    // Calculate total price
-    const totalPrice = basePrice + serviceCosts + equipmentCosts;
-
-    return {
-      basePrice,
-      serviceCosts,
-      equipmentCosts,
-      totalPrice,
-    };
+    return total;
   };
-  const handleSelectEquipment = (equipment: any) => {
-    setSelectedEquipments([
-      ...selectedEquipments,
-      { id: equipment.id, price: equipment.price },
-    ]);
-  };
-
-  const handleDeselectEquipment = (equipment: any) => {
-    setSelectedEquipments(
-      selectedEquipments.filter((e) => e.id !== equipment.id)
-    );
+  const handleEquipmentSelect = (equipment: any, selected: boolean) => {
+    if (selected) {
+      setSelectedEquipments([
+        ...selectedEquipments,
+        { id: equipment.id, price: equipment.price },
+      ]);
+    } else {
+      setSelectedEquipments(
+        selectedEquipments.filter((e) => e.id !== equipment.id)
+      );
+    }
   };
 
   const handleBookNow = () => {
     if (!acceptTerms1 || !acceptTerms2) return;
 
+    
+
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
 
     const serviceDetails = {
-      service_id: "1",
+      service_id :"1",
       date,
-      time: selectedTime,
-      property_size: propertySize,
-      duration: parseInt(duration),
-      number_of_cleaners: Number(numCleaners),
+      time :selectedTime,
+      property_size :propertySize,
+      duration : parseInt(duration),
+      number_of_cleaners :Number(numCleaners),
       frequency,
       package_details: [
         {
-          package_id: 1,
-          price: 3000.0,
-          qty: 2,
+            "package_id": 1,
+            "price": 3000.00,
+            "qty": 2
         },
         {
-          package_id: 2,
-          price: 500.0,
-          qty: 1,
-        },
-      ],
-      person_type: contactType,
+            "package_id": 2,
+            "price": 500.00,
+            "qty": 1
+        }
+    ],
+      person_type :contactType,
       language,
-      business_property: propertyType,
+      business_property :propertyType,
       cleaning_solvents: selectedSolvent,
-      // equipmentOption: selectedEquipmentOption,
+      equipmentOption: selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
       price: calculateTotalPrice(),
-      note: document.querySelector("textarea")?.value || "",
+      note : document.querySelector("textarea")?.value || "",
+
     };
     console.log("Service Details:", serviceDetails);
     navigate("/checkout", { state: { serviceDetails } });
   };
 
- const imagePairs = [
-     [
-       {
-         img: regularService2,
-         title: "Bedroom Cleaning",
-         features: [
-           "Dust all cleanable surfaces",
-           "Make the bed",
-           "Clean floor surfaces",
-         ],
-       },
-       {
-         img: regularService3,
-         title: "Kitchen Cleaning",
-         features: [
-           "Dust all available surfaces.",
-           "Wipe down the exterior of appliances and cabinets.",
-           "Clean floor surfaces."
-         ],
-       },
-     ],
-     [
-       {
-         img: regularService4,
-         title: "Living Room Cleaning",
-         features: [
-           "Dust all accessible surfaces.",
-           "Clean the exterior of cabinets.",
-           "Clean floor surfaces."
-         ],
-       },
-       {
-         img: regularService5,
-         title: "Bathroom Cleaning",
-         features: [
-           "Wash & sanitize the toilet, shower, tub, and sink.",
-           "Wipe down mirrors and glass surfaces.",
-           "Clean floor surfaces."
-         ],
-       },
-     ],
-     [
-       {
-         img: regularService6,
-         title: "Limescale Removal",
-         features: [
-           "Clean the balcony/terrace floor.",
-           "De-limescale & polish the shower cabin.",
-           "De-limescale & polish the sink area.",
-           "Remove limescale from other surfaces in the bathroom."
-         ],
-       },
-       {
-         img: regularService7,
-         title: "Fridge Cleaning",
-         features: [
-           "Clean the fridge door and handle with a damp cloth and mild soap.",
-           "Dust the back of the fridge and vacuum the condenser coils.",
-           "Check and clean the drip pan."
-         ],
-       },
-     ],
-     [
-       {
-         img: regularService8,
-         title: "Balcony Cleaning",
-         features: [
-           "Clean the balcony/terrace floor.",
-           "Clean railings.",
-           "Dust and wipe down outdoor furniture and fixtures."
-         ],
-       },
-       {
-         img: regularService9,
-         title: "Oven Cleaning",
-         features: [
-           "Cleaning the Oven Interior.",
-           "Cleaning Oven Racks and Trays.",
-           "Cleaning the Oven Door."
-         ],
-       },
-     ],
-     [
-       {
-         img: regularService10,
-         title: "Ironing",
-         features: [
-           "Iron the clothes.",
-           "Fold the clothes.",
-           "Place the clothes in the wardrobe."
-         ],
-       },
-       {
-         img: regularService11,
-         title: "After-Party Cleanup",
-         features: [
-           "Wash dishes & glassware.",
-           "Empty garbage cans.",
-           "Clean up vomit stains (ask for quotation)."
-         ],
-       },
-     ],
-   ];
+  const imagePairs = [
+    [
+      {
+        img: regularService2,
+        title: "Bedroom Cleaning",
+        features: [
+          "Dust all cleanable surfaces",
+          "Make the bed",
+          "Clean floor surfaces",
+        ],
+      },
+      {
+        img: regularService3,
+        title: "Bedroom Cleaning",
+        features: [
+          "Dust all cleanable surfaces",
+          "Make the bed",
+          "Clean floor surfaces",
+        ],
+      },
+    ],
+    [
+      {
+        img: regularService4,
+        title: "Bedroom Cleaning",
+        features: [
+          "Dust all cleanable surfaces",
+          "Make the bed",
+          "Clean floor surfaces",
+        ],
+      },
+      {
+        img: regularService5,
+        title: "Bedroom Cleaning",
+        features: [
+          "Dust all cleanable surfaces",
+          "Make the bed",
+          "Clean floor surfaces",
+        ],
+      },
+    ],
+  ];
 
   const solvents = [
     { value: "customer", label: "Provided by the Customer" },
@@ -442,7 +354,7 @@ function RegularBasicCleaningPage() {
                         ...selectedServices,
                         {
                           id: service.package_id.toString(),
-                          price: service.price,
+                          price:service.price,
                           qty:
                             service.name === "Oven Cleaning"
                               ? ovenQty
@@ -540,9 +452,7 @@ function RegularBasicCleaningPage() {
           equipments={equipments}
           onSolventChange={setSelectedSolvent}
           onEquipmentOptionChange={setSelectedEquipmentOption}
-          onEquipmentSelect={(equipment, selected) =>
-            selected ? handleSelectEquipment(equipment) : handleDeselectEquipment(equipment)
-          }
+          onEquipmentSelect={handleEquipmentSelect}
         />
       </div>
 
@@ -567,7 +477,7 @@ function RegularBasicCleaningPage() {
                   calendarType="iso8601"
                   prevLabel={<ChevronLeft className="w-5 h-5" />}
                   nextLabel={<ChevronRight className="w-5 h-5" />}
-                  formatMonthYear={(_, date) => format(date, "MMMM yyyy")}
+                  formatMonthYear={(_, date) => dayjs(date).format("MMMM YYYY")}
                 />
               </div>
             </div>
@@ -601,7 +511,7 @@ function RegularBasicCleaningPage() {
             >
               <option value="">Select property size</option>
               <option value="small">20m²(215ft²)</option>
-              <option value="medium">30m²(323ft²))</option>
+              <option value="medium">30m²(323ft²)</option>
               <option value="large">40m²(430ft²)</option>
               <option value="large">50m²(538ft²)</option>
               <option value="large">60m²(646ft²)</option>
@@ -757,45 +667,18 @@ function RegularBasicCleaningPage() {
           className="mb-6"
         />
 
+        {/* Price Summary */}
         <div className="pt-4 mb-6">
-          {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              Base Cost <span className="text-gray-400">(C$ 27.00)</span>
+              General Cost{" "}
+              <span className="text-gray-400">(C$ 40.00 Per Hour)</span>
             </span>
-            <span>C$27.00</span>
+            <span>C$40.00 X 1</span>
           </div>
-
-          {/* Selected Services Costs */}
-          {selectedServices.length > 0 && (
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
-              <span className="mb-2 md:mb-0">
-                Selected Services{" "}
-                <span className="text-gray-400">
-                  ({selectedServices.length} services)
-                </span>
-              </span>
-              <span>C${calculateTotalPrice().serviceCosts.toFixed(2)}</span>
-            </div>
-          )}
-
-          {/* Selected Equipment Costs */}
-          {selectedEquipments.length > 0 && (
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
-              <span className="mb-2 md:mb-0">
-                Selected Equipment{" "}
-                <span className="text-gray-400">
-                  ({selectedEquipments.length} items)
-                </span>
-              </span>
-              <span>C${calculateTotalPrice().equipmentCosts.toFixed(2)}</span>
-            </div>
-          )}
-
-          {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
             <span>Total</span>
-            <span>C${calculateTotalPrice().totalPrice.toFixed(2)}</span>
+            <span>C$40.00</span>
           </div>
         </div>
 

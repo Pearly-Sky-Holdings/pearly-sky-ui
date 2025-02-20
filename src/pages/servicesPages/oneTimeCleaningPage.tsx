@@ -398,6 +398,9 @@ function OneTimeCleaningPage() {
           solvents={solvents}
           equipmentOptions={equipmentOptions}
           equipments={equipments}
+          onSolventChange={(selectedSolvent) => console.log(selectedSolvent)}
+          onEquipmentOptionChange={(selectedOption) => console.log(selectedOption)}
+          onEquipmentSelect={(selectedEquipment) => console.log(selectedEquipment)}
         />
       </div>
 
