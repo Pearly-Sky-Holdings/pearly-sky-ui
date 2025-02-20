@@ -4,7 +4,7 @@ import instance from "../AxiosOrder";
 
 export const saveRegulrService = createAsyncThunk('save-regular-service', async (serviceData : any, {rejectWithValue}) => {
     try {
-        const {data} = await instance.post(`api/saveServiceDetails`, serviceData, {
+        const {data} = await instance.post(`saveServiceDetails`, serviceData, {
         });
         return data;
     } catch (error) {
