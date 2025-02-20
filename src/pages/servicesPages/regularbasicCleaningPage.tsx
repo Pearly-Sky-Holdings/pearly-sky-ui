@@ -13,7 +13,6 @@ import TermsAndConditions from "../../components/termsAndConditions/termsAndCond
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
 
 import { getPackege } from "../../services/CleaningServices/index";
-import { saveRegulrService } from "../../services/CleaningServices/saveRegulrService";
 import dayjs from "dayjs";
 
 import {
@@ -71,7 +70,7 @@ function RegularBasicCleaningPage() {
     Array<{ id: string; price: number }>
   >([]);
 
-  const [checkedList, setCheckedList] = useState<String[]>([]);
+  const [checkedList, setCheckedList] = useState<string[]>([]);
 
   const [priceBreakdown, setPriceBreakdown] = useState({
     basePrice: 27.0,
@@ -81,7 +80,7 @@ function RegularBasicCleaningPage() {
   });
 
   useEffect(() => {
-    setPriceBreakdown(calculateTotalPrice());
+    setPriceBreakdown(() => calculateTotalPrice());
   }, [selectedServices, selectedEquipments]);
 
   useEffect(() => {
@@ -124,17 +123,17 @@ function RegularBasicCleaningPage() {
       totalPrice,
     };
   };
-  const handleEquipmentSelect = (equipment: any, selected: boolean) => {
-    if (selected) {
-      setSelectedEquipments([
-        ...selectedEquipments,
-        { id: equipment.id, price: equipment.price },
-      ]);
-    } else {
-      setSelectedEquipments(
-        selectedEquipments.filter((e) => e.id !== equipment.id)
-      );
-    }
+  const handleSelectEquipment = (equipment: any) => {
+    setSelectedEquipments([
+      ...selectedEquipments,
+      { id: equipment.id, price: equipment.price },
+    ]);
+  };
+
+  const handleDeselectEquipment = (equipment: any) => {
+    setSelectedEquipments(
+      selectedEquipments.filter((e) => e.id !== equipment.id)
+    );
   };
 
   const handleBookNow = () => {
@@ -541,7 +540,9 @@ function RegularBasicCleaningPage() {
           equipments={equipments}
           onSolventChange={setSelectedSolvent}
           onEquipmentOptionChange={setSelectedEquipmentOption}
-          onEquipmentSelect={handleEquipmentSelect}
+          onEquipmentSelect={(equipment, selected) =>
+            selected ? handleSelectEquipment(equipment) : handleDeselectEquipment(equipment)
+          }
         />
       </div>
 

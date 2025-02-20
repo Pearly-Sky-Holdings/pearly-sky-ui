@@ -4,7 +4,7 @@ import instance from "../AxiosOrder";
 
 export const getPackege = createAsyncThunk('getPackeges', async (_, { rejectWithValue }) => {
     try {
-        const { data } = await instance.get(`/api/getPackege`);
+        const { data } = await instance.get(`getPackege`);
         return data;
     } catch (error) {
         if (error instanceof Error) {
