@@ -1,63 +1,41 @@
-// import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-// interface ServiceDetails {
-//     selectedDate: string;
-//     selectedTime: string;
-//     propertySize: string;
-//     duration: string;
-//     numCleaners: string;
-//     frequency: string;
-//     selectedServices: string[];
-//     totalPrice: number;
-//     additionalNote: string;
-//     contactType: string;
-//     language: string;
-//     propertyType: string;
-//     solvents: string;
-//     selectedEquipments: string[];
-// }
-
-// const initialState = {
-//   serviceDetails: null as ServiceDetails | null,
-// };
-
-// export const serviceDetailsSlice = createSlice({
-//   name: "serviceDetails",
-//   initialState,
-//   reducers: {
-//     setServiceDetails: (state, action: PayloadAction<ServiceDetails>) => {
-//       state.serviceDetails = action.payload;
-//     },
-//     clearServiceDetails: (state) => {
-//       state.serviceDetails = null;
-//     },
-//   },
-// });
-
-// export const { setServiceDetails, clearServiceDetails } = serviceDetailsSlice.actions;
-// export default serviceDetailsSlice.reducer;
-
-
 import { createSlice } from "@reduxjs/toolkit";
 import { saveRegulrService } from "../../../services/CleaningServices/saveRegulrService";
 
+interface PackageDetail {
+  package_id: number;
+  price: number;
+  qty: number;
+}
+
 interface ServiceDetails {
-       service_id: number;
-       date: string;
-       time: string;
-       property_size: string;
-       duration: string;
-       number_of_cleaners: string;
-       frequency: string;
-       package_details: string[];
-       price: number;
-       note: string;
-       person_type: string;
-       language: string;
-       business_property: string;
-       cleaning_solvents: string;
-       Equipment: string[];
-   }
+  status: string;
+  service_id: string;
+  price: number;
+  date: string;
+  time: string;
+  property_size: string;
+  duration: number;
+  number_of_cleaners: number;
+  note: string;
+  person_type: string;
+  language: string;
+  business_property: string;
+  cleaning_solvents: string;
+  Equipment: string;
+  package_details: PackageDetail[];
+  customer: {
+    firstName: string;
+    lastName: string;
+    company: string;
+    country: string;
+    city: string;
+    province: string;
+    postalCode: string;
+    contact: string;
+    email: string;
+    password: string;
+  };
+}
 
 interface ServiceState {
   service: {
