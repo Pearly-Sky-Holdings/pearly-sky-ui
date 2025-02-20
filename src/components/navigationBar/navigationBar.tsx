@@ -8,9 +8,9 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
-import { Link, useLocation } from "react-router-dom"; // Import useLocation
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"; // Dropdown icon
-import { companyLogo } from "../../config/images"; // Import company logo
+import { Link, useLocation } from "react-router-dom"; 
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"; 
+import { companyLogo } from "../../config/images";
 
 export default function NavigationBar() {
   const location = useLocation(); // Get current route
@@ -62,8 +62,8 @@ export default function NavigationBar() {
                     onClick={label === "Services" ? handleServicesClick : handleOtherServicesClick}
                     sx={{
                       color: "white",
-                      fontWeight: location.pathname.includes(path) ? "bold" : "normal", // Bold for active tab
-                      borderBottom: location.pathname.includes(path) ? "2px solid white" : "none", // Underline active tab
+                      fontWeight: location.pathname.includes(path) ? "bold" : "normal",
+                      borderBottom: location.pathname.includes(path) ? "px solid white" : "none", 
                       transition: "border-bottom 0.3s",
                     }}
                   >

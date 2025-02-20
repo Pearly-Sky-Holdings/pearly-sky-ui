@@ -9,6 +9,7 @@ import OurServicePage from './pages/ourServicePage/ourServicePage';
 import GalleryPage from './pages/galleryPage/galleryPage';
 import InformationPage from './pages/informationPage/informationPage';
 import TeamOfExpertsPage from './pages/teamOfExpertsPage/teamOfExpertsPage';
+import SectorPage from './pages/sectorPage/sectorPage';
 import OurShowcasePage from './pages/ourShowCasePage/ourShowCasePage';
 import Footer from './pages/footerPage/footerPage';
 import UiContactUsPage from './pages/HomeContactUsPage/uiContactUsPage.tsx';
@@ -78,7 +79,7 @@ function App() {
                             <OurServicePage />
                             <InformationPage/>
                             <GalleryPage />
-                            {/* <SectorPage /> */}
+                            <SectorPage />
                             <TeamOfExpertsPage/>
                             <OurShowcasePage/>
                             <CleanServices/>
