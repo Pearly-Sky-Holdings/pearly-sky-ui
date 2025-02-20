@@ -1,11 +1,10 @@
-
 import {
   Container,
   Grid,
-  Box,
-  TextField,
   Button,
   Typography,
+  Snackbar,
+  Alert,
   Select,
   MenuItem,
   FormControl,
@@ -13,8 +12,78 @@ import {
   InputAdornment,
   FormLabel,
 } from "@mui/material";
+import store from "../../store";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch} from "react-redux";
+import BillingDetailsForm from "../../components/checkoutSection/BillingDetailsForm";
+import { saveRegulrService } from "../../services/CleaningServices/saveRegulrService";
+import { useLocation } from "react-router-dom";
+import OrderSummary from "../../components/checkoutSection/OrderSummary";
+import PaymentMethod from "../../components/checkoutSection/PaymentMethod";
+
+
 
 const CheckoutPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch<typeof store.dispatch>();
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  
+  const location = useLocation();
+  const { serviceDetails } = location.state || {};
+
+
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    company: "",
+    country: "",
+    city: "",
+    province: "",
+    // address: "",
+    postal_code: "",
+    contact: "",
+    email: "",
+    password: "",
+  });
+
+  const handlePlaceOrder = async () => {
+    const data = {
+      customer: formData, 
+      service_id: serviceDetails.service_id,
+      price: parseInt(serviceDetails.price),
+      date: serviceDetails.date,
+      time: serviceDetails.time,
+      property_size: serviceDetails.property_size,
+      duration: serviceDetails.duration,
+      number_of_cleaners: serviceDetails.number_of_cleaners,
+      frequency: serviceDetails.frequency,
+      package_details: serviceDetails.package_details,
+      note: serviceDetails.note,
+      language : serviceDetails.language,
+      person_type: serviceDetails.person_type,
+      equipment : serviceDetails.Equipment,
+      cleaning_solvents: serviceDetails.cleaning_solvents,
+      business_property: serviceDetails.business_property,
+      
+    }
+
+    try {
+      await dispatch(saveRegulrService(data));
+      setShowSuccess(true);
+      setTimeout(() => {
+        navigate("/regular-basic-cleaning", { state: { showSuccessPopup: true } });
+      }, 2000);
+    } catch (error) {
+      console.error('Error:', error);
+      setErrorMessage("An error occurred while processing your order");
+      setShowError(true);
+    }
+  }
+
+
   return (
     <Container maxWidth="xl" sx={{ marginBottom: "5%", color: "black" }}>
       <Typography variant="h4" fontWeight="bold" sx={{ mb: 3, mt: 5, color: "#002F6D" }}>
@@ -22,155 +91,41 @@ const CheckoutPage = () => {
       </Typography>
 
       <Grid container spacing={4}>
-        
         <Grid item xs={20} md={7}>
-          <Paper sx={{ p: 4, borderRadius: 2 }}>
-            <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>
-              Billing Details
-            </Typography>
-
-            <Grid container spacing={2}>
-              {/* First Name & Last Name */}
-              <Grid item xs={6}>
-                <FormControl fullWidth size="small">
-                  <FormLabel>First Name <span style={{ color: "red" }}>*</span></FormLabel>
-                  <TextField fullWidth placeholder="Enter first name" variant="outlined" size="small"
-                    InputProps={{ sx: { borderRadius: "12px", border: "1px solid #0D90C8" } }} />
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl fullWidth size="small">
-                  <FormLabel>Last Name <span style={{ color: "red" }}>*</span></FormLabel>
-                  <TextField fullWidth placeholder="Enter last name" variant="outlined" size="small"
-                    InputProps={{ sx: { borderRadius: "12px", border: "1px solid #0D90C8" } }} />
-                </FormControl>
-              </Grid>
-
-              {/* Company Name (Optional) */}
-              <Grid item xs={12}>
-                <FormControl fullWidth size="small">
-                  <FormLabel>Company Name (Optional)</FormLabel>
-                  <TextField fullWidth placeholder="Enter company name" variant="outlined" size="small"
-                    InputProps={{ sx: { borderRadius: "12px", border: "1px solid #0D90C8" } }} />
-                </FormControl>
-              </Grid>
-
-              {/*  Country/Region */}
-              <Grid item xs={12}>
-                <FormControl fullWidth size="small">
-                  <FormLabel>Country / Region <span style={{ color: "red" }}>*</span></FormLabel>
-                  <Select sx={{ borderRadius: "12px", border: "1px solid #0D90C8" }}>
-                    <MenuItem value="">Select country</MenuItem>
-                    <MenuItem value="US">United States</MenuItem>
-                    <MenuItem value="CA">Canada</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              {/* Street Address & Apartment (Fixed Alignment) */}
-              <Grid item xs={6}>
-                <FormControl fullWidth size="small">
-                  <FormLabel>Street Address <span style={{ color: "red" }}>*</span></FormLabel>
-                  <TextField fullWidth placeholder="Enter street address" variant="outlined" size="small"
-                    InputProps={{ sx: { borderRadius: "12px", border: "1px solid #0D90C8" } }} />
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl fullWidth size="small">
-                  <FormLabel>Apartment, Suite, Unit (Optional)</FormLabel>
-                  <TextField fullWidth placeholder="Enter apartment/suite" variant="outlined" size="small"
-                    InputProps={{ sx: { borderRadius: "12px", border: "1px solid #0D90C8" } }} />
-                </FormControl>
-              </Grid>
-
-              {/* Town/City & Province/State */}
-              <Grid item xs={6}>
-                <FormControl fullWidth size="small">
-                  <FormLabel>Town/City <span style={{ color: "red" }}>*</span></FormLabel>
-                  <TextField fullWidth placeholder="Enter city" variant="outlined" size="small"
-                    InputProps={{ sx: { borderRadius: "12px", border: "1px solid #0D90C8" } }} />
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl fullWidth size="small">
-                  <FormLabel>Province/State <span style={{ color: "red" }}>*</span></FormLabel>
-                  <Select sx={{ borderRadius: "12px", border: "1px solid #0D90C8" }}>
-                    <MenuItem value="">Select province/state</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              {/* Postal Code */}
-              <Grid item xs={12}>
-                <FormControl fullWidth size="small">
-                  <FormLabel>Postal Code <span style={{ color: "red" }}>*</span></FormLabel>
-                  <TextField fullWidth placeholder="Enter postal code" variant="outlined" size="small"
-                    InputProps={{ sx: { borderRadius: "12px", border: "1px solid #0D90C8" } }} />
-                </FormControl>
-              </Grid>
-
-              {/* Phone & Email */}
-              <Grid item xs={6}>
-                <FormControl fullWidth size="small">
-                  <FormLabel>Phone <span style={{ color: "red" }}>*</span></FormLabel>
-                  <TextField fullWidth placeholder="Enter phone number" variant="outlined" size="small"
-                    InputProps={{ sx: { borderRadius: "12px", border: "1px solid #0D90C8" } }} />
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl fullWidth size="small">
-                  <FormLabel>Email <span style={{ color: "red" }}>*</span></FormLabel>
-                  <TextField fullWidth placeholder="Enter email address" variant="outlined" size="small"
-                    InputProps={{ sx: { borderRadius: "12px", border: "1px solid #0D90C8" } }} />
-                </FormControl>
-              </Grid>
-            </Grid>
-          </Paper>
+          <BillingDetailsForm setFormData={setFormData } formData={formData} />
         </Grid>
 
-
-        {/* Order Summary & Payment */}
         <Grid item xs={12} md={5}>
-          {/* Order Summary */}
-          <Paper sx={{ p: 4, borderRadius: 2 }}>
-            <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>
-              Your Order
-            </Typography>
-            <Box sx={{ mb: 2, p: 2, bgcolor: "#f9f9f9", borderRadius: 1 }}>
-              <Typography>Deep Cleaning × 1</Typography>
-              <Typography fontWeight="bold">C$ 150.00</Typography>
-            </Box>
-            <Typography>Subtotal: C$ 150.00</Typography>
-            <Typography fontWeight="bold">Final Total: C$ 150.00</Typography>
-
-            {/* Coupon Code (Same Line) */}
-            <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
-              <TextField fullWidth placeholder="Coupon Code" variant="outlined" size="small" 
-                InputProps={{ sx: { borderRadius: "12px", border: "1px solid #0D90C8" } }} />
-              <Button variant="contained">Apply</Button>
-            </Box>
-          </Paper>
-
-          {/* Payment Method */}
-          <Paper sx={{ p: 4, borderRadius: 2, mt: 3 }}>
-            <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>
-              Payment Method
-            </Typography>
-
-            <FormControl fullWidth size="small" sx={{ mt: 2 }}>
-              <FormLabel>Card Number <span style={{ color: "red" }}>*</span></FormLabel>
-              <TextField fullWidth placeholder="Enter card number" variant="outlined" size="small"
-                InputProps={{ startAdornment: <InputAdornment position="start">💳</InputAdornment>,
-                  sx: { borderRadius: "12px", border: "1px solid #0D90C8" } }} />
-            </FormControl>
-          </Paper>
-
-          {/* Place Order Button */}
-          <Button fullWidth variant="contained" sx={{ mt: 3, padding: "12px", backgroundColor: "#0070f3", "&:hover": { backgroundColor: "#005bb5" } }}>
+          <OrderSummary />
+          <PaymentMethod />
+          
+          <Button 
+            fullWidth 
+            variant="contained" 
+            onClick={handlePlaceOrder}
+            sx={{ 
+              mt: 3, 
+              padding: "12px", 
+              backgroundColor: "#0070f3", 
+              "&:hover": { backgroundColor: "#005bb5" } 
+            }}
+          >
             Place Order
           </Button>
         </Grid>
       </Grid>
+
+      <Snackbar open={showSuccess} autoHideDuration={6000} onClose={() => setShowSuccess(false)}>
+        <Alert severity="success" onClose={() => setShowSuccess(false)}>
+          Order placed successfully!
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={showError} autoHideDuration={6000} onClose={() => setShowError(false)}>
+        <Alert severity="error" onClose={() => setShowError(false)}>
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };
