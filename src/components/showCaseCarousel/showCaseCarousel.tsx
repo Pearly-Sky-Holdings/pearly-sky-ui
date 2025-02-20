@@ -3,10 +3,12 @@ import { IconButton } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
 const showcaseImages = [
-  "/images/ourShowCase/ourShowCase.png",
-  "/images/ourShowCase/elderCareService.png",
-  "/images/ourShowCase/ourShowCase.png",
-  "/images/ourShowCase/elderCareService.png",
+  "/images/ourShowCase/OurShowcase1.jpg",
+  "/images/ourShowCase/OurShowcase2.jpg",
+  "/images/ourShowCase/OurShowcase3.jpg",
+  "/images/ourShowCase/OurShowcase4.jpg",
+  "/images/ourShowCase/OurShowcase5.jpg",
+  
 ];
 
 const ImageCarousel: React.FC = () => {
