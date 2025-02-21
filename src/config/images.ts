@@ -111,6 +111,9 @@ export const homeVideo1: string = "/video/pearlysky-web-banner-video-new-1.mp4";
 //one time cleaning
 export const OneTimeService1: string = "/images/service/oneTime/oneTimeCleaner.png";
 
+//last minute cleaning
+export const lastMinuteService1: string = "/images/service/lastMinute/LastMinuteCleaning.png";
+
 //our show case image
 export const OurShowcase1: string = "/images/ourShowCase/OurShowcase1.jpg";
 export const OurShowcase2: string = "/images/ourShowCase/OurShowcase2.jpg";

@@ -93,6 +93,12 @@ export default function NavigationBar() {
                             one-time-cleaning
                           </Link>
                         </MenuItem>
+
+                        <MenuItem onClick={handleClose}>
+                          <Link to="/last-minute-cleaning" style={{ textDecoration: "none", color: "black" }}>
+                            Last Minute Cleaning
+                          </Link>
+                        </MenuItem>
                       </>
                     ) : (
                       <>
