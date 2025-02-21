@@ -15,14 +15,17 @@ import Footer from "./pages/footerPage/footerPage";
 import UiContactUsPage from "./pages/HomeContactUsPage/uiContactUsPage.tsx";
 import ContactUsPage from "./pages/contactUsPage/contactUsPage";
 import OurLocations from "./pages/ourLocationPage/ourLocationPage.tsx";
-import LastMinuteCleaningPage from './pages/servicesPages/lastMinuteCleaningPage.tsx';
 import CleanServices from "./pages/cleanServices/cleanServices";
-import RegularBasicCleaning from "./pages/servicesPages/regularbasicCleaningPage.tsx";
 import CircularProgress from "@mui/material/CircularProgress";
 import LoginPage from "./pages/loginPage/looginPage.tsx";
 import CheckoutPage from "./pages/checkoutPage/checkoutPage.tsx";
+
+
+import RegularBasicCleaning from "./pages/servicesPages/regularbasicCleaningPage.tsx";
 import OneTimeCleaning from "./pages/servicesPages/oneTimeCleaningPage.tsx";
+import LastMinuteCleaningPage from "./pages/servicesPages/lastMinuteCleaningPage.tsx";
 import DeepCleaningPage from "./pages/servicesPages/deepCleaningPage.tsx";
+import MoveInOutCleaningPage from "./pages/servicesPages/moveInOutCleaningPage.tsx";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -120,30 +123,38 @@ function App() {
             }
           />
 
-                  <Route
-                      path="/one-time-cleaning"
-                      element={
-                        <>
-                        <OneTimeCleaning />
-                        <Footer />
-                        </>     
-                      }
-                  />
-                  <Route
-                      path="/last-minute-cleaning"
-                      element={
-                        <>
-                        <LastMinuteCleaningPage />
-                        <Footer />
-                        </>     
-                      }
-                  />
-        
-        <Route
-            path="/deep_leaning"
+          <Route
+            path="/one-time-cleaning"
+            element={
+              <>
+                <OneTimeCleaning />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/last-minute-cleaning"
+            element={
+              <>
+                <LastMinuteCleaningPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/deep_cleaning"
             element={
               <>
                 <DeepCleaningPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/move_in_out_cleaning"
+            element={
+              <>
+                <MoveInOutCleaningPage />
                 <Footer />
               </>
             }

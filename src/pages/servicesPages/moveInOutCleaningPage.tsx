@@ -14,7 +14,7 @@ import { getPackege } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
 import ServicesCarosel from "../../components/oneTimeCleaning/servicesCarousel";
 import {
-  DeepService,
+  MoveInAndOutService,
   regularServiceEquipment1,
   regularServiceEquipment2,
   regularServiceEquipment3,
@@ -33,175 +33,173 @@ import {
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
 
+function moveInOutCleaningPage() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch<typeof store.dispatch>();
+  const packages = useSelector((state: any) => state.packagesSlice.package);
+  const [selectedServices, setSelectedServices] = useState<object[]>([]);
+  const [ovenQty, setOvenQty] = useState("0");
+  const [showTermsCard, setShowTermsCard] = useState(false);
+  const [fridgeQty, setFridgeQty] = useState("0");
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [selectedTime, setSelectedTime] = useState("");
+  const [propertySize, setPropertySize] = useState("");
+  const [duration, setDuration] = useState("");
+  const [numCleaners, setNumCleaners] = useState("");
+  const [frequency, setFrequency] = useState("");
+  const [acceptTerms1, setAcceptTerms1] = useState(false);
+  const [acceptTerms2, setAcceptTerms2] = useState(false);
+  const [language, setLanguage] = useState("");
+  const [propertyType, setPropertyType] = useState("");
+  const [contactType, setContactType] = useState("");
+  const [selectedSolvent, setSelectedSolvent] = useState("");
+  const [selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
+  const [selectedEquipments, setSelectedEquipments] = useState<
+    Array<{ id: string; price: number }>
+  >([]);
+  const [checkedList, setCheckedList] = useState<string[]>([]);
+  const [priceBreakdown, setPriceBreakdown] = useState({
+    basePrice: 57.72,
+    serviceCosts: 0,
+    equipmentCosts: 0,
+    totalPrice: 57.72,
+  });
 
-function DeepCleaningPage() {
- const navigate = useNavigate();
-   const dispatch = useDispatch<typeof store.dispatch>();
-   const packages = useSelector((state: any) => state.packagesSlice.package);
-   const [selectedServices, setSelectedServices] = useState<object[]>([]);
-   const [ovenQty, setOvenQty] = useState("0");
-   const [showTermsCard, setShowTermsCard] = useState(false);
-   const [fridgeQty, setFridgeQty] = useState("0");
-   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-   const [selectedTime, setSelectedTime] = useState("");
-   const [propertySize, setPropertySize] = useState("");
-   const [duration, setDuration] = useState("");
-   const [numCleaners, setNumCleaners] = useState("");
-   const [frequency, setFrequency] = useState("");
-   const [acceptTerms1, setAcceptTerms1] = useState(false);
-   const [acceptTerms2, setAcceptTerms2] = useState(false);
-   const [language, setLanguage] = useState("");
-   const [propertyType, setPropertyType] = useState("");
-   const [contactType, setContactType] = useState("");
-   const [selectedSolvent, setSelectedSolvent] = useState("");
-   const [selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
-   const [selectedEquipments, setSelectedEquipments] = useState<
-     Array<{ id: string; price: number }>
-   >([]);
-   const [checkedList, setCheckedList] = useState<string[]>([]);
-   const [priceBreakdown, setPriceBreakdown] = useState({
-     basePrice: 57.72,
-     serviceCosts: 0,
-     equipmentCosts: 0,
-     totalPrice: 57.72,
-   });
- 
- 
-   useEffect(() => {
-     setPriceBreakdown(calculateTotalPrice());
-   }, [selectedServices, selectedEquipments]);
- 
-   useEffect(() => {
-     dispatch(getPackege("1"));
-   }, []);
-   const calculateTotalPrice = () => {
-     let basePrice = 57.72;
-     let serviceCosts = 0;
-     let equipmentCosts = 0;
- 
-     selectedServices.forEach((serviceId) => {
-       const service = packages.data.find(
-         (p: any) => p.package_id.toString() === serviceId
-       );
-       if (service) {
-         serviceCosts += parseFloat(service.price.replace("$", ""));
-       }
-     });
- 
-     selectedEquipments.forEach((equipment) => {
-       equipmentCosts += equipment.price;
-     });
- 
-     const totalPrice = basePrice + serviceCosts + equipmentCosts;
-     return {
-       basePrice,
-       serviceCosts,
-       equipmentCosts,
-       totalPrice,
-     };
-   };
-   const handleSelectEquipment = (equipment: any) => {
-     setSelectedEquipments([
-       ...selectedEquipments,
-       { id: equipment.id, price: equipment.price },
-     ]);
-   };
- 
-   const handleBookNow = () => {
-     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
-     const serviceDetails = {
-       service_id: "1",
-       date,
-       time: selectedTime,
-       property_size: propertySize,
-       duration: Number(duration),
-       number_of_cleaners: Number(numCleaners),
-       frequency,
-       package_details: [
-         {
-           package_id: 1,
-           price: 3000.0,
-           qty: 1,
-         },
-       ],
-       person_type: contactType,
-       language,
-       business_property: propertyType,
-       cleaning_solvents: selectedSolvent,
-       equipmentOption: selectedEquipmentOption,
-       Equipment: selectedEquipments.map((e) => e.id).join(","),
-       price: priceBreakdown.totalPrice,
-       note: document.querySelector("textarea")?.value || "",
-     };
-     console.log("Service Details:", serviceDetails);
-     navigate("/checkout", { state: { serviceDetails } });
-   };
- 
-   const solvents = [
-     { value: "customer", label: "Provided by the Customer" },
-     { value: "company", label: "Request the Company" },
-   ];
- 
-   const equipmentOptions = [
-     { value: "basic", label: "Provided by the Customer" },
-     { value: "advanced", label: "Request the Company" },
-   ];
- 
-   const equipments = [
-     {
-       id: "cleaning-solvent ",
-       name: "Cleaning Solvent (Eco Friendly Chemicals)",
-       price: 15.99,
-       image: regularServiceEquipment1,
-     },
-     {
-       id: "mop",
-       name: "MOP",
-       price: 11.99,
-       image: regularServiceEquipment2,
-     },
-     {
-       id: "materials",
-       name: "Other Cleaning Materials",
-       price: 19.99,
-       image: regularServiceEquipment3,
-     },
-     {
-       id: "vacuum",
-       name: "Vacuum Cleaner",
-       price: 29.99,
-       image: regularServiceEquipment4,
-     },
-   ];
- 
-   const paymentMethods = [
-     { icon: supportPayment1, alt: "Visa" },
-     { icon: supportPayment2, alt: "Stripe" },
-     { icon: supportPayment3, alt: "PayPal" },
-     { icon: supportPayment4, alt: "Mastercard" },
-     { icon: supportPayment5, alt: "American Express" },
-     { icon: supportPayment6, alt: "Apple Pay" },
-     { icon: supportPayment7, alt: "Google Pay" },
-     { icon: supportPayment8, alt: "Bitcoin" },
-     { icon: supportPayment9, alt: "Amazon Pay" },
-     { icon: supportPayment10, alt: "Discover" },
-   ];
+  useEffect(() => {
+    setPriceBreakdown(calculateTotalPrice());
+  }, [selectedServices, selectedEquipments]);
 
-   return (
+  useEffect(() => {
+    dispatch(getPackege("1"));
+  }, []);
+  const calculateTotalPrice = () => {
+    let basePrice = 57.72;
+    let serviceCosts = 0;
+    let equipmentCosts = 0;
+
+    selectedServices.forEach((serviceId) => {
+      const service = packages.data.find(
+        (p: any) => p.package_id.toString() === serviceId
+      );
+      if (service) {
+        serviceCosts += parseFloat(service.price.replace("$", ""));
+      }
+    });
+
+    selectedEquipments.forEach((equipment) => {
+      equipmentCosts += equipment.price;
+    });
+
+    const totalPrice = basePrice + serviceCosts + equipmentCosts;
+    return {
+      basePrice,
+      serviceCosts,
+      equipmentCosts,
+      totalPrice,
+    };
+  };
+  const handleSelectEquipment = (equipment: any) => {
+    setSelectedEquipments([
+      ...selectedEquipments,
+      { id: equipment.id, price: equipment.price },
+    ]);
+  };
+
+  const handleBookNow = () => {
+    const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
+    const serviceDetails = {
+      service_id: "1",
+      date,
+      time: selectedTime,
+      property_size: propertySize,
+      duration: Number(duration),
+      number_of_cleaners: Number(numCleaners),
+      frequency,
+      package_details: [
+        {
+          package_id: 1,
+          price: 3000.0,
+          qty: 1,
+        },
+      ],
+      person_type: contactType,
+      language,
+      business_property: propertyType,
+      cleaning_solvents: selectedSolvent,
+      equipmentOption: selectedEquipmentOption,
+      Equipment: selectedEquipments.map((e) => e.id).join(","),
+      price: priceBreakdown.totalPrice,
+      note: document.querySelector("textarea")?.value || "",
+    };
+    console.log("Service Details:", serviceDetails);
+    navigate("/checkout", { state: { serviceDetails } });
+  };
+
+  const solvents = [
+    { value: "customer", label: "Provided by the Customer" },
+    { value: "company", label: "Request the Company" },
+  ];
+
+  const equipmentOptions = [
+    { value: "basic", label: "Provided by the Customer" },
+    { value: "advanced", label: "Request the Company" },
+  ];
+
+  const equipments = [
+    {
+      id: "cleaning-solvent ",
+      name: "Cleaning Solvent (Eco Friendly Chemicals)",
+      price: 15.99,
+      image: regularServiceEquipment1,
+    },
+    {
+      id: "mop",
+      name: "MOP",
+      price: 11.99,
+      image: regularServiceEquipment2,
+    },
+    {
+      id: "materials",
+      name: "Other Cleaning Materials",
+      price: 19.99,
+      image: regularServiceEquipment3,
+    },
+    {
+      id: "vacuum",
+      name: "Vacuum Cleaner",
+      price: 29.99,
+      image: regularServiceEquipment4,
+    },
+  ];
+
+  const paymentMethods = [
+    { icon: supportPayment1, alt: "Visa" },
+    { icon: supportPayment2, alt: "Stripe" },
+    { icon: supportPayment3, alt: "PayPal" },
+    { icon: supportPayment4, alt: "Mastercard" },
+    { icon: supportPayment5, alt: "American Express" },
+    { icon: supportPayment6, alt: "Apple Pay" },
+    { icon: supportPayment7, alt: "Google Pay" },
+    { icon: supportPayment8, alt: "Bitcoin" },
+    { icon: supportPayment9, alt: "Amazon Pay" },
+    { icon: supportPayment10, alt: "Discover" },
+  ];
+
+  return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6">
       {/* Header Section */}
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col sm:flex-row gap-4 sm:gap-8">
-        <div className="w-full sm:w-1/3">
+      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col sm:flex-row gap-4 sm:gap-8 items-stretch">
+        <div className="w-full sm:w-3/5 flex">
           <img
-            src={DeepService}
+            src={MoveInAndOutService}
             alt="Cleaning Service"
-            className="rounded-lg w-full h-auto mt-8"
+            className="rounded-lg w-full h-full object-cover"
           />
         </div>
-        <div className="w-full sm:w-2/3">
-          <div className="">
+        <div className="w-full sm:w-2/3 flex flex-col justify-between">
+          <div>
             <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
-              Deep Cleaning
+              Move In/Out Cleaning
             </h1>
             <div className="mt-4 mb-4 ml-4">
               <div className="flex gap-3">
@@ -218,30 +216,44 @@ function DeepCleaningPage() {
               </div>
             </div>
           </div>
-          <p className="text-gray-600 mb-4 text-sm sm:text-base">
-          Deep cleaning, provided by professional cleaning services, is a thorough and detailed cleaning solution that
-           goes beyond routine maintenance. This all-encompassing method includes careful attention to detail and 
-           specifically focuses on areas often ignored in standard cleaning protocols.
-          </p>
-          <p>The deep cleaning routine consists of necessary tasks like:</p>
-          <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
-            <li>Sanitizing high-touch surfaces</li>
-            <li>Meticulously scrubbing and disinfecting bathroom fixtures</li>
-            <li>Performing deep cleaning on carpets.</li>
-            <li>Precise dusting and vent cleaning</li>
-          </ul>
-          <p className="text-gray-600 text-sm sm:text-base">
-          The main goal of this intensive process is the eradicate collected dirt, grime, and allergens, 
-          promoting a healthier and more hygienic living or working atmosphere. Generally, recommended semi-annually 
-          or annually, deep cleaning is instrumental in upholding cleanliness standards and preventing thebuildup of 
-          contaminants.
-          </p>
+          <div className="flex-grow">
+            <p className="text-gray-600 mb-4 text-sm sm:text-base">
+              Move-in/out cleaning is a specialized service offered by cleaning
+              companies and is prepared for individuals transitioning into or
+              out of a property.
+            </p>
+            <p className="text-gray-600 mb-4 text-sm sm:text-base">
+              This subtle cleaning procedure is specially made to prepare a
+              space for new occupants or ensure the departure leaves the
+              premises in impeccable condition.
+            </p>
+            <h1 className="font-semibold text-lg sm:text-xl">
+              It generally covers deep cleaning tasks such as surface scrubbing,
+              high-touch areas:
+            </h1>
+            <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
+              <li>Sanitization</li>
+              <li>Appliance cleaning</li>
+              <li>Fixture maintenance</li>
+              <li>Overall cleanliness</li>
+            </ul>
+            <p className="text-gray-600 text-sm sm:text-base">
+              The objective of this cleaning is to present the space in optimal
+              condition for incoming residents or to meet landlords’
+              expectations during move-outs.
+            </p>
+            <p className="text-gray-600 text-sm sm:text-base">
+              The ultimate aim of move-in/out cleaning services is to set up a
+              fresh, energetic, and welcoming atmosphere for the upcoming phase
+              in the property’s utilization.
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Carousel Section */}
       <div>
-         <ServicesCarosel index={2}/>
+        <ServicesCarosel index={2} />
       </div>
 
       {/* Checklist Section */}
@@ -262,19 +274,14 @@ function DeepCleaningPage() {
                   type="checkbox"
                   className="hidden"
                   checked={checkedList.includes(service.package_id.toString())}
-                  onChange={(e) => {
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     if (e.target.checked) {
                       setSelectedServices([
                         ...selectedServices,
                         {
                           id: Number(service.package_id),
                           price: parseInt(service.price),
-                          qty:
-                            service.name === "Oven Cleaning"
-                              ? Number(ovenQty)
-                              : service.name === "Fridge Cleaning"
-                              ? Number(fridgeQty)
-                              : 0,
+                          qty: service.name === "Oven Cleaning" ? Number(ovenQty) : Number(fridgeQty),
                         },
                       ]);
                       setCheckedList([
@@ -413,7 +420,7 @@ function DeepCleaningPage() {
         </div>
 
         {/* Booking Details */}
-        <div >
+        <div>
           <BookingSectionCart />
         </div>
 
@@ -540,7 +547,6 @@ function DeepCleaningPage() {
       </div>
     </div>
   );
- 
 }
 
-export default DeepCleaningPage;
+export default moveInOutCleaningPage;
