@@ -43,6 +43,7 @@ function RegularBasicCleaningPage() {
   const packages = useSelector((state: any) => state.packagesSlice.package);
   const [selectedServices, setSelectedServices] = useState<object[]>([]);
   const [ovenQty, setOvenQty] = useState("0");
+  const [showTermsCard, setShowTermsCard] = useState(false);
   const [fridgeQty, setFridgeQty] = useState("0");
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
@@ -76,9 +77,9 @@ function RegularBasicCleaningPage() {
     dispatch(getPackege());
   }, []);
   const calculateTotalPrice = () => {
-    let basePrice = 27.0; 
-    let serviceCosts = 0; 
-    let equipmentCosts = 0; 
+    let basePrice = 27.0;
+    let serviceCosts = 0;
+    let equipmentCosts = 0;
 
     selectedServices.forEach((serviceId) => {
       const service = packages.data.find(
@@ -127,9 +128,9 @@ function RegularBasicCleaningPage() {
       package_details: [
         {
           package_id: 1,
-          price: 3000.00,
-          qty : 1
-        }
+          price: 3000.0,
+          qty: 1,
+        },
       ],
       person_type: contactType,
       language,
@@ -683,25 +684,53 @@ function RegularBasicCleaningPage() {
   ];
 
   const durationOptions = [
-    { value: "2", label: "2" },
-    { value: "3", label: "3" },
-    { value: "4", label: "4" },
-    { value: "5", label: "5" },
-    { value: "6", label: "6" },
-    { value: "7", label: "7" },
-    { value: "8", label: "8" },
-    { value: "9", label: "9" },
-    { value: "10", label: "10" },
-    { value: "11", label: "11" },
-    { value: "12", label: "12" },
-    { value: "13", label: "13" },
-    { value: "14", label: "14" },
-    { value: "15", label: "15" },
-    { value: "16", label: "16" },
-    { value: "17", label: "17" },
-    { value: "18", label: "18" },
-    { value: "19", label: "19" },
-    { value: "20", label: "20" },
+    { value: "2", label: "2 hours" },
+    { value: "2.5", label: "2.5 hours" },
+    { value: "3", label: "3 hours" },
+    { value: "3.5", label: "3.5 hours" },
+    { value: "4", label: "4 hours" },
+    { value: "4.5", label: "4.5 hours" },
+    { value: "5", label: "5 hours" },
+    { value: "5.5", label: "5.5 hours" },
+    { value: "6", label: "6 hours" },
+    { value: "6.5", label: "6.5 hours" },
+    { value: "7", label: "7 hours" },
+    { value: "7.5", label: "7.5 hours" },
+    { value: "8", label: "8 hours" },
+    { value: "8.5", label: "8.5 hours" },
+    { value: "9", label: "9 hours" },
+    { value: "9.5", label: "9.5 hours" },
+    { value: "10", label: "10 hours" },
+    { value: "10.5", label: "10.5 hours" },
+    { value: "11", label: "11 hours" },
+    { value: "11.5", label: "11.5 hours" },
+    { value: "12", label: "12 hours" },
+    { value: "12.5", label: "12.5 hours" },
+    { value: "13", label: "13 hours" },
+    { value: "13.5", label: "13.5 hours" },
+    { value: "14", label: "14 hours" },
+    { value: "14.5", label: "14.5 hours" },
+    { value: "15", label: "15 hours" },
+    { value: "15.5", label: "15.5 hours" },
+    { value: "16", label: "16 hours" },
+    { value: "16.5", label: "16.5 hours" },
+    { value: "17", label: "17 hours" },
+    { value: "17.5", label: "17.5 hours" },
+    { value: "18", label: "18 hours" },
+    { value: "18.5", label: "18.5 hours" },
+    { value: "19", label: "19 hours" },
+    { value: "19.5", label: "19.5 hours" },
+    { value: "20", label: "20 hours" },
+    { value: "20.5", label: "20.5 hours" },
+    { value: "21", label: "21 hours" },
+    { value: "21.5", label: "21.5 hours" },
+    { value: "22", label: "22 hours" },
+    { value: "22.5", label: "22.5 hours" },
+    { value: "23", label: "23 hours" },
+    { value: "23.5", label: "23.5 hours" },
+    { value: "24", label: "24 hours" },
+    { value: "24.5", label: "24.5 hours" },
+    { value: "25", label: "25 hours" },
   ];
 
   const numCleanersOptions = [
@@ -1081,7 +1110,10 @@ function RegularBasicCleaningPage() {
                 type="checkbox"
                 className="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 checked={acceptTerms2}
-                onChange={(e) => setAcceptTerms2(e.target.checked)}
+                onChange={(e) => {
+                  setAcceptTerms2(e.target.checked);
+                  setShowTermsCard(e.target.checked);
+                }}
               />
               <span className="text-sm">
                 By selecting this I accept terms and conditions
@@ -1091,12 +1123,14 @@ function RegularBasicCleaningPage() {
         </div>
 
         {/* Terms and Conditions */}
-        <TermsAndConditions
-          terms={bookingTerms}
-          isAccepted={acceptTerms1}
-          onAcceptChange={setAcceptTerms1}
-          className="mb-6"
-        />
+        {showTermsCard && (
+          <TermsAndConditions
+            terms={bookingTerms}
+            isAccepted={acceptTerms1}
+            onAcceptChange={setAcceptTerms1}
+            className="mb-6"
+          />
+        )}
 
         <div className="pt-4 mb-6">
           {/* Base Price */}
