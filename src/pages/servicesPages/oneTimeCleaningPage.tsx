@@ -6,25 +6,13 @@ import { format } from "date-fns";
 import "react-calendar/dist/Calendar.css";
 import TimeSlots from "../../components/timeSlot/timeSlot";
 import "./CustomCalendar.css";
-import Carousel from "../../components/carouselSection/carousel";
 import EquipmentSection from "../../components/equipmentSection/equipmentSection";
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
-
+import ServicesCarosel from "../../components/oneTimeCleaning/servicesCarousel";
 import { getPackege } from "../../services/CleaningServices/index";
 
 import {
-  
-  regularService2,
-  regularService3,
-  regularService4,
-  regularService5,
-  regularService6,
-  regularService7,
-  regularService8,
-  regularService9,
-  regularService10,
-  regularService11,
   regularServiceEquipment1,
   regularServiceEquipment2,
   regularServiceEquipment3,
@@ -39,8 +27,8 @@ import {
   supportPayment8,
   supportPayment9,
   supportPayment10,
+  OneTimeService1
 } from "../../config/images";
-import{OneTimeService1}from "../../config/images";
 import store from "../../store";
 function OneTimeCleaningPage() {
   const dispatch = useDispatch<typeof store.dispatch>();
@@ -58,112 +46,8 @@ function OneTimeCleaningPage() {
   const [acceptTerms2, setAcceptTerms2] = useState(false);
 
   useEffect(() => {
-    dispatch(getPackege());
+    dispatch(getPackege("2"));
   }, [dispatch]);
-
-  const imagePairs = [
-    [
-      {
-        img: regularService2,
-        title: "Bedroom Cleaning",
-        features: [
-          "Dust all cleanable surfaces",
-          "Make the bed",
-          "Clean floor surfaces",
-        ],
-      },
-      {
-        img: regularService3,
-        title: "Kitchen Cleaning",
-        features: [
-          "Dust all available surfaces.",
-          "Wipe down the exterior of appliances and cabinets.",
-          "Clean floor surfaces."
-        ],
-      },
-    ],
-    [
-      {
-        img: regularService4,
-        title: "Living Room Cleaning",
-        features: [
-          "Dust all accessible surfaces.",
-          "Clean the exterior of cabinets.",
-          "Clean floor surfaces."
-        ],
-      },
-      {
-        img: regularService5,
-        title: "Bathroom Cleaning",
-        features: [
-          "Wash & sanitize the toilet, shower, tub, and sink.",
-          "Wipe down mirrors and glass surfaces.",
-          "Clean floor surfaces."
-        ],
-      },
-    ],
-    [
-      {
-        img: regularService6,
-        title: "Limescale Removal",
-        features: [
-          "Clean the balcony/terrace floor.",
-          "De-limescale & polish the shower cabin.",
-          "De-limescale & polish the sink area.",
-          "Remove limescale from other surfaces in the bathroom."
-        ],
-      },
-      {
-        img: regularService7,
-        title: "Fridge Cleaning",
-        features: [
-          "Clean the fridge door and handle with a damp cloth and mild soap.",
-          "Dust the back of the fridge and vacuum the condenser coils.",
-          "Check and clean the drip pan."
-        ],
-      },
-    ],
-    [
-      {
-        img: regularService8,
-        title: "Balcony Cleaning",
-        features: [
-          "Clean the balcony/terrace floor.",
-          "Clean railings.",
-          "Dust and wipe down outdoor furniture and fixtures."
-        ],
-      },
-      {
-        img: regularService9,
-        title: "Oven Cleaning",
-        features: [
-          "Cleaning the Oven Interior.",
-          "Cleaning Oven Racks and Trays.",
-          "Cleaning the Oven Door."
-        ],
-      },
-    ],
-    [
-      {
-        img: regularService10,
-        title: "Ironing",
-        features: [
-          "Iron the clothes.",
-          "Fold the clothes.",
-          "Place the clothes in the wardrobe."
-        ],
-      },
-      {
-        img: regularService11,
-        title: "After-Party Cleanup",
-        features: [
-          "Wash dishes & glassware.",
-          "Empty garbage cans.",
-          "Clean up vomit stains (ask for quotation)."
-        ],
-      },
-    ],
-  ];
 
   const solvents = [
     { value: "basic", label: "Basic Cleaning Solution" },
@@ -300,7 +184,7 @@ function OneTimeCleaningPage() {
 
       {/* Carousel Section */}
       <div>
-        <Carousel imagePairs={imagePairs} />
+         <ServicesCarosel index={2}/>
       </div>
 
       {/* Checklist Section */}
