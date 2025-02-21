@@ -41,7 +41,6 @@ function RegularBasicCleaningPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const packages = useSelector((state: any) => state.packagesSlice.package);
-  const services = useSelector((state: any) => state.serviceDetailsSlice.service);
   const [selectedServices, setSelectedServices] = useState<object[]>([]);
   const [ovenQty, setOvenQty] = useState("0");
   const [fridgeQty, setFridgeQty] = useState("0");
@@ -61,7 +60,6 @@ function RegularBasicCleaningPage() {
   const [selectedEquipments, setSelectedEquipments] = useState<
     Array<{ id: string; price: number }>
   >([]);
-
   const [checkedList, setCheckedList] = useState<String[]>([]);
   const [priceBreakdown, setPriceBreakdown] = useState({
     basePrice: 27.0,
@@ -74,11 +72,9 @@ function RegularBasicCleaningPage() {
     setPriceBreakdown(calculateTotalPrice());
   }, [selectedServices, selectedEquipments]);
 
-
   useEffect(() => {
     dispatch(getPackege());
   }, []);
-
   const calculateTotalPrice = () => {
     let basePrice = 27.0; 
     let serviceCosts = 0; 
@@ -89,14 +85,13 @@ function RegularBasicCleaningPage() {
         (p: any) => p.package_id.toString() === serviceId
       );
       if (service) {
-        total += parseFloat(service.price.replace("$", ""));
+        serviceCosts += parseFloat(service.price.replace("$", ""));
       }
     });
 
     selectedEquipments.forEach((equipment) => {
-      total += equipment.price;
+      equipmentCosts += equipment.price;
     });
-
 
     const totalPrice = basePrice + serviceCosts + equipmentCosts;
     return {
@@ -105,7 +100,7 @@ function RegularBasicCleaningPage() {
       equipmentCosts,
       totalPrice,
     };
-
+  };
   const handleEquipmentSelect = (equipment: any, selected: boolean) => {
     if (selected) {
       setSelectedEquipments([
@@ -120,41 +115,30 @@ function RegularBasicCleaningPage() {
   };
 
   const handleBookNow = () => {
-
-    if (!acceptTerms1 || !acceptTerms2) return;
-
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
-      service_id :"1",
+      service_id: "1",
       date,
-
-      time :selectedTime,
-      property_size :propertySize,
-      duration : parseInt(duration),
-      number_of_cleaners :Number(numCleaners),
+      time: selectedTime,
+      property_size: propertySize,
+      duration: Number(duration),
+      number_of_cleaners: Number(numCleaners),
       frequency,
       package_details: [
         {
-            "package_id": 1,
-            "price": 3000.00,
-            "qty": 2
-        },
-        {
-            "package_id": 2,
-            "price": 500.00,
-            "qty": 1
+          package_id: 1,
+          price: 3000.00,
+          qty : 1
         }
-    ],
-      person_type :contactType,
-
+      ],
+      person_type: contactType,
       language,
-      business_property :propertyType,
+      business_property: propertyType,
       cleaning_solvents: selectedSolvent,
-      equipmentOption: selectedEquipmentOption,
+      // equipmentOption: selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
       price: priceBreakdown.totalPrice,
       note: document.querySelector("textarea")?.value || "",
-
     };
     console.log("Service Details:", serviceDetails);
     navigate("/checkout", { state: { serviceDetails } });
@@ -863,10 +847,8 @@ function RegularBasicCleaningPage() {
                       setSelectedServices([
                         ...selectedServices,
                         {
-
                           id: Number(service.package_id),
                           price: parseInt(service.price),
-
                           qty:
                             service.name === "Oven Cleaning"
                               ? Number(ovenQty)
@@ -989,8 +971,7 @@ function RegularBasicCleaningPage() {
                   calendarType="iso8601"
                   prevLabel={<ChevronLeft className="w-5 h-5" />}
                   nextLabel={<ChevronRight className="w-5 h-5" />}
-                  formatMonthYear={(_, date) => dayjs(date).format("MMMM YYYY")}
-
+                  formatMonthYear={(date) => dayjs(date).format("MMMM YYYY")}
                 />
               </div>
             </div>
@@ -1013,7 +994,6 @@ function RegularBasicCleaningPage() {
 
         {/* Booking Details */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-
           <Dropdown
             label="Approx. Property Size"
             value={propertySize}
@@ -1057,7 +1037,6 @@ function RegularBasicCleaningPage() {
               options={languageOptions}
               onChange={setLanguage}
             />
-
           </div>
         </div>
 
@@ -1119,14 +1098,12 @@ function RegularBasicCleaningPage() {
           className="mb-6"
         />
 
-        {/* Price Summary */}
         <div className="pt-4 mb-6">
+          {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              General Cost{" "}
-              <span className="text-gray-400">(C$ 40.00 Per Hour)</span>
+              Base Cost <span className="text-gray-400">(C$ 27.00)</span>
             </span>
-
             <span>C${priceBreakdown.basePrice.toFixed(2)}</span>
           </div>
 
@@ -1160,7 +1137,6 @@ function RegularBasicCleaningPage() {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
             <span>Total</span>
             <span>C${priceBreakdown.totalPrice.toFixed(2)}</span>
-
           </div>
         </div>
 
