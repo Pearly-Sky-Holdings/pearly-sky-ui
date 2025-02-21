@@ -39,8 +39,8 @@ import {
   supportPayment8,
   supportPayment9,
   supportPayment10,
+  OneTimeService1
 } from "../../config/images";
-import{OneTimeService1}from "../../config/images";
 import store from "../../store";
 function OneTimeCleaningPage() {
   const dispatch = useDispatch<typeof store.dispatch>();
@@ -58,7 +58,7 @@ function OneTimeCleaningPage() {
   const [acceptTerms2, setAcceptTerms2] = useState(false);
 
   useEffect(() => {
-    dispatch(getPackege());
+    dispatch(getPackege("2"));
   }, [dispatch]);
 
   const imagePairs = [

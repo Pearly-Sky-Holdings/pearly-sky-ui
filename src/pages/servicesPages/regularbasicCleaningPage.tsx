@@ -74,7 +74,7 @@ function RegularBasicCleaningPage() {
   }, [selectedServices, selectedEquipments]);
 
   useEffect(() => {
-    dispatch(getPackege());
+    dispatch(getPackege("1"));
   }, []);
   const calculateTotalPrice = () => {
     let basePrice = 27.0;
