@@ -1,9 +1,10 @@
 export const companyLogo: string = "./images/logo.png";
 
-export const homePageImage1: string = "/images/home/homePageImage1.png";
+export const homePageImage1: string = "/images/home/homePageImage1.jpg";
 export const homePageImage2: string = "/images/home/homePageImage2.png";
 export const homePageImage3: string = "/images/home/homePageImage3.jpg";
 export const homePageImage4: string = "/images/home/homePageImage4.jpg";
+export const inforImage: string = "/images/home/inforImage.jpg";
 
 
 export const girl: string = "/images/Girl_1_New.png";
@@ -39,10 +40,11 @@ export const sectorImage3: string = "/images/sector/sectorImage3.png";
 export const sectorImage4: string = "/images/sector/sectorImage4.png";
 export const sectorImage5: string = "/images/sector/sectorImage5.png";
 
+//choos our cleaning
 export const chooseClening1: string = "/images/chooseClening/chooseClening1.png";
 export const chooseClening2: string = "/images/chooseClening/chooseClening2.png";
 export const chooseClening3: string = "/images/chooseClening/chooseClening3.png";
-export const chooseClening4: string = "/images/home/homePageImage1.png";
+export const chooseClening4: string = "/images/ourShowCase/OurShowcase4.jpg";
 
 export const contactImage1: string = "/images/uiContactUs/ContactUs.png";
 
@@ -108,3 +110,11 @@ export const homeVideo1: string = "/video/pearlysky-web-banner-video-new-1.mp4";
 
 //one time cleaning
 export const OneTimeService1: string = "/images/service/oneTime/oneTimeCleaner.png";
+
+//our show case image
+export const OurShowcase1: string = "/images/ourShowCase/OurShowcase1.jpg";
+export const OurShowcase2: string = "/images/ourShowCase/OurShowcase2.jpg";
+export const OurShowcase3: string = "/images/ourShowCase/OurShowcase3.jpg";
+export const OurShowcase4: string = "/images/ourShowCase/OurShowcase4.jpg";
+export const OurShowcase5: string = "/images/ourShowCase/OurShowcase5.jpg";
+

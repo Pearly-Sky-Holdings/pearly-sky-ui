@@ -1,11 +1,20 @@
 import {
-  Grid,
-  TextField,
-  Typography,
-  FormControl,
-  Paper,
-  FormLabel,
-} from "@mui/material";
+    Grid,
+    TextField,
+    Typography,
+    Select,
+    MenuItem,
+    FormControl,
+    Paper,
+    FormLabel,
+  } from "@mui/material";
+  
+  
+  interface BillingDetailsFormProps {
+    setFormData: React.Dispatch<React.SetStateAction<any>>;
+    formData: any;
+  }
+
 
 
 interface BillingDetailsFormProps {

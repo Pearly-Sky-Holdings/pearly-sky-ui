@@ -346,6 +346,16 @@ function OurLocations() {
     },
   ];
 
+  locations.sort((a, b) => {
+    if (a.name < b.name) {
+      return -1;
+    }
+    if (a.name > b.name) {
+      return 1;
+    }
+    return 0;
+  });
+
   // Split locations into two halves
   const half = Math.ceil(locations.length / 2);
   const firstColumn = locations.slice(0, half);
