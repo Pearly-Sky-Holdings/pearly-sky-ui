@@ -95,6 +95,12 @@ export default function NavigationBar() {
                         </MenuItem>
 
                         <MenuItem onClick={handleClose}>
+                          <Link to="/last-minute-cleaning" style={{ textDecoration: "none", color: "black" }}>
+                            Last Minute Cleaning
+                          </Link>
+                        </MenuItem>
+
+                        <MenuItem onClick={handleClose}>
                           <Link to="/deep_leaning" style={{ textDecoration: "none", color: "black" }}>
                           Deep Cleaning
                           </Link>

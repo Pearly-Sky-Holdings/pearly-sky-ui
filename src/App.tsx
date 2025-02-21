@@ -15,6 +15,7 @@ import Footer from "./pages/footerPage/footerPage";
 import UiContactUsPage from "./pages/HomeContactUsPage/uiContactUsPage.tsx";
 import ContactUsPage from "./pages/contactUsPage/contactUsPage";
 import OurLocations from "./pages/ourLocationPage/ourLocationPage.tsx";
+import LastMinuteCleaningPage from './pages/servicesPages/lastMinuteCleaningPage.tsx';
 import CleanServices from "./pages/cleanServices/cleanServices";
 import RegularBasicCleaning from "./pages/servicesPages/regularbasicCleaningPage.tsx";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -119,16 +120,26 @@ function App() {
             }
           />
 
-          <Route
-            path="/one-time-cleaning"
-            element={
-              <>
-                <OneTimeCleaning />
-                <Footer />
-              </>
-            }
-          />
-          <Route
+                  <Route
+                      path="/one-time-cleaning"
+                      element={
+                        <>
+                        <OneTimeCleaning />
+                        <Footer />
+                        </>     
+                      }
+                  />
+                  <Route
+                      path="/last-minute-cleaning"
+                      element={
+                        <>
+                        <LastMinuteCleaningPage />
+                        <Footer />
+                        </>     
+                      }
+                  />
+        
+        <Route
             path="/deep_leaning"
             element={
               <>
