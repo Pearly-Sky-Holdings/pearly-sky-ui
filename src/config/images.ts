@@ -9,6 +9,8 @@ export const inforImage: string = "/images/home/inforImage.jpg";
 
 export const girl: string = "/images/Girl_1_New.png";
 
+
+//service
 export const regularService: string = "/images/service/regularService.png";
 export const OneTimeService: string = "/images/service/OneTimeService.png";
 export const lastMinuteService: string = "/images/service/lastMinuteService.png";
@@ -83,12 +85,12 @@ export const regularService2: string = "/images/service/regularBasic/regularServ
 export const regularService3: string = "/images/service/regularBasic/regularService-3.png";
 export const regularService4: string = "/images/service/regularBasic/regularService-4.png";
 export const regularService5: string = "/images/service/regularBasic/regularService-5.png";
-export const regularService6: string = "/images/service/regularBasic/regularService6.png";
-export const regularService7: string = "/images/service/regularBasic/regularService7.png";
-export const regularService8: string = "/images/service/regularBasic/regularService8.png";
-export const regularService9: string = "/images/service/regularBasic/regularService9.png";
-export const regularService10: string = "/images/service/regularBasic/regularService10.png";
-export const regularService11: string = "/images/service/regularBasic/regularService11.png";
+export const LimescaleService: string = "/images/service/regularBasic/LimescaleService.png";
+export const FridgeCleaning: string = "/images/service/regularBasic/FridgeCleaning.png";
+export const BalconyCleaning: string = "/images/service/regularBasic/BalconyCleaning.png";
+export const OvenCleaning: string = "/images/service/regularBasic/OvenCleaning.png";
+export const ironing: string = "/images/service/regularBasic/ironing.png";
+export const AfterPartyCleanup: string = "/images/service/regularBasic/AfterPartyCleanup.png";
 export const regularServiceEquipment1: string = "/images/service/regularBasic/equipments-1.png";
 export const regularServiceEquipment2: string = "/images/service/regularBasic/equipments-2.png";
 export const regularServiceEquipment3: string = "/images/service/regularBasic/equipments-3.png";

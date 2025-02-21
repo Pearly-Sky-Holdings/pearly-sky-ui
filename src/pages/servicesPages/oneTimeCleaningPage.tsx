@@ -19,12 +19,12 @@ import {
   regularService3,
   regularService4,
   regularService5,
-  regularService6,
-  regularService7,
-  regularService8,
-  regularService9,
-  regularService10,
-  regularService11,
+  LimescaleService,
+  FridgeCleaning,
+  BalconyCleaning,
+  OvenCleaning,
+  ironing,
+  AfterPartyCleanup,
   regularServiceEquipment1,
   regularServiceEquipment2,
   regularServiceEquipment3,
@@ -104,7 +104,7 @@ function OneTimeCleaningPage() {
     ],
     [
       {
-        img: regularService6,
+        img: LimescaleService,
         title: "Limescale Removal",
         features: [
           "Clean the balcony/terrace floor.",
@@ -114,7 +114,7 @@ function OneTimeCleaningPage() {
         ],
       },
       {
-        img: regularService7,
+        img: FridgeCleaning,
         title: "Fridge Cleaning",
         features: [
           "Clean the fridge door and handle with a damp cloth and mild soap.",
@@ -125,7 +125,7 @@ function OneTimeCleaningPage() {
     ],
     [
       {
-        img: regularService8,
+        img: BalconyCleaning,
         title: "Balcony Cleaning",
         features: [
           "Clean the balcony/terrace floor.",
@@ -134,7 +134,7 @@ function OneTimeCleaningPage() {
         ],
       },
       {
-        img: regularService9,
+        img: OvenCleaning,
         title: "Oven Cleaning",
         features: [
           "Cleaning the Oven Interior.",
@@ -145,7 +145,7 @@ function OneTimeCleaningPage() {
     ],
     [
       {
-        img: regularService10,
+        img: ironing,
         title: "Ironing",
         features: [
           "Iron the clothes.",
@@ -154,7 +154,7 @@ function OneTimeCleaningPage() {
         ],
       },
       {
-        img: regularService11,
+        img: AfterPartyCleanup,
         title: "After-Party Cleanup",
         features: [
           "Wash dishes & glassware.",
