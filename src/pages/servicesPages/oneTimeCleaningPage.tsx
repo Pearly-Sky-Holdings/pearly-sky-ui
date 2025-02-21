@@ -15,9 +15,11 @@ import dayjs from "dayjs";
 import ServicesCarosel from "../../components/oneTimeCleaning/servicesCarousel";
 
 import {
+
   OneTimeService1,  regularServiceEquipment1,  regularServiceEquipment2,  regularServiceEquipment3,  regularServiceEquipment4,
   supportPayment1,  supportPayment2,  supportPayment3,  supportPayment4,  supportPayment5,  supportPayment6,
   supportPayment7,  supportPayment8,  supportPayment9,  supportPayment10,} from "../../config/images";
+
 import store from "../../store";
 import Dropdown from "../../components/dropDown/dropDown";
 function RegularBasicCleaningPage() {
@@ -56,25 +58,10 @@ function RegularBasicCleaningPage() {
   }, [selectedServices, selectedEquipments]);
 
   useEffect(() => {
-    dispatch(getPackege());
-  }, []);
-  const calculateTotalPrice = () => {
-    let basePrice = 27.0; 
-    let serviceCosts = 0; 
-    let equipmentCosts = 0; 
 
-    selectedServices.forEach((serviceId) => {
-      const service = packages.data.find(
-        (p: any) => p.package_id.toString() === serviceId
-      );
-      if (service) {
-        serviceCosts += parseFloat(service.price.replace("$", ""));
-      }
-    });
+    dispatch(getPackege("2"));
+  }, [dispatch]);
 
-    selectedEquipments.forEach((equipment) => {
-      equipmentCosts += equipment.price;
-    });
 
     const totalPrice = basePrice + serviceCosts + equipmentCosts;
     return {
