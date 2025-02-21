@@ -12,9 +12,25 @@ import TermsAndConditions from "../../components/termsAndConditions/termsAndCond
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
 import { getPackege } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
-import ServicesCarosel from "../../components/oneTimeCleaning/servicesCarousel";
 import {
-  MoveInAndOutService,
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
+
+import {
+  postConstructorImage1,
+  postConstructorImage2,
+  postConstructorImage3,
+  postConstructorImage4,
+  postConstructorImage5,
+  postConstructorImage6,
+  postConstructionService,
   regularServiceEquipment1,
   regularServiceEquipment2,
   regularServiceEquipment3,
@@ -33,14 +49,59 @@ import {
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
 
-function MoveInOutCleaningPage() {
+const cleaningPackages = [
+  {
+    icon: postConstructorImage1,
+    items: ["Floor cleaning", "Removing debris", "Mopping", "Mirrors cleaning"],
+  },
+  {
+    icon: postConstructorImage2,
+    items: [
+      "Clean windows",
+      "Clean the doors",
+      "Cleaning fixtures",
+      "Cleaning solutions",
+    ],
+  },
+  {
+    icon: postConstructorImage3,
+    items: [
+      "Vacuuming",
+      "Wipe down hard surfaces",
+      "Bathroom cleaning",
+      "Buckets and scrub brushes",
+    ],
+  },
+  {
+    icon: postConstructorImage4,
+    items: [
+      "Sweep and vacuum/mop floors",
+      "Vacuum cleaner",
+      "Window cleaning",
+      "Appliance cleaning",
+    ],
+  },
+  {
+    icon: postConstructorImage5,
+    items: ["Dust fans and ceiling", "Dust removal", "Remove trash", "Dusting"],
+  },
+  {
+    icon: postConstructorImage6,
+    items: [
+      "Clean all gates",
+      "Clean inside cabinets and drawers",
+      "Clean sink and food spaces",
+      "Trash bags",
+    ],
+  },
+];
+
+function PostConstructionCleaningPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const packages = useSelector((state: any) => state.packagesSlice.package);
   const [selectedServices, setSelectedServices] = useState<object[]>([]);
-  const [ovenQty, setOvenQty] = useState("0");
   const [showTermsCard, setShowTermsCard] = useState(false);
-  const [fridgeQty, setFridgeQty] = useState("0");
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
   const [propertySize, setPropertySize] = useState("");
@@ -57,12 +118,11 @@ function MoveInOutCleaningPage() {
   const [selectedEquipments, setSelectedEquipments] = useState<
     Array<{ id: string; price: number }>
   >([]);
-  const [checkedList, setCheckedList] = useState<string[]>([]);
   const [priceBreakdown, setPriceBreakdown] = useState({
-    basePrice: 57.72,
+    basePrice: 59.72,
     serviceCosts: 0,
     equipmentCosts: 0,
-    totalPrice: 57.72,
+    totalPrice: 59.72,
   });
 
   useEffect(() => {
@@ -70,10 +130,10 @@ function MoveInOutCleaningPage() {
   }, [selectedServices, selectedEquipments]);
 
   useEffect(() => {
-    dispatch(getPackege("5"));
+    dispatch(getPackege("1"));
   }, []);
   const calculateTotalPrice = () => {
-    let basePrice = 57.72;
+    let basePrice = 59.72;
     let serviceCosts = 0;
     let equipmentCosts = 0;
 
@@ -186,12 +246,12 @@ function MoveInOutCleaningPage() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto p-4 sm:p-6">
+    <div className="max-w-7xl mx-auto p-4 mt-6 sm:p-2">
       {/* Header Section */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col sm:flex-row gap-4 sm:gap-8 items-stretch">
         <div className="w-full sm:w-3/5 flex">
           <img
-            src={MoveInAndOutService}
+            src={postConstructionService}
             alt="Cleaning Service"
             className="rounded-lg w-full h-full object-cover"
           />
@@ -199,12 +259,12 @@ function MoveInOutCleaningPage() {
         <div className="w-full sm:w-2/3 flex flex-col justify-between">
           <div>
             <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
-              Move In/Out Cleaning
+              Post Construction & Renovation Cleaning
             </h1>
             <div className="mt-4 mb-4 ml-4">
               <div className="flex gap-3">
                 <p className="text-xl sm:text-2xl font-semibold text-black">
-                  C$ 57.72
+                  C$ 59.72
                 </p>
                 <select className="border rounded p-0.5 text-blue-900 h-7">
                   <option>EUR</option>
@@ -218,150 +278,95 @@ function MoveInOutCleaningPage() {
           </div>
           <div className="flex-grow">
             <p className="text-gray-600 mb-4 text-sm sm:text-base">
-              Move-in/out cleaning is a specialized service offered by cleaning
-              companies and is prepared for individuals transitioning into or
-              out of a property.
-            </p>
-            <p className="text-gray-600 mb-4 text-sm sm:text-base">
-              This subtle cleaning procedure is specially made to prepare a
-              space for new occupants or ensure the departure leaves the
-              premises in impeccable condition.
-            </p>
-            <h1 className="font-semibold text-lg sm:text-xl">
-              It generally covers deep cleaning tasks such as surface scrubbing,
-              high-touch areas:
-            </h1>
-            <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
-              <li>Sanitization</li>
-              <li>Appliance cleaning</li>
-              <li>Fixture maintenance</li>
-              <li>Overall cleanliness</li>
-            </ul>
-            <p className="text-gray-600 text-sm sm:text-base">
-              The objective of this cleaning is to present the space in optimal
-              condition for incoming residents or to meet landlords’
-              expectations during move-outs.
-            </p>
-            <p className="text-gray-600 text-sm sm:text-base">
-              The ultimate aim of move-in/out cleaning services is to set up a
-              fresh, energetic, and welcoming atmosphere for the upcoming phase
-              in the property’s utilization.
+              Experience the joy of a spotless home with Pearly Sky’s trusted
+              maid services, now available in Dubai and France. Our professional
+              team delivers tailored cleaning solutions, from one-time deep
+              cleans to regular maintenance plans, ensuring your home stays
+              immaculate and stress-free. Let us handle the cleaning, so you can
+              focus on what truly matters
             </p>
           </div>
         </div>
       </div>
 
-      {/* Carousel Section */}
-      <div>
-        <ServicesCarosel index={2} />
-      </div>
 
-      {/* Checklist Section */}
-      <div className="bg-white rounded-lg p-4 sm:p-6 mb-8 shadow-lg">
-        <h2 className="text-xl font-semibold mb-4 text-blue-900">
-          Select Additional Service Including to Your Package Checklist
-        </h2>
-        {packages.isLoading ? (
-          <div className="text-center py-4">Loading packages...</div>
-        ) : packages.isSuccess ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {packages.data.map((service: any) => (
-              <label
-                key={service.package_id}
-                className="flex items-center space-x-2 text-blue-900 cursor-pointer"
+      {/* packege list */}
+      <div
+        className="rounded-lg shadow-lg p-4 sm:p-6 mb-8"
+        style={{ backgroundColor: "rgba(37, 150, 190, 0.14)" }}
+      >
+        <Typography
+          variant="h4"
+          align="center"
+          gutterBottom
+          color="primary"
+          sx={{ mb: 4, fontWeight: "medium" }}
+        >
+          Package Checklist
+        </Typography>
+
+        <Grid container spacing={3}>
+          {cleaningPackages.map((pkg, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <Card
+                elevation={3}
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
+                  transition: "transform 0.3s, box-shadow 0.3s",
+                  position: "relative",
+                  backgroundImage: `url(${pkg.icon})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                  overflow: "visible",
+                  "&:hover": {
+                    transform: "translateY(-5px)",
+                    boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.8)",
+                  },
+                }}
               >
-                <input
-                  type="checkbox"
-                  className="hidden"
-                  checked={checkedList.includes(service.package_id.toString())}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    if (e.target.checked) {
-                      setSelectedServices([
-                        ...selectedServices,
-                        {
-                          id: Number(service.package_id),
-                          price: parseInt(service.price),
-                          qty: service.name === "Oven Cleaning" ? Number(ovenQty) : Number(fridgeQty),
-                        },
-                      ]);
-                      setCheckedList([
-                        ...checkedList,
-                        service.package_id.toString(),
-                      ]);
-                    } else {
-                      setCheckedList(
-                        checkedList.filter(
-                          (id) => id !== service.package_id.toString()
-                        )
-                      );
-                    }
-                  }}
-                  disabled={service.status !== "active"}
-                />
-                {/* Custom checkbox */}
-                <div
-                  className={`w-5 h-5 border-2 border-gray-400 rounded flex items-center justify-center transition-colors ${
-                    checkedList.includes(service.package_id.toString())
-                      ? "bg-blue-500 border-blue-500"
-                      : "bg-white border-gray-400"
-                  } ${service.status !== "active" ? "opacity-50" : ""}`}
-                >
-                  {/* Checkmark icon */}
-                  {checkedList.includes(service.package_id.toString()) && (
-                    <svg
-                      className="w-3 h-3 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                  )}
-                </div>
-                <div className="flex-1">
-                  <span className="text-sm font-medium group-hover:text-black">
-                    {service.name}
-                  </span>
-                  {service.price !== "0$" && (
-                    <div className="mt-1 text-xs text-gray-500">
-                      <span>{service.price}</span>
-                      <select
-                        className="ml-2 border rounded px-1 py-0.5 text-xs"
-                        value={
-                          service.name === "Oven Cleaning" ? ovenQty : fridgeQty
-                        }
-                        onChange={(e) => {
-                          if (service.name === "Oven Cleaning") {
-                            setOvenQty(e.target.value);
-                            console.log("oven", e.target.value);
-                          } else {
-                            setFridgeQty(e.target.value);
-                            console.log("fridge", e.target.value);
-                          }
-                        }}
-                      >
-                        <option>No of pieces</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                      </select>
-                    </div>
-                  )}
-                </div>
-              </label>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-4 text-red-500">
-            {packages.errorMessage}
-          </div>
-        )}
+                <CardContent sx={{ flexGrow: 1, pt: 2, mt: 1 }}>
+                  <List dense>
+                    {pkg.items.map((item, idx) => (
+                      <ListItem key={idx} disableGutters>
+                        <ListItemText
+                          primary={item}
+                          sx={{
+                            "& .MuiTypography-root": {
+                              fontSize: "0.95rem",
+                              paddingLeft: "20px",
+                              paddingY: "5px",
+                              borderColor: "gray",
+                              borderBottomWidth: "1px",
+                              marginX: "10%",
+                              paddingBottom: "2%",
+                              position: "relative",
+                              color: "white",
+                              "&::before": {
+                                content: '""',
+                                position: "absolute",
+                                left: 0,
+                                top: "50%",
+                                transform: "translateY(-50%)",
+                                width: "6px",
+                                height: "6px",
+                                backgroundColor: "primary.main",
+                                borderRadius: "50%",
+                              },
+                            },
+                          }}
+                        />
+                      </ListItem>
+                    ))}
+                  </List>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
       </div>
 
       {/* Equipment Section */}
@@ -490,7 +495,7 @@ function MoveInOutCleaningPage() {
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              Base Cost <span className="text-gray-400">(C$ 57.72)</span>
+              Base Cost <span className="text-gray-400">(C$ 59.72)</span>
             </span>
             <span>C${priceBreakdown.basePrice.toFixed(2)}</span>
           </div>
@@ -549,4 +554,4 @@ function MoveInOutCleaningPage() {
   );
 }
 
-export default MoveInOutCleaningPage;
+export default PostConstructionCleaningPage;

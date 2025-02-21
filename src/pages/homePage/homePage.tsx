@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { homePageImage1, homePageImage2, homePageImage3, homePageImage4 } from "../../config/images";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-
 export default function HomePage() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));

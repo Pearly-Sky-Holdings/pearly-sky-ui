@@ -20,12 +20,12 @@ import CircularProgress from "@mui/material/CircularProgress";
 import LoginPage from "./pages/loginPage/looginPage.tsx";
 import CheckoutPage from "./pages/checkoutPage/checkoutPage.tsx";
 
-
 import RegularBasicCleaning from "./pages/servicesPages/regularbasicCleaningPage.tsx";
 import OneTimeCleaning from "./pages/servicesPages/oneTimeCleaningPage.tsx";
 import LastMinuteCleaningPage from "./pages/servicesPages/lastMinuteCleaningPage.tsx";
 import DeepCleaningPage from "./pages/servicesPages/deepCleaningPage.tsx";
 import MoveInOutCleaningPage from "./pages/servicesPages/moveInOutCleaningPage.tsx";
+import PostConstructionCleaningPage from "./pages/servicesPages/postConstructionCleaningPage.tsx";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -155,6 +155,15 @@ function App() {
             element={
               <>
                 <MoveInOutCleaningPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/post_constructor_cleaning"
+            element={
+              <>
+                <PostConstructionCleaningPage />
                 <Footer />
               </>
             }

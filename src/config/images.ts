@@ -123,3 +123,11 @@ export const OurShowcase3: string = "/images/ourShowCase/OurShowcase3.jpg";
 export const OurShowcase4: string = "/images/ourShowCase/OurShowcase4.jpg";
 export const OurShowcase5: string = "/images/ourShowCase/OurShowcase5.jpg";
 
+
+//post Constructor image
+export const postConstructorImage1: string = "/images/service/postConstructor/postConstructorImage1.png";
+export const postConstructorImage2: string = "/images/service/postConstructor/postConstructorImage2.png";
+export const postConstructorImage3: string = "/images/service/postConstructor/postConstructorImage3.png";
+export const postConstructorImage4: string = "/images/service/postConstructor/postConstructorImage4.png";
+export const postConstructorImage5: string = "/images/service/postConstructor/postConstructorImage5.png";
+export const postConstructorImage6: string = "/images/service/postConstructor/postConstructorImage6.png";
