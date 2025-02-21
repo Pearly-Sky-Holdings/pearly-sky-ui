@@ -2,8 +2,6 @@ import {
     Grid,
     TextField,
     Typography,
-    Select,
-    MenuItem,
     FormControl,
     Paper,
     FormLabel,

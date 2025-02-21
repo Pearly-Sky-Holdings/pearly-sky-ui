@@ -57,7 +57,7 @@ function RegularBasicCleaningPage() {
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
   const [selectedSolvent, setSelectedSolvent] = useState("");
-  const [selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
+  const [ setSelectedEquipmentOption] = useState("");
   const [selectedEquipments, setSelectedEquipments] = useState<
     Array<{ id: string; price: number }>
   >([]);

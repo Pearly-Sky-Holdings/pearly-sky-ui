@@ -7,7 +7,6 @@ interface TermsItem {
 
 interface TermsAndConditionsProps {
   title?: string;
-  terms: TermsItem[];
   showCheckbox?: boolean;
   isAccepted?: boolean;
   onAcceptChange?: (accepted: boolean) => void;
@@ -17,13 +16,48 @@ interface TermsAndConditionsProps {
 
 const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({
   title = "Before you book",
-  terms,
   showCheckbox = true,
   isAccepted = false,
   onAcceptChange,
   checkboxLabel = "I have read and accept the above terms and considerations",
   className = "",
 }) => {
+  // Integrated bookingTerms data directly into the component
+  const terms: TermsItem[] = [
+    {
+      title: "Consider Property Size and Architecture",
+      items: [
+        "Evaluate the size and layout of your property before deciding on the number of cleaners",
+        "Larger properties or complex layouts may require more time or additional cleaners",
+      ],
+    },
+    {
+      title: "Factor in Additional Cleaning Services",
+      items: [
+        "Some services may require specialized cleaning or additional time",
+        "Consider bundling services for better value",
+      ],
+    },
+    {
+      title: "Limitations or Continuous Working Hours",
+      items: [
+        "Maximum continuous working hours apply",
+        "Plan the number of cleaners accordingly",
+      ],
+    },
+    {
+      title: "Booking cancellation",
+      items: [
+        "24-hour notice required for cancellations",
+        "Late cancellations may incur fees",
+      ],
+    },
+    {
+      title: "Accept company cookies policy",
+      items: [],
+    },
+  ];
+
   return (
     <div className={`bg-blue-950 text-white rounded-lg p-4 md:p-6 ${className}`}>
       <h3 className="text-lg md:text-xl font-semibold mb-4">{title}</h3>
