@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../AxiosOrder";
 
 
-export const saveRegulrService = createAsyncThunk('save-regular-service', async (serviceData : any, {rejectWithValue}) => {
+export const saveServices = createAsyncThunk('save-services', async (serviceData : any, {rejectWithValue}) => {
     try {
         const {data} = await instance.post(`saveServiceDetails`, serviceData);
         return data;
@@ -13,3 +13,4 @@ export const saveRegulrService = createAsyncThunk('save-regular-service', async 
         return rejectWithValue("An unknown error occurred");
     }
 });
+
