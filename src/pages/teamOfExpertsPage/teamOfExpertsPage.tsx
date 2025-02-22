@@ -1,26 +1,32 @@
 import React from "react";
 import TeamCard from "../../components/teamCard/teamCard";
 const emailIcon = "./images/teamExperts/email_icon.png";
+import { teamExperts1, teamExperts2, teamExperts3, teamExperts4 } from "../../config/images";
+import { time } from "framer-motion";
 
 const teamMembers = [
   {
-    name: "Call Center",
-    image: "./images/teamExperts/callCenter.png",
+    name: "Mr Oshan Bandarar",
+    title:"Operations Manager",
+    image: teamExperts1,
     email: "callcenter@company.com",
   },
   {
-    name: "Sales Manager",
-    image: "./images/teamExperts/salesManager.png",
+    name: "Mrs Anusha Niroshini",
+    title:"Sales Director",
+    image: teamExperts2,
     email: "callcenter@company.com",
   },
   {
-    name: "Customer Relationship Manager",
-    image: "./images/teamExperts/customerManager.png",
+    name: "Mr Nipuna Piyumal",
+    title:"IT Supervisor",
+    image: teamExperts3,
     email: "callcenter@company.com",
   },
   {
-    name: "Team Expertise",
-    image: "./images/teamExperts/teamExperts.png",
+    name: "Mr Shakila Bandara",
+    title:"Operations Manager",
+    image: teamExperts4,
     email: "callcenter@company.com",
   },
 ];
@@ -41,7 +47,7 @@ const TeamOfExpertsPage: React.FC = () => {
       {/* Team Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-10">
         {teamMembers.map((member, index) => (
-          <TeamCard key={index} name={member.name} image={member.image} emailIcon={emailIcon}  email={member.email} />
+          <TeamCard key={index} name={member.name} title={member.title} image={member.image} emailIcon={emailIcon}  email={member.email} />
         ))}
       </div>
     </div>
