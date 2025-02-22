@@ -8,14 +8,12 @@ import {
 } from "@mui/material";
 import store from "../../store";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import BillingDetailsForm from "../../components/checkoutSection/BillingDetailsForm";
-import { saveRegulrService} from "../../services/CleaningServices/saveRegulrService";
 import {
   saveServices,
 } from "../../services/CleaningServices/saveRegulrService";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import OrderSummary from "../../components/checkoutSection/OrderSummary";
 import PaymentMethod from "../../components/checkoutSection/PaymentMethod";
 
@@ -59,30 +57,6 @@ const CheckoutPage = () => {
 
   const handlePlaceOrder = async () => {
 
-    const data = {
-      customer: formData,
-      service_id: serviceDetails.service_id,
-      price: parseInt(serviceDetails.price),
-      date: serviceDetails.date,
-      time: serviceDetails.time,
-      property_size: serviceDetails.property_size,
-      duration: serviceDetails.duration,
-      number_of_cleaners: serviceDetails.number_of_cleaners,
-      frequency: serviceDetails.frequency,
-      package_details: serviceDetails.package_details,
-      note: serviceDetails.note,
-      language: serviceDetails.language,
-      person_type: serviceDetails.person_type,
-      Equipment: serviceDetails.Equipment,
-      cleaning_solvents: serviceDetails.cleaning_solvents,
-      business_property: serviceDetails.business_property,
-      
-    };
-
-    setSaveLoader(true);
-    dispatch(saveRegulrService(data));
-  };
-
     if (data.serviceName == "Regular Basic") {
       const regularBasicServiceData = {
         customer: formData,
@@ -106,7 +80,7 @@ const CheckoutPage = () => {
       setSaveLoader(true);
       dispatch(saveServices(regularBasicServiceData));
       console.log("Data", data);
-    } else if (data.serviceName == "Deep Cleaning") {
+    } else if (data.serviceName == "Deep Cleaning"  || data.serviceName == "One time cleaning") {
       const deepServiceData = {
         customer: formData,
         service_id: data.details.service_id,

@@ -131,8 +131,9 @@ function OneTimeCleaningPage() {
       price: priceBreakdown.totalPrice,
       note: document.querySelector("textarea")?.value || "",
     };
+    const data = { serviceName: "Deep Cleaning", details: serviceDetails };
     console.log("Service Details:", serviceDetails);
-    navigate("/checkout", { state: { serviceDetails } });
+    navigate("/checkout", { state: { data } });
   };
 
   const solvents = [
