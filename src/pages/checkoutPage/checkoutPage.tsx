@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import BillingDetailsForm from "../../components/checkoutSection/BillingDetailsForm";
-import { saveRegulrService,saveOneTimeCleaningPage} from "../../services/CleaningServices/saveRegulrService";
+import { saveRegulrService} from "../../services/CleaningServices/saveRegulrService";
 import { useLocation } from "react-router-dom";
 import OrderSummary from "../../components/checkoutSection/OrderSummary";
 import PaymentMethod from "../../components/checkoutSection/PaymentMethod";
@@ -71,7 +71,7 @@ const CheckoutPage = () => {
     };
 
     setSaveLoader(true);
-    dispatch(saveOneTimeCleaningPage(data));
+    dispatch(saveRegulrService(data));
   };
 
   

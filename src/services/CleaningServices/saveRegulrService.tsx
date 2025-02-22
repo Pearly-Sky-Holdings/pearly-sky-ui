@@ -5,18 +5,6 @@ import instance from "../AxiosOrder";
 export const saveRegulrService = createAsyncThunk('save-regular-service', async (serviceData : any, {rejectWithValue}) => {
     try {
         const {data} = await instance.post(`saveServiceDetails`, serviceData);
-        return data;
-    } catch (error) {
-        if (error instanceof Error) {
-            return rejectWithValue(error.message);
-        }
-        return rejectWithValue("An unknown error occurred");
-    }
-});
-
-export const saveOneTimeCleaningPage = createAsyncThunk('save-one-time-cleaning', async (serviceData : any, {rejectWithValue}) => {
-    try {
-        const {data} = await instance.post(`saveService`, serviceData);
         alert(JSON.stringify(data,null,2));
         return data;
     } catch (error) {
@@ -27,23 +15,36 @@ export const saveOneTimeCleaningPage = createAsyncThunk('save-one-time-cleaning'
     }
 });
 
+// export const saveOneTimeCleaningPage = createAsyncThunk('save-one-time-cleaning', async (serviceData : any, {rejectWithValue}) => {
+//     try {
+//         const {data} = await instance.post(`saveServiceDetails`, serviceData);
+//         alert(JSON.stringify(data,null,2));
+//         return data;
+//     } catch (error) {
+//         if (error instanceof Error) {
+//             return rejectWithValue(error.message);
+//         }
+//         return rejectWithValue("An unknown error occurred");
+//     }
+// });
 
-// Generic save service function
-export const saveService = createAsyncThunk(
-    'save-service',
-    async ({ serviceType, serviceData }: { serviceType: string; serviceData: any }, { rejectWithValue }) => {
-        try {
-            const { data } = await instance.post(`saveService`, { serviceType, ...serviceData });
-            alert(JSON.stringify(data,null,2));
-            return data;
-        } catch (error) {
-            if (error instanceof Error) {
-                return rejectWithValue(error.message);
-            }
-            return rejectWithValue("An unknown error occurred");
-        }
-    }
-);
+
+// // Generic save service function
+// export const saveService = createAsyncThunk(
+//     'save-service',
+//     async ({ serviceType, serviceData }: { serviceType: string; serviceData: any }, { rejectWithValue }) => {
+//         try {
+//             const { data } = await instance.post(`saveService`, { serviceType, ...serviceData });
+//             alert(JSON.stringify(data,null,2));
+//             return data;
+//         } catch (error) {
+//             if (error instanceof Error) {
+//                 return rejectWithValue(error.message);
+//             }
+//             return rejectWithValue("An unknown error occurred");
+//         }
+//     }
+// );
 
 //function to call generic 
 // const getServiceType = (serviceId) => {
