@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { saveRegulrService } from "../../../services/CleaningServices/saveRegulrService";
+import { saveServices } from "../../../services/CleaningServices/saveRegulrService";
 
 interface PackageDetail {
   package_id: number;
@@ -61,17 +61,17 @@ export const serviceDetailsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(saveRegulrService.pending, (state) => {
+      .addCase(saveServices.pending, (state) => {
         state.service.isLoading = true;
         state.service.isSuccess = false;
         state.service.errorMessage = "";
       })
-      .addCase(saveRegulrService.fulfilled, (state, { payload }) => {
+      .addCase(saveServices.fulfilled, (state, { payload }) => {
         state.service.isLoading = false;
         state.service.isSuccess = true;
         state.service.data = payload;
       })
-      .addCase(saveRegulrService.rejected, (state, { payload }) => {
+      .addCase(saveServices.rejected, (state, { payload }) => {
         state.service.isLoading = false;
         state.service.isSuccess = false;
         state.service.errorMessage = payload as string;
