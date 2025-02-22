@@ -116,6 +116,12 @@ export const OneTimeService1: string = "/images/service/oneTime/oneTimeCleaner.p
 //last minute cleaning
 export const lastMinuteService1: string = "/images/service/lastMinute/LastMinuteCleaning.png";
 
+//deep cleaning
+export const DeepService1: string = "/images/service/deepCleaning/DeepCleaning.png";
+
+//move in and out cleaning
+export const MoveInAndOutService1: string = "/images/service/moveInOutCleaning/MoveInOutCleaning.png";
+
 //our show case image
 export const OurShowcase1: string = "/images/ourShowCase/OurShowcase1.jpg";
 export const OurShowcase2: string = "/images/ourShowCase/OurShowcase2.jpg";
