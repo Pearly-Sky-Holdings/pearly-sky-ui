@@ -1,15 +1,39 @@
 import { useState } from "react";
 import Dropdown from "../dropDown/dropDown";
 
-const BookingSectionCart = () => {
-  const [propertySize, setPropertySize] = useState("");
-  const [duration, setDuration] = useState("");
-  const [numCleaners, setNumCleaners] = useState("");
-  const [propertyType, setPropertyType] = useState("");
-  const [frequency, setFrequency] = useState("");
-  const [contactType, setContactType] = useState("");
-  const [language, setLanguage] = useState("");
+interface BookingSectionCartProps {
+  propertySize: string;
+  setPropertySize: (size: string) => void;
+  numCleaners: string;
+  setNumCleaners: (num: string) => void;
+  duration: string;
+  setDuration: (duration: string) => void;
+  propertyType: string;
+  setPropertyType: (type: string) => void;
+  frequency: string;
+  setFrequency: (frequency: string) => void;
+  contactType: string;
+  setContactType: (contactType: string) => void;
+  language: string;
+  setLanguage: (language: string) => void;
+}
 
+const BookingSectionCart: React.FC<BookingSectionCartProps> = ({
+  propertySize,
+  setPropertySize,
+  numCleaners,
+  setNumCleaners,
+  duration,
+  setDuration,
+  propertyType,
+  setPropertyType,
+  frequency,
+  setFrequency,
+  contactType,
+  setContactType,
+  language,
+  setLanguage,
+}) => {
   const propertySizeOptions = [
     { value: "20m²(215ft²)", label: "20m²(215ft²)" },
     { value: "21m²(226ft²)", label: "21m²(226ft²)" },
