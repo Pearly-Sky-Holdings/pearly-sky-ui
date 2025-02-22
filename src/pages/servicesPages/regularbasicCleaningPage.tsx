@@ -57,7 +57,7 @@ function RegularBasicCleaningPage() {
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
   const [selectedSolvent, setSelectedSolvent] = useState("");
-  const [ setSelectedEquipmentOption] = useState("");
+  const [_selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
   const [selectedEquipments, setSelectedEquipments] = useState<
     Array<{ id: string; price: number }>
   >([]);
@@ -467,7 +467,7 @@ function RegularBasicCleaningPage() {
           equipmentOptions={equipmentOptions}
           equipments={equipments}
           onSolventChange={setSelectedSolvent}
-          onEquipmentOptionChange={setSelectedEquipmentOption}
+          onEquipmentOptionChange={(option: string) => setSelectedEquipmentOption(option)}
           onEquipmentSelect={handleSelectEquipment}
         />
       </div>

@@ -46,8 +46,8 @@ function LastMinuteCleaningPage() {
   const [selectedTime, setSelectedTime] = useState("");
   const [acceptTerms1, setAcceptTerms1] = useState(false);
   const [acceptTerms2, setAcceptTerms2] = useState(false);;
-  const [selectedSolvent, setSelectedSolvent] = useState("");
-  const [selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
+  const [_selectedSolvent, setSelectedSolvent] = useState("");
+  const [_selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
   const [checkedList, setCheckedList] = useState<String[]>([]);
   const [selectedEquipments, setSelectedEquipments] = useState<
     Array<{ id: string; price: number }>
@@ -147,6 +147,41 @@ function LastMinuteCleaningPage() {
       name: "Vacuum Cleaner",
       price: 29.99,
       image: regularServiceEquipment4,
+    },
+  ];
+
+  const bookingTerms = [
+    {
+      title: "Consider Property Size and Architecture",
+      items: [
+        "Evaluate the size and layout of your property before deciding on the number of cleaners",
+        "Larger properties or complex layouts may require more time or additional cleaners",
+      ],
+    },
+    {
+      title: "Factor in Additional Cleaning Services",
+      items: [
+        "Some services may require specialized cleaning or additional time",
+        "Consider bundling services for better value",
+      ],
+    },
+    {
+      title: "Limitations or Continuous Working Hours",
+      items: [
+        "Maximum continuous working hours apply",
+        "Plan the number of cleaners accordingly",
+      ],
+    },
+    {
+      title: "Booking cancellation",
+      items: [
+        "24-hour notice required for cancellations",
+        "Late cancellations may incur fees",
+      ],
+    },
+    {
+      title: "Accept company cookies policy",
+      items: [],
     },
   ];
 
@@ -451,6 +486,7 @@ function LastMinuteCleaningPage() {
         {/* Terms and Conditions */}
         {showTermsCard && (
           <TermsAndConditions
+          terms={bookingTerms}
             isAccepted={acceptTerms1}
             onAcceptChange={setAcceptTerms1}
             className="mb-6"

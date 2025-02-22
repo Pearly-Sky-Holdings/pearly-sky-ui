@@ -6,6 +6,7 @@ interface TermsItem {
 }
 
 interface TermsAndConditionsProps {
+  terms: { title: string; items: string[] }[];
   title?: string;
   showCheckbox?: boolean;
   isAccepted?: boolean;
