@@ -13,7 +13,6 @@ import PaymentSupportSection from "../../components/paymentSupportSection/paymen
 import { getPackege } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
 import {
-  Box,
   Card,
   CardContent,
   Grid,
@@ -35,16 +34,6 @@ import {
   regularServiceEquipment2,
   regularServiceEquipment3,
   regularServiceEquipment4,
-  supportPayment1,
-  supportPayment2,
-  supportPayment3,
-  supportPayment4,
-  supportPayment5,
-  supportPayment6,
-  supportPayment7,
-  supportPayment8,
-  supportPayment9,
-  supportPayment10,
 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
@@ -231,20 +220,6 @@ function PostConstructionCleaningPage() {
       image: regularServiceEquipment4,
     },
   ];
-
-  const paymentMethods = [
-    { icon: supportPayment1, alt: "Visa" },
-    { icon: supportPayment2, alt: "Stripe" },
-    { icon: supportPayment3, alt: "PayPal" },
-    { icon: supportPayment4, alt: "Mastercard" },
-    { icon: supportPayment5, alt: "American Express" },
-    { icon: supportPayment6, alt: "Apple Pay" },
-    { icon: supportPayment7, alt: "Google Pay" },
-    { icon: supportPayment8, alt: "Bitcoin" },
-    { icon: supportPayment9, alt: "Amazon Pay" },
-    { icon: supportPayment10, alt: "Discover" },
-  ];
-
   return (
     <div className="max-w-7xl mx-auto p-4 mt-6 sm:p-2">
       {/* Header Section */}
@@ -426,7 +401,22 @@ function PostConstructionCleaningPage() {
 
         {/* Booking Details */}
         <div>
-          <BookingSectionCart />
+          <BookingSectionCart
+            propertySize={propertySize}
+            setPropertySize={setPropertySize}
+            numCleaners={numCleaners}
+            setNumCleaners={setNumCleaners}
+            duration={duration}
+            setDuration={setDuration}
+            propertyType={propertyType}
+            setPropertyType={setPropertyType}
+            frequency={frequency}
+            setFrequency={setFrequency}
+            contactType={contactType}
+            setContactType={setContactType}
+            language={language}
+            setLanguage={setLanguage}
+          />
         </div>
 
         {/* File Upload and Additional Note */}
@@ -545,10 +535,7 @@ function PostConstructionCleaningPage() {
 
       {/* Payment Support Section */}
       <div>
-        <PaymentSupportSection
-          title="We Support"
-          paymentMethods={paymentMethods}
-        />
+        <PaymentSupportSection/>
       </div>
     </div>
   );
