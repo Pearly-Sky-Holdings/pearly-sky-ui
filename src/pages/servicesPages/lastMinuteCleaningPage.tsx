@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState} from "react";
+import {  useSelector } from "react-redux";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
@@ -11,7 +11,6 @@ import Carousel from "../../components/carouselSection/carousel";
 import EquipmentSection from "../../components/equipmentSection/equipmentSection";
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
-import { getPackege, getServices } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
 
 import {
@@ -35,78 +34,29 @@ import {
   supportPayment10,
   lastMinuteService1,
 } from "../../config/images";
-import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
 function LastMinuteCleaningPage() {
   const navigate = useNavigate();
-  const dispatch = useDispatch<typeof store.dispatch>();
   const packages = useSelector((state: any) => state.packagesSlice.package);
-  const services = useSelector((state: any) => state.servicesSlice.service);
   const [selectedServices, setSelectedServices] = useState<object[]>([]);
   const [ovenQty, setOvenQty] = useState("0");
   const [showTermsCard, setShowTermsCard] = useState(false);
   const [fridgeQty, setFridgeQty] = useState("0");
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
-  const [propertySize, setPropertySize] = useState("");
-  const [duration, setDuration] = useState("");
-  const [numCleaners, setNumCleaners] = useState("");
-  const [frequency, setFrequency] = useState("");
   const [acceptTerms1, setAcceptTerms1] = useState(false);
-  const [acceptTerms2, setAcceptTerms2] = useState(false);
-  const [language, setLanguage] = useState("");
-  const [propertyType, setPropertyType] = useState("");
-  const [contactType, setContactType] = useState("");
-  const [selectedSolvent, setSelectedSolvent] = useState("");
-  const [selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
+  const [acceptTerms2, setAcceptTerms2] = useState(false);;
+  const [_selectedSolvent, setSelectedSolvent] = useState("");
+  const [_selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
+  const [checkedList, setCheckedList] = useState<String[]>([]);
   const [selectedEquipments, setSelectedEquipments] = useState<
     Array<{ id: string; price: number }>
   >([]);
-  const [checkedList, setCheckedList] = useState<String[]>([]);
-
-  const [priceBreakdown, setPriceBreakdown] = useState({
-    basePrice: 57.0,
-    serviceCosts: 0,
-    equipmentCosts: 0,
-    totalPrice: 57.0,
-  });
-
-  useEffect(() => {
-    setPriceBreakdown(calculateTotalPrice());
-  }, [selectedServices, selectedEquipments]);
-
-  useEffect(() => {
-    dispatch(getPackege("3"));
-  }, []);
-  useEffect(() => {
-    dispatch(getServices("3"));
-  }, []);
-  const calculateTotalPrice = () => {
-    let basePrice = 57.0;
-    let serviceCosts = 0;
-    let equipmentCosts = 0;
-
-    selectedServices.forEach((serviceId) => {
-      const service = packages.data.find(
-        (p: any) => p.package_id.toString() === serviceId
-      );
-      if (service) {
-        serviceCosts += parseFloat(service.price.replace("$", ""));
-      }
-    });
-
-    selectedEquipments.forEach((equipment) => {
-      equipmentCosts += equipment.price;
-    });
-
-    const totalPrice = basePrice + serviceCosts + equipmentCosts;
-    return {
-      basePrice,
-      serviceCosts,
-      equipmentCosts,
-      totalPrice,
-    };
+  
+    const handleBookNow = () => {
+    navigate("/checkout");
   };
+
   const handleEquipmentSelect = (equipment: any, selected: boolean) => {
     if (selected) {
       setSelectedEquipments([
@@ -118,31 +68,6 @@ function LastMinuteCleaningPage() {
         selectedEquipments.filter((e) => e.id !== equipment.id)
       );
     }
-  };
-
-  const handleBookNow = () => {
-    const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
-    const serviceDetails = {
-      service_id: "3",
-      date,
-      time: selectedTime,
-      property_size: propertySize,
-      duration: parseInt(duration),
-      number_of_cleaners: parseInt(numCleaners),
-      frequency,
-      package_details: selectedServices,
-      person_type: contactType,
-      language,
-      business_property: propertyType,
-      cleaning_solvents: selectedSolvent,
-      // equipmentOption: selectedEquipmentOption,
-      Equipment: selectedEquipments.map((e) => e.id).join(","),
-      price: priceBreakdown.totalPrice,
-      note: document.querySelector("textarea")?.value || "",
-    };
-    const data = { serviceName: "Last Minute", details: serviceDetails };
-    console.log("Service Details:", serviceDetails);
-    navigate("/checkout", { state: { data } });
   };
 
   const imagePairs = [
@@ -225,6 +150,41 @@ function LastMinuteCleaningPage() {
     },
   ];
 
+  const bookingTerms = [
+    {
+      title: "Consider Property Size and Architecture",
+      items: [
+        "Evaluate the size and layout of your property before deciding on the number of cleaners",
+        "Larger properties or complex layouts may require more time or additional cleaners",
+      ],
+    },
+    {
+      title: "Factor in Additional Cleaning Services",
+      items: [
+        "Some services may require specialized cleaning or additional time",
+        "Consider bundling services for better value",
+      ],
+    },
+    {
+      title: "Limitations or Continuous Working Hours",
+      items: [
+        "Maximum continuous working hours apply",
+        "Plan the number of cleaners accordingly",
+      ],
+    },
+    {
+      title: "Booking cancellation",
+      items: [
+        "24-hour notice required for cancellations",
+        "Late cancellations may incur fees",
+      ],
+    },
+    {
+      title: "Accept company cookies policy",
+      items: [],
+    },
+  ];
+
   const paymentMethods = [
     { icon: supportPayment1, alt: "Visa" },
     { icon: supportPayment2, alt: "Stripe" },
@@ -237,6 +197,7 @@ function LastMinuteCleaningPage() {
     { icon: supportPayment9, alt: "Amazon Pay" },
     { icon: supportPayment10, alt: "Discover" },
   ];
+
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
@@ -252,12 +213,12 @@ function LastMinuteCleaningPage() {
         <div className="w-full sm:w-2/3">
           <div className="">
             <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
-              {services.data.name}
+              Regular Basic Cleaning
             </h1>
             <div className="mt-4 mb-4 ml-4">
               <div className="flex gap-3">
                 <p className="text-xl sm:text-2xl font-semibold text-black">
-                  {services.data.price}
+                  C$ 59.72
                 </p>
                 <select className="border rounded p-0.5 text-blue-900 h-7">
                   <option>EUR</option>
@@ -274,9 +235,7 @@ function LastMinuteCleaningPage() {
             a space look presentable in a short amount of time. It focuses on
             high-impact areas like the living room, kitchen, and bathroom.
           </p>
-          <p className="text-gray-600 mb-2 text-sm sm:text-base">
-            Tasks often include:
-          </p>
+          <p className="text-gray-600 mb-2 text-sm sm:text-base">Tasks often include:</p>
           <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
             <li>Tidying up clutter</li>
             <li>Quickly wiping down visible surfaces</li>
@@ -287,8 +246,8 @@ function LastMinuteCleaningPage() {
             <li>Emptying trash.</li>
           </ul>
           <p className="text-gray-600 text-sm sm:text-base">
-            Routine basic cleaning consists of performing necessary tasks
-            regularly to maintain a clean and well-preserved environment.
+            The goal is to create a clean and orderly appearance as fast as
+            possible, perfect for unexpected guests or a last-minute event.
           </p>
         </div>
       </div>
@@ -321,7 +280,7 @@ function LastMinuteCleaningPage() {
                       setSelectedServices([
                         ...selectedServices,
                         {
-                          package_id: Number(service.package_id),
+                          id: Number(service.package_id),
                           price: parseInt(service.price),
                           qty:
                             service.name === "Oven Cleaning"
@@ -467,23 +426,8 @@ function LastMinuteCleaningPage() {
         </div>
 
         {/* Booking Details */}
-        <div>
-          <BookingSectionCart
-            propertySize={propertySize}
-            setPropertySize={setPropertySize}
-            numCleaners={numCleaners}
-            setNumCleaners={setNumCleaners}
-            duration={duration}
-            setDuration={setDuration}
-            propertyType={propertyType}
-            setPropertyType={setPropertyType}
-            frequency={frequency}
-            setFrequency={setFrequency}
-            contactType={contactType}
-            setContactType={setContactType}
-            language={language}
-            setLanguage={setLanguage}
-          />
+        <div >
+          <BookingSectionCart />
         </div>
 
         {/* File Upload and Additional Note */}
@@ -542,6 +486,7 @@ function LastMinuteCleaningPage() {
         {/* Terms and Conditions */}
         {showTermsCard && (
           <TermsAndConditions
+          terms={bookingTerms}
             isAccepted={acceptTerms1}
             onAcceptChange={setAcceptTerms1}
             className="mb-6"
@@ -552,9 +497,9 @@ function LastMinuteCleaningPage() {
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              Base Cost <span className="text-gray-400">(C$ 57.00)</span>
+              Base Cost <span className="text-gray-400">(C$ 59.72)</span>
             </span>
-            <span>C${priceBreakdown.basePrice.toFixed(2)}</span>
+            <span>C${"59.72"}</span>
           </div>
 
           {/* Selected Services Costs */}
@@ -566,27 +511,27 @@ function LastMinuteCleaningPage() {
                   ({selectedServices.length} services)
                 </span>
               </span>
-              <span>C${priceBreakdown.serviceCosts.toFixed(2)}</span>
+              <span>C${"0"}</span>
             </div>
           )}
 
           {/* Selected Equipment Costs */}
-          {selectedEquipments.length > 0 && (
+          
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
               <span className="mb-2 md:mb-0">
                 Selected Equipment{" "}
                 <span className="text-gray-400">
-                  ({selectedEquipments.length} items)
+                  ({""} items)
                 </span>
               </span>
-              <span>C${priceBreakdown.equipmentCosts.toFixed(2)}</span>
+              <span>C${"0"}</span>
             </div>
-          )}
+       
 
           {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
             <span>Total</span>
-            <span>C${priceBreakdown.totalPrice.toFixed(2)}</span>
+            <span>C${"0"}</span>
           </div>
         </div>
 

@@ -48,15 +48,15 @@ function MoveInOutCleaningPage() {
   const [fridgeQty, setFridgeQty] = useState("0");
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
-  const [propertySize, setPropertySize] = useState("");
-  const [duration, setDuration] = useState("");
-  const [numCleaners, setNumCleaners] = useState("");
-  const [frequency, setFrequency] = useState("");
+  const [propertySize, _setPropertySize] = useState("");
+  const [duration, _setDuration] = useState("");
+  const [numCleaners, _setNumCleaners] = useState("");
+  const [frequency, _setFrequency] = useState("");
   const [acceptTerms1, setAcceptTerms1] = useState(false);
   const [acceptTerms2, setAcceptTerms2] = useState(false);
-  const [language, setLanguage] = useState("");
-  const [propertyType, setPropertyType] = useState("");
-  const [contactType, setContactType] = useState("");
+  const [language, _setLanguage] = useState("");
+  const [propertyType, _setPropertyType] = useState("");
+  const [contactType, _setContactType] = useState("");
   const [selectedSolvent, setSelectedSolvent] = useState("");
   const [selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
   const [selectedEquipments, setSelectedEquipments] = useState<
@@ -222,6 +222,41 @@ function MoveInOutCleaningPage() {
       name: "Vacuum Cleaner",
       price: 29.99,
       image: regularServiceEquipment4,
+    },
+  ];
+
+  const bookingTerms = [
+    {
+      title: "Consider Property Size and Architecture",
+      items: [
+        "Evaluate the size and layout of your property before deciding on the number of cleaners",
+        "Larger properties or complex layouts may require more time or additional cleaners",
+      ],
+    },
+    {
+      title: "Factor in Additional Cleaning Services",
+      items: [
+        "Some services may require specialized cleaning or additional time",
+        "Consider bundling services for better value",
+      ],
+    },
+    {
+      title: "Limitations or Continuous Working Hours",
+      items: [
+        "Maximum continuous working hours apply",
+        "Plan the number of cleaners accordingly",
+      ],
+    },
+    {
+      title: "Booking cancellation",
+      items: [
+        "24-hour notice required for cancellations",
+        "Late cancellations may incur fees",
+      ],
+    },
+    {
+      title: "Accept company cookies policy",
+      items: [],
     },
   ];
 
@@ -545,6 +580,7 @@ function MoveInOutCleaningPage() {
         {/* Terms and Conditions */}
         {showTermsCard && (
           <TermsAndConditions
+            terms={bookingTerms}
             isAccepted={acceptTerms1}
             onAcceptChange={setAcceptTerms1}
             className="mb-6"
