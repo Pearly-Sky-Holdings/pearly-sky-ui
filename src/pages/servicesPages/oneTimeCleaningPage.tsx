@@ -403,7 +403,22 @@ function OneTimeCleaningPage() {
 
         {/* Booking Details */}
         <div>
-          <BookingSectionCart />
+          <BookingSectionCart
+            propertySize={propertySize}
+            setPropertySize={setPropertySize}
+            numCleaners={numCleaners}
+            setNumCleaners={setNumCleaners}
+            duration={duration}
+            setDuration={setDuration}
+            propertyType={propertyType}
+            setPropertyType={setPropertyType}
+            frequency={frequency}
+            setFrequency={setFrequency}
+            contactType={contactType}
+            setContactType={setContactType}
+            language={language}
+            setLanguage={setLanguage}
+          />
         </div>
 
         {/* File Upload and Additional Note */}
@@ -522,10 +537,7 @@ function OneTimeCleaningPage() {
 
       {/* Payment Support Section */}
       <div>
-        <PaymentSupportSection
-          title="We Support"
-          paymentMethods={paymentMethods}
-        />
+        <PaymentSupportSection/>
       </div>
     </div>
   );

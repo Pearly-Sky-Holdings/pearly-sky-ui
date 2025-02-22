@@ -7,40 +7,31 @@ import { format } from "date-fns";
 import "react-calendar/dist/Calendar.css";
 import TimeSlots from "../../components/timeSlot/timeSlot";
 import "./CustomCalendar.css";
+import Carousel from "../../components/carouselSection/carousel";
 import EquipmentSection from "../../components/equipmentSection/equipmentSection";
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
-import { getPackege } from "../../services/CleaningServices/index";
+import { getPackege,getServices } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
-import ServicesCarosel from "../../components/oneTimeCleaning/servicesCarousel";
-import store from "../../store";
-import Dropdown from "../../components/dropDown/dropDown";
-import { PropertySizeOptions } from "../../components/data/PropertySizeOptions";
-import { Duration } from "../../components/data/Duration";
+
 import {
   regularService1,
+  regularService2,
+  regularService3,
+  regularService4,
+  regularService5,
   regularServiceEquipment1,
   regularServiceEquipment2,
   regularServiceEquipment3,
   regularServiceEquipment4,
-  supportPayment1,
-  supportPayment2,
-  supportPayment3,
-  supportPayment4,
-  supportPayment5,
-  supportPayment6,
-  supportPayment7,
-  supportPayment8,
-  supportPayment9,
-  supportPayment10,
 } from "../../config/images";
-
-
-
+import store from "../../store";
+import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
 function RegularBasicCleaningPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const packages = useSelector((state: any) => state.packagesSlice.package);
+  const services = useSelector((state: any) => state.servicesSlice.service);
   const [selectedServices, setSelectedServices] = useState<object[]>([]);
   const [ovenQty, setOvenQty] = useState("0");
   const [showTermsCard, setShowTermsCard] = useState(false);
@@ -57,11 +48,15 @@ function RegularBasicCleaningPage() {
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
   const [selectedSolvent, setSelectedSolvent] = useState("");
-  const [ setSelectedEquipmentOption] = useState("");
+  const [selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
   const [selectedEquipments, setSelectedEquipments] = useState<
     Array<{ id: string; price: number }>
   >([]);
-  const [checkedList, setCheckedList] = useState<string[]>([]);
+  const [checkedList, setCheckedList] = useState<String[]>([]);
+
+  
+
+
   const [priceBreakdown, setPriceBreakdown] = useState({
     basePrice: 27.0,
     serviceCosts: 0,
@@ -69,16 +64,15 @@ function RegularBasicCleaningPage() {
     totalPrice: 27.0,
   });
 
-    // Use the class to get property size options
-    const propertySizeOptions = PropertySizeOptions.getOptions();
-    const durationOptions = Duration.getOptions();
-
   useEffect(() => {
     setPriceBreakdown(calculateTotalPrice());
   }, [selectedServices, selectedEquipments]);
 
   useEffect(() => {
     dispatch(getPackege("1"));
+  }, []);
+  useEffect(() => {
+    dispatch(getServices("1"));
   }, []);
   const calculateTotalPrice = () => {
     let basePrice = 27.0;
@@ -106,11 +100,17 @@ function RegularBasicCleaningPage() {
       totalPrice,
     };
   };
-  const handleSelectEquipment = (equipment: any) => {
-    setSelectedEquipments([
-      ...selectedEquipments,
-      { id: equipment.id, price: equipment.price },
-    ]);
+  const handleEquipmentSelect = (equipment: any, selected: boolean) => {
+    if (selected) {
+      setSelectedEquipments([
+        ...selectedEquipments,
+        { id: equipment.id, price: equipment.price },
+      ]);
+    } else {
+      setSelectedEquipments(
+        selectedEquipments.filter((e) => e.id !== equipment.id)
+      );
+    }
   };
 
   const handleBookNow = () => {
@@ -120,16 +120,10 @@ function RegularBasicCleaningPage() {
       date,
       time: selectedTime,
       property_size: propertySize,
-      duration: Number(duration),
-      number_of_cleaners: Number(numCleaners),
+      duration: parseInt(duration),
+      number_of_cleaners: parseInt(numCleaners),
       frequency,
-      package_details: [
-        {
-          package_id: 1,
-          price: 3000.0,
-          qty: 1,
-        },
-      ],
+      package_details: selectedServices,
       person_type: contactType,
       language,
       business_property: propertyType,
@@ -139,9 +133,55 @@ function RegularBasicCleaningPage() {
       price: priceBreakdown.totalPrice,
       note: document.querySelector("textarea")?.value || "",
     };
+    const data ={serviceName: "Regular Basic",
+      details: serviceDetails
+    }
     console.log("Service Details:", serviceDetails);
-    navigate("/checkout", { state: { serviceDetails } });
+    navigate("/checkout", { state: { data } });
   };
+
+  const imagePairs = [
+    [
+      {
+        img: regularService2,
+        title: "Bedroom Cleaning",
+        features: [
+          "Dust all cleanable surfaces",
+          "Make the bed",
+          "Clean floor surfaces",
+        ],
+      },
+      {
+        img: regularService3,
+        title: "Bedroom Cleaning",
+        features: [
+          "Dust all cleanable surfaces",
+          "Make the bed",
+          "Clean floor surfaces",
+        ],
+      },
+    ],
+    [
+      {
+        img: regularService4,
+        title: "Bedroom Cleaning",
+        features: [
+          "Dust all cleanable surfaces",
+          "Make the bed",
+          "Clean floor surfaces",
+        ],
+      },
+      {
+        img: regularService5,
+        title: "Bedroom Cleaning",
+        features: [
+          "Dust all cleanable surfaces",
+          "Make the bed",
+          "Clean floor surfaces",
+        ],
+      },
+    ],
+  ];
 
   const solvents = [
     { value: "customer", label: "Provided by the Customer" },
@@ -180,117 +220,6 @@ function RegularBasicCleaningPage() {
     },
   ];
 
-  const bookingTerms = [
-    {
-      title: "Consider Property Size and Architecture",
-      items: [
-        "Evaluate the size and layout of your property before deciding on the number of cleaners",
-        "Larger properties or complex layouts may require more time or additional cleaners",
-      ],
-    },
-    {
-      title: "Factor in Additional Cleaning Services",
-      items: [
-        "Some services may require specialized cleaning or additional time",
-        "Consider bundling services for better value",
-      ],
-    },
-    {
-      title: "Limitations or Continuous Working Hours",
-      items: [
-        "Maximum continuous working hours apply",
-        "Plan the number of cleaners accordingly",
-      ],
-    },
-    {
-      title: "Booking cancellation",
-      items: [
-        "24-hour notice required for cancellations",
-        "Late cancellations may incur fees",
-      ],
-    },
-    {
-      title: "Accept company cookies policy",
-      items: [],
-    },
-  ];
-
-  const paymentMethods = [
-    { icon: supportPayment1, alt: "Visa" },
-    { icon: supportPayment2, alt: "Stripe" },
-    { icon: supportPayment3, alt: "PayPal" },
-    { icon: supportPayment4, alt: "Mastercard" },
-    { icon: supportPayment5, alt: "American Express" },
-    { icon: supportPayment6, alt: "Apple Pay" },
-    { icon: supportPayment7, alt: "Google Pay" },
-    { icon: supportPayment8, alt: "Bitcoin" },
-    { icon: supportPayment9, alt: "Amazon Pay" },
-    { icon: supportPayment10, alt: "Discover" },
-  ];
-
-
-  const numCleanersOptions = [
-    { value: "1", label: "1 " },
-    { value: "2", label: "2 " },
-    { value: "3", label: "3 " },
-    { value: "4", label: "4" },
-    { value: "5", label: "5" },
-    { value: "6", label: "6" },
-    { value: "7", label: "7" },
-    { value: "8", label: "8" },
-    { value: "9", label: "9" },
-    { value: "10", label: "10" },
-    { value: "15", label: "15" },
-    { value: "20", label: "20" },
-    { value: "25", label: "25" },
-    { value: "50", label: "50" },
-    { value: "75", label: "75" },
-    { value: "100", label: "100" },
-  ];
-
-  const propertyTypeOptions = [
-    { value: "home", label: "Home" },
-    { value: "apartment", label: "Apartment" },
-    { value: "villa", label: "Villa" },
-    { value: "commercial property", label: "Commercial property" },
-    { value: "government office", label: "Government office" },
-    { value: "public office", label: "Public office" },
-    { value: "private office", label: "Private office " },
-    { value: "daycare centre", label: "Daycare centre " },
-    { value: "elders care centre", label: "Elder's Care Centre" },
-    { value: "shopping mall", label: "Shopping mall" },
-    { value: "government hospital", label: "Government hospital" },
-    { value: "private hospital", label: "Private hospital" },
-    { value: "sport centre", label: "Sport centre" },
-    { value: "gym", label: "Gym " },
-    { value: "restaurant", label: "Restaurant" },
-    { value: "hotel", label: "Hotel" },
-    {value: "school private or government",label: "School Private or Government",},
-    { value: "transport sector", label: "Transport sector" },
-    { value: "airport", label: "Airport" },
-    { value: "retail building or shop", label: "Retail building or shop" },
-    { value: "other", label: "Other sector" },
-  ];
-
-  const frequencyOptions = [
-    { value: "once", label: "One-time" },
-    { value: "weekly", label: "Weekly" },
-    { value: "every2weeks", label: "Every 02 weeks" },
-    { value: "every3weeks", label: "Every 03 weeks" },
-    { value: "monthly", label: "Monthly" },
-  ];
-
-  const contactTypeOptions = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-  ];
-
-  const languageOptions = [
-    { value: "english", label: "English" },
-    { value: "french", label: "French" },
-    { value: "spanish", label: "Spanish" },
-  ];
-
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
       {/* Header Section */}
@@ -305,12 +234,12 @@ function RegularBasicCleaningPage() {
         <div className="w-full sm:w-2/3">
           <div className="">
             <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
-              Regular Basic Cleaning
+             {services.data.name}
             </h1>
             <div className="mt-4 mb-4 ml-4">
               <div className="flex gap-3">
                 <p className="text-xl sm:text-2xl font-semibold text-black">
-                  C$ 27.00
+                  {services.data.price}
                 </p>
                 <select className="border rounded p-0.5 text-blue-900 h-7">
                   <option>EUR</option>
@@ -343,7 +272,7 @@ function RegularBasicCleaningPage() {
 
       {/* Carousel Section */}
       <div>
-        <ServicesCarosel index={2}/>
+        <Carousel imagePairs={imagePairs} />
       </div>
 
       {/* Checklist Section */}
@@ -369,7 +298,7 @@ function RegularBasicCleaningPage() {
                       setSelectedServices([
                         ...selectedServices,
                         {
-                          id: Number(service.package_id),
+                          package_id: Number(service.package_id),
                           price: parseInt(service.price),
                           qty:
                             service.name === "Oven Cleaning"
@@ -468,7 +397,7 @@ function RegularBasicCleaningPage() {
           equipments={equipments}
           onSolventChange={setSelectedSolvent}
           onEquipmentOptionChange={setSelectedEquipmentOption}
-          onEquipmentSelect={handleSelectEquipment}
+          onEquipmentSelect={handleEquipmentSelect}
         />
       </div>
 
@@ -515,51 +444,23 @@ function RegularBasicCleaningPage() {
         </div>
 
         {/* Booking Details */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <Dropdown
-            label="Approx. Property Size"
-            value={propertySize}
-            options={propertySizeOptions}
-            onChange={setPropertySize}
+        <div>
+          <BookingSectionCart
+            propertySize={propertySize}
+            setPropertySize={setPropertySize}
+            numCleaners={numCleaners}
+            setNumCleaners={setNumCleaners}
+            duration={duration}
+            setDuration={setDuration}
+            propertyType={propertyType}
+            setPropertyType={setPropertyType}
+            frequency={frequency}
+            setFrequency={setFrequency}
+            contactType={contactType}
+            setContactType={setContactType}
+            language={language}
+            setLanguage={setLanguage}
           />
-          <Dropdown
-            label="Duration (in hours)"
-            value={duration}
-            options={durationOptions}
-            onChange={setDuration}
-          />
-          <Dropdown
-            label="Number of Cleaners"
-            value={numCleaners}
-            options={numCleanersOptions}
-            onChange={setNumCleaners}
-          />
-          <Dropdown
-            label="Select your business or property"
-            value={propertyType}
-            options={propertyTypeOptions}
-            onChange={setPropertyType}
-          />
-          <Dropdown
-            label="Select Frequency"
-            value={frequency}
-            options={frequencyOptions}
-            onChange={setFrequency}
-          />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Dropdown
-              label="Contact Person Type"
-              value={contactType}
-              options={contactTypeOptions}
-              onChange={setContactType}
-            />
-            <Dropdown
-              label="Select Language"
-              value={language}
-              options={languageOptions}
-              onChange={setLanguage}
-            />
-          </div>
         </div>
 
         {/* File Upload and Additional Note */}
@@ -618,7 +519,6 @@ function RegularBasicCleaningPage() {
         {/* Terms and Conditions */}
         {showTermsCard && (
           <TermsAndConditions
-            terms={bookingTerms}
             isAccepted={acceptTerms1}
             onAcceptChange={setAcceptTerms1}
             className="mb-6"
@@ -679,10 +579,7 @@ function RegularBasicCleaningPage() {
 
       {/* Payment Support Section */}
       <div>
-        <PaymentSupportSection
-          title="We Support"
-          paymentMethods={paymentMethods}
-        />
+        <PaymentSupportSection/>
       </div>
     </div>
   );

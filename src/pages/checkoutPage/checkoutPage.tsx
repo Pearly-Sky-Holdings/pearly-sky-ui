@@ -12,6 +12,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import BillingDetailsForm from "../../components/checkoutSection/BillingDetailsForm";
 import { saveRegulrService} from "../../services/CleaningServices/saveRegulrService";
+import {
+  saveServices,
+} from "../../services/CleaningServices/saveRegulrService";
 import { useLocation } from "react-router-dom";
 import OrderSummary from "../../components/checkoutSection/OrderSummary";
 import PaymentMethod from "../../components/checkoutSection/PaymentMethod";
@@ -26,10 +29,19 @@ const CheckoutPage = () => {
   const saveRegularServiceData = useSelector(
     (state: any) => state.serviceDetailsSlice.service
   );
+  const saveLastMinuteServiceData = useSelector(
+    (state: any) => state.serviceDetailsSlice.service
+  );
+  const saveDeepServiceData = useSelector(
+    (state: any) => state.serviceDetailsSlice.service
+  );
+  const saveMoveInOutServiceData = useSelector(
+    (state: any) => state.serviceDetailsSlice.service
+  );
   const [saveLoader, setSaveLoader] = useState(false);
 
   const location = useLocation();
-  const { serviceDetails } = location.state || {};
+  const { data } = location.state || {};
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -46,11 +58,8 @@ const CheckoutPage = () => {
   });
 
   const handlePlaceOrder = async () => {
+
     const data = {
-      // name:"One Time Cleaning",
-      // price:"560$",
-      // status:"active",
-      // time: "10:12"
       customer: formData,
       service_id: serviceDetails.service_id,
       price: parseInt(serviceDetails.price),
@@ -74,7 +83,101 @@ const CheckoutPage = () => {
     dispatch(saveRegulrService(data));
   };
 
-  
+    if (data.serviceName == "Regular Basic") {
+      const regularBasicServiceData = {
+        customer: formData,
+        service_id: data.details.service_id,
+        price: parseInt(data.details.price),
+        date: data.details.date,
+        time: data.details.time,
+        property_size: data.details.property_size,
+        duration: data.details.duration,
+        number_of_cleaners: data.details.number_of_cleaners,
+        frequency: data.details.frequency,
+        package_details: data.details.package_details,
+        note: data.details.note,
+        language: data.details.language,
+        person_type: data.details.person_type,
+        Equipment: data.details.Equipment,
+        cleaning_solvents: data.details.cleaning_solvents,
+        business_property: data.details.business_property,
+      };
+
+      setSaveLoader(true);
+      dispatch(saveServices(regularBasicServiceData));
+      console.log("Data", data);
+    } else if (data.serviceName == "Deep Cleaning") {
+      const deepServiceData = {
+        customer: formData,
+        service_id: data.details.service_id,
+        price: parseInt(data.details.price),
+        date: data.details.date,
+        time: data.details.time,
+        property_size: data.details.property_size,
+        duration: data.details.duration,
+        number_of_cleaners: data.details.number_of_cleaners,
+        frequency: data.details.frequency,
+        package_details: data.details.package_details,
+        note: data.details.note,
+        language: data.details.language,
+        person_type: data.details.person_type,
+        Equipment: data.details.Equipment,
+        cleaning_solvents: data.details.cleaning_solvents,
+        business_property: data.details.business_property,
+      };
+
+      setSaveLoader(true);
+      dispatch(saveServices(deepServiceData));
+      console.log("Data", data);
+    } else if (data.serviceName == "Last Minute") {
+      const lastMinuteServiceData = {
+        customer: formData,
+        service_id: data.details.service_id,
+        price: parseInt(data.details.price),
+        date: data.details.date,
+        time: data.details.time,
+        property_size: data.details.property_size,
+        duration: data.details.duration,
+        number_of_cleaners: data.details.number_of_cleaners,
+        frequency: data.details.frequency,
+        package_details: data.details.package_details,
+        note: data.details.note,
+        language: data.details.language,
+        person_type: data.details.person_type,
+        Equipment: data.details.Equipment,
+        cleaning_solvents: data.details.cleaning_solvents,
+        business_property: data.details.business_property,
+      };
+
+      setSaveLoader(true);
+      dispatch(saveServices(lastMinuteServiceData));
+      console.log("Data", data);
+    } else if (data.serviceName == "Move In/Out Cleaning") {
+      const moveInOutServiceData = {
+        customer: formData,
+        service_id: data.details.service_id,
+        price: parseInt(data.details.price),
+        date: data.details.date,
+        time: data.details.time,
+        property_size: data.details.property_size,
+        duration: data.details.duration,
+        number_of_cleaners: data.details.number_of_cleaners,
+        frequency: data.details.frequency,
+        package_details: data.details.package_details,
+        note: data.details.note,
+        language: data.details.language,
+        person_type: data.details.person_type,
+        Equipment: data.details.Equipment,
+        cleaning_solvents: data.details.cleaning_solvents,
+        business_property: data.details.business_property,
+      };
+      setSaveLoader(true);
+      dispatch(saveServices(moveInOutServiceData));
+      console.log("Data", data);
+    }
+  };
+
+  // Save Regular Service
 
   useEffect(() => {
     if (saveLoader) {
@@ -82,7 +185,7 @@ const CheckoutPage = () => {
         saveRegularServiceData.isSuccess &&
         !saveRegularServiceData.isLoading
       ) {
-        if(saveRegularServiceData.data.original.status === "success"){
+        if (saveRegularServiceData.data.status === "success") {
           console.log("Saved Successfully");
           setShowSuccess(true);
           setTimeout(() => {
@@ -91,12 +194,11 @@ const CheckoutPage = () => {
             });
           }, 2000);
           setSaveLoader(false);
-        }else{
-          console.log("Error", saveRegularServiceData.data.original.message);
-          setErrorMessage(saveRegularServiceData.data.original.message);
+        } else {
+          console.log("Error", saveRegularServiceData.data.message);
+          setErrorMessage(saveRegularServiceData.data.message);
           setShowError(true);
-          setSaveLoader(false
-          );
+          setSaveLoader(false);
         }
       } else if (
         !saveRegularServiceData.isSuccess &&
@@ -108,10 +210,98 @@ const CheckoutPage = () => {
     }
   }, [saveRegularServiceData.data, saveRegularServiceData.errorMessage]);
 
+  // Save Last Minute Service
   useEffect(() => {
-    console.log(saveRegularServiceData.data.original);
-  }, [saveRegularServiceData.data]);
+    if (saveLoader) {
+      if (
+        saveLastMinuteServiceData.isSuccess &&
+        !saveLastMinuteServiceData.isLoading
+      ) {
+        if (saveLastMinuteServiceData.data.status === "success") {
+          console.log("Saved Successfully");
+          setShowSuccess(true);
+          setTimeout(() => {
+            navigate("/last-minute-cleaning", {
+              state: { showSuccessPopup: true },
+            });
+          }, 2000);
+          setSaveLoader(false);
+        } else {
+          console.log("Error", saveLastMinuteServiceData.data.message);
+          setErrorMessage(saveLastMinuteServiceData.data.message);
+          setShowError(true);
+          setSaveLoader(false);
+        }
+      } else if (
+        !saveLastMinuteServiceData.isSuccess &&
+        !saveLastMinuteServiceData.isLoading
+      ) {
+        console.log("Error", saveLastMinuteServiceData.errorMessage);
+        setSaveLoader(false);
+      }
+    }
+  }, [saveLastMinuteServiceData.data, saveLastMinuteServiceData.errorMessage]);
 
+  // Save Deep Service
+  useEffect(() => {
+    if (saveLoader) {
+      if (saveDeepServiceData.isSuccess && !saveDeepServiceData.isLoading) {
+        if (saveDeepServiceData.data.status === "success") {
+          console.log("Saved Successfully");
+          setShowSuccess(true);
+          setTimeout(() => {
+            navigate("/deep_cleaning", {
+              state: { showSuccessPopup: true },
+            });
+          }, 2000);
+          setSaveLoader(false);
+        } else {
+          console.log("Error", saveDeepServiceData.data.message);
+          setErrorMessage(saveDeepServiceData.data.message);
+          setShowError(true);
+          setSaveLoader(false);
+        }
+      } else if (
+        !saveDeepServiceData.isSuccess &&
+        !saveDeepServiceData.isLoading
+      ) {
+        console.log("Error", saveDeepServiceData.errorMessage);
+        setSaveLoader(false);
+      }
+    }
+  }, [saveDeepServiceData.data, saveDeepServiceData.errorMessage]);
+
+  // Save Move In/Out Service
+  useEffect(() => {
+    if (saveLoader) {
+      if (
+        saveMoveInOutServiceData.isSuccess &&
+        !saveMoveInOutServiceData.isLoading
+      ) {
+        if (saveMoveInOutServiceData.data.status === "success") {
+          console.log("Saved Successfully");
+          setShowSuccess(true);
+          setTimeout(() => {
+            navigate("/move_in_out_cleaning", {
+              state: { showSuccessPopup: true },
+            });
+          }, 2000);
+          setSaveLoader(false);
+        } else {
+          console.log("Error", saveMoveInOutServiceData.data.message);
+          setErrorMessage(saveMoveInOutServiceData.data.message);
+          setShowError(true);
+          setSaveLoader(false);
+        }
+      } else if (
+        !saveMoveInOutServiceData.isSuccess &&
+        !saveMoveInOutServiceData.isLoading
+      ) {
+        console.log("Error", saveMoveInOutServiceData.errorMessage);
+        setSaveLoader(false);
+      }
+    }
+  }, [saveMoveInOutServiceData.data, saveMoveInOutServiceData.errorMessage]);
   return (
     <Container maxWidth="xl" sx={{ marginBottom: "5%", color: "black" }}>
       <Typography

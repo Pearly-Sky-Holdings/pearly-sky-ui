@@ -7,36 +7,31 @@ import { format } from "date-fns";
 import "react-calendar/dist/Calendar.css";
 import TimeSlots from "../../components/timeSlot/timeSlot";
 import "./CustomCalendar.css";
+import Carousel from "../../components/carouselSection/carousel";
 import EquipmentSection from "../../components/equipmentSection/equipmentSection";
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
-import { getPackege } from "../../services/CleaningServices/index";
+import { getPackege, getServices } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
-import ServicesCarosel from "../../components/oneTimeCleaning/servicesCarousel";
+
 import {
-  MoveInAndOutService,
+  regularService2,
+  regularService3,
+  regularService4,
+  regularService5,
   regularServiceEquipment1,
   regularServiceEquipment2,
   regularServiceEquipment3,
   regularServiceEquipment4,
-  supportPayment1,
-  supportPayment2,
-  supportPayment3,
-  supportPayment4,
-  supportPayment5,
-  supportPayment6,
-  supportPayment7,
-  supportPayment8,
-  supportPayment9,
-  supportPayment10,
+  MoveInAndOutService1,
 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
-
 function MoveInOutCleaningPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const packages = useSelector((state: any) => state.packagesSlice.package);
+  const services = useSelector((state: any) => state.servicesSlice.service);
   const [selectedServices, setSelectedServices] = useState<object[]>([]);
   const [ovenQty, setOvenQty] = useState("0");
   const [showTermsCard, setShowTermsCard] = useState(false);
@@ -57,12 +52,13 @@ function MoveInOutCleaningPage() {
   const [selectedEquipments, setSelectedEquipments] = useState<
     Array<{ id: string; price: number }>
   >([]);
-  const [checkedList, setCheckedList] = useState<string[]>([]);
+  const [checkedList, setCheckedList] = useState<String[]>([]);
+
   const [priceBreakdown, setPriceBreakdown] = useState({
-    basePrice: 57.72,
+    basePrice: 59.0,
     serviceCosts: 0,
     equipmentCosts: 0,
-    totalPrice: 57.72,
+    totalPrice: 59.0,
   });
 
   useEffect(() => {
@@ -72,8 +68,11 @@ function MoveInOutCleaningPage() {
   useEffect(() => {
     dispatch(getPackege("5"));
   }, []);
+  useEffect(() => {
+    dispatch(getServices("5"));
+  }, []);
   const calculateTotalPrice = () => {
-    let basePrice = 57.72;
+    let basePrice = 59.0;
     let serviceCosts = 0;
     let equipmentCosts = 0;
 
@@ -98,42 +97,86 @@ function MoveInOutCleaningPage() {
       totalPrice,
     };
   };
-  const handleSelectEquipment = (equipment: any) => {
-    setSelectedEquipments([
-      ...selectedEquipments,
-      { id: equipment.id, price: equipment.price },
-    ]);
+  const handleEquipmentSelect = (equipment: any, selected: boolean) => {
+    if (selected) {
+      setSelectedEquipments([
+        ...selectedEquipments,
+        { id: equipment.id, price: equipment.price },
+      ]);
+    } else {
+      setSelectedEquipments(
+        selectedEquipments.filter((e) => e.id !== equipment.id)
+      );
+    }
   };
 
   const handleBookNow = () => {
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
-      service_id: "1",
+      service_id: "5",
       date,
       time: selectedTime,
       property_size: propertySize,
-      duration: Number(duration),
-      number_of_cleaners: Number(numCleaners),
+      duration: parseInt(duration),
+      number_of_cleaners: parseInt(numCleaners),
       frequency,
-      package_details: [
-        {
-          package_id: 1,
-          price: 3000.0,
-          qty: 1,
-        },
-      ],
+      package_details: selectedServices,
       person_type: contactType,
       language,
       business_property: propertyType,
       cleaning_solvents: selectedSolvent,
-      equipmentOption: selectedEquipmentOption,
+      // equipmentOption: selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
       price: priceBreakdown.totalPrice,
       note: document.querySelector("textarea")?.value || "",
     };
+    const data = { serviceName: "Move In/Out Cleaning", details: serviceDetails };
     console.log("Service Details:", serviceDetails);
-    navigate("/checkout", { state: { serviceDetails } });
+    navigate("/checkout", { state: { data } });
   };
+
+  const imagePairs = [
+    [
+      {
+        img: regularService2,
+        title: "Bedroom Cleaning",
+        features: [
+          "Dust all cleanable surfaces",
+          "Make the bed",
+          "Clean floor surfaces",
+        ],
+      },
+      {
+        img: regularService3,
+        title: "Bedroom Cleaning",
+        features: [
+          "Dust all cleanable surfaces",
+          "Make the bed",
+          "Clean floor surfaces",
+        ],
+      },
+    ],
+    [
+      {
+        img: regularService4,
+        title: "Bedroom Cleaning",
+        features: [
+          "Dust all cleanable surfaces",
+          "Make the bed",
+          "Clean floor surfaces",
+        ],
+      },
+      {
+        img: regularService5,
+        title: "Bedroom Cleaning",
+        features: [
+          "Dust all cleanable surfaces",
+          "Make the bed",
+          "Clean floor surfaces",
+        ],
+      },
+    ],
+  ];
 
   const solvents = [
     { value: "customer", label: "Provided by the Customer" },
@@ -172,39 +215,26 @@ function MoveInOutCleaningPage() {
     },
   ];
 
-  const paymentMethods = [
-    { icon: supportPayment1, alt: "Visa" },
-    { icon: supportPayment2, alt: "Stripe" },
-    { icon: supportPayment3, alt: "PayPal" },
-    { icon: supportPayment4, alt: "Mastercard" },
-    { icon: supportPayment5, alt: "American Express" },
-    { icon: supportPayment6, alt: "Apple Pay" },
-    { icon: supportPayment7, alt: "Google Pay" },
-    { icon: supportPayment8, alt: "Bitcoin" },
-    { icon: supportPayment9, alt: "Amazon Pay" },
-    { icon: supportPayment10, alt: "Discover" },
-  ];
-
   return (
-    <div className="max-w-7xl mx-auto p-4 sm:p-6">
+    <div className="max-w-6xl mx-auto p-4 sm:p-6">
       {/* Header Section */}
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col sm:flex-row gap-4 sm:gap-8 items-stretch">
-        <div className="w-full sm:w-3/5 flex">
+      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col sm:flex-row gap-4 sm:gap-8">
+        <div className="w-full sm:w-1/3">
           <img
-            src={MoveInAndOutService}
+            src={MoveInAndOutService1}
             alt="Cleaning Service"
-            className="rounded-lg w-full h-full object-cover"
+            className="rounded-lg w-full h-auto"
           />
         </div>
-        <div className="w-full sm:w-2/3 flex flex-col justify-between">
-          <div>
+        <div className="w-full sm:w-2/3">
+          <div className="">
             <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
-              Move In/Out Cleaning
+              {services.data.name}
             </h1>
             <div className="mt-4 mb-4 ml-4">
               <div className="flex gap-3">
                 <p className="text-xl sm:text-2xl font-semibold text-black">
-                  C$ 57.72
+                  {services.data.price}
                 </p>
                 <select className="border rounded p-0.5 text-blue-900 h-7">
                   <option>EUR</option>
@@ -216,44 +246,36 @@ function MoveInOutCleaningPage() {
               </div>
             </div>
           </div>
-          <div className="flex-grow">
-            <p className="text-gray-600 mb-4 text-sm sm:text-base">
-              Move-in/out cleaning is a specialized service offered by cleaning
-              companies and is prepared for individuals transitioning into or
-              out of a property.
-            </p>
-            <p className="text-gray-600 mb-4 text-sm sm:text-base">
-              This subtle cleaning procedure is specially made to prepare a
-              space for new occupants or ensure the departure leaves the
-              premises in impeccable condition.
-            </p>
-            <h1 className="font-semibold text-lg sm:text-xl">
-              It generally covers deep cleaning tasks such as surface scrubbing,
-              high-touch areas:
-            </h1>
-            <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
-              <li>Sanitization</li>
-              <li>Appliance cleaning</li>
-              <li>Fixture maintenance</li>
-              <li>Overall cleanliness</li>
-            </ul>
-            <p className="text-gray-600 text-sm sm:text-base">
-              The objective of this cleaning is to present the space in optimal
-              condition for incoming residents or to meet landlords’
-              expectations during move-outs.
-            </p>
-            <p className="text-gray-600 text-sm sm:text-base">
-              The ultimate aim of move-in/out cleaning services is to set up a
-              fresh, energetic, and welcoming atmosphere for the upcoming phase
-              in the property’s utilization.
-            </p>
-          </div>
+          <p className="text-gray-600 mb-4 text-sm sm:text-base">
+            Move-in/out cleaning is a specialized service offered by cleaning
+            companies and is prepared for individuals transitioning into or out
+            of a property. This subtle cleaning procedure is specially made to
+            prepare a space for new occupants or ensure the departure leaves the
+            premises in impeccable condition. 
+          </p>
+          <p className="text-gray-600 mb-2 text-sm sm:text-base">
+            It generally covers deep cleaning tasks such as surface scrubbing,
+            high-touch area :
+          </p>
+          <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
+            <li>Sanitization</li>
+            <li>Appliance cleaning</li>
+            <li>Fixture maintenance</li>
+            <li>Overall cleanliness</li>
+          </ul>
+          <p className="text-gray-600 text-sm sm:text-base">
+            The objective of this cleaning is to present the space in optimal
+            condition for incoming residents or to meet landlords’ expectations
+            during move-outs. The ultimate aim of move-in/out cleaning services
+            is to set up a fresh, energetic and welcoming atmosphere for the
+            upcoming phase in the property’s utilization.
+          </p>
         </div>
       </div>
 
       {/* Carousel Section */}
       <div>
-        <ServicesCarosel index={2} />
+        <Carousel imagePairs={imagePairs} />
       </div>
 
       {/* Checklist Section */}
@@ -274,14 +296,19 @@ function MoveInOutCleaningPage() {
                   type="checkbox"
                   className="hidden"
                   checked={checkedList.includes(service.package_id.toString())}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onChange={(e) => {
                     if (e.target.checked) {
                       setSelectedServices([
                         ...selectedServices,
                         {
-                          id: Number(service.package_id),
+                          package_id: Number(service.package_id),
                           price: parseInt(service.price),
-                          qty: service.name === "Oven Cleaning" ? Number(ovenQty) : Number(fridgeQty),
+                          qty:
+                            service.name === "Oven Cleaning"
+                              ? Number(ovenQty)
+                              : service.name === "Fridge Cleaning"
+                              ? Number(fridgeQty)
+                              : 0,
                         },
                       ]);
                       setCheckedList([
@@ -373,7 +400,7 @@ function MoveInOutCleaningPage() {
           equipments={equipments}
           onSolventChange={setSelectedSolvent}
           onEquipmentOptionChange={setSelectedEquipmentOption}
-          onEquipmentSelect={handleSelectEquipment}
+          onEquipmentSelect={handleEquipmentSelect}
         />
       </div>
 
@@ -421,7 +448,22 @@ function MoveInOutCleaningPage() {
 
         {/* Booking Details */}
         <div>
-          <BookingSectionCart />
+          <BookingSectionCart
+            propertySize={propertySize}
+            setPropertySize={setPropertySize}
+            numCleaners={numCleaners}
+            setNumCleaners={setNumCleaners}
+            duration={duration}
+            setDuration={setDuration}
+            propertyType={propertyType}
+            setPropertyType={setPropertyType}
+            frequency={frequency}
+            setFrequency={setFrequency}
+            contactType={contactType}
+            setContactType={setContactType}
+            language={language}
+            setLanguage={setLanguage}
+          />
         </div>
 
         {/* File Upload and Additional Note */}
@@ -490,7 +532,7 @@ function MoveInOutCleaningPage() {
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              Base Cost <span className="text-gray-400">(C$ 57.72)</span>
+              Base Cost <span className="text-gray-400">(C$ 59.00)</span>
             </span>
             <span>C${priceBreakdown.basePrice.toFixed(2)}</span>
           </div>
@@ -540,10 +582,7 @@ function MoveInOutCleaningPage() {
 
       {/* Payment Support Section */}
       <div>
-        <PaymentSupportSection
-          title="We Support"
-          paymentMethods={paymentMethods}
-        />
+        <PaymentSupportSection/>
       </div>
     </div>
   );

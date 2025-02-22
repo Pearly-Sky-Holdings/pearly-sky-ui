@@ -1,8 +1,8 @@
 export const companyLogo: string = "./images/logo.png";
 
-export const homePageImage1: string = "/images/home/homePageImage1.jpg";
+export const homePageImage1: string = "/images/home/homePageImage3.png";
 export const homePageImage2: string = "/images/home/homePageImage2.png";
-export const homePageImage3: string = "/images/home/homePageImage3.jpg";
+export const homePageImage3: string = "/images/home/homePageImage1.jpg";
 export const homePageImage4: string = "/images/home/homePageImage4.jpg";
 export const inforImage: string = "/images/home/inforImage.jpg";
 
@@ -46,7 +46,13 @@ export const sectorImage5: string = "/images/sector/sectorImage5.png";
 export const chooseClening1: string = "/images/chooseClening/chooseClening1.png";
 export const chooseClening2: string = "/images/chooseClening/chooseClening2.png";
 export const chooseClening3: string = "/images/chooseClening/chooseClening3.png";
-export const chooseClening4: string = "/images/ourShowCase/OurShowcase4.jpg";
+export const chooseClening4: string = "/images/chooseClening/chooseClening4.png";
+
+//choos our cleaning
+export const teamExperts1: string = "/images/teamExperts/chooseClening1.png";
+export const teamExperts2: string = "/images/teamExperts/anusha.png";
+export const teamExperts3: string = "/images/teamExperts/chooseClening3.png";
+export const teamExperts4: string = "/images/teamExperts/chooseClening4.png";
 
 export const contactImage1: string = "/images/uiContactUs/ContactUs.png";
 
@@ -115,6 +121,12 @@ export const OneTimeService1: string = "/images/service/oneTime/oneTimeCleaner.p
 
 //last minute cleaning
 export const lastMinuteService1: string = "/images/service/lastMinute/LastMinuteCleaning.png";
+
+//deep cleaning
+export const DeepService1: string = "/images/service/deepCleaning/DeepCleaning.png";
+
+//move in and out cleaning
+export const MoveInAndOutService1: string = "/images/service/moveInOutCleaning/MoveInOutCleaning.png";
 
 //our show case image
 export const OurShowcase1: string = "/images/ourShowCase/OurShowcase1.jpg";

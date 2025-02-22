@@ -1,144 +1,130 @@
-import { useState, useEffect, useRef } from 'react';
-import { 
-  Box, 
-  Typography, 
-  Grid, 
-  Card, 
-  CardContent, 
-  Container, 
-  useMediaQuery, 
-  useTheme 
-} from '@mui/material';
+import React from 'react';
+import { Box, Typography, Grid, Card, CardMedia, Container } from '@mui/material';
+import {
+  galleryImage1,
+  galleryImage2,
+  galleryImage3,
+  galleryImage4,
+  galleryImage5,
+} from '../../config/images';
 
-const ANIMATION_DURATION = 2000;
-const ANIMATION_STEPS = 60;
-const INTERSECTION_THRESHOLD = 0.1;
-
-const PROGRESS_DATA = [
+// Progress data for the progress section
+const progressData = [
   { label: 'Assessment and Planning', value: 100 },
   { label: 'Execution', value: 95 },
-  { label: 'Project Completion', value: 95 }
+  { label: 'Project Completion', value: 95 },
 ];
 
-const cardStyles = {
-  boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
-  borderRadius: 3,
-  backgroundColor: 'white'
-};
-
-const desktopBoxStyles = {
-  display: "flex",
-  justifyContent: "space-around",
-  marginBottom: 8,
-  backgroundColor: "white",
-  textAlign: "center",
-  paddingTop: 1,
-  paddingBottom: 8,
-  borderRadius: 50,
-  width: "75%",
-  height: 35,
-  boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)"
-};
+// Array of gallery images
+const images = [galleryImage1, galleryImage2, galleryImage3, galleryImage4, galleryImage5];
 
 const Gallery = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const progressRef = useRef(null);
-  
-
-  const [currentValues, setCurrentValues] = useState(PROGRESS_DATA.map(() => 0));
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: INTERSECTION_THRESHOLD }
-    );
-
-    const currentRef = progressRef.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, []);
-
-  // Handle animation
-  useEffect(() => {
-    if (!isVisible) return;
-
-    const interval = ANIMATION_DURATION / ANIMATION_STEPS;
-    let currentStep = 0;
-    
-    const timer = setInterval(() => {
-      currentStep++;
-      
-      if (currentStep <= ANIMATION_STEPS) {
-        setCurrentValues(PROGRESS_DATA.map((item) => {
-          const progress = (currentStep / ANIMATION_STEPS) * item.value;
-          return Math.min(Math.round(progress), item.value);
-        }));
-      } else {
-        clearInterval(timer);
-      }
-    }, interval);
-    
-    return () => clearInterval(timer);
-  }, [isVisible]);
-
-  // Render progress cards for mobile view
-  const renderMobileView = () => (
-    <Box mb={4}>
-      <Grid container spacing={2}>
-        {PROGRESS_DATA.map((item, index) => (
-          <Grid item xs={12} key={item.label}>
-            <Card sx={cardStyles}>
-              <CardContent sx={{ textAlign: 'center', py: 2 }}>
-                <Typography variant="h6" color="#008CDA" fontWeight="bold" gutterBottom>
-                  {currentValues[index]}%
-                </Typography>
-                <Typography variant="body2" color="black">
-                  {item.label}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    </Box>
-  );
-
-  // Render progress boxes for desktop view
-  const renderDesktopView = () => (
-    <Box display="flex" justifyContent="center" textAlign="center">
-      <Box sx={desktopBoxStyles}>
-        {PROGRESS_DATA.map((item, index) => (
-          <Box key={item.label} textAlign="center">
-            <Typography variant="h6" color="#008CDA" fontWeight="bold">
-              {currentValues[index]}%
-            </Typography>
-            <Typography variant="body2" color="black">
-              {item.label}
-            </Typography>
-          </Box>
-        ))}
-      </Box>
-    </Box>
-  );
-
   return (
-    <Container style={{ marginTop: '5%' }}>
-      <div ref={progressRef}>
-        {isMobile ? renderMobileView() : renderDesktopView()}
-      </div>
+    <Container>
+      {/* Progress Section */}
+      <Box display="flex" justifyContent="center" textAlign="center">
+        <Box
+          display="flex"
+          justifyContent="space-around"
+          mt={2}
+          mb={10}
+          bgcolor="white"
+          textAlign="center"
+          pt={2}
+          pb={4}
+          borderRadius={50}
+          width="70%"
+          height={35}
+          boxShadow="2px 2px 5px rgba(198, 131, 131, 0.5)"
+        >
+          {progressData.map((item, index) => (
+            <Box key={index} textAlign="center">
+              <Typography variant="h6" color="#008CDA" fontWeight="bold">
+                {item.value}%
+              </Typography>
+              <Typography variant="body2" color="black">
+                {item.label}
+              </Typography>
+            </Box>
+          ))}
+        </Box>
+      </Box>
+
+      {/* Gallery Section */}
+      <Typography variant="h5" color="#003370" fontWeight="bold" align="center" mb={2}>
+        Gallery
+      </Typography>
+
+      <Grid container spacing={1} mb={4}>
+        {/* Large Image on the Left */}
+        <Grid item xs={12} md={5}>
+          <Card sx={{ height: '100%', width: '100%' }}>
+            <CardMedia
+              component="img"
+              image={images[0]}
+              alt="Gallery image 1"
+              sx={{ height: '100%', objectFit: 'cover' }}
+            />
+          </Card>
+        </Grid>
+
+        {/* Smaller Images on the Right */}
+        <Grid item xs={12} md={7}>
+          <Grid container spacing={1}>
+            {/* Vertical Stack for Images 2 and 3 */}
+            <Grid item xs={12} md={5}>
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <Card>
+                    <CardMedia
+                      component="img"
+                      image={images[1]}
+                      alt="Gallery image 2"
+                      sx={{ height: '200px', objectFit: 'cover' }}
+                    />
+                  </Card>
+                </Grid>
+                <Grid item xs={12}>
+                  <Card>
+                    <CardMedia
+                      component="img"
+                      image={images[2]}
+                      alt="Gallery image 3"
+                      sx={{ height: '200px', objectFit: 'cover' }}
+                    />
+                  </Card>
+                </Grid>
+              </Grid>
+            </Grid>
+
+            {/* Horizontal Stack for Images 4 and 5 */}
+            <Grid item xs={12} md={7}>
+              <Grid container spacing={1}>
+                <Grid item xs={6}>
+                  <Card>
+                    <CardMedia
+                      component="img"
+                      image={images[3]}
+                      alt="Gallery image 4"
+                      sx={{ height: '405px', objectFit: 'cover' }}
+                    />
+                  </Card>
+                </Grid>
+                <Grid item xs={6}>
+                  <Card>
+                    <CardMedia
+                      component="img"
+                      image={images[4]}
+                      alt="Gallery image 5"
+                      sx={{ height: '405px', objectFit: 'cover' }}
+                    />
+                  </Card>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
     </Container>
   );
 };
