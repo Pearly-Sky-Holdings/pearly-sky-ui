@@ -265,6 +265,8 @@ function DeepCleaningPage() {
                   <option>GBP</option>
                   <option>AED</option>
                   <option>NZD</option>
+                  <option>usdt</option>
+                  <option>NZD</option>
                 </select>
               </div>
             </div>
