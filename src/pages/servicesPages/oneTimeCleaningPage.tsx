@@ -30,6 +30,7 @@ import {
   OneTimeService1
 } from "../../config/images";
 import store from "../../store";
+import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
 function OneTimeCleaningPage() {
   const dispatch = useDispatch<typeof store.dispatch>();
   const packages = useSelector(
@@ -44,6 +45,9 @@ function OneTimeCleaningPage() {
   const [frequency, setFrequency] = useState("");
   const [acceptTerms1, setAcceptTerms1] = useState(false);
   const [acceptTerms2, setAcceptTerms2] = useState(false);
+  const [language, setLanguage] = useState("");
+  const [propertyType, setPropertyType] = useState("");
+  const [contactType, setContactType] = useState("");
 
   useEffect(() => {
     dispatch(getPackege("2"));
@@ -83,41 +87,6 @@ function OneTimeCleaningPage() {
       name: "Vacuum Cleaner",
       price: 29.99,
       image: regularServiceEquipment4,
-    },
-  ];
-
-  const bookingTerms = [
-    {
-      title: "Consider Property Size and Architecture",
-      items: [
-        "Evaluate the size and layout of your property before deciding on the number of cleaners",
-        "Larger properties or complex layouts may require more time or additional cleaners",
-      ],
-    },
-    {
-      title: "Factor in Additional Cleaning Services",
-      items: [
-        "Some services may require specialized cleaning or additional time",
-        "Consider bundling services for better value",
-      ],
-    },
-    {
-      title: "Limitations or Continuous Working Hours",
-      items: [
-        "Maximum continuous working hours apply",
-        "Plan the number of cleaners accordingly",
-      ],
-    },
-    {
-      title: "Booking cancellation",
-      items: [
-        "24-hour notice required for cancellations",
-        "Late cancellations may incur fees",
-      ],
-    },
-    {
-      title: "Accept company cookies policy",
-      items: [],
     },
   ];
 
@@ -331,114 +300,23 @@ function OneTimeCleaningPage() {
         </div>
 
         {/* Booking Details */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <div>
-            <label className="block mb-2 text-black">
-              Approx. Property Size
-            </label>
-            <select
-              className="w-full border border-blue-900 rounded p-2 text-gray-400"
-              value={propertySize}
-              onChange={(e) => setPropertySize(e.target.value)}
-            >
-              <option value="">Select property size</option>
-              <option value="small">20m²(215ft²)</option>
-              <option value="medium">30m²(323ft²))</option>
-              <option value="large">40m²(430ft²)</option>
-              <option value="large">50m²(538ft²)</option>
-              <option value="large">60m²(646ft²)</option>
-            </select>
-          </div>
-          <div>
-            <label className="block mb-2 text-black">Duration (in hours)</label>
-            <select
-              className="w-full border border-blue-900 rounded p-2 text-gray-400"
-              value={duration}
-              onChange={(e) => setDuration(e.target.value)}
-            >
-              <option value="">Select duration</option>
-              <option value="2">2 hours</option>
-              <option value="3">3 hours</option>
-              <option value="4">4 hours</option>
-              <option value="5">5+ hours</option>
-            </select>
-          </div>
-          <div>
-            <label className="block mb-2 text-black">Number of Cleaners</label>
-            <select
-              className="w-full border border-blue-900 rounded p-2 text-gray-400"
-              value={numCleaners}
-              onChange={(e) => setNumCleaners(e.target.value)}
-            >
-              <option value="">Select number of cleaners</option>
-              <option value="1">1 Cleaner</option>
-              <option value="2">2 Cleaners</option>
-              <option value="3">3 Cleaners</option>
-            </select>
-          </div>
-          <div>
-            <label className="block mb-2 text-black">
-              Select your business or property
-            </label>
-            <select
-              className="w-full border border-blue-900 rounded p-2 text-gray-400"
-              value={frequency}
-              onChange={(e) => setFrequency(e.target.value)}
-            >
-              <option value="">Select frequency</option>
-              <option value="once">Home</option>
-              <option value="weekly">Appartmnent</option>
-              <option value="biweekly">Villa</option>
-              <option value="monthly">Monthly</option>
-            </select>
-          </div>
-          <div>
-            <label className="block mb-2 text-black">Select Frequency</label>
-            <select
-              className="w-full border border-blue-900 rounded p-2 text-gray-400"
-              value={frequency}
-              onChange={(e) => setFrequency(e.target.value)}
-            >
-              <option value="">Select frequency</option>
-              <option value="once">One-time</option>
-              <option value="weekly">Weekly</option>
-              <option value="biweekly">Bi-weekly</option>
-              <option value="monthly">Monthly</option>
-            </select>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-2 gap-4 ">
-            <div>
-              <label className="block mb-2 text-black">
-                Contact Person Type
-              </label>
-              <select
-                className="w-full border border-blue-900 rounded p-2 text-gray-400"
-                value={frequency}
-                onChange={(e) => setFrequency(e.target.value)}
-              >
-                <option value="">Select contact type</option>
-                <option value="owner">Owner</option>
-                <option value="tenant">Tenant</option>
-                <option value="manager">Property Manager</option>
-              </select>
-            </div>
-            <div>
-              <label className="block mb-2 text-black">
-                Preferred Language to Contact
-              </label>
-              <select
-                className="w-full border border-blue-900 rounded p-2 text-gray-400"
-                value={frequency}
-                onChange={(e) => setFrequency(e.target.value)}
-              >
-                <option value="">Select language</option>
-                <option value="english">English</option>
-                <option value="french">French</option>
-                <option value="spanish">Spanish</option>
-              </select>
-            </div>
-          </div>
+        <div>
+          <BookingSectionCart
+            propertySize={propertySize}
+            setPropertySize={setPropertySize}
+            numCleaners={numCleaners}
+            setNumCleaners={setNumCleaners}
+            duration={duration}
+            setDuration={setDuration}
+            propertyType={propertyType}
+            setPropertyType={setPropertyType}
+            frequency={frequency}
+            setFrequency={setFrequency}
+            contactType={contactType}
+            setContactType={setContactType}
+            language={language}
+            setLanguage={setLanguage}
+          />
         </div>
 
         {/* File Upload and Additional Note */}
@@ -493,7 +371,6 @@ function OneTimeCleaningPage() {
 
         {/* Terms and Conditions */}
         <TermsAndConditions
-          terms={bookingTerms}
           isAccepted={acceptTerms1}
           onAcceptChange={setAcceptTerms1}
           className="mb-6"
@@ -525,10 +402,7 @@ function OneTimeCleaningPage() {
 
       {/* Payment Support Section */}
       <div>
-        <PaymentSupportSection
-          title="We Support"
-          paymentMethods={paymentMethods}
-        />
+        <PaymentSupportSection/>
       </div>
     </div>
   );
