@@ -11,10 +11,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import BillingDetailsForm from "../../components/checkoutSection/BillingDetailsForm";
-import { saveRegulrService } from "../../services/CleaningServices/saveRegulrService";
+import { saveRegulrService,saveOneTimeCleaningPage} from "../../services/CleaningServices/saveRegulrService";
 import { useLocation } from "react-router-dom";
 import OrderSummary from "../../components/checkoutSection/OrderSummary";
 import PaymentMethod from "../../components/checkoutSection/PaymentMethod";
+
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
@@ -46,6 +47,10 @@ const CheckoutPage = () => {
 
   const handlePlaceOrder = async () => {
     const data = {
+      // name:"One Time Cleaning",
+      // price:"560$",
+      // status:"active",
+      // time: "10:12"
       customer: formData,
       service_id: serviceDetails.service_id,
       price: parseInt(serviceDetails.price),
@@ -62,11 +67,14 @@ const CheckoutPage = () => {
       Equipment: serviceDetails.Equipment,
       cleaning_solvents: serviceDetails.cleaning_solvents,
       business_property: serviceDetails.business_property,
+      
     };
 
     setSaveLoader(true);
-    dispatch(saveRegulrService(data));
+    dispatch(saveOneTimeCleaningPage(data));
   };
+
+  
 
   useEffect(() => {
     if (saveLoader) {
