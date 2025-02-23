@@ -26,6 +26,7 @@ import LastMinuteCleaningPage from "./pages/servicesPages/lastMinuteCleaningPage
 import DeepCleaningPage from "./pages/servicesPages/deepCleaningPage.tsx";
 import MoveInOutCleaningPage from "./pages/servicesPages/moveInOutCleaningPage.tsx";
 import PostConstructionCleaningPage from "./pages/servicesPages/postConstructionCleaningPage.tsx";
+import AirbnbAndShortService from "./pages/servicesPages/AirbnbCleaning.tsx";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -164,6 +165,15 @@ function App() {
             element={
               <>
                 <PostConstructionCleaningPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/airbnb_and_short_service"
+            element={
+              <>
+                <AirbnbAndShortService />
                 <Footer />
               </>
             }
