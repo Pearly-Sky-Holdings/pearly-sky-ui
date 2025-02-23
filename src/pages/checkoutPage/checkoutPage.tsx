@@ -36,6 +36,13 @@ const CheckoutPage = () => {
   const saveMoveInOutServiceData = useSelector(
     (state: any) => state.serviceDetailsSlice.service
   );
+  const savePostConstructionServiceData = useSelector(
+    (state: any) => state.serviceDetailsSlice.service
+  );
+  
+  const oneTimeServiceData = useSelector(
+    (state: any) => state.serviceDetailsSlice.service
+  );
   const [saveLoader, setSaveLoader] = useState(false);
 
   const location = useLocation();
@@ -80,7 +87,7 @@ const CheckoutPage = () => {
       setSaveLoader(true);
       dispatch(saveServices(regularBasicServiceData));
       console.log("Data", data);
-    } else if (data.serviceName == "Deep Cleaning"  || data.serviceName == "One time cleaning") {
+    } else if (data.serviceName == "Deep Cleaning"  || data.serviceName == "One Time Cleaning") {
       const deepServiceData = {
         customer: formData,
         service_id: data.details.service_id,
@@ -148,6 +155,27 @@ const CheckoutPage = () => {
       setSaveLoader(true);
       dispatch(saveServices(moveInOutServiceData));
       console.log("Data", data);
+    } else if (data.serviceName == "Post Construction") {
+      const postConstructionServiceData = {
+        customer: formData,
+        service_id: data.details.service_id,
+        price: parseInt(data.details.price),
+        date: data.details.date,
+        time: data.details.time,
+        property_size: data.details.property_size,
+        duration: data.details.duration,
+        number_of_cleaners: data.details.number_of_cleaners,
+        frequency: data.details.frequency,
+        note: data.details.note,
+        language: data.details.language,
+        person_type: data.details.person_type,
+        Equipment: data.details.Equipment,
+        cleaning_solvents: data.details.cleaning_solvents,
+        business_property: data.details.business_property,
+      };
+      setSaveLoader(true);
+      dispatch(saveServices(postConstructionServiceData));
+      console.log("Data", data);
     }
   };
 
@@ -183,6 +211,38 @@ const CheckoutPage = () => {
       }
     }
   }, [saveRegularServiceData.data, saveRegularServiceData.errorMessage]);
+
+  // Save One Time Service
+  useEffect(() => {
+    if (saveLoader) {
+      if (
+        oneTimeServiceData.isSuccess &&
+        !oneTimeServiceData.isLoading
+      ) {
+        if (saveRegularServiceData.data.status === "success") {
+          console.log("Saved Successfully");
+          setShowSuccess(true);
+          setTimeout(() => {
+            navigate("/one-time-cleaning", {
+              state: { showSuccessPopup: true },
+            });
+          }, 2000);
+          setSaveLoader(false);
+        } else {
+          console.log("Error", oneTimeServiceData.data.message);
+          setErrorMessage(oneTimeServiceData.data.message);
+          setShowError(true);
+          setSaveLoader(false);
+        }
+      } else if (
+        !oneTimeServiceData.isSuccess &&
+        !oneTimeServiceData.isLoading
+      ) {
+        console.log("Error", oneTimeServiceData.errorMessage);
+        setSaveLoader(false);
+      }
+    }
+  }, [saveRegularServiceData.data, oneTimeServiceData.errorMessage]);
 
   // Save Last Minute Service
   useEffect(() => {
@@ -276,6 +336,38 @@ const CheckoutPage = () => {
       }
     }
   }, [saveMoveInOutServiceData.data, saveMoveInOutServiceData.errorMessage]);
+
+  // postConstruction service
+  useEffect(() => {
+    if (saveLoader) {
+      if (
+        savePostConstructionServiceData.isSuccess &&
+        !savePostConstructionServiceData.isLoading
+      ) {
+        if (savePostConstructionServiceData.data.status === "success") {
+          console.log("Saved Successfully");
+          setShowSuccess(true);
+          setTimeout(() => {
+            navigate("/post_constructor_cleaning", {
+              state: { showSuccessPopup: true },
+            });
+          }, 2000);
+          setSaveLoader(false);
+        } else {
+          console.log("Error", savePostConstructionServiceData.data.message);
+          setErrorMessage(savePostConstructionServiceData.data.message);
+          setShowError(true);
+          setSaveLoader(false);
+        }
+      } else if (
+        !savePostConstructionServiceData.isSuccess &&
+        !savePostConstructionServiceData.isLoading
+      ) {
+        console.log("Error", savePostConstructionServiceData.errorMessage);
+        setSaveLoader(false);
+      }
+    }
+  }, [savePostConstructionServiceData.data, savePostConstructionServiceData.errorMessage]);
   return (
     <Container maxWidth="xl" sx={{ marginBottom: "5%", color: "black" }}>
       <Typography

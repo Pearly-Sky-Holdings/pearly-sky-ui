@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   supportPayment1,
   supportPayment2,
