@@ -19,16 +19,6 @@ import {
   regularServiceEquipment2,
   regularServiceEquipment3,
   regularServiceEquipment4,
-  supportPayment1,
-  supportPayment2,
-  supportPayment3,
-  supportPayment4,
-  supportPayment5,
-  supportPayment6,
-  supportPayment7,
-  supportPayment8,
-  supportPayment9,
-  supportPayment10,
 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
@@ -131,7 +121,7 @@ function OneTimeCleaningPage() {
       price: priceBreakdown.totalPrice,
       note: document.querySelector("textarea")?.value || "",
     };
-    const data = { serviceName: "Deep Cleaning", details: serviceDetails };
+    const data = { serviceName: "One Time Cleaning", details: serviceDetails };
     console.log("Service Details:", serviceDetails);
     navigate("/checkout", { state: { data } });
   };
@@ -173,18 +163,7 @@ function OneTimeCleaningPage() {
     },
   ];
 
-  const paymentMethods = [
-    { icon: supportPayment1, alt: "Visa" },
-    { icon: supportPayment2, alt: "Stripe" },
-    { icon: supportPayment3, alt: "PayPal" },
-    { icon: supportPayment4, alt: "Mastercard" },
-    { icon: supportPayment5, alt: "American Express" },
-    { icon: supportPayment6, alt: "Apple Pay" },
-    { icon: supportPayment7, alt: "Google Pay" },
-    { icon: supportPayment8, alt: "Bitcoin" },
-    { icon: supportPayment9, alt: "Amazon Pay" },
-    { icon: supportPayment10, alt: "Discover" },
-  ];
+  
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">

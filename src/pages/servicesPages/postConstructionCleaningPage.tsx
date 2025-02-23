@@ -10,7 +10,7 @@ import "./CustomCalendar.css";
 import EquipmentSection from "../../components/equipmentSection/equipmentSection";
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
-import { getPackege } from "../../services/CleaningServices/index";
+import { getPackege, getServices } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
 import {
   Card,
@@ -38,57 +38,11 @@ import {
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
 
-const cleaningPackages = [
-  {
-    icon: postConstructorImage1,
-    items: ["Floor cleaning", "Removing debris", "Mopping", "Mirrors cleaning"],
-  },
-  {
-    icon: postConstructorImage2,
-    items: [
-      "Clean windows",
-      "Clean the doors",
-      "Cleaning fixtures",
-      "Cleaning solutions",
-    ],
-  },
-  {
-    icon: postConstructorImage3,
-    items: [
-      "Vacuuming",
-      "Wipe down hard surfaces",
-      "Bathroom cleaning",
-      "Buckets and scrub brushes",
-    ],
-  },
-  {
-    icon: postConstructorImage4,
-    items: [
-      "Sweep and vacuum/mop floors",
-      "Vacuum cleaner",
-      "Window cleaning",
-      "Appliance cleaning",
-    ],
-  },
-  {
-    icon: postConstructorImage5,
-    items: ["Dust fans and ceiling", "Dust removal", "Remove trash", "Dusting"],
-  },
-  {
-    icon: postConstructorImage6,
-    items: [
-      "Clean all gates",
-      "Clean inside cabinets and drawers",
-      "Clean sink and food spaces",
-      "Trash bags",
-    ],
-  },
-];
-
 function PostConstructionCleaningPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const packages = useSelector((state: any) => state.packagesSlice.package);
+  const services = useSelector((state: any) => state.servicesSlice.service);
   const [selectedServices, setSelectedServices] = useState<object[]>([]);
   const [showTermsCard, setShowTermsCard] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -108,10 +62,10 @@ function PostConstructionCleaningPage() {
     Array<{ id: string; price: number }>
   >([]);
   const [priceBreakdown, setPriceBreakdown] = useState({
-    basePrice: 59.72,
+    basePrice: 59.00,
     serviceCosts: 0,
     equipmentCosts: 0,
-    totalPrice: 59.72,
+    totalPrice: 59.00,
   });
 
   useEffect(() => {
@@ -119,10 +73,14 @@ function PostConstructionCleaningPage() {
   }, [selectedServices, selectedEquipments]);
 
   useEffect(() => {
-    dispatch(getPackege("1"));
+    dispatch(getPackege("6"));
+  }, []);
+
+  useEffect(() => {
+    dispatch(getServices("6"));
   }, []);
   const calculateTotalPrice = () => {
-    let basePrice = 59.72;
+    let basePrice = 59.00;
     let serviceCosts = 0;
     let equipmentCosts = 0;
 
@@ -157,31 +115,25 @@ function PostConstructionCleaningPage() {
   const handleBookNow = () => {
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
-      service_id: "1",
+      service_id: "6",
       date,
       time: selectedTime,
       property_size: propertySize,
       duration: Number(duration),
       number_of_cleaners: Number(numCleaners),
       frequency,
-      package_details: [
-        {
-          package_id: 1,
-          price: 3000.0,
-          qty: 1,
-        },
-      ],
       person_type: contactType,
       language,
       business_property: propertyType,
       cleaning_solvents: selectedSolvent,
-      equipmentOption: selectedEquipmentOption,
+      // equipmentOption: selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
       price: priceBreakdown.totalPrice,
       note: document.querySelector("textarea")?.value || "",
     };
+    const data = { serviceName: "Post Construction", details: serviceDetails };
     console.log("Service Details:", serviceDetails);
-    navigate("/checkout", { state: { serviceDetails } });
+    navigate("/checkout", { state: { data } });
   };
 
   const solvents = [
@@ -220,6 +172,62 @@ function PostConstructionCleaningPage() {
       image: regularServiceEquipment4,
     },
   ];
+  const cleaningPackages = [
+    {
+      icon: postConstructorImage1,
+      items: [
+        "Floor cleaning",
+        "Removing debris",
+        "Mopping",
+        "Mirrors cleaning",
+      ],
+    },
+    {
+      icon: postConstructorImage2,
+      items: [
+        "Clean windows",
+        "Clean the doors",
+        "Cleaning fixtures",
+        "Cleaning solutions",
+      ],
+    },
+    {
+      icon: postConstructorImage3,
+      items: [
+        "Vacuuming",
+        "Wipe down hard surfaces",
+        "Bathroom cleaning",
+        "Buckets and scrub brushes",
+      ],
+    },
+    {
+      icon: postConstructorImage4,
+      items: [
+        "Sweep and vacuum/mop floors",
+        "Vacuum cleaner",
+        "Window cleaning",
+        "Appliance cleaning",
+      ],
+    },
+    {
+      icon: postConstructorImage5,
+      items: [
+        "Dust fans and ceiling",
+        "Dust removal",
+        "Remove trash",
+        "Dusting",
+      ],
+    },
+    {
+      icon: postConstructorImage6,
+      items: [
+        "Clean all gates",
+        "Clean inside cabinets and drawers",
+        "Clean sink and food spaces",
+        "Trash bags",
+      ],
+    },
+  ];
   return (
     <div className="max-w-7xl mx-auto p-4 mt-6 sm:p-2">
       {/* Header Section */}
@@ -234,12 +242,12 @@ function PostConstructionCleaningPage() {
         <div className="w-full sm:w-2/3 flex flex-col justify-between">
           <div>
             <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
-              Post Construction & Renovation Cleaning
+              {services.data.name}
             </h1>
             <div className="mt-4 mb-4 ml-4">
               <div className="flex gap-3">
                 <p className="text-xl sm:text-2xl font-semibold text-black">
-                  C$ 59.72
+                  {services.data.price}
                 </p>
                 <select className="border rounded p-0.5 text-blue-900 h-7">
                   <option>EUR</option>
@@ -263,7 +271,6 @@ function PostConstructionCleaningPage() {
           </div>
         </div>
       </div>
-
 
       {/* packege list */}
       <div
@@ -535,7 +542,7 @@ function PostConstructionCleaningPage() {
 
       {/* Payment Support Section */}
       <div>
-        <PaymentSupportSection/>
+        <PaymentSupportSection />
       </div>
     </div>
   );
