@@ -134,6 +134,9 @@ export const OurShowcase2: string = "/images/ourShowCase/OurShowcase2.jpg";
 export const OurShowcase3: string = "/images/ourShowCase/OurShowcase3.jpg";
 export const OurShowcase4: string = "/images/ourShowCase/OurShowcase4.jpg";
 export const OurShowcase5: string = "/images/ourShowCase/OurShowcase5.jpg";
+export const OurShowcase6: string = "/images/ourShowCase/OurShowcase6.jpg";
+export const OurShowcase7: string = "/images/ourShowCase/OurShowcase7.jpg";
+export const OurShowcase8: string = "/images/ourShowCase/OurShowcase8.jpg";
 
 
 //post Constructor image

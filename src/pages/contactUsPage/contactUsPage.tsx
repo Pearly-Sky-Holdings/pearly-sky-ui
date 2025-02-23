@@ -3,6 +3,7 @@ import { Container, Grid, Typography, Box } from "@mui/material";
 import CountryCard from "../../components/contactUsCountryCards/contactUsCountryCards";
 import { contactImage1 } from "../../config/images.ts";
 import Globe from "../../components/contactUsCountryCards/Globe";
+const emailIcon = "./images/uiContactUs/mailicon.png";
 
 const countries = [
   { name: "France", hasOffice: true, mapSrc: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.8965731406633!2d2.3461149!3d48.860182599999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66f6025fd8697%3A0xe4968cc599a43374!2sPearly%20Sky%20Cleaning%20Service%20Private%20Ltd!5e0!3m2!1sen!2slk!4v1740018065562!5m2!1sen!2slk"  },
@@ -29,6 +30,14 @@ const countries = [
   { name: "Qatar", hasOffice: false },
   { name: "New Zealand", hasOffice: false },
   { name: "Luxembourg", hasOffice: false },
+];
+
+const emails = [
+  { label: "General Info", address: "Info@pearlyskyplc.com" },
+  { label: "Support", address: "support@pearlyskyplc.com" },
+  { label: "Sales", address: "Sales@pearlyskyplc.com" },
+  { label: "Helpdesk", address: "Helpdesk@pearlyskyplc.com" },
+  { label: "Recruiting", address: "Recruiting@pearlyskyplc.com" },
 ];
 
 const ContactUsPage: React.FC = () => {
@@ -90,6 +99,43 @@ const ContactUsPage: React.FC = () => {
           ))}
         </Grid>
       </Grid>
+
+      {/* Email Section */}
+        <Box sx={{ mt: 5, textAlign: "center" }}>
+          <Typography variant="h5" fontWeight="bold" color="#002F6D" sx={{ mb: 3 }}>
+            Get in Touch
+          </Typography>
+          <Grid container spacing={2} justifyContent="center" alignItems="center" wrap="nowrap">
+            {emails.map((email, index) => (
+              <Grid item key={index} xs="auto">
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    padding: "10px",
+                    border: "1px solid #ddd",
+                    borderRadius: "8px",
+                    boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
+                    transition: "transform 0.3s ease-in-out",
+                    "&:hover": { transform: "scale(1.05)" },
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={emailIcon}
+                    alt="Email Icon"
+                    sx={{ width: "24px", height: "24px", marginBottom: "8px" }}
+                  />
+                  <a href={`mailto:${email.address}`} style={{ textDecoration: "none", color: "#257ebe", fontWeight: "bold" }}>
+                    {email.address}
+                  </a>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+
     </Container>
   );
 };
