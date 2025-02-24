@@ -43,6 +43,12 @@ const CheckoutPage = () => {
   const oneTimeServiceData = useSelector(
     (state: any) => state.serviceDetailsSlice.service
   );
+  const childCareServiceData = useSelector(
+    (state: any) => state.serviceDetailsSlice.service
+  );
+  const elderCareServiceData = useSelector(
+    (state: any) => state.serviceDetailsSlice.service
+  );
   const [saveLoader, setSaveLoader] = useState(false);
 
   const location = useLocation();
@@ -175,6 +181,44 @@ const CheckoutPage = () => {
       };
       setSaveLoader(true);
       dispatch(saveServices(postConstructionServiceData));
+      console.log("Data", data);
+    }else if (data.serviceName == "Child Care") {
+      const childCareServiceData = {
+        customer: formData,
+        service_id: data.details.service_id,
+        price: parseInt(data.details.price),
+        date: data.details.date,
+        time: data.details.time,
+        property_size: data.details.property_size,
+        duration: data.details.duration,
+        number_of_cleaners: data.details.number_of_cleaners,
+        frequency: data.details.frequency,
+        note: data.details.note,
+        language: data.details.language,
+        person_type: data.details.person_type,
+        business_property: data.details.business_property,
+      };
+      setSaveLoader(true);
+      dispatch(saveServices(childCareServiceData));
+      console.log("Data", data);
+    }else if (data.serviceName == "Elder Care") {
+      const elderCareServiceData = {
+        customer: formData,
+        service_id: data.details.service_id,
+        price: parseInt(data.details.price),
+        date: data.details.date,
+        time: data.details.time,
+        property_size: data.details.property_size,
+        duration: data.details.duration,
+        number_of_cleaners: data.details.number_of_cleaners,
+        frequency: data.details.frequency,
+        note: data.details.note,
+        language: data.details.language,
+        person_type: data.details.person_type,
+        business_property: data.details.business_property,
+      };
+      setSaveLoader(true);
+      dispatch(saveServices(elderCareServiceData));
       console.log("Data", data);
     }
   };
@@ -368,6 +412,70 @@ const CheckoutPage = () => {
       }
     }
   }, [savePostConstructionServiceData.data, savePostConstructionServiceData.errorMessage]);
+
+  // childCare service
+  useEffect(() => {
+    if (saveLoader) {
+      if (
+        childCareServiceData.isSuccess &&
+        !childCareServiceData.isLoading
+      ) {
+        if (childCareServiceData.data.status === "success") {
+          console.log("Saved Successfully");
+          setShowSuccess(true);
+          setTimeout(() => {
+            navigate("/child_care_cleaning", {
+              state: { showSuccessPopup: true },
+            });
+          }, 2000);
+          setSaveLoader(false);
+        } else {
+          console.log("Error", childCareServiceData.data.message);
+          setErrorMessage(childCareServiceData.data.message);
+          setShowError(true);
+          setSaveLoader(false);
+        }
+      } else if (
+        !childCareServiceData.isSuccess &&
+        !childCareServiceData.isLoading
+      ) {
+        console.log("Error", childCareServiceData.errorMessage);
+        setSaveLoader(false);
+      }
+    }
+  }, [childCareServiceData.data, childCareServiceData.errorMessage]);
+
+  // Elder care service
+  useEffect(() => {
+    if (saveLoader) {
+      if (
+        elderCareServiceData.isSuccess &&
+        !elderCareServiceData.isLoading
+      ) {
+        if (elderCareServiceData.data.status === "success") {
+          console.log("Saved Successfully");
+          setShowSuccess(true);
+          setTimeout(() => {
+            navigate("/child_care_cleaning", {
+              state: { showSuccessPopup: true },
+            });
+          }, 2000);
+          setSaveLoader(false);
+        } else {
+          console.log("Error", elderCareServiceData.data.message);
+          setErrorMessage(elderCareServiceData.data.message);
+          setShowError(true);
+          setSaveLoader(false);
+        }
+      } else if (
+        !elderCareServiceData.isSuccess &&
+        !elderCareServiceData.isLoading
+      ) {
+        console.log("Error", elderCareServiceData.errorMessage);
+        setSaveLoader(false);
+      }
+    }
+  }, [elderCareServiceData.data, elderCareServiceData.errorMessage]);
   return (
     <Container maxWidth="xl" sx={{ marginBottom: "5%", color: "black" }}>
       <Typography
