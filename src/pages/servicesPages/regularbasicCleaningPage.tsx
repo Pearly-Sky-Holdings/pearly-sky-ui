@@ -11,7 +11,7 @@ import Carousel from "../../components/carouselSection/carousel";
 import EquipmentSection from "../../components/equipmentSection/equipmentSection";
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
-import { getPackege,getServices } from "../../services/CleaningServices/index";
+import { getPackege, getServices } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
 
 import {
@@ -28,11 +28,16 @@ import {
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
 function RegularBasicCleaningPage() {
+  type selectService = {
+    package_id: number;
+    price: number;
+    qty: number;
+  };
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const packages = useSelector((state: any) => state.packagesSlice.package);
   const services = useSelector((state: any) => state.servicesSlice.service);
-  const [selectedServices, setSelectedServices] = useState<object[]>([]);
+  const [selectedServices, setSelectedServices] = useState<selectService[]>([]);
   const [ovenQty, setOvenQty] = useState("0");
   const [showTermsCard, setShowTermsCard] = useState(false);
   const [fridgeQty, setFridgeQty] = useState("0");
@@ -53,9 +58,6 @@ function RegularBasicCleaningPage() {
     Array<{ id: string; price: number }>
   >([]);
   const [checkedList, setCheckedList] = useState<String[]>([]);
-
-  
-
 
   const [priceBreakdown, setPriceBreakdown] = useState({
     basePrice: 27.0,
@@ -79,14 +81,9 @@ function RegularBasicCleaningPage() {
     let serviceCosts = 0;
     let equipmentCosts = 0;
 
-    selectedServices.forEach((serviceId) => {
-      const service = packages.data.find(
-        (p: any) => p.package_id.toString() === serviceId
-      );
-      if (service) {
-        serviceCosts += parseFloat(service.price.replace("$", ""));
-      }
-    });
+    selectedServices.forEach((service) => {
+      serviceCosts += service.price * (service.qty || 1); 
+    });;
 
     selectedEquipments.forEach((equipment) => {
       equipmentCosts += equipment.price;
@@ -123,7 +120,16 @@ function RegularBasicCleaningPage() {
       duration: parseInt(duration),
       number_of_cleaners: parseInt(numCleaners),
       frequency,
-      package_details: selectedServices,
+      package_details: selectedServices.some(
+        (service) => service.package_id === 21 || service.package_id === 22
+      )
+        ? selectedServices.map((obj) => {
+            if (obj.package_id === 21)
+              return { ...obj, qty: Number(fridgeQty) };
+            if (obj.package_id === 22) return { ...obj, qty: Number(ovenQty) };
+            return obj;
+          })
+        : selectedServices,
       person_type: contactType,
       language,
       business_property: propertyType,
@@ -133,9 +139,7 @@ function RegularBasicCleaningPage() {
       price: priceBreakdown.totalPrice,
       note: document.querySelector("textarea")?.value || "",
     };
-    const data ={serviceName: "Regular Basic",
-      details: serviceDetails
-    }
+    const data = { serviceName: "Regular Basic", details: serviceDetails };
     console.log("Service Details:", serviceDetails);
     navigate("/checkout", { state: { data } });
   };
@@ -234,7 +238,7 @@ function RegularBasicCleaningPage() {
         <div className="w-full sm:w-2/3">
           <div className="">
             <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
-             {services.data.name}
+              {services.data.name}
             </h1>
             <div className="mt-4 mb-4 ml-4">
               <div className="flex gap-3">
@@ -313,6 +317,13 @@ function RegularBasicCleaningPage() {
                         service.package_id.toString(),
                       ]);
                     } else {
+                      setSelectedServices(
+                        selectedServices.filter(
+                          (item) =>
+                            item.package_id.toString() !==
+                            service.package_id.toString()
+                        )
+                      );
                       setCheckedList(
                         checkedList.filter(
                           (id) => id !== service.package_id.toString()
@@ -579,7 +590,7 @@ function RegularBasicCleaningPage() {
 
       {/* Payment Support Section */}
       <div>
-        <PaymentSupportSection/>
+        <PaymentSupportSection />
       </div>
     </div>
   );

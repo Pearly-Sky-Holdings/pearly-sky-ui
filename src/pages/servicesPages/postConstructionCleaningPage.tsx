@@ -41,7 +41,6 @@ import BookingSectionCart from "../../components/bookingSectionCarts/bookingSect
 function PostConstructionCleaningPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
-  const packages = useSelector((state: any) => state.packagesSlice.package);
   const services = useSelector((state: any) => state.servicesSlice.service);
   const [selectedServices, setSelectedServices] = useState<object[]>([]);
   const [showTermsCard, setShowTermsCard] = useState(false);
@@ -84,14 +83,7 @@ function PostConstructionCleaningPage() {
     let serviceCosts = 0;
     let equipmentCosts = 0;
 
-    selectedServices.forEach((serviceId) => {
-      const service = packages.data.find(
-        (p: any) => p.package_id.toString() === serviceId
-      );
-      if (service) {
-        serviceCosts += parseFloat(service.price.replace("$", ""));
-      }
-    });
+    
 
     selectedEquipments.forEach((equipment) => {
       equipmentCosts += equipment.price;

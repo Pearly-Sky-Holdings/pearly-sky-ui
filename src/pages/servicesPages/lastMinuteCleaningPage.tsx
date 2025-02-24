@@ -28,11 +28,16 @@ import {
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
 function LastMinuteCleaningPage() {
+  type selectService = {
+    package_id: number;
+    price: number;
+    qty: number;
+  };
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const packages = useSelector((state: any) => state.packagesSlice.package);
   const services = useSelector((state: any) => state.servicesSlice.service);
-  const [selectedServices, setSelectedServices] = useState<object[]>([]);
+  const [selectedServices, setSelectedServices] = useState<selectService[]>([]);
   const [ovenQty, setOvenQty] = useState("0");
   const [showTermsCard, setShowTermsCard] = useState(false);
   const [fridgeQty, setFridgeQty] = useState("0");
@@ -76,14 +81,9 @@ function LastMinuteCleaningPage() {
     let serviceCosts = 0;
     let equipmentCosts = 0;
 
-    selectedServices.forEach((serviceId) => {
-      const service = packages.data.find(
-        (p: any) => p.package_id.toString() === serviceId
-      );
-      if (service) {
-        serviceCosts += parseFloat(service.price.replace("$", ""));
-      }
-    });
+    selectedServices.forEach((service) => {
+      serviceCosts += service.price * (service.qty || 1); 
+    });;
 
     selectedEquipments.forEach((equipment) => {
       equipmentCosts += equipment.price;
@@ -120,7 +120,16 @@ function LastMinuteCleaningPage() {
       duration: parseInt(duration),
       number_of_cleaners: parseInt(numCleaners),
       frequency,
-      package_details: selectedServices,
+      package_details: selectedServices.some(
+        (service) => service.package_id === 21 || service.package_id === 22
+      )
+        ? selectedServices.map((obj) => {
+            if (obj.package_id === 21)
+              return { ...obj, qty: Number(fridgeQty) };
+            if (obj.package_id === 22) return { ...obj, qty: Number(ovenQty) };
+            return obj;
+          })
+        : selectedServices,
       person_type: contactType,
       language,
       business_property: propertyType,
@@ -314,6 +323,13 @@ function LastMinuteCleaningPage() {
                         service.package_id.toString(),
                       ]);
                     } else {
+                      setSelectedServices(
+                        selectedServices.filter(
+                          (item) =>
+                            item.package_id.toString() !==
+                            service.package_id.toString()
+                        )
+                      );
                       setCheckedList(
                         checkedList.filter(
                           (id) => id !== service.package_id.toString()
