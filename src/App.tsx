@@ -27,6 +27,8 @@ import DeepCleaningPage from "./pages/servicesPages/deepCleaningPage.tsx";
 import MoveInOutCleaningPage from "./pages/servicesPages/moveInOutCleaningPage.tsx";
 import PostConstructionCleaningPage from "./pages/servicesPages/postConstructionCleaningPage.tsx";
 import AirbnbAndShortService from "./pages/servicesPages/AirbnbCleaning.tsx";
+import ChildCareCleaningPage from "./pages/servicesPages/childCareCleaning.tsx";
+import ElderCareCleaningPage from "./pages/servicesPages/elderCareCleaning.tsx";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -174,6 +176,24 @@ function App() {
             element={
               <>
                 <AirbnbAndShortService />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/child_care_cleaning"
+            element={
+              <>
+                <ChildCareCleaningPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/elder_care_cleaning"
+            element={
+              <>
+                <ElderCareCleaningPage />
                 <Footer />
               </>
             }
