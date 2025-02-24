@@ -50,8 +50,8 @@ export const chooseClening4: string = "/images/chooseClening/chooseClening4.png"
 
 //choos our cleaning
 export const teamExperts1: string = "/images/teamExperts/oshan(OM1).png";
+export const teamExperts3: string = "/images/teamExperts/nipuna.png";
 export const teamExperts2: string = "/images/teamExperts/anusha.png";
-export const teamExperts3: string = "/images/teamExperts/chooseClening3.png";
 export const teamExperts4: string = "/images/teamExperts/chooseClening4.png";
 
 export const contactImage1: string = "/images/uiContactUs/ContactUs.png";
