@@ -14,7 +14,7 @@ export const getPackege = createAsyncThunk('getPackeges', async (id: string, { r
     }
 });
 
-export const getReStocking = createAsyncThunk('getReStocking', async ( page, { rejectWithValue }) => {
+export const getReStocking = createAsyncThunk('getReStocking', async ( _page, { rejectWithValue }) => {
     try {
         const { data } = await instance.get(`re_stocking_checklists`);
         return data;

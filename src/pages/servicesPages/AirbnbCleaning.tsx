@@ -29,10 +29,10 @@ function AirbnbAndShortService() {
   const packages = useSelector((state: any) => state.packagesSlice.package);
   const services = useSelector((state: any) => state.servicesSlice.service); 
   const items = useSelector((state:any)=> state.itemsSlice.items);
-  const [selectedServices, setSelectedServices] = useState<object[]>([]);
-  const [ovenQty, setOvenQty] = useState("0");
+  const [selectedServices, _setSelectedServices] = useState<object[]>([]);
+  const [_ovenQty, _setOvenQty] = useState("0");
   const [showTermsCard, setShowTermsCard] = useState(false);
-  const [fridgeQty, setFridgeQty] = useState("0");
+  const [_fridgeQty, _setFridgeQty] = useState("0");
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
   const [propertySize, setPropertySize] = useState("");
@@ -45,7 +45,7 @@ function AirbnbAndShortService() {
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
   const [selectedSolvent, setSelectedSolvent] = useState("");
-  const [selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
+  const [_selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
   const [selectedEquipments, setSelectedEquipments] = useState<
     Array<{ id: string; price: number }>
   >([]);

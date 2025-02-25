@@ -18,6 +18,7 @@ import { Link, useLocation } from "react-router-dom";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MenuIcon from "@mui/icons-material/Menu";
 import { companyLogo } from "../../config/images";
+import ScrollToTop from "../../components/scrollToTop/ScrollToTop";
 
 export default function NavigationBar() {
   const location = useLocation();
@@ -157,6 +158,7 @@ export default function NavigationBar() {
       position="sticky"
       sx={{ backgroundColor: "#002F6D", width: "100%", left: 0, top: 0 }}
     >
+      <ScrollToTop />
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", px: 2 }}>
         {/* Left side: Company Logo */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
