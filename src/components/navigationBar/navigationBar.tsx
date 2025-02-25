@@ -46,13 +46,26 @@ export default function NavigationBar() {
     { label: "Last Minute Cleaning", path: "/last-minute-cleaning" },
     { label: "Deep Cleaning", path: "/deep_cleaning" },
     { label: "Move In/Out Cleaning", path: "/move_in_out_cleaning" },
-    {
-      label: "Post Construction & Renovation Cleaning",
-      path: "/post_constructor_cleaning",
-    },
+    {label: "Post Construction & Renovation Cleaning", path: "/post_constructor_cleaning",},
     { label: "Airbnb And Short Term Rental Cleaning", path: "/airbnb_and_short_service" },
     { label: "Child Care Cleaning", path: "/child_care_cleaning" },
     { label: "Elder Care Cleaning", path: "/elder_care_cleaning" },
+
+    { label: "Sanitization & Disinfection Booking", path: "/vision_update_coming_soon" },
+    { label: "Office and Commercial Cleaning", path: "/vision_update_coming_soon" },
+    { label: "Carpet & Upholstery Cleaning Booking", path: "/vision_update_coming_soon" },
+    { label: "Move In/Out Transport Service Booking", path: "/vision_update_coming_soon" },
+    { label: "Steam Cleaning Booking", path: "/vision_update_coming_soon" },
+    { label: "Pressure Washing Booking", path: "/vision_update_coming_soon",},
+    { label: "Event Cleaning", path: "/vision_update_coming_soon" },
+    { label: "Pool cleaning Booking", path: "/vision_update_coming_soon" },
+    { label: "Laundry Services", path: "/vision_update_coming_soon" },
+  ];
+
+  const otherServiceDropdownItems = [
+    { label: "Other Service 1", path: "/other-service-1" },
+    { label: "Other Service 2", path: "/other-service-2" },
+    { label: "Other Service 3", path: "/other-service-3" },
   ];
 
   const otherServiceDropdownItems = [

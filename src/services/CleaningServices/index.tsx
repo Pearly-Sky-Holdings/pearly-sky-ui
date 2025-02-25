@@ -14,6 +14,18 @@ export const getPackege = createAsyncThunk('getPackeges', async (id: string, { r
     }
 });
 
+export const getReStocking = createAsyncThunk('getReStocking', async ( _page, { rejectWithValue }) => {
+    try {
+        const { data } = await instance.get(`re_stocking_checklists`);
+        return data;
+    } catch (error) {
+        if (error instanceof Error) {
+            return rejectWithValue(error.message);
+        }
+        return rejectWithValue('An unknown error occurred');
+    }
+});
+
 export const getServices = createAsyncThunk('searchService', async (id: string, { rejectWithValue }) => {
     try {
         const { data } = await instance.get(`searchService/${id}`);
