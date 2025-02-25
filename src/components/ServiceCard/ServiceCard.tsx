@@ -1,9 +1,11 @@
 import { Card, CardContent, CardMedia, Typography, Button, Box } from "@mui/material";
+import { Link } from 'react-router-dom';
 
 interface Service {
   image: string;
   title: string;
   description: string;
+  link: string;
 }
 
 export default function ServiceCard({ service }: Readonly<{ service: Service }>) {
@@ -31,6 +33,8 @@ export default function ServiceCard({ service }: Readonly<{ service: Service }>)
       <Box sx={{ textAlign: "center", pb: 3 }}>
         <Button
           variant="contained"
+          component={Link}
+            to={service.link}
           sx={{
             backgroundColor: "#002F6D",
             color: "white",

@@ -6,6 +6,12 @@ import {
   sectorImage3,
   sectorImage4,
   sectorImage5,
+  finance,
+  healthcare,
+  privateProperties,
+  retail,
+  sports,
+  residential
 } from "../../config/images";
 
 const sectors = [
@@ -17,17 +23,17 @@ const sectors = [
   {
     title: "Sports",
     description: "Elevating performance and passion through every game.",
-    image: "",
+    image: sports,
   },
  {
     title: "Private Properties",
     description: "Exclusive spaces tailored for comfort and luxury.",
-    image: "",
+    image: privateProperties,
   },
   {
     title: "Residential",
     description: "Creating welcoming and vibrant communities.",
-    image: "",
+    image: residential,
   },
   {
     title: "Hotels & Restaurants",
@@ -42,18 +48,18 @@ const sectors = [
 {
     title: "Healthcare",
     description: "Transforming healthcare for a healthier tomorrow.",
-    image: "",
+    image: healthcare,
   },
 {
     title: "Finance",
     description: "Unlocking financial growth and security.",
-    image: "",
+    image: finance,
   },
-{
-    title: "Government",
-    description: "Shaping effective governance for a better society.",
-    image: "",
-  },
+// {
+//     title: "Government",
+//     description: "Shaping effective governance for a better society.",
+//     image: "",
+//   },
   {
     title: "Leisure & Hospitality",
     description: "Elevating experiences in leisure and hospitality.",
@@ -67,7 +73,7 @@ const sectors = [
   {
     title: "Retail",
     description: "Redefining the shopping experience with innovation and convenience.",
-    image: "",
+    image: retail,
   }
 ];
 

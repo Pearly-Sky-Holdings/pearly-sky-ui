@@ -36,11 +36,19 @@ export const galleryImage3: string = "/images/gallery/galleryImage3.png";
 export const galleryImage4: string = "/images/gallery/galleryImage4.png";
 export const galleryImage5: string = "/images/gallery/galleryImage5.png";
 
+
+//sector
 export const sectorImage1: string = "/images/sector/sectorImage1.png";
 export const sectorImage2: string = "/images/sector/sectorImage2.png";
 export const sectorImage3: string = "/images/sector/sectorImage3.png";
 export const sectorImage4: string = "/images/sector/sectorImage4.png";
 export const sectorImage5: string = "/images/sector/sectorImage5.png";
+export const finance: string = "/images/sector/Finance.jpg";
+export const healthcare: string = "/images/sector/Healthcare.jpg";
+export const privateProperties: string = "/images/sector/PrivateProperties.jpg";
+export const retail: string = "/images/sector/Retail.jpg";
+export const sports: string = "/images/sector/Sports.jpg";
+export const residential: string = "/images/sector/Residential.jpg";
 
 //choos our cleaning
 export const chooseClening1: string = "/images/chooseClening/chooseClening1.png";

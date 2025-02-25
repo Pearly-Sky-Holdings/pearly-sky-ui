@@ -51,6 +51,7 @@ export default function NavigationBar() {
       label: "Post Construction & Renovation Cleaning",
       path: "/post_constructor_cleaning",
     },
+    { label: "Airbnb And Short Term Rental Cleaning", path: "/airbnb_and_short_service" },
     { label: "Child Care Cleaning", path: "/child_care_cleaning" },
     { label: "Elder Care Cleaning", path: "/elder_care_cleaning" },
   ];
