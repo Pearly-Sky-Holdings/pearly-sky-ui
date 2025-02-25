@@ -68,6 +68,12 @@ export default function NavigationBar() {
     { label: "Other Service 3", path: "/other-service-3" },
   ];
 
+  const otherServiceDropdownItems = [
+    { label: "Other Service 1", path: "/other-service-1" },
+    { label: "Other Service 2", path: "/other-service-2" },
+    { label: "Other Service 3", path: "/other-service-3" },
+  ];
+
   const handleServicesMouseEnter = (event: React.MouseEvent<HTMLElement>) => {
     setServicesAnchorEl(event.currentTarget);
   };
