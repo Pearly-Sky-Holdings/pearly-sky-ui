@@ -20,10 +20,6 @@ import {
   regularService3,
   regularService4,
   regularService5,
-  regularServiceEquipment1,
-  regularServiceEquipment2,
-  regularServiceEquipment3,
-  regularServiceEquipment4,
 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
@@ -82,8 +78,8 @@ function RegularBasicCleaningPage() {
     let equipmentCosts = 0;
 
     selectedServices.forEach((service) => {
-      serviceCosts += service.price * (service.qty || 1); 
-    });;
+      serviceCosts += service.price * (service.qty || 1);
+    });
 
     selectedEquipments.forEach((equipment) => {
       equipmentCosts += equipment.price;
@@ -108,6 +104,13 @@ function RegularBasicCleaningPage() {
         selectedEquipments.filter((e) => e.id !== equipment.id)
       );
     }
+  };
+  const handleSolventChange = (solvent: string) => {
+    setSelectedSolvent(solvent);
+  };
+  
+  const handleEquipmentOptionChange = (option: string) => {
+    setSelectedEquipmentOption(option);
   };
 
   const handleBookNow = () => {
@@ -134,7 +137,7 @@ function RegularBasicCleaningPage() {
       language,
       business_property: propertyType,
       cleaning_solvents: selectedSolvent,
-      // equipmentOption: selectedEquipmentOption,
+      equipmentOption: selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
       price: priceBreakdown.totalPrice,
       note: document.querySelector("textarea")?.value || "",
@@ -187,42 +190,6 @@ function RegularBasicCleaningPage() {
     ],
   ];
 
-  const solvents = [
-    { value: "customer", label: "Provided by the Customer" },
-    { value: "company", label: "Request the Company" },
-  ];
-
-  const equipmentOptions = [
-    { value: "basic", label: "Provided by the Customer" },
-    { value: "advanced", label: "Request the Company" },
-  ];
-
-  const equipments = [
-    {
-      id: "cleaning-solvent ",
-      name: "Cleaning Solvent (Eco Friendly Chemicals)",
-      price: 15.99,
-      image: regularServiceEquipment1,
-    },
-    {
-      id: "mop",
-      name: "MOP",
-      price: 11.99,
-      image: regularServiceEquipment2,
-    },
-    {
-      id: "materials",
-      name: "Other Cleaning Materials",
-      price: 19.99,
-      image: regularServiceEquipment3,
-    },
-    {
-      id: "vacuum",
-      name: "Vacuum Cleaner",
-      price: 29.99,
-      image: regularServiceEquipment4,
-    },
-  ];
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
@@ -402,13 +369,12 @@ function RegularBasicCleaningPage() {
       {/* Equipment Section */}
       <div>
         <EquipmentSection
-          title="Select your cleaning solvents and equipment"
-          solvents={solvents}
-          equipmentOptions={equipmentOptions}
-          equipments={equipments}
-          onSolventChange={setSelectedSolvent}
-          onEquipmentOptionChange={setSelectedEquipmentOption}
+          onSolventChange={handleSolventChange}
+          onEquipmentOptionChange={handleEquipmentOptionChange}
           onEquipmentSelect={handleEquipmentSelect}
+          solvents={[]}
+          equipmentOptions={[]}
+          equipments={[]}
         />
       </div>
 

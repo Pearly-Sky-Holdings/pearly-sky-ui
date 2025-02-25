@@ -12,7 +12,6 @@ import TermsAndConditions from "../../components/termsAndConditions/termsAndCond
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
 import {
   getServices,
-  getReStocking,
 } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
 
@@ -26,27 +25,16 @@ import {
 import store from "../../store";
 import BookingSectionCart2 from "../../components/bookingSectionChildAndElderCart/bookingSectionCart2";
 
-interface ReStockingItem {
-  id: number;
-  name: string;
-  category: string;
-  status: string;
-}
 function ChildCareCleaningPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const services = useSelector((state: any) => state.servicesSlice.service);
-  const reStocking = useSelector(
-    (state: any) => state.reStockingSlice.reStocking
-  );
   const [selectedServices, setSelectedServices] = useState<object[]>([]);
   const [showTermsCard, setShowTermsCard] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
   const [acceptTerms1, setAcceptTerms1] = useState(false);
   const [acceptTerms2, setAcceptTerms2] = useState(false);
-
-  const [checkedList, setCheckedList] = useState<String[]>([]);
   const [numChild, setNumChild] = useState("");
   const [duration, setDuration] = useState("");
   const [childAge, setChildAge] = useState("");
@@ -64,27 +52,11 @@ function ChildCareCleaningPage() {
 
   useEffect(() => {
     setPriceBreakdown(calculateTotalPrice());
-  }, [selectedServices]);
+  }, []);
 
   useEffect(() => {
     dispatch(getServices("8"));
   }, []);
-  useEffect(() => {
-    dispatch(getReStocking());
-  }, []);
-
-  const groupedData = reStocking.data
-    ? reStocking.data.reduce(
-        (acc: Record<string, ReStockingItem[]>, item: ReStockingItem) => {
-          if (!acc[item.category]) {
-            acc[item.category] = [];
-          }
-          acc[item.category].push(item);
-          return acc;
-        },
-        {} as Record<string, ReStockingItem[]>
-      )
-    : {};
 
   const calculateTotalPrice = () => {
     let basePrice = 58.0;
@@ -225,111 +197,7 @@ function ChildCareCleaningPage() {
         <Carousel imagePairs={imagePairs} />
       </div>
 
-      {/* Checklist Section */}
-      <div className="bg-white rounded-lg p-4 sm:p-6 mb-8 shadow-lg">
-        <h2 className="text-xl font-semibold mb-4 text-blue-900">
-          Re-Stocking Checklist
-        </h2>
-        {reStocking.isLoading ? (
-          <div className="text-center py-4">Loading packages...</div>
-        ) : reStocking.isSuccess ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {/* Sort categories in the desired order */}
-            {Object.entries(groupedData)
-              .sort(([categoryA], [categoryB]) => {
-                const order = [
-                  "Bathrooms",
-                  "Kitchen",
-                  "BedRooms",
-                  "Miscellaneous",
-                ];
-                return order.indexOf(categoryA) - order.indexOf(categoryB);
-              })
-              .map(([category, items]) => (
-                <div
-                  key={category}
-                  className={`mb-6 ${
-                    category === "Miscellaneous" ? "md:col-span-2" : ""
-                  }`} 
-                >
-                  <h3 className="text-lg font-semibold mb-2 text-blue-900">
-                    {category}
-                  </h3>
-                  {/* Add spacing between checklist items */}
-                  <div className="space-y-2">
-                    {(items as ReStockingItem[]).map((item: ReStockingItem) => (
-                      <label
-                        key={item.id}
-                        className="flex items-center space-x-2 text-blue-900 cursor-pointer"
-                      >
-                        <input
-                          type="checkbox"
-                          className="hidden"
-                          checked={checkedList.includes(item.id.toString())}
-                          onChange={(e) => {
-                            if (e.target.checked) {
-                              setSelectedServices([
-                                ...selectedServices,
-                                {
-                                  id: Number(item.id),
-                                },
-                              ]);
-                              setCheckedList([
-                                ...checkedList,
-                                item.id.toString(),
-                              ]);
-                            } else {
-                              setCheckedList(
-                                checkedList.filter(
-                                  (id) => id !== item.id.toString()
-                                )
-                              );
-                            }
-                          }}
-                        />
-                        {/* Custom checkbox */}
-                        <div
-                          className={`w-5 h-5 border-2 border-gray-400 rounded flex items-center justify-center transition-colors ${
-                            checkedList.includes(item.id.toString())
-                              ? "bg-blue-400 border-blue-400"
-                              : "bg-white border-gray-400"
-                          } ${item.status !== "active" ? "opacity-50" : ""}`}
-                        >
-                          {/* Checkmark icon */}
-                          {checkedList.includes(item.id.toString()) && (
-                            <svg
-                              className="w-3 h-3 text-white"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M5 13l4 4L19 7"
-                              />
-                            </svg>
-                          )}
-                        </div>
-                        <div className="flex-1">
-                          <span className="text-sm font-medium group-hover:text-black">
-                            {item.name}
-                          </span>
-                        </div>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              ))}
-          </div>
-        ) : (
-          <div className="text-center py-4 text-red-500">
-            {reStocking.errorMessage}
-          </div>
-        )}
-      </div>
+      
 
       {/* Booking Section */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8">

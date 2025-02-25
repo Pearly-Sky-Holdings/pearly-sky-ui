@@ -42,7 +42,6 @@ function PostConstructionCleaningPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const services = useSelector((state: any) => state.servicesSlice.service);
-  const [selectedServices, setSelectedServices] = useState<object[]>([]);
   const [showTermsCard, setShowTermsCard] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
@@ -62,14 +61,13 @@ function PostConstructionCleaningPage() {
   >([]);
   const [priceBreakdown, setPriceBreakdown] = useState({
     basePrice: 59.00,
-    serviceCosts: 0,
     equipmentCosts: 0,
     totalPrice: 59.00,
   });
 
   useEffect(() => {
     setPriceBreakdown(calculateTotalPrice());
-  }, [selectedServices, selectedEquipments]);
+  }, [ selectedEquipments]);
 
   useEffect(() => {
     dispatch(getPackege("6"));
@@ -80,7 +78,6 @@ function PostConstructionCleaningPage() {
   }, []);
   const calculateTotalPrice = () => {
     let basePrice = 59.00;
-    let serviceCosts = 0;
     let equipmentCosts = 0;
 
     
@@ -89,10 +86,9 @@ function PostConstructionCleaningPage() {
       equipmentCosts += equipment.price;
     });
 
-    const totalPrice = basePrice + serviceCosts + equipmentCosts;
+    const totalPrice = basePrice  + equipmentCosts;
     return {
       basePrice,
-      serviceCosts,
       equipmentCosts,
       totalPrice,
     };
@@ -118,7 +114,7 @@ function PostConstructionCleaningPage() {
       language,
       business_property: propertyType,
       cleaning_solvents: selectedSolvent,
-      // equipmentOption: selectedEquipmentOption,
+      equipmentOption: selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
       price: priceBreakdown.totalPrice,
       note: document.querySelector("textarea")?.value || "",
@@ -488,19 +484,6 @@ function PostConstructionCleaningPage() {
             </span>
             <span>C${priceBreakdown.basePrice.toFixed(2)}</span>
           </div>
-
-          {/* Selected Services Costs */}
-          {selectedServices.length > 0 && (
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
-              <span className="mb-2 md:mb-0">
-                Selected Services{" "}
-                <span className="text-gray-400">
-                  ({selectedServices.length} services)
-                </span>
-              </span>
-              <span>C${priceBreakdown.serviceCosts.toFixed(2)}</span>
-            </div>
-          )}
 
           {/* Selected Equipment Costs */}
           {selectedEquipments.length > 0 && (
