@@ -1,35 +1,61 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchItems } from './store/slice/CleaningServices/itemsSlice'; // Import fetchItems action
-import { RootState } from '../../store/index'; // Import RootState to access typed state
+import { fetchItems } from '../../store/slice/CleaningServices/itemsSlice';
+import { RootState, AppDispatch } from '../../store';
 
-const AirbnbCleaning = () => {
-  const dispatch = useDispatch();
+// Define Item interface based on your actual data structure
+interface Item {
+  id: number;
+  name: string;
+  category: string;
+  created_at: string;
+  updated_at: string;
+}
 
-  const { items, loading, error } = useSelector(
-    (state: RootState) => state.items // Select the items from the store
-  );
+// Define structure for grouped items
+interface GroupedItems {
+  [key: string]: Item[];
+}
+
+const RestockingChecklist = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  // Access the nested data structure properly
+  const { 
+    data = [], 
+    isLoading = false, 
+    errorMessage = null 
+  } = useSelector((state: RootState) => state.itemsSlice.items);
 
   useEffect(() => {
-    dispatch(fetchItems()); // Dispatch the action to fetch data when component mounts
+    // Now fetchItems is a proper thunk action creator
+    dispatch(fetchItems());
   }, [dispatch]);
 
-  if (loading) {
+  if (isLoading) {
     return <p>Loading...</p>;
   }
 
-  if (error) {
-    return <p>Error: {error}</p>;
+  if (errorMessage) {
+    return <p>Error: {errorMessage}</p>;
   }
 
-  // Group the items by category (you can do this directly in the render)
-  const groupedItems = items.reduce((acc: any, item) => {
-    if (!acc[item.category]) {
-      acc[item.category] = [];
+  // Check if data is available before reducing
+  if (!data || data.length === 0) {
+    return <p>No items found.</p>;
+  }
+
+  // Group the items by category
+  const groupedItems: GroupedItems = data.reduce((acc: GroupedItems, item: Item) => {
+    const category = item.category || 'Uncategorized';
+    
+    if (!acc[category]) {
+      acc[category] = [];
     }
-    acc[item.category].push(item);
+    
+    acc[category].push(item);
     return acc;
-  }, {});
+  }, {} as GroupedItems);
 
   return (
     <div>
@@ -37,7 +63,7 @@ const AirbnbCleaning = () => {
         <div key={category} className="mb-6">
           <h2 className="text-lg font-bold text-blue-900 mb-2">{category}</h2>
           {groupedItems[category].map((item) => (
-            <div key={item.id} className="text-blue-900 mb-2">
+            <div key={item.id.toString()} className="text-blue-900 mb-2">
               <p>{item.name}</p>
               <small>{item.created_at}</small>
             </div>
@@ -48,4 +74,4 @@ const AirbnbCleaning = () => {
   );
 };
 
-export default AirbnbCleaning;
+export default RestockingChecklist;
