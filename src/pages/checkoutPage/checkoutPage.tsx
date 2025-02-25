@@ -495,18 +495,8 @@ const CheckoutPage = () => {
           <OrderSummary />
           <PaymentMethod />
 
-          <Button
-            fullWidth
-            variant="contained"
-            onClick={handlePlaceOrder}
-            sx={{
-              mt: 3,
-              padding: "12px",
-              backgroundColor: "#0070f3",
-              "&:hover": { backgroundColor: "#005bb5" },
-            }}
-          >
-            Place Order
+          <Button variant="contained" color="primary" fullWidth style={{ marginTop: '20px', backgroundColor: '#003087', color: 'white', padding: '10px', fontSize: '16px', fontWeight: 'bold', borderRadius: '8px' }}>
+           Place Order
           </Button>
         </Grid>
       </Grid>
