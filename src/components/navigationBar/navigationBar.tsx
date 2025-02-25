@@ -14,21 +14,19 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MenuIcon from "@mui/icons-material/Menu";
 import { companyLogo } from "../../config/images";
-import ScrollToTop from "../../components/scrollToTop/ScrollToTop";
 
 export default function NavigationBar() {
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const navigate = useNavigate();
 
-  const [servicesAnchorEl, setServicesAnchorEl] =
-    React.useState<HTMLElement | null>(null);
-  const [otherServicesAnchorEl, setOtherServicesAnchorEl] =
-    React.useState<HTMLElement | null>(null);
+  const [servicesAnchorEl, setServicesAnchorEl] = React.useState<HTMLElement | null>(null);
+  const [otherServicesAnchorEl, setOtherServicesAnchorEl] = React.useState<HTMLElement | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [openDropdown, setOpenDropdown] = React.useState<string | null>(null);
 
@@ -38,7 +36,7 @@ export default function NavigationBar() {
     { label: "Company", path: "" },
     { label: "Contact Us", path: "/contactUsPage" },
     { label: "Careers", path: "" },
-    { label: "Other Services", path: "", isDropdown2: true },
+    { label: "Other Services", path: "/otherServices", isDropdown2: true },
     { label: "Our Locations", path: "/our-locations" },
   ];
 
@@ -48,13 +46,26 @@ export default function NavigationBar() {
     { label: "Last Minute Cleaning", path: "/last-minute-cleaning" },
     { label: "Deep Cleaning", path: "/deep_cleaning" },
     { label: "Move In/Out Cleaning", path: "/move_in_out_cleaning" },
-    {
-      label: "Post Construction & Renovation Cleaning",
-      path: "/post_constructor_cleaning",
-    },
+    {label: "Post Construction & Renovation Cleaning", path: "/post_constructor_cleaning",},
     { label: "Airbnb And Short Term Rental Cleaning", path: "/airbnb_and_short_service" },
     { label: "Child Care Cleaning", path: "/child_care_cleaning" },
     { label: "Elder Care Cleaning", path: "/elder_care_cleaning" },
+
+    { label: "Sanitization & Disinfection Booking", path: "/vision_update_coming_soon" },
+    { label: "Office and Commercial Cleaning", path: "/vision_update_coming_soon" },
+    { label: "Carpet & Upholstery Cleaning Booking", path: "/vision_update_coming_soon" },
+    { label: "Move In/Out Transport Service Booking", path: "/vision_update_coming_soon" },
+    { label: "Steam Cleaning Booking", path: "/vision_update_coming_soon" },
+    { label: "Pressure Washing Booking", path: "/vision_update_coming_soon",},
+    { label: "Event Cleaning", path: "/vision_update_coming_soon" },
+    { label: "Pool cleaning Booking", path: "/vision_update_coming_soon" },
+    { label: "Laundry Services", path: "/vision_update_coming_soon" },
+  ];
+
+  const otherServiceDropdownItems = [
+    { label: "Other Service 1", path: "/other-service-1" },
+    { label: "Other Service 2", path: "/other-service-2" },
+    { label: "Other Service 3", path: "/other-service-3" },
   ];
 
   const handleServicesMouseEnter = (event: React.MouseEvent<HTMLElement>) => {
@@ -78,6 +89,11 @@ export default function NavigationBar() {
     setOpenDropdown(openDropdown === label ? null : label);
   };
 
+  const handleMenuItemClick = (path: string) => {
+    navigate(path); // Navigate to the specified path
+    handleMouseLeave(); // Close the dropdown menu
+  };
+
   const MobileDrawer = () => (
     <Drawer
       anchor="top"
@@ -95,10 +111,10 @@ export default function NavigationBar() {
         {navItems.map((item) => (
           <React.Fragment key={item.label}>
             <ListItem
-              component={item.isDropdown ? "div" : Link}
-              to={!item.isDropdown ? item.path : undefined}
+              component={item.isDropdown || item.isDropdown2 ? "div" : Link}
+              to={!item.isDropdown && !item.isDropdown2 ? item.path : undefined}
               onClick={() => {
-                if (!item.isDropdown) {
+                if (!item.isDropdown && !item.isDropdown2) {
                   toggleMobileMenu();
                 } else {
                   handleDropdownClick(item.label);
@@ -114,7 +130,7 @@ export default function NavigationBar() {
               }}
             >
               <ListItemText primary={item.label} />
-              {item.isDropdown && (
+              {(item.isDropdown || item.isDropdown2) && (
                 <KeyboardArrowDownIcon
                   sx={{
                     color: "white",
@@ -147,6 +163,27 @@ export default function NavigationBar() {
                 ))}
               </Box>
             )}
+
+            {item.isDropdown2 && openDropdown === item.label && (
+              <Box sx={{ pl: 4, backgroundColor: "#003F7D" }}>
+                {otherServiceDropdownItems.map((subItem) => (
+                  <ListItem
+                    key={subItem.label}
+                    component={Link}
+                    to={subItem.path}
+                    onClick={toggleMobileMenu}
+                    sx={{
+                      color: "white",
+                      "&:hover": {
+                        backgroundColor: "rgba(255, 255, 255, 0.2)",
+                      },
+                    }}
+                  >
+                    <ListItemText primary={subItem.label} />
+                  </ListItem>
+                ))}
+              </Box>
+            )}
           </React.Fragment>
         ))}
       </List>
@@ -158,7 +195,6 @@ export default function NavigationBar() {
       position="sticky"
       sx={{ backgroundColor: "#002F6D", width: "100%", left: 0, top: 0 }}
     >
-      <ScrollToTop />
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", px: 2 }}>
         {/* Left side: Company Logo */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -184,20 +220,20 @@ export default function NavigationBar() {
         ) : (
           /* Desktop Navigation Items */
           <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
-            {navItems.map(({ label, path, isDropdown }) => (
+            {navItems.map(({ label, path, isDropdown, isDropdown2 }) => (
               <Box
                 key={label}
                 sx={{ display: "flex", alignItems: "center" }}
                 onMouseEnter={
-                  isDropdown
+                  isDropdown || isDropdown2
                     ? label === "Services"
                       ? handleServicesMouseEnter
                       : handleOtherServicesMouseEnter
                     : undefined
                 }
-                onMouseLeave={isDropdown ? handleMouseLeave : undefined}
+                onMouseLeave={isDropdown || isDropdown2 ? handleMouseLeave : undefined}
               >
-                {isDropdown ? (
+                {isDropdown || isDropdown2 ? (
                   <>
                     <IconButton
                       sx={{
@@ -239,14 +275,12 @@ export default function NavigationBar() {
                         },
                       }}
                     >
-                      {serviceDropdownItems.map((subItem) => (
-                        <MenuItem key={subItem.label} onClick={handleMouseLeave}>
-                          <Link
-                            to={subItem.path}
-                            style={{ textDecoration: "none", color: "black" }}
-                          >
-                            {subItem.label}
-                          </Link>
+                      {(label === "Services" ? serviceDropdownItems : otherServiceDropdownItems).map((subItem) => (
+                        <MenuItem
+                          key={subItem.label}
+                          onClick={() => handleMenuItemClick(subItem.path)} // Navigate and close dropdown
+                        >
+                          <Typography>{subItem.label}</Typography>
                         </MenuItem>
                       ))}
                     </Menu>
