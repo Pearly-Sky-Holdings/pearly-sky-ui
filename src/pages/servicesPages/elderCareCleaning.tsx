@@ -7,7 +7,6 @@ import { format } from "date-fns";
 import "react-calendar/dist/Calendar.css";
 import TimeSlots from "../../components/timeSlot/timeSlot";
 import "./CustomCalendar.css";
-import Carousel from "../../components/carouselSection/carousel";
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
 import {
@@ -17,28 +16,22 @@ import {
 import dayjs from "dayjs";
 
 import {
-  regularService2,
-  regularService3,
-  regularService4,
-  regularService5,
   MoveInAndOutService1,
+  elderCareVideo,
 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart2 from "../../components/bookingSectionChildAndElderCart/bookingSectionCart2";
+import Carousel2 from "../../components/carouselSection2/carousel2";
 
 function ElderCareCleaningPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const services = useSelector((state: any) => state.servicesSlice.service);
   const [selectedServices, setSelectedServices] = useState<object[]>([]);
-  
   const [showTermsCard, setShowTermsCard] = useState(false);
-  
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
-  
   const [duration, setDuration] = useState("");
- 
   const [frequency, setFrequency] = useState("");
   const [acceptTerms1, setAcceptTerms1] = useState(false);
   const [acceptTerms2, setAcceptTerms2] = useState(false);
@@ -91,49 +84,6 @@ function ElderCareCleaningPage() {
     console.log("Service Details:", serviceDetails);
     navigate("/checkout", { state: { data } });
   };
-
-  const imagePairs = [
-    [
-      {
-        img: regularService2,
-        title: "Bedroom Cleaning",
-        features: [
-          "Dust all cleanable surfaces",
-          "Make the bed",
-          "Clean floor surfaces",
-        ],
-      },
-      {
-        img: regularService3,
-        title: "Bedroom Cleaning",
-        features: [
-          "Dust all cleanable surfaces",
-          "Make the bed",
-          "Clean floor surfaces",
-        ],
-      },
-    ],
-    [
-      {
-        img: regularService4,
-        title: "Bedroom Cleaning",
-        features: [
-          "Dust all cleanable surfaces",
-          "Make the bed",
-          "Clean floor surfaces",
-        ],
-      },
-      {
-        img: regularService5,
-        title: "Bedroom Cleaning",
-        features: [
-          "Dust all cleanable surfaces",
-          "Make the bed",
-          "Clean floor surfaces",
-        ],
-      },
-    ],
-  ];
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
@@ -199,7 +149,13 @@ function ElderCareCleaningPage() {
 
       {/* Carousel Section */}
       <div>
-        <Carousel imagePairs={imagePairs} />
+        <Carousel2
+          videoItems={[
+            {
+              video: elderCareVideo,     
+            },
+          ]}
+        />
       </div>
 
       {/* Booking Section */}
