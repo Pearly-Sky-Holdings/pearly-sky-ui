@@ -13,6 +13,7 @@ import PaymentSupportSection from "../../components/paymentSupportSection/paymen
 import { getPackege } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
 import ServicesCarosel from "../../components/oneTimeCleaning/servicesCarousel";
+import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
 import {
   OneTimeService1,
   regularServiceEquipment1,
@@ -53,31 +54,46 @@ function OneTimeCleaningPage() {
     Array<{ id: string; price: number }>
   >([]);
   const [checkedList, setCheckedList] = useState<string[]>([]);
+
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const [currencySymbol, setCurrencySymbol] = useState("$");
+  const [conversionRate, setConversionRate] = useState(1);
+
   const [priceBreakdown, setPriceBreakdown] = useState({
-    basePrice: 27.00,
+    basePrice: 27.0,
     serviceCosts: 0,
     equipmentCosts: 0,
-    totalPrice: 27.00,
+    totalPrice: 27.0,
   });
+
+  const handleCurrencyUpdate = (
+    currency: string,
+    symbol: string,
+    rate: number
+  ) => {
+    setSelectedCurrency(currency);
+    setCurrencySymbol(symbol);
+    setConversionRate(rate);
+  };
 
   useEffect(() => {
     setPriceBreakdown(calculateTotalPrice());
-  }, [selectedServices, selectedEquipments]);
+  }, [selectedServices, selectedEquipments, conversionRate]);
 
   useEffect(() => {
     dispatch(getPackege("5"));
   }, []);
   const calculateTotalPrice = () => {
-    let basePrice = 27.00;
+    let basePrice = 27.0 * conversionRate;
     let serviceCosts = 0;
     let equipmentCosts = 0;
 
     selectedServices.forEach((service) => {
-      serviceCosts += service.price * (service.qty || 1); 
-    });;
+      serviceCosts += service.price * (service.qty || 1) * conversionRate;
+    });
 
     selectedEquipments.forEach((equipment) => {
-      equipmentCosts += equipment.price;
+      equipmentCosts += equipment.price * conversionRate;
     });
 
     const totalPrice = basePrice + serviceCosts + equipmentCosts;
@@ -122,6 +138,7 @@ function OneTimeCleaningPage() {
       equipmentOption: selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
       price: priceBreakdown.totalPrice,
+      currency: selectedCurrency,
       note: document.querySelector("textarea")?.value || "",
     };
     const data = { serviceName: "One Time Cleaning", details: serviceDetails };
@@ -166,8 +183,6 @@ function OneTimeCleaningPage() {
     },
   ];
 
-  
-
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
       {/* Header Section */}
@@ -185,23 +200,17 @@ function OneTimeCleaningPage() {
               One Time Cleaning
             </h1>
             <div className="mt-4 mb-4 ml-4">
-              <div className="flex gap-3">
-                <p className="text-xl sm:text-2xl font-semibold text-black">
-                  C$ 27.00
-                </p>
-                <select className="border rounded p-0.5 text-blue-900 h-7">
-                  <option>EUR</option>
-                  <option>USD</option>
-                  <option>GBP</option>
-                  <option>AED</option>
-                  <option>NZD</option>
-                </select>
-              </div>
+              <CurrencyConverter
+                basePrice={parseFloat("27.00")}
+                onCurrencyChange={handleCurrencyUpdate}
+                initialCurrency="USD"
+              />
             </div>
           </div>
           <p className="text-gray-600 mb-4 text-sm sm:text-base">
-          One-time basic cleaning typically involves a thorough, 
-          general cleaning of a space to make it fresh and presentable. This service includes tasks such as, 
+            One-time basic cleaning typically involves a thorough, general
+            cleaning of a space to make it fresh and presentable. This service
+            includes tasks such as,
           </p>
           <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
             <li>Dusting surfaces </li>
@@ -210,19 +219,22 @@ function OneTimeCleaningPage() {
             <li>Sanitizing high-traffic areas like kitchens and bathrooms</li>
           </ul>
           <p className="text-gray-600 text-sm sm:text-base">
-          Basic cleaning also covers light organization, trash removal, and disinfecting common touch points such as door handles and light switches. This service is ideal for people 
-          who need a quick refresh of their space or want it cleaned for an event or after a period of inactivity.
+            Basic cleaning also covers light organization, trash removal, and
+            disinfecting common touch points such as door handles and light
+            switches. This service is ideal for people who need a quick refresh
+            of their space or want it cleaned for an event or after a period of
+            inactivity.
           </p>
         </div>
       </div>
 
       {/* Carousel Section */}
       <div>
-         <ServicesCarosel index={2}/>
+        <ServicesCarosel index={2} />
       </div>
 
-    {/* Checklist Section */}
-    <div className="bg-white rounded-lg p-4 sm:p-6 mb-8 shadow-lg">
+      {/* Checklist Section */}
+      <div className="bg-white rounded-lg p-4 sm:p-6 mb-8 shadow-lg">
         <h2 className="text-xl font-semibold mb-4 text-blue-900">
           Select Additional Service Including to Your Package Checklist
         </h2>
@@ -481,10 +493,10 @@ function OneTimeCleaningPage() {
         <div className="pt-4 mb-6">
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
-            <span className="mb-2 md:mb-0">
-              Base Cost <span className="text-gray-400">(C$ 27.00)</span>
+          <span className="mb-2 md:mb-0">
+              Base Cost <span className="text-gray-400">({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})</span>
             </span>
-            <span>C${priceBreakdown.basePrice.toFixed(2)}</span>
+            <span>{currencySymbol}{priceBreakdown.basePrice.toFixed(2)}</span>
           </div>
 
           {/* Selected Services Costs */}
@@ -496,7 +508,7 @@ function OneTimeCleaningPage() {
                   ({selectedServices.length} services)
                 </span>
               </span>
-              <span>C${priceBreakdown.serviceCosts.toFixed(2)}</span>
+              <span>{currencySymbol}{priceBreakdown.serviceCosts.toFixed(2)}</span>
             </div>
           )}
 
@@ -509,14 +521,14 @@ function OneTimeCleaningPage() {
                   ({selectedEquipments.length} items)
                 </span>
               </span>
-              <span>C${priceBreakdown.equipmentCosts.toFixed(2)}</span>
+              <span>{currencySymbol}{priceBreakdown.equipmentCosts.toFixed(2)}</span>
             </div>
           )}
 
           {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
             <span>Total</span>
-            <span>C${priceBreakdown.totalPrice.toFixed(2)}</span>
+            <span>{currencySymbol}{priceBreakdown.totalPrice.toFixed(2)}</span>
           </div>
         </div>
 
@@ -532,7 +544,7 @@ function OneTimeCleaningPage() {
 
       {/* Payment Support Section */}
       <div>
-        <PaymentSupportSection/>
+        <PaymentSupportSection />
       </div>
     </div>
   );

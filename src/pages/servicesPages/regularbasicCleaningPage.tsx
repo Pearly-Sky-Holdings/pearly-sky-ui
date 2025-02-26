@@ -7,11 +7,11 @@ import { format } from "date-fns";
 import "react-calendar/dist/Calendar.css";
 import TimeSlots from "../../components/timeSlot/timeSlot";
 import "./CustomCalendar.css";
-// import Carousel from "../../components/carouselSection/carousel";
 import ServicesCarosel from "../../components/oneTimeCleaning/servicesCarousel";
 import EquipmentSection from "../../components/equipmentSection/equipmentSection";
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
+import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
 import { getPackege, getServices } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
 
@@ -24,6 +24,7 @@ import {
 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
+
 function RegularBasicCleaningPage() {
   type selectService = {
     package_id: number;
@@ -55,6 +56,11 @@ function RegularBasicCleaningPage() {
     Array<{ id: string; price: number }>
   >([]);
   const [checkedList, setCheckedList] = useState<String[]>([]);
+  
+  // Currency state - Changed default from EUR to USD
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const [currencySymbol, setCurrencySymbol] = useState("$");
+  const [conversionRate, setConversionRate] = useState(1);
 
   const [priceBreakdown, setPriceBreakdown] = useState({
     basePrice: 27.0,
@@ -63,27 +69,36 @@ function RegularBasicCleaningPage() {
     totalPrice: 27.0,
   });
 
+  // Handler for currency changes from CurrencyConverter component
+  const handleCurrencyUpdate = (currency: string, symbol: string, rate: number) => {
+    setSelectedCurrency(currency);
+    setCurrencySymbol(symbol);
+    setConversionRate(rate);
+  };
+
   useEffect(() => {
     setPriceBreakdown(calculateTotalPrice());
-  }, [selectedServices, selectedEquipments]);
+  }, [selectedServices, selectedEquipments, conversionRate]);
 
   useEffect(() => {
     dispatch(getPackege("1"));
   }, []);
+  
   useEffect(() => {
     dispatch(getServices("1"));
   }, []);
+  
   const calculateTotalPrice = () => {
-    let basePrice = 27.0;
+    let basePrice = 27.0 * conversionRate;
     let serviceCosts = 0;
     let equipmentCosts = 0;
 
     selectedServices.forEach((service) => {
-      serviceCosts += service.price * (service.qty || 1);
+      serviceCosts += service.price * (service.qty || 1) * conversionRate;
     });
 
     selectedEquipments.forEach((equipment) => {
-      equipmentCosts += equipment.price;
+      equipmentCosts += equipment.price * conversionRate;
     });
 
     const totalPrice = basePrice + serviceCosts + equipmentCosts;
@@ -94,6 +109,7 @@ function RegularBasicCleaningPage() {
       totalPrice,
     };
   };
+  
   const handleEquipmentSelect = (equipment: any, selected: boolean) => {
     if (selected) {
       setSelectedEquipments([
@@ -106,6 +122,7 @@ function RegularBasicCleaningPage() {
       );
     }
   };
+  
   const handleSolventChange = (solvent: string) => {
     setSelectedSolvent(solvent);
   };
@@ -141,6 +158,7 @@ function RegularBasicCleaningPage() {
       equipmentOption: _selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
       price: priceBreakdown.totalPrice,
+      currency: selectedCurrency,
       note: document.querySelector("textarea")?.value || "",
     };
     const data = { serviceName: "Regular Basic", details: serviceDetails };
@@ -209,18 +227,12 @@ function RegularBasicCleaningPage() {
               {services.data.name}
             </h1>
             <div className="mt-4 mb-4 ml-4">
-              <div className="flex gap-3">
-                <p className="text-xl sm:text-2xl font-semibold text-black">
-                  {services.data.price}
-                </p>
-                <select className="border rounded p-0.5 text-blue-900 h-7">
-                  <option>EUR</option>
-                  <option>USD</option>
-                  <option>GBP</option>
-                  <option>AED</option>
-                  <option>NZD</option>
-                </select>
-              </div>
+              {/* Using the CurrencyConverter component with USD as initial currency */}
+              <CurrencyConverter 
+                basePrice={parseFloat(services.data.price)} 
+                onCurrencyChange={handleCurrencyUpdate}
+                initialCurrency="USD"
+              />
             </div>
           </div>
           <p className="text-gray-600 mb-4 text-sm sm:text-base">
@@ -333,7 +345,7 @@ function RegularBasicCleaningPage() {
                   </span>
                   {service.price !== "0$" && (
                     <div className="mt-1 text-xs text-gray-500">
-                      <span>{service.price}</span>
+                      <span>{currencySymbol}{(parseInt(service.price) * conversionRate).toFixed(2)}</span>
                       <select
                         className="ml-2 border rounded px-1 py-0.5 text-xs"
                         value={
@@ -507,9 +519,9 @@ function RegularBasicCleaningPage() {
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              Base Cost <span className="text-gray-400">(C$ 27.00)</span>
+              Base Cost <span className="text-gray-400">({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})</span>
             </span>
-            <span>C${priceBreakdown.basePrice.toFixed(2)}</span>
+            <span>{currencySymbol}{priceBreakdown.basePrice.toFixed(2)}</span>
           </div>
 
           {/* Selected Services Costs */}
@@ -521,7 +533,7 @@ function RegularBasicCleaningPage() {
                   ({selectedServices.length} services)
                 </span>
               </span>
-              <span>C${priceBreakdown.serviceCosts.toFixed(2)}</span>
+              <span>{currencySymbol}{priceBreakdown.serviceCosts.toFixed(2)}</span>
             </div>
           )}
 
@@ -534,14 +546,14 @@ function RegularBasicCleaningPage() {
                   ({selectedEquipments.length} items)
                 </span>
               </span>
-              <span>C${priceBreakdown.equipmentCosts.toFixed(2)}</span>
+              <span>{currencySymbol}{priceBreakdown.equipmentCosts.toFixed(2)}</span>
             </div>
           )}
 
           {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
             <span>Total</span>
-            <span>C${priceBreakdown.totalPrice.toFixed(2)}</span>
+            <span>{currencySymbol}{priceBreakdown.totalPrice.toFixed(2)}</span>
           </div>
         </div>
 

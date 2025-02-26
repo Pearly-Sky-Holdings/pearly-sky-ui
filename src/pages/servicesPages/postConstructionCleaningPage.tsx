@@ -11,6 +11,7 @@ import EquipmentSection from "../../components/equipmentSection/equipmentSection
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
 import { getPackege, getServices } from "../../services/CleaningServices/index";
+import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
 import dayjs from "dayjs";
 import {
   Card,
@@ -60,15 +61,30 @@ function PostConstructionCleaningPage() {
   const [selectedEquipments, setSelectedEquipments] = useState<
     Array<{ id: string; price: number }>
   >([]);
+
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const [currencySymbol, setCurrencySymbol] = useState("$");
+  const [conversionRate, setConversionRate] = useState(1);
+
   const [priceBreakdown, setPriceBreakdown] = useState({
-    basePrice: 59.00,
+    basePrice: 59.0,
     equipmentCosts: 0,
-    totalPrice: 59.00,
+    totalPrice: 59.0,
   });
+
+  const handleCurrencyUpdate = (
+    currency: string,
+    symbol: string,
+    rate: number
+  ) => {
+    setSelectedCurrency(currency);
+    setCurrencySymbol(symbol);
+    setConversionRate(rate);
+  };
 
   useEffect(() => {
     setPriceBreakdown(calculateTotalPrice());
-  }, [ selectedEquipments]);
+  }, [selectedEquipments, conversionRate]);
 
   useEffect(() => {
     dispatch(getPackege("6"));
@@ -78,16 +94,14 @@ function PostConstructionCleaningPage() {
     dispatch(getServices("6"));
   }, []);
   const calculateTotalPrice = () => {
-    let basePrice = 59.00;
+    let basePrice = 59.0 * conversionRate;
     let equipmentCosts = 0;
 
-    
-
     selectedEquipments.forEach((equipment) => {
-      equipmentCosts += equipment.price;
+      equipmentCosts += equipment.price * conversionRate;
     });
 
-    const totalPrice = basePrice  + equipmentCosts;
+    const totalPrice = basePrice + equipmentCosts;
     return {
       basePrice,
       equipmentCosts,
@@ -118,6 +132,7 @@ function PostConstructionCleaningPage() {
       equipmentOption: _selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
       price: priceBreakdown.totalPrice,
+      currency: selectedCurrency,
       note: document.querySelector("textarea")?.value || "",
     };
     const data = { serviceName: "Post Construction", details: serviceDetails };
@@ -234,18 +249,11 @@ function PostConstructionCleaningPage() {
               {services.data.name}
             </h1>
             <div className="mt-4 mb-4 ml-4">
-              <div className="flex gap-3">
-                <p className="text-xl sm:text-2xl font-semibold text-black">
-                  {services.data.price}
-                </p>
-                <select className="border rounded p-0.5 text-blue-900 h-7">
-                  <option>EUR</option>
-                  <option>USD</option>
-                  <option>GBP</option>
-                  <option>AED</option>
-                  <option>NZD</option>
-                </select>
-              </div>
+              <CurrencyConverter
+                basePrice={parseFloat(services.data.price)}
+                onCurrencyChange={handleCurrencyUpdate}
+                initialCurrency="USD"
+              />
             </div>
           </div>
           <div className="flex-grow">
@@ -480,10 +488,10 @@ function PostConstructionCleaningPage() {
         <div className="pt-4 mb-6">
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
-            <span className="mb-2 md:mb-0">
-              Base Cost <span className="text-gray-400">(C$ 59.72)</span>
+          <span className="mb-2 md:mb-0">
+              Base Cost <span className="text-gray-400">({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})</span>
             </span>
-            <span>C${priceBreakdown.basePrice.toFixed(2)}</span>
+            <span>{currencySymbol}{priceBreakdown.basePrice.toFixed(2)}</span>
           </div>
 
           {/* Selected Equipment Costs */}
@@ -495,14 +503,14 @@ function PostConstructionCleaningPage() {
                   ({selectedEquipments.length} items)
                 </span>
               </span>
-              <span>C${priceBreakdown.equipmentCosts.toFixed(2)}</span>
+              <span>{currencySymbol}{priceBreakdown.equipmentCosts.toFixed(2)}</span>
             </div>
           )}
 
           {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
             <span>Total</span>
-            <span>C${priceBreakdown.totalPrice.toFixed(2)}</span>
+            <span>{currencySymbol}{priceBreakdown.totalPrice.toFixed(2)}</span>
           </div>
         </div>
 
