@@ -10,9 +10,12 @@ import "./CustomCalendar.css";
 import EquipmentSection from "../../components/equipmentSection/equipmentSection";
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
-import { getPackege,getRestockList,getServices } from "../../services/CleaningServices/index";
+import {
+  getPackege,
+  getRestockList,
+  getServices,
+} from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
-
 
 import {
   airbnbAndShortService,
@@ -20,15 +23,17 @@ import {
   regularServiceEquipment2,
   regularServiceEquipment3,
   regularServiceEquipment4,
+  airbnbVideo,
 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
+import Carousel2 from "../../components/carouselSection2/carousel2";
 function AirbnbAndShortService() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const packages = useSelector((state: any) => state.packagesSlice.package);
-  const services = useSelector((state: any) => state.servicesSlice.service); 
-  const items = useSelector((state:any)=> state.itemsSlice.items);
+  const services = useSelector((state: any) => state.servicesSlice.service);
+  const items = useSelector((state: any) => state.itemsSlice.items);
   const [_ovenQty, _setOvenQty] = useState("0");
   const [_fridgeQty, _setFridgeQty] = useState("0");
   const [selectedServices, _setSelectedServices] = useState<object[]>([]);
@@ -68,30 +73,29 @@ function AirbnbAndShortService() {
 
   useEffect(() => {
     dispatch(getServices("7"));
-       
   }, []);
 
   useEffect(() => {
-    if(items.data.length === 0){
+    if (items.data.length === 0) {
       dispatch(getRestockList());
     }
     console.log(items.data);
-    console.log('Grouped Items:', groupedItems);    
+    console.log("Grouped Items:", groupedItems);
   });
 
   useEffect(() => {
-  if (items.data.length > 0) {
-    const grouped = items.data.reduce((acc: any, item: any) => {
-      if (!acc[item.category]) {
-        acc[item.category] = [];
-      }
-      acc[item.category].push(item);
-      return acc;
-    }, {});
-    setGroupedItems(grouped);
-    console.log(groupedItems);
-  }
-}, [items.data]);
+    if (items.data.length > 0) {
+      const grouped = items.data.reduce((acc: any, item: any) => {
+        if (!acc[item.category]) {
+          acc[item.category] = [];
+        }
+        acc[item.category].push(item);
+        return acc;
+      }, {});
+      setGroupedItems(grouped);
+      console.log(groupedItems);
+    }
+  }, [items.data]);
 
   const calculateTotalPrice = () => {
     let basePrice = 59.72;
@@ -152,20 +156,28 @@ function AirbnbAndShortService() {
       price: priceBreakdown.totalPrice,
       note: document.querySelector("textarea")?.value || "",
     };
-    const data ={serviceName: "Airbnb And Short Term Rental Cleaning",  details: serviceDetails   }
+    const data = {
+      serviceName: "Airbnb And Short Term Rental Cleaning",
+      details: serviceDetails,
+    };
     console.log("Service Details:", serviceDetails);
     navigate("/checkout", { state: { data } });
-  }; 
-  
-    // Handle checkbox change
-  const handleCheckboxChange = (itemId: number, e: React.ChangeEvent<HTMLInputElement>) => {
+  };
+
+  // Handle checkbox change
+  const handleCheckboxChange = (
+    itemId: number,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     if (e.target.checked) {
       setCheckedList((prevChecked) => [...prevChecked, itemId.toString()]);
     } else {
-      setCheckedList((prevChecked) => prevChecked.filter((id) => id !== itemId.toString()));
+      setCheckedList((prevChecked) =>
+        prevChecked.filter((id) => id !== itemId.toString())
+      );
     }
   };
-     
+
   const solvents = [
     { value: "customer", label: "Provided by the Customer" },
     { value: "company", label: "Request the Company" },
@@ -203,7 +215,6 @@ function AirbnbAndShortService() {
     },
   ];
 
-
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
       {/* Header Section */}
@@ -218,7 +229,7 @@ function AirbnbAndShortService() {
         <div className="w-full sm:w-2/3">
           <div className="">
             <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
-             {services.data.name}
+              {services.data.name}
             </h1>
             <div className="mt-4 mb-4 ml-4">
               <div className="flex gap-3">
@@ -236,214 +247,250 @@ function AirbnbAndShortService() {
             </div>
           </div>
           <p className="text-gray-600 mb-4 text-sm sm:text-base">
-          Move-in/out cleaning is a specialized service offered by cleaning companies 
-          and is prepared for individuals transitioning into or out of a property. 
-          This subtle cleaning procedure is specially made to prepare a space for new occupants 
-          or ensure the departure leaves the premises in impeccable condition. 
+            Move-in/out cleaning is a specialized service offered by cleaning
+            companies and is prepared for individuals transitioning into or out
+            of a property. This subtle cleaning procedure is specially made to
+            prepare a space for new occupants or ensure the departure leaves the
+            premises in impeccable condition. 
           </p>
           <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
-            <li>Deep cleaning and sanitization of kitchens, bathrooms, and living spaces</li>
+            <li>
+              Deep cleaning and sanitization of kitchens, bathrooms, and living
+              spaces
+            </li>
             <li>Vacuuming and stain removal for carpets and upholstery</li>
-            <li>Dusting and disinfecting high-touch surfaces and hard-to-reach spots</li>
+            <li>
+              Dusting and disinfecting high-touch surfaces and hard-to-reach
+              spots
+            </li>
             <li>Scrubbing and polishing floors, fixtures, and appliances</li>
-            
           </ul>
           <p className="text-gray-600 text-sm sm:text-base">
-          This detailed process eliminates dirt, grime, and allergens, fostering a healthier and more inviting space.
-           It enhances overall cleanliness, prolongs the life of furniture and appliances, and ensures a comfortable 
-           environment for every guest, improving their stay and boosting positive reviews.
+            This detailed process eliminates dirt, grime, and allergens,
+            fostering a healthier and more inviting space. It enhances overall
+            cleanliness, prolongs the life of furniture and appliances, and
+            ensures a comfortable environment for every guest, improving their
+            stay and boosting positive reviews.
           </p>
         </div>
       </div>
 
-            {/* Checklist Section */}
-            <div className="bg-white rounded-lg p-4 sm:p-6 mb-8 shadow-lg">
-          <h2 className="text-xl font-semibold mb-4 text-blue-900">
-            Re-stocking CheckList
-          </h2>
+      {/* Carousel Section */}
+      <div>
+        <Carousel2
+          videoItems={[
+            {
+              video: airbnbVideo,
+            },
+          ]}
+        />
+      </div>
 
-          <div>
-            {items?.isLoading ? (
-              <div className="text-center py-4">Loading items...</div>
-            ) : items?.isSuccess && items?.data ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-                {/* Bathrooms Column */}
-                <div>
-                  <h3 className="text-lg font-semibold text-blue-900">Bathrooms</h3>
-                  <div className="flex flex-col text-blue-900 gap-5 mt-2">
-                    {groupedItems.Bathrooms?.map((item: any) => (
-                      <label key={item.id} className="flex items-center space-x-2 cursor-pointer">
-                        <input
-                          type="checkbox"
-                          className="hidden"
-                          checked={checkedList.includes(item.id.toString())}
-                          onChange={(e) => handleCheckboxChange(item.id, e)}
-                        />
-                        <div
-                          className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-colors ${
-                            checkedList.includes(item.id.toString())
-                              ? 'bg-blue-500 border-blue-500'
-                              : 'bg-white border-gray-400'
-                          }`}
-                        >
-                          {checkedList.includes(item.id.toString()) && (
-                            <svg
-                              className="w-3 h-3 text-white"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M5 13l4 4L19 7"
-                              />
-                            </svg>
-                          )}
-                        </div>
-                        <span className="text-sm">{item.name}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
+      {/* Checklist Section */}
+      <div className="bg-white rounded-lg p-4 sm:p-6 mb-8 shadow-lg">
+        <h2 className="text-xl font-semibold mb-4 text-blue-900">
+          Re-stocking CheckList
+        </h2>
 
-                {/* Kitchen Column */}
-                <div>
-                  <h3 className="text-lg font-semibold text-blue-900">Kitchen</h3>
-                  <div className="flex flex-col text-blue-900 gap-5 mt-2">
-                    {groupedItems.Kitchen?.map((item: any) => (
-                      <label key={item.id} className="flex items-center space-x-2 cursor-pointer">
-                        <input
-                          type="checkbox"
-                          className="hidden"
-                          checked={checkedList.includes(item.id.toString())}
-                          onChange={(e) => handleCheckboxChange(item.id, e)}
-                        />
-                        <div
-                          className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-colors ${
-                            checkedList.includes(item.id.toString())
-                              ? 'bg-blue-500 border-blue-500'
-                              : 'bg-white border-gray-400'
-                          }`}
-                        >
-                          {checkedList.includes(item.id.toString()) && (
-                            <svg
-                              className="w-3 h-3 text-white"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M5 13l4 4L19 7"
-                              />
-                            </svg>
-                          )}
-                        </div>
-                        <span className="text-sm">{item.name}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Bedrooms Column */}
-                <div>
-                  <h3 className="text-lg font-semibold text-blue-900">BedRooms</h3>
-                  <div className="flex text-blue-900 flex-col gap-5 mt-2">
-                    {groupedItems.BedRooms?.map((item: any) => (
-                      <label key={item.id} className="flex items-center space-x-2 cursor-pointer">
-                        <input
-                          type="checkbox"
-                          className="hidden"
-                          checked={checkedList.includes(item.id.toString())}
-                          onChange={(e) => handleCheckboxChange(item.id, e)}
-                        />
-                        <div
-                          className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-colors ${
-                            checkedList.includes(item.id.toString())
-                              ? 'bg-blue-500 border-blue-500'
-                              : 'bg-white border-gray-400'
-                          }`}
-                        >
-                          {checkedList.includes(item.id.toString()) && (
-                            <svg
-                              className="w-3 h-3 text-white"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M5 13l4 4L19 7"
-                              />
-                            </svg>
-                          )}
-                        </div>
-                        <span className="text-sm">{item.name}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Miscellaneous Column */}
-                <div>
-                  <h3 className="text-lg font-semibold text-blue-900">Miscellaneous</h3>
-                  <div className="flex flex-col text-blue-900 gap-5 mt-2">
-                    {groupedItems.Miscellaneous?.map((item: any) => (
-                      <label key={item.id} className="flex items-center space-x-2 cursor-pointer">
-                        <input
-                          type="checkbox"
-                          className="hidden"
-                          checked={checkedList.includes(item.id.toString())}
-                          onChange={(e) => handleCheckboxChange(item.id, e)}
-                        />
-                        <div
-                          className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-colors ${
-                            checkedList.includes(item.id.toString())
-                              ? 'bg-blue-500 border-blue-500'
-                              : 'bg-white border-gray-400'
-                          }`}
-                        >
-                          {checkedList.includes(item.id.toString()) && (
-                            <svg
-                              className="w-3 h-3 text-white"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M5 13l4 4L19 7"
-                              />
-                            </svg>
-                          )}
-                        </div>
-                        <span className="text-sm">{item.name}</span>
-                      </label>
-                    ))}
-                  </div>
+        <div>
+          {items?.isLoading ? (
+            <div className="text-center py-4">Loading items...</div>
+          ) : items?.isSuccess && items?.data ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+              {/* Bathrooms Column */}
+              <div>
+                <h3 className="text-lg font-semibold text-blue-900">
+                  Bathrooms
+                </h3>
+                <div className="flex flex-col text-blue-900 gap-5 mt-2">
+                  {groupedItems.Bathrooms?.map((item: any) => (
+                    <label
+                      key={item.id}
+                      className="flex items-center space-x-2 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        className="hidden"
+                        checked={checkedList.includes(item.id.toString())}
+                        onChange={(e) => handleCheckboxChange(item.id, e)}
+                      />
+                      <div
+                        className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-colors ${
+                          checkedList.includes(item.id.toString())
+                            ? "bg-blue-500 border-blue-500"
+                            : "bg-white border-gray-400"
+                        }`}
+                      >
+                        {checkedList.includes(item.id.toString()) && (
+                          <svg
+                            className="w-3 h-3 text-white"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M5 13l4 4L19 7"
+                            />
+                          </svg>
+                        )}
+                      </div>
+                      <span className="text-sm">{item.name}</span>
+                    </label>
+                  ))}
                 </div>
               </div>
-            ) : (
-              <div className="text-center py-4 text-red-500">
-                {items?.errorMessage || "Failed to load items."}
+
+              {/* Kitchen Column */}
+              <div>
+                <h3 className="text-lg font-semibold text-blue-900">Kitchen</h3>
+                <div className="flex flex-col text-blue-900 gap-5 mt-2">
+                  {groupedItems.Kitchen?.map((item: any) => (
+                    <label
+                      key={item.id}
+                      className="flex items-center space-x-2 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        className="hidden"
+                        checked={checkedList.includes(item.id.toString())}
+                        onChange={(e) => handleCheckboxChange(item.id, e)}
+                      />
+                      <div
+                        className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-colors ${
+                          checkedList.includes(item.id.toString())
+                            ? "bg-blue-500 border-blue-500"
+                            : "bg-white border-gray-400"
+                        }`}
+                      >
+                        {checkedList.includes(item.id.toString()) && (
+                          <svg
+                            className="w-3 h-3 text-white"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M5 13l4 4L19 7"
+                            />
+                          </svg>
+                        )}
+                      </div>
+                      <span className="text-sm">{item.name}</span>
+                    </label>
+                  ))}
+                </div>
               </div>
-            )}
-          </div>
+
+              {/* Bedrooms Column */}
+              <div>
+                <h3 className="text-lg font-semibold text-blue-900">
+                  BedRooms
+                </h3>
+                <div className="flex text-blue-900 flex-col gap-5 mt-2">
+                  {groupedItems.BedRooms?.map((item: any) => (
+                    <label
+                      key={item.id}
+                      className="flex items-center space-x-2 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        className="hidden"
+                        checked={checkedList.includes(item.id.toString())}
+                        onChange={(e) => handleCheckboxChange(item.id, e)}
+                      />
+                      <div
+                        className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-colors ${
+                          checkedList.includes(item.id.toString())
+                            ? "bg-blue-500 border-blue-500"
+                            : "bg-white border-gray-400"
+                        }`}
+                      >
+                        {checkedList.includes(item.id.toString()) && (
+                          <svg
+                            className="w-3 h-3 text-white"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M5 13l4 4L19 7"
+                            />
+                          </svg>
+                        )}
+                      </div>
+                      <span className="text-sm">{item.name}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Miscellaneous Column */}
+              <div>
+                <h3 className="text-lg font-semibold text-blue-900">
+                  Miscellaneous
+                </h3>
+                <div className="flex flex-col text-blue-900 gap-5 mt-2">
+                  {groupedItems.Miscellaneous?.map((item: any) => (
+                    <label
+                      key={item.id}
+                      className="flex items-center space-x-2 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        className="hidden"
+                        checked={checkedList.includes(item.id.toString())}
+                        onChange={(e) => handleCheckboxChange(item.id, e)}
+                      />
+                      <div
+                        className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-colors ${
+                          checkedList.includes(item.id.toString())
+                            ? "bg-blue-500 border-blue-500"
+                            : "bg-white border-gray-400"
+                        }`}
+                      >
+                        {checkedList.includes(item.id.toString()) && (
+                          <svg
+                            className="w-3 h-3 text-white"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M5 13l4 4L19 7"
+                            />
+                          </svg>
+                        )}
+                      </div>
+                      <span className="text-sm">{item.name}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="text-center py-4 text-red-500">
+              {items?.errorMessage || "Failed to load items."}
+            </div>
+          )}
         </div>
+      </div>
 
-               
       {/* Equipment Section */}
       <div>
         <EquipmentSection
@@ -635,11 +682,9 @@ function AirbnbAndShortService() {
 
       {/* Payment Support Section */}
       <div>
-        <PaymentSupportSection/>
+        <PaymentSupportSection />
       </div>
     </div>
-    
-
   );
 }
 
