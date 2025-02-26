@@ -1,47 +1,53 @@
 import Dropdown from "../dropDown/dropDown";
 
 interface BookingSectionCartProps {
-    numChild: string;
-    setNumChild: (num: string) => void;
-    duration: string;
-    setDuration: (duration: string) => void;
-    frequency: string;
-    setFrequency: (frequency: string) => void;
-    contactType: string;
-    setContactType: (contactType: string) => void;
-    language: string;
-    setLanguage: (language: string) => void;
-    childAge: string;
-    setChildAge: (age: string) => void;
-    type: string;
-    setType: (type: string) => void;
-    numProfession: string;
-    setNumProfession: (numProfession: string) => void;
-    profession: string;
-    setProfession: (profession: string) => void;
-    pageType: "child" | "elder";
-  }
+  numChild: string;
+  setNumChild: (num: string) => void;
+  duration: string;
+  setDuration: (duration: string) => void;
+  frequency: string;
+  setFrequency: (frequency: string) => void;
+  contactType: string;
+  setContactType: (contactType: string) => void;
+  language: string;
+  setLanguage: (language: string) => void;
+  childAge: string;
+  setChildAge: (age: string) => void;
+  type: string;
+  setType: (type: string) => void;
+  numProfession: string;
+  setNumProfession: (numProfession: string) => void;
+  profession: string;
+  setProfession: (profession: string) => void;
+  pageType: "child" | "elder";
+  specialRequest: string;
+  setSpecialRequest: (specialRequest: string) => void;
+  propertyType: string;
+  setPropertyType: (propertyType: string) => void;
+}
 
 const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
-    numChild,
-    setNumChild,
-    duration,
-    setDuration,
-    frequency,
-    setFrequency,
-    contactType,
-    setContactType,
-    language,
-    setLanguage,
-    childAge,
-    setChildAge,
-    type,
-    setType,
-    numProfession,
-    setNumProfession,
-    profession,
-    setProfession,
-    pageType,
+  numChild,
+  setNumChild,
+  duration,
+  setDuration,
+  frequency,
+  setFrequency,
+  contactType,
+  setContactType,
+  language,
+  setLanguage,
+  childAge,
+  setChildAge,
+  type,
+  setType,
+  numProfession,
+  setNumProfession,
+  specialRequest,
+  setSpecialRequest,
+  propertyType,
+  setPropertyType,
+  pageType,
 }) => {
   const durationOptions = [
     { value: "2", label: "2 hours" },
@@ -151,12 +157,6 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
     { value: "female", label: "Female" },
     { value: "both", label: "Both" },
   ];
-  const requestCareProfessionOptions = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-    { value: "nurse", label: "Nurse" },
-    { value: "multiple", label: "Multiple" },
-  ];
 
   const languageOptions = [
     { value: "english", label: "English" },
@@ -188,6 +188,29 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
     { value: "6 years", label: "95" },
     { value: "7 years", label: "100" },
   ];
+  const specialRequestOptions = [
+    { value: "disable", label: "Disable" },
+    { value: "non-disable", label: "Non-Disable" },
+  ];
+
+  const propertyTypeOptions = [
+    { value: "home", label: "Home" },
+    { value: "apartment", label: "Apartment" },
+    { value: "villa", label: "Villa" },
+    { value: "commercial property", label: "Commercial property" },
+    { value: "government office", label: "Government office" },
+    { value: "public office", label: "Public office" },
+    { value: "private office", label: "Private office " },
+    { value: "daycare centre", label: "Daycare centre " },
+    { value: "elders care centre", label: "Elder's Care Centre" },
+    { value: "shopping mall", label: "Shopping mall" },
+    { value: "government hospital", label: "Government hospital" },
+    { value: "private hospital", label: "Private hospital" },
+    { value: "sport centre", label: "Sport centre" },
+    { value: "gym", label: "Gym " },
+    { value: "restaurant", label: "Restaurant" },
+    { value: "hotel", label: "Hotel" },
+  ];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -198,22 +221,34 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
         onChange={setDuration}
       />
       <Dropdown
+        label="Request Care Professionals"
+        value={numProfession}
+        options={numCareProfession}
+        onChange={setNumProfession}
+      />
+      <Dropdown
         label="Select Frequency"
         value={frequency}
         options={frequencyOptions}
         onChange={setFrequency}
       />
       <Dropdown
-        label={pageType === "child" ? "Child Age" : "Elder Age"}
-        value={childAge}
-        options={pageType === "child" ? childageOption : elderageOption}
-        onChange={setChildAge}
+        label="Preferred Language to Contact"
+        value={language}
+        options={languageOptions}
+        onChange={setLanguage}
       />
       <Dropdown
-        label={pageType === "child" ? "Children Type" : "Elder Type"}
+        label={pageType === "child" ? "Children Gender" : "Elder Gender"}
         value={type}
         options={contactTypeOptions}
         onChange={setType}
+      />
+      <Dropdown
+        label="Care Professional Gender"
+        value={contactType}
+        options={contactTypeOptions}
+        onChange={setContactType}
       />
       <Dropdown
         label={pageType === "child" ? "Number of Children" : "Number of Elders"}
@@ -222,31 +257,23 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
         onChange={setNumChild}
       />
       <Dropdown
-        label="No of Care Professionals"
-        value={numProfession}
-        options={numCareProfession}
-        onChange={setNumProfession}
+        label={pageType === "child" ? "Child Age" : "Elder Age"}
+        value={childAge}
+        options={pageType === "child" ? childageOption : elderageOption}
+        onChange={setChildAge}
       />
       <Dropdown
-        label="Request Care Profession"
-        value={profession}
-        options={requestCareProfessionOptions}
-        onChange={setProfession}
+        label="Special Request"
+        value={specialRequest}
+        options={specialRequestOptions}
+        onChange={setSpecialRequest}
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Dropdown
-          label="Contact Person Type"
-          value={contactType}
-          options={contactTypeOptions}
-          onChange={setContactType}
-        />
-        <Dropdown
-          label="Select Language"
-          value={language}
-          options={languageOptions}
-          onChange={setLanguage}
-        />
-      </div>
+      <Dropdown
+        label="Service Providing Place"
+        value={propertyType}
+        options={propertyTypeOptions}
+        onChange={setPropertyType}
+      />
     </div>
   );
 };
