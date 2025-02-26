@@ -36,7 +36,7 @@ function AirbnbAndShortService() {
   const items = useSelector((state: any) => state.itemsSlice.items);
   const [_ovenQty, _setOvenQty] = useState("0");
   const [_fridgeQty, _setFridgeQty] = useState("0");
-  const [selectedServices, setSelectedServices] = useState<object[]>([]);
+  const [selectedServices, _setSelectedServices] = useState<object[]>([]);
   const [showTermsCard, setShowTermsCard] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
@@ -151,7 +151,7 @@ function AirbnbAndShortService() {
       language,
       business_property: propertyType,
       cleaning_solvents: selectedSolvent,
-      // equipmentOption: selectedEquipmentOption,
+      equipmentOption: _selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
       price: priceBreakdown.totalPrice,
       note: document.querySelector("textarea")?.value || "",

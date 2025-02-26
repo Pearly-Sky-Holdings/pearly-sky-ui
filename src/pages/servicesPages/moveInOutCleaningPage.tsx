@@ -134,7 +134,7 @@ function MoveInOutCleaningPage() {
       language,
       business_property: propertyType,
       cleaning_solvents: selectedSolvent,
-      equipmentOption: selectedEquipmentOption,
+      equipmentOption: _selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
       price: priceBreakdown.totalPrice,
       note: document.querySelector("textarea")?.value || "",
