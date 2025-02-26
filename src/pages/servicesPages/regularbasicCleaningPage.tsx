@@ -7,7 +7,8 @@ import { format } from "date-fns";
 import "react-calendar/dist/Calendar.css";
 import TimeSlots from "../../components/timeSlot/timeSlot";
 import "./CustomCalendar.css";
-import Carousel from "../../components/carouselSection/carousel";
+// import Carousel from "../../components/carouselSection/carousel";
+import ServicesCarosel from "../../components/oneTimeCleaning/servicesCarousel";
 import EquipmentSection from "../../components/equipmentSection/equipmentSection";
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
@@ -137,7 +138,7 @@ function RegularBasicCleaningPage() {
       language,
       business_property: propertyType,
       cleaning_solvents: selectedSolvent,
-      equipmentOption: selectedEquipmentOption,
+      equipmentOption: _selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
       price: priceBreakdown.totalPrice,
       note: document.querySelector("textarea")?.value || "",
@@ -243,7 +244,7 @@ function RegularBasicCleaningPage() {
 
       {/* Carousel Section */}
       <div>
-        <Carousel imagePairs={imagePairs} />
+        <ServicesCarosel/>
       </div>
 
       {/* Checklist Section */}
@@ -443,7 +444,7 @@ function RegularBasicCleaningPage() {
         {/* File Upload and Additional Note */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
-            <label className="block mb-2 text-black">
+            <label className="block mb-2 text-blue-900">
               Upload Images or Documents
             </label>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center min-h-[150px] flex items-center justify-center">
@@ -467,7 +468,7 @@ function RegularBasicCleaningPage() {
           </div>
 
           <div>
-            <label className="block mb-2 text-black">Additional Note</label>
+            <label className="block mb-2 text-blue-900">Additional Note</label>
             <textarea
               className="w-full min-h-[150px] border border-blue-900 rounded p-2 text-gray-700 resize-none"
               placeholder="Type your note here..."
