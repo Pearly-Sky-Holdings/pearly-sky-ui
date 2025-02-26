@@ -29,6 +29,7 @@ import PostConstructionCleaningPage from "./pages/servicesPages/postConstruction
 import AirbnbAndShortService from "./pages/servicesPages/AirbnbCleaning.tsx";
 import ChildCareCleaningPage from "./pages/servicesPages/childCareCleaning.tsx";
 import ElderCareCleaningPage from "./pages/servicesPages/elderCareCleaning.tsx";
+import UpdateComingSoon from "./components/updateComingSoon/UpdateComingSoon.tsx";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -202,6 +203,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
 
           <Route path="/checkout" element={<CheckoutPage />} />
+
+          <Route path="/upcomming" element={<UpdateComingSoon />} />
         </Routes>
       </Router>
     </ThemeProvider>

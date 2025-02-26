@@ -42,7 +42,7 @@ function PostConstructionCleaningPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const services = useSelector((state: any) => state.servicesSlice.service);
-  const [selectedServices, _setSelectedServices] = useState<object[]>([]);
+  const [_selectedServices, _setSelectedServices] = useState<object[]>([]);
   const [showTermsCard, setShowTermsCard] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
@@ -115,7 +115,7 @@ function PostConstructionCleaningPage() {
       language,
       business_property: propertyType,
       cleaning_solvents: selectedSolvent,
-      equipmentOption: selectedEquipmentOption,
+      equipmentOption: _selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
       price: priceBreakdown.totalPrice,
       note: document.querySelector("textarea")?.value || "",

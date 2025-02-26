@@ -68,7 +68,7 @@ const CheckoutPage = () => {
     password: "",
   });
 
-  const handlePlaceOrder = async () => {
+  const _handlePlaceOrder = async () => {
 
     if (data.serviceName == "Regular Basic") {
       const regularBasicServiceData = {
@@ -93,6 +93,7 @@ const CheckoutPage = () => {
       setSaveLoader(true);
       dispatch(saveServices(regularBasicServiceData));
       console.log("Data", data);
+      console.log("Data", _handlePlaceOrder);
     } else if (data.serviceName == "Deep Cleaning"  || data.serviceName == "One Time Cleaning") {
       const deepServiceData = {
         customer: formData,

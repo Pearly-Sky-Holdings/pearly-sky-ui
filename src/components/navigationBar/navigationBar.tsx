@@ -52,21 +52,27 @@ export default function NavigationBar() {
     { label: "Child Care Cleaning", path: "/child_care_cleaning" },
     { label: "Elder Care Cleaning", path: "/elder_care_cleaning" },
 
-    { label: "Sanitization & Disinfection Booking", path: "/vision_update_coming_soon" },
-    { label: "Office and Commercial Cleaning", path: "/vision_update_coming_soon" },
-    { label: "Carpet & Upholstery Cleaning Booking", path: "/vision_update_coming_soon" },
-    { label: "Move In/Out Transport Service Booking", path: "/vision_update_coming_soon" },
-    { label: "Steam Cleaning Booking", path: "/vision_update_coming_soon" },
-    { label: "Pressure Washing Booking", path: "/vision_update_coming_soon",},
-    { label: "Event Cleaning", path: "/vision_update_coming_soon" },
-    { label: "Pool cleaning Booking", path: "/vision_update_coming_soon" },
-    { label: "Laundry Services", path: "/vision_update_coming_soon" },
+    { label: "Sanitization & Disinfection Booking", path: "/upcomming" },
+    { label: "Office and Commercial Cleaning", path: "/upcomming" },
+    { label: "Carpet & Upholstery Cleaning Booking", path: "/upcomming" },
+    { label: "Move In/Out Transport Service Booking", path: "/upcomming" },
+    { label: "Steam Cleaning Booking", path: "/upcomming" },
+    { label: "Pressure Washing Booking", path: "/upcomming",},
+    { label: "Event Cleaning", path: "/upcomming" },
+    { label: "Pool cleaning Booking", path: "/upcomming" },
+    { label: "Laundry Services", path: "/upcomming" },
   ];
 
   const otherServiceDropdownItems = [
-    { label: "Other Service 1", path: "/other-service-1" },
-    { label: "Other Service 2", path: "/other-service-2" },
-    { label: "Other Service 3", path: "/other-service-3" },
+    { label: "Pearly Sky cleaning services", path: "/upcomming" },
+    { label: "Pearly Sky Engineering and Construction", path: "/upcomming" },
+    { label: "Pearly Sky facility maintenance", path: "/upcomming" },
+    { label: "Pearly Sky  interior and architectural designing", path: "/upcomming" },
+    { label: "Pearly Sky swimming pool and landscaping", path: "/upcomming" },
+    { label: "Pearly Sky Hotel and restaurant ", path: "/upcomming" },
+    { label: "Pearly Sky cargo services", path: "/upcomming" },
+    { label: "Pearly Sky propety magment ", path: "/upcomming" },
+    { label: "Pearly Sky real estate", path: "/upcomming" },
   ];
 
 
@@ -92,8 +98,8 @@ export default function NavigationBar() {
   };
 
   const handleMenuItemClick = (path: string) => {
-    navigate(path); // Navigate to the specified path
-    handleMouseLeave(); // Close the dropdown menu
+    navigate(path); 
+    handleMouseLeave(); 
   };
 
   const MobileDrawer = () => (
@@ -127,7 +133,7 @@ export default function NavigationBar() {
                 display: "flex",
                 justifyContent: "space-between",
                 "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
+                  backgroundColor: "rgba(111, 163, 179, 0.1)",
                 },
               }}
             >
@@ -156,7 +162,7 @@ export default function NavigationBar() {
                     sx={{
                       color: "white",
                       "&:hover": {
-                        backgroundColor: "rgba(255, 255, 255, 0.2)",
+                        backgroundColor: "rgba(111, 163, 179, 0.2)",
                       },
                     }}
                   >
@@ -177,7 +183,7 @@ export default function NavigationBar() {
                     sx={{
                       color: "white",
                       "&:hover": {
-                        backgroundColor: "rgba(255, 255, 255, 0.2)",
+                        backgroundColor: "rgba(111, 163, 179, 0.2)",
                       },
                     }}
                   >
