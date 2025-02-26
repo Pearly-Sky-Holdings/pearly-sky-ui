@@ -27,7 +27,7 @@ function ElderCareCleaningPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const services = useSelector((state: any) => state.servicesSlice.service);
-  const [selectedServices, _setSelectedServices] = useState<object[]>([]);
+  const [_selectedServices, _setSelectedServices] = useState<object[]>([]);
   const [selectedServices, setSelectedServices] = useState<object[]>([]);
   const [showTermsCard, setShowTermsCard] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -203,7 +203,7 @@ function ElderCareCleaningPage() {
 
         {/* Booking Details */}
         <div>
-          <BookingSectionCart2
+        <BookingSectionCart2
             duration={duration}
             setDuration={setDuration}
             frequency={frequency}
@@ -222,6 +222,10 @@ function ElderCareCleaningPage() {
             setContactType={setContactType}
             language={language}
             setLanguage={setLanguage}
+            specialRequest={""} // Add appropriate state or value
+            setSpecialRequest={() => {}} // Add appropriate state setter
+            propertyType={""} // Add appropriate state or value
+            setPropertyType={() => {}} // Add appropriate state setter
             pageType={"elder"}
           />
         </div>
