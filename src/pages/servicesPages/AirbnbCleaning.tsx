@@ -24,6 +24,7 @@ import {
   regularServiceEquipment3,
   regularServiceEquipment4,
   airbnbVideo,
+  airbnbVideo2,
 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
@@ -281,6 +282,9 @@ function AirbnbAndShortService() {
           videoItems={[
             {
               video: airbnbVideo,
+            },
+            {
+              video: airbnbVideo2,
             },
           ]}
         />

@@ -10,15 +10,10 @@ import "./CustomCalendar.css";
 import Carousel2 from "../../components/carouselSection2/carousel2";
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
-import {
-  getServices,
-} from "../../services/CleaningServices/index";
+import { getServices } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
 
-import {
-  childCareVideo,
-  MoveInAndOutService1,
-} from "../../config/images";
+import { childCareVideo,childCareVideo2, MoveInAndOutService1 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart2 from "../../components/bookingSectionChildAndElderCart/bookingSectionCart2";
 
@@ -41,6 +36,8 @@ function ChildCareCleaningPage() {
   const [type, setType] = useState("");
   const [numProfession, setNumProfession] = useState("");
   const [profession, setProfession] = useState("");
+  const [propertyType, setPropertyType] = useState("");
+  const [specialRequest, setSpecialRequest] = useState("");
 
   const [priceBreakdown, setPriceBreakdown] = useState({
     basePrice: 59.0,
@@ -83,8 +80,6 @@ function ChildCareCleaningPage() {
     console.log("Service Details:", serviceDetails);
     navigate("/checkout", { state: { data } });
   };
-
-  
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
@@ -153,13 +148,14 @@ function ChildCareCleaningPage() {
         <Carousel2
           videoItems={[
             {
-              video: childCareVideo,     
+              video: childCareVideo,
+            },
+            {
+              video: childCareVideo2,
             },
           ]}
         />
       </div>
-
-      
 
       {/* Booking Section */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8">
@@ -224,7 +220,11 @@ function ChildCareCleaningPage() {
             setContactType={setContactType}
             language={language}
             setLanguage={setLanguage}
-            pageType={"child"}
+            specialRequest={specialRequest} 
+            setSpecialRequest={setSpecialRequest} 
+            propertyType={propertyType} 
+            setPropertyType={setPropertyType} 
+            pageType={"elder"}
           />
         </div>
 
