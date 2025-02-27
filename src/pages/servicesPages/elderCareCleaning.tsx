@@ -27,8 +27,7 @@ function ElderCareCleaningPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const services = useSelector((state: any) => state.servicesSlice.service);
-  const [_selectedServices, _setSelectedServices] = useState<object[]>([]);
-  const [selectedServices, setSelectedServices] = useState<object[]>([]);
+  const [selectedServices] = useState<object[]>([]);
   const [showTermsCard, setShowTermsCard] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
