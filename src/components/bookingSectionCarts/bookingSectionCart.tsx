@@ -133,12 +133,7 @@ const BookingSectionCart: React.FC<BookingSectionCartProps> = ({
 
   
 
-  const handleNumCleanersChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (/^[1-5]?$/.test(value)) {
-      setNumCleaners(value);
-    }
-  };
+  
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">

@@ -16,11 +16,7 @@ import { getPackege, getServices } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
 
 import {
-  regularService1,
-  regularService2,
-  regularService3,
-  regularService4,
-  regularService5,
+  regularService1
 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
@@ -166,48 +162,6 @@ function RegularBasicCleaningPage() {
     navigate("/checkout", { state: { data } });
   };
 
-  const imagePairs = [
-    [
-      {
-        img: regularService2,
-        title: "Bedroom Cleaning",
-        features: [
-          "Dust all cleanable surfaces",
-          "Make the bed",
-          "Clean floor surfaces",
-        ],
-      },
-      {
-        img: regularService3,
-        title: "Bedroom Cleaning",
-        features: [
-          "Dust all cleanable surfaces",
-          "Make the bed",
-          "Clean floor surfaces",
-        ],
-      },
-    ],
-    [
-      {
-        img: regularService4,
-        title: "Bedroom Cleaning",
-        features: [
-          "Dust all cleanable surfaces",
-          "Make the bed",
-          "Clean floor surfaces",
-        ],
-      },
-      {
-        img: regularService5,
-        title: "Bedroom Cleaning",
-        features: [
-          "Dust all cleanable surfaces",
-          "Make the bed",
-          "Clean floor surfaces",
-        ],
-      },
-    ],
-  ];
 
 
   return (

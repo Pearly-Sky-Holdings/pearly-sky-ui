@@ -224,6 +224,10 @@ function ChildCareCleaningPage() {
             setContactType={setContactType}
             language={language}
             setLanguage={setLanguage}
+            specialRequest={""} // Add appropriate state or value
+            setSpecialRequest={() => {}} // Add appropriate state setter
+            propertyType={""} // Add appropriate state or value
+            setPropertyType={() => {}} // Add appropriate state setter
             pageType={"child"}
           />
         </div>
