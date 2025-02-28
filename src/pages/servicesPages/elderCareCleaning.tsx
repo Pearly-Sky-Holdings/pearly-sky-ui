@@ -82,6 +82,10 @@ function ElderCareCleaningPage() {
       language,
       price: priceBreakdown.totalPrice,
       note: document.querySelector("textarea")?.value || "",
+      number_of_count: numChild,
+      request_care_professional: numProfession,
+      service_providing_place: propertyType,
+      special_request: specialRequest,
     };
     const data = { serviceName: "Elder Care", details: serviceDetails };
     console.log("Service Details:", serviceDetails);
@@ -230,7 +234,8 @@ function ElderCareCleaningPage() {
             specialRequest={specialRequest} 
             setSpecialRequest={setSpecialRequest} 
             propertyType={propertyType} 
-            setPropertyType={setPropertyType}
+            setPropertyType={setPropertyType} 
+            pageType={"elder"}
           />
         </div>
 

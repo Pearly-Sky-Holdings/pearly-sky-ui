@@ -71,10 +71,13 @@ function ChildCareCleaningPage() {
       time: selectedTime,
       frequency,
       package_details: selectedServices,
-      person_type: contactType,
       language,
       price: priceBreakdown.totalPrice,
       note: document.querySelector("textarea")?.value || "",
+      number_of_count: numChild,
+      request_care_professional: numProfession,
+      service_providing_place: propertyType,
+      special_request: specialRequest,
     };
     const data = { serviceName: "Child Care", details: serviceDetails };
     console.log("Service Details:", serviceDetails);
@@ -224,7 +227,7 @@ function ChildCareCleaningPage() {
             setSpecialRequest={setSpecialRequest} 
             propertyType={propertyType} 
             setPropertyType={setPropertyType} 
-            pageType={"elder"}
+            pageType={"child"}
           />
         </div>
 
