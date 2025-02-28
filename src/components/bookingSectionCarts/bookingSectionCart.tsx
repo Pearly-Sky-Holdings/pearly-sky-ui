@@ -628,7 +628,7 @@ const BookingSectionCart: React.FC<BookingSectionCartProps> = ({
 
       }
     }
-  }, [propertySize, setDuration, setNumCleaners, onBasePriceChange]);
+  }, [propertySize, setDuration, setNumCleaners]);
   
 
   return (
