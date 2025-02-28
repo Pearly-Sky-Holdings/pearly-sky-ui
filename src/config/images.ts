@@ -126,6 +126,9 @@ export const homeVideo1: string = "/video/pearlysky-web-banner-video-new-1.mp4";
 export const airbnbVideo: string = "/video/carousel/carouselVideo1(Airbnb).mp4";
 export const childCareVideo: string = "/video/carousel/carouselVideo2(child).mp4";
 export const elderCareVideo: string = "/video/carousel/carouselVideo3(elder).mp4";
+export const airbnbVideo2: string = "/video/carousel/carouselVideo1(Airbnb2).mp4";
+export const childCareVideo2: string = "/video/carousel/carouselVideo2(child2).mp4";
+export const elderCareVideo2: string = "/video/carousel/carouselVideo3(elder2).mp4";
 
 //one time cleaning
 export const OneTimeService1: string = "/images/service/oneTime/oneTimeCleaner.png";
@@ -155,3 +158,9 @@ export const postConstructorImage3: string = "/images/service/postConstructor/po
 export const postConstructorImage4: string = "/images/service/postConstructor/postConstructorImage4.png";
 export const postConstructorImage5: string = "/images/service/postConstructor/postConstructorImage5.png";
 export const postConstructorImage6: string = "/images/service/postConstructor/postConstructorImage6.png";
+
+// Read More Pages
+export const readMoreImage1: string = "/images/readMore/CleaningIndustryRegulation.png";
+export const readMoreImage2: string = "/images/readMore/HygienePublicSpaces.png"; 
+export const readMoreImage3: string = "/images/readMore/CleaningHospitality.png"; 
+export const readMoreImage4: string = "/images/readMore/RoboticsCleaning.png";    

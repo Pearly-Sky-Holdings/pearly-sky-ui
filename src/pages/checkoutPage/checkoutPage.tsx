@@ -10,13 +10,10 @@ import store from "../../store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BillingDetailsForm from "../../components/checkoutSection/BillingDetailsForm";
-import {
-  saveServices,
-} from "../../services/CleaningServices/saveRegulrService";
+import { saveServices } from "../../services/CleaningServices/saveRegulrService";
 import { useLocation, useNavigate } from "react-router-dom";
 import OrderSummary from "../../components/checkoutSection/OrderSummary";
 import PaymentMethod from "../../components/checkoutSection/PaymentMethod";
-
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
@@ -39,7 +36,7 @@ const CheckoutPage = () => {
   const savePostConstructionServiceData = useSelector(
     (state: any) => state.serviceDetailsSlice.service
   );
-  
+
   const oneTimeServiceData = useSelector(
     (state: any) => state.serviceDetailsSlice.service
   );
@@ -61,7 +58,7 @@ const CheckoutPage = () => {
     country: "",
     city: "",
     province: "",
-    // address: "",
+    address: "",
     postal_code: "",
     contact: "",
     email: "",
@@ -69,8 +66,15 @@ const CheckoutPage = () => {
   });
 
   const _handlePlaceOrder = async () => {
-
-    if (data.serviceName == "Regular Basic") {
+    if (
+      data.serviceName == "Regular Basic" ||
+      data.serviceName == "Deep Cleaning" ||
+      data.serviceName == "One Time Cleaning" ||
+      data.serviceName == "Last Minute" ||
+      data.serviceName == "Move In/Out Cleaning" ||
+      data.serviceName == "Post Construction" ||
+      data.serviceName == "Airbnb And Short Term Rental Cleaning"
+    ) {
       const regularBasicServiceData = {
         customer: formData,
         service_id: data.details.service_id,
@@ -94,132 +98,24 @@ const CheckoutPage = () => {
       dispatch(saveServices(regularBasicServiceData));
       console.log("Data", data);
       console.log("Data", _handlePlaceOrder);
-    } else if (data.serviceName == "Deep Cleaning"  || data.serviceName == "One Time Cleaning") {
-      const deepServiceData = {
-        customer: formData,
-        service_id: data.details.service_id,
-        price: parseInt(data.details.price),
-        date: data.details.date,
-        time: data.details.time,
-        property_size: data.details.property_size,
-        duration: data.details.duration,
-        number_of_cleaners: data.details.number_of_cleaners,
-        frequency: data.details.frequency,
-        package_details: data.details.package_details,
-        note: data.details.note,
-        language: data.details.language,
-        person_type: data.details.person_type,
-        Equipment: data.details.Equipment,
-        cleaning_solvents: data.details.cleaning_solvents,
-        business_property: data.details.business_property,
-      };
-
-      setSaveLoader(true);
-      dispatch(saveServices(deepServiceData));
-      console.log("Data", data);
-    } else if (data.serviceName == "Last Minute") {
-      const lastMinuteServiceData = {
-        customer: formData,
-        service_id: data.details.service_id,
-        price: parseInt(data.details.price),
-        date: data.details.date,
-        time: data.details.time,
-        property_size: data.details.property_size,
-        duration: data.details.duration,
-        number_of_cleaners: data.details.number_of_cleaners,
-        frequency: data.details.frequency,
-        package_details: data.details.package_details,
-        note: data.details.note,
-        language: data.details.language,
-        person_type: data.details.person_type,
-        Equipment: data.details.Equipment,
-        cleaning_solvents: data.details.cleaning_solvents,
-        business_property: data.details.business_property,
-      };
-
-      setSaveLoader(true);
-      dispatch(saveServices(lastMinuteServiceData));
-      console.log("Data", data);
-    } else if (data.serviceName == "Move In/Out Cleaning") {
-      const moveInOutServiceData = {
-        customer: formData,
-        service_id: data.details.service_id,
-        price: parseInt(data.details.price),
-        date: data.details.date,
-        time: data.details.time,
-        property_size: data.details.property_size,
-        duration: data.details.duration,
-        number_of_cleaners: data.details.number_of_cleaners,
-        frequency: data.details.frequency,
-        package_details: data.details.package_details,
-        note: data.details.note,
-        language: data.details.language,
-        person_type: data.details.person_type,
-        Equipment: data.details.Equipment,
-        cleaning_solvents: data.details.cleaning_solvents,
-        business_property: data.details.business_property,
-      };
-      setSaveLoader(true);
-      dispatch(saveServices(moveInOutServiceData));
-      console.log("Data", data);
-    } else if (data.serviceName == "Post Construction") {
-      const postConstructionServiceData = {
-        customer: formData,
-        service_id: data.details.service_id,
-        price: parseInt(data.details.price),
-        date: data.details.date,
-        time: data.details.time,
-        property_size: data.details.property_size,
-        duration: data.details.duration,
-        number_of_cleaners: data.details.number_of_cleaners,
-        frequency: data.details.frequency,
-        note: data.details.note,
-        language: data.details.language,
-        person_type: data.details.person_type,
-        Equipment: data.details.Equipment,
-        cleaning_solvents: data.details.cleaning_solvents,
-        business_property: data.details.business_property,
-      };
-      setSaveLoader(true);
-      dispatch(saveServices(postConstructionServiceData));
-      console.log("Data", data);
-    }else if (data.serviceName == "Child Care") {
+    }  else if (data.serviceName == "Child Care" || data.serviceName == "Elder Care") {
       const childCareServiceData = {
         customer: formData,
         service_id: data.details.service_id,
         price: parseInt(data.details.price),
         date: data.details.date,
         time: data.details.time,
-        property_size: data.details.property_size,
         duration: data.details.duration,
-        number_of_cleaners: data.details.number_of_cleaners,
         frequency: data.details.frequency,
         note: data.details.note,
         language: data.details.language,
-        person_type: data.details.person_type,
-        business_property: data.details.business_property,
+        number_of_count : data.details.number_of_count,
+        request_care_professional: data.details.request_care_professional,
+        service_providing_place: data.details.service_providing_place,
+        special_request: data.details.special_request,
       };
       setSaveLoader(true);
       dispatch(saveServices(childCareServiceData));
-      console.log("Data", data);
-    }else if (data.serviceName == "Elder Care") {
-      const elderCareServiceData = {
-        customer: formData,
-        service_id: data.details.service_id,
-        price: parseInt(data.details.price),
-        date: data.details.date,
-        time: data.details.time,
-        property_size: data.details.property_size,
-        duration: data.details.duration,
-        number_of_cleaners: data.details.number_of_cleaners,
-        frequency: data.details.frequency,
-        note: data.details.note,
-        language: data.details.language,
-        person_type: data.details.person_type,
-        business_property: data.details.business_property,
-      };
-      setSaveLoader(true);
-      dispatch(saveServices(elderCareServiceData));
       console.log("Data", data);
     }
   };
@@ -260,10 +156,7 @@ const CheckoutPage = () => {
   // Save One Time Service
   useEffect(() => {
     if (saveLoader) {
-      if (
-        oneTimeServiceData.isSuccess &&
-        !oneTimeServiceData.isLoading
-      ) {
+      if (oneTimeServiceData.isSuccess && !oneTimeServiceData.isLoading) {
         if (saveRegularServiceData.data.status === "success") {
           console.log("Saved Successfully");
           setShowSuccess(true);
@@ -412,15 +305,15 @@ const CheckoutPage = () => {
         setSaveLoader(false);
       }
     }
-  }, [savePostConstructionServiceData.data, savePostConstructionServiceData.errorMessage]);
+  }, [
+    savePostConstructionServiceData.data,
+    savePostConstructionServiceData.errorMessage,
+  ]);
 
   // childCare service
   useEffect(() => {
     if (saveLoader) {
-      if (
-        childCareServiceData.isSuccess &&
-        !childCareServiceData.isLoading
-      ) {
+      if (childCareServiceData.isSuccess && !childCareServiceData.isLoading) {
         if (childCareServiceData.data.status === "success") {
           console.log("Saved Successfully");
           setShowSuccess(true);
@@ -449,15 +342,12 @@ const CheckoutPage = () => {
   // Elder care service
   useEffect(() => {
     if (saveLoader) {
-      if (
-        elderCareServiceData.isSuccess &&
-        !elderCareServiceData.isLoading
-      ) {
+      if (elderCareServiceData.isSuccess && !elderCareServiceData.isLoading) {
         if (elderCareServiceData.data.status === "success") {
           console.log("Saved Successfully");
           setShowSuccess(true);
           setTimeout(() => {
-            navigate("/child_care_cleaning", {
+            navigate("/elder_care_cleaning", {
               state: { showSuccessPopup: true },
             });
           }, 2000);
@@ -493,11 +383,37 @@ const CheckoutPage = () => {
         </Grid>
 
         <Grid item xs={12} md={5}>
-          <OrderSummary />
+          {/* Order Summary */}
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold mb-4 text-blue-900">
+              Order Summary
+            </h2>
+            <OrderSummary
+              selectedServices={data?.orderSummary?.selectedServices || []}
+              selectedEquipments={data?.orderSummary?.selectedEquipments || []}
+              basePrice={data?.orderSummary?.basePrice || 0}
+              currencySymbol={data?.orderSummary?.currencySymbol || "$"}
+              selectedCurrency={data?.orderSummary?.selectedCurrency || "USD"}
+            />
+          </div>
           <PaymentMethod />
 
-          <Button variant="contained" color="primary" fullWidth style={{ marginTop: '20px', backgroundColor: '#003087', color: 'white', padding: '10px', fontSize: '16px', fontWeight: 'bold', borderRadius: '8px' }}>
-           Place Order
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            style={{
+              marginTop: "20px",
+              backgroundColor: "#003087",
+              color: "white",
+              padding: "10px",
+              fontSize: "16px",
+              fontWeight: "bold",
+              borderRadius: "8px",
+            }}
+            onClick={_handlePlaceOrder}
+          >
+            Place Order
           </Button>
         </Grid>
       </Grid>

@@ -18,6 +18,7 @@ import dayjs from "dayjs";
 import {
   MoveInAndOutService1,
   elderCareVideo,
+  elderCareVideo2,
 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart2 from "../../components/bookingSectionChildAndElderCart/bookingSectionCart2";
@@ -42,6 +43,8 @@ function ElderCareCleaningPage() {
   const [numProfession, setNumProfession] = useState("");
   const [profession, setProfession] = useState("");
   const [numChild, setNumChild] = useState("");
+  const [propertyType, setPropertyType] = useState("");
+  const [specialRequest, setSpecialRequest] = useState("");
 
   const [priceBreakdown, setPriceBreakdown] = useState({
     basePrice: 59.0,
@@ -79,6 +82,10 @@ function ElderCareCleaningPage() {
       language,
       price: priceBreakdown.totalPrice,
       note: document.querySelector("textarea")?.value || "",
+      number_of_count: numChild,
+      request_care_professional: numProfession,
+      service_providing_place: propertyType,
+      special_request: specialRequest,
     };
     const data = { serviceName: "Elder Care", details: serviceDetails };
     console.log("Service Details:", serviceDetails);
@@ -154,6 +161,9 @@ function ElderCareCleaningPage() {
             {
               video: elderCareVideo,     
             },
+            {
+              video: elderCareVideo2,
+            },
           ]}
         />
       </div>
@@ -221,10 +231,10 @@ function ElderCareCleaningPage() {
             setContactType={setContactType}
             language={language}
             setLanguage={setLanguage}
-            specialRequest={""} // Add appropriate state or value
-            setSpecialRequest={() => {}} // Add appropriate state setter
-            propertyType={""} // Add appropriate state or value
-            setPropertyType={() => {}} // Add appropriate state setter
+            specialRequest={specialRequest} 
+            setSpecialRequest={setSpecialRequest} 
+            propertyType={propertyType} 
+            setPropertyType={setPropertyType} 
             pageType={"elder"}
           />
         </div>

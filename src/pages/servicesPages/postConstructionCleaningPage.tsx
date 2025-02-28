@@ -31,13 +31,15 @@ import {
   postConstructorImage5,
   postConstructorImage6,
   postConstructionService,
-  regularServiceEquipment1,
-  regularServiceEquipment2,
-  regularServiceEquipment3,
-  regularServiceEquipment4,
 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
+
+type Equipment = {
+  id: string;
+  price: number;
+  name?: string;
+};
 
 function PostConstructionCleaningPage() {
   const navigate = useNavigate();
@@ -65,11 +67,14 @@ function PostConstructionCleaningPage() {
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const [currencySymbol, setCurrencySymbol] = useState("$");
   const [conversionRate, setConversionRate] = useState(1);
+  const [maxTime, setMaxTime] = useState<number>(1);
 
   const [priceBreakdown, setPriceBreakdown] = useState({
-    basePrice: 59.0,
+    hourlyRate: parseInt(services.data.price),
+    serviceCosts: 0,
     equipmentCosts: 0,
-    totalPrice: 59.0,
+    totalPrice: 27.0,
+    basePrice: parseInt(services.data.price),
   });
 
   const handleCurrencyUpdate = (
@@ -84,7 +89,7 @@ function PostConstructionCleaningPage() {
 
   useEffect(() => {
     setPriceBreakdown(calculateTotalPrice());
-  }, [selectedEquipments, conversionRate]);
+  }, [selectedEquipments, conversionRate, duration]);
 
   useEffect(() => {
     dispatch(getPackege("6"));
@@ -94,28 +99,66 @@ function PostConstructionCleaningPage() {
     dispatch(getServices("6"));
   }, []);
   const calculateTotalPrice = () => {
-    let basePrice = 59.0 * conversionRate;
+    // Calculate base price based on hourly rate and maxTime
+    const hourlyRate = parseInt(services.data.price);
+    const basePrice = hourlyRate * maxTime * conversionRate;
+    let serviceCosts = 0;
     let equipmentCosts = 0;
 
     selectedEquipments.forEach((equipment) => {
       equipmentCosts += equipment.price * conversionRate;
     });
 
-    const totalPrice = basePrice + equipmentCosts;
+    const totalPrice = basePrice + serviceCosts + equipmentCosts;
     return {
-      basePrice,
+      hourlyRate,
+      serviceCosts,
       equipmentCosts,
       totalPrice,
+      basePrice,
     };
   };
-  const handleSelectEquipment = (equipment: any) => {
-    setSelectedEquipments([
-      ...selectedEquipments,
-      { id: equipment.id, price: equipment.price },
-    ]);
+  const handleEquipmentSelect = (equipment: Equipment, selected: boolean) => {
+    if (selected) {
+      // Check if the equipment is already in the array
+      if (!selectedEquipments.some((e) => e.id === equipment.id)) {
+        setSelectedEquipments((prev) => [
+          ...prev,
+          { id: equipment.id, price: equipment.price },
+        ]);
+      }
+    } else {
+      // Remove the equipment if it exists
+      setSelectedEquipments((prev) =>
+        prev.filter((e) => e.id !== equipment.id)
+      );
+    }
+  };
+  const handleSolventChange = (solvent: string) => {
+    setSelectedSolvent(solvent);
+  };
+
+  const handleEquipmentOptionChange = (option: string) => {
+    setSelectedEquipmentOption(option);
   };
 
   const handleBookNow = () => {
+    if (
+      !propertySize ||
+      !duration ||
+      !numCleaners ||
+      !frequency ||
+      !propertyType ||
+      !contactType ||
+      !language ||
+      !selectedDate ||
+      !selectedTime ||
+      !acceptTerms1 ||
+      !acceptTerms2
+    ) {
+      alert("Please fill all required fields before proceeding to checkout.");
+      return;
+    }
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
       service_id: "6",
@@ -135,47 +178,20 @@ function PostConstructionCleaningPage() {
       currency: selectedCurrency,
       note: document.querySelector("textarea")?.value || "",
     };
-    const data = { serviceName: "Post Construction", details: serviceDetails };
+    const data = {
+      serviceName: "Post Construction",
+      details: serviceDetails,
+      orderSummary: {
+        selectedEquipments,
+        basePrice: priceBreakdown.basePrice / conversionRate,
+        currencySymbol,
+        selectedCurrency,
+      },
+    };
     console.log("Service Details:", serviceDetails);
     navigate("/checkout", { state: { data } });
   };
 
-  const solvents = [
-    { value: "customer", label: "Provided by the Customer" },
-    { value: "company", label: "Request the Company" },
-  ];
-
-  const equipmentOptions = [
-    { value: "basic", label: "Provided by the Customer" },
-    { value: "advanced", label: "Request the Company" },
-  ];
-
-  const equipments = [
-    {
-      id: "cleaning-solvent ",
-      name: "Cleaning Solvent (Eco Friendly Chemicals)",
-      price: 15.99,
-      image: regularServiceEquipment1,
-    },
-    {
-      id: "mop",
-      name: "MOP",
-      price: 11.99,
-      image: regularServiceEquipment2,
-    },
-    {
-      id: "materials",
-      name: "Other Cleaning Materials",
-      price: 19.99,
-      image: regularServiceEquipment3,
-    },
-    {
-      id: "vacuum",
-      name: "Vacuum Cleaner",
-      price: 29.99,
-      image: regularServiceEquipment4,
-    },
-  ];
   const cleaningPackages = [
     {
       icon: postConstructorImage1,
@@ -351,13 +367,15 @@ function PostConstructionCleaningPage() {
       {/* Equipment Section */}
       <div>
         <EquipmentSection
-          title="Select your cleaning solvents and equipment"
-          solvents={solvents}
-          equipmentOptions={equipmentOptions}
-          equipments={equipments}
-          onSolventChange={setSelectedSolvent}
-          onEquipmentOptionChange={setSelectedEquipmentOption}
-          onEquipmentSelect={handleSelectEquipment}
+          onSolventChange={handleSolventChange}
+          onEquipmentOptionChange={handleEquipmentOptionChange}
+          onEquipmentSelect={handleEquipmentSelect}
+          solvents={[]}
+          equipmentOptions={[]}
+          equipments={[]}
+          selectedCurrency={selectedCurrency}
+          currencySymbol={currencySymbol}
+          conversionRate={conversionRate}
         />
       </div>
 
@@ -420,6 +438,9 @@ function PostConstructionCleaningPage() {
             setContactType={setContactType}
             language={language}
             setLanguage={setLanguage}
+            onBasePriceChange={(maxTime) => {
+              setMaxTime(maxTime);
+            }}
           />
         </div>
 
@@ -488,10 +509,16 @@ function PostConstructionCleaningPage() {
         <div className="pt-4 mb-6">
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
-          <span className="mb-2 md:mb-0">
-              Base Cost <span className="text-gray-400">({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})</span>
+            <span className="mb-2 md:mb-0">
+              Base Cost{" "}
+              <span className="text-gray-400">
+                ({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})
+              </span>
             </span>
-            <span>{currencySymbol}{priceBreakdown.basePrice.toFixed(2)}</span>
+            <span>
+              {currencySymbol}
+              {priceBreakdown.basePrice.toFixed(2)}
+            </span>
           </div>
 
           {/* Selected Equipment Costs */}
@@ -503,14 +530,20 @@ function PostConstructionCleaningPage() {
                   ({selectedEquipments.length} items)
                 </span>
               </span>
-              <span>{currencySymbol}{priceBreakdown.equipmentCosts.toFixed(2)}</span>
+              <span>
+                {currencySymbol}
+                {priceBreakdown.equipmentCosts.toFixed(2)}
+              </span>
             </div>
           )}
 
           {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
             <span>Total</span>
-            <span>{currencySymbol}{priceBreakdown.totalPrice.toFixed(2)}</span>
+            <span>
+              {currencySymbol}
+              {priceBreakdown.totalPrice.toFixed(2)}
+            </span>
           </div>
         </div>
 

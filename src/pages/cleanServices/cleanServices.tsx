@@ -3,10 +3,10 @@ import CleaningServiceCard from "../../components/ServiceCard/CleaningServiceCar
 import { chooseClening1, chooseClening2, chooseClening3, chooseClening4 } from "../../config/images.ts";
 
 const services = [
-  { id: 1, title: "Cleaning Industry Regulation", image: chooseClening1, link: "#" },
-  { id: 2, title: "Hygiene in Public Spaces", image: chooseClening2, link: "#" },
-  { id: 3, title: "Cleaning Hospitality", image: chooseClening3, link: "#" },
-  { id: 4, title: "Robotics in Cleaning", image: chooseClening4, link: "#" },
+  { id: 1, title: "Cleaning Industry Regulation", image: chooseClening1, link: "/cleaning-industry-regulation" },
+  { id: 2, title: "Hygiene in Public Spaces", image: chooseClening2, link: "/hygiene-public-spaces" },
+  { id: 3, title: "Cleaning Hospitality", image: chooseClening3, link: "/cleaning-hospitality" },
+  { id: 4, title: "Robotics in Cleaning", image: chooseClening4, link: "/robotics-cleaning" },
 ];
 
 const CleaningServices = () => {

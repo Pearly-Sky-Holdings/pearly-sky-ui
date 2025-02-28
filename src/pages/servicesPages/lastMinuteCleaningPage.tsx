@@ -20,14 +20,16 @@ import {
   regularService3,
   regularService4,
   regularService5,
-  regularServiceEquipment1,
-  regularServiceEquipment2,
-  regularServiceEquipment3,
-  regularServiceEquipment4,
   lastMinuteService1,
 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
+
+type Equipment = {
+  id: string;
+  price: number;
+  name?: string;
+};
 function LastMinuteCleaningPage() {
   type selectService = {
     package_id: number;
@@ -63,12 +65,14 @@ function LastMinuteCleaningPage() {
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const [currencySymbol, setCurrencySymbol] = useState("$");
   const [conversionRate, setConversionRate] = useState(1);
+  const [maxTime, setMaxTime] = useState<number>(1);
 
   const [priceBreakdown, setPriceBreakdown] = useState({
-    basePrice: 57.0,
+    hourlyRate : parseInt(services.data.price),
     serviceCosts: 0,
     equipmentCosts: 0,
-    totalPrice: 57.0,
+    totalPrice: 27.0,
+    basePrice: parseInt(services.data.price),
   });
 
   const handleCurrencyUpdate = (
@@ -83,7 +87,7 @@ function LastMinuteCleaningPage() {
 
   useEffect(() => {
     setPriceBreakdown(calculateTotalPrice());
-  }, [selectedServices, selectedEquipments, conversionRate]);
+  }, [selectedServices, selectedEquipments, conversionRate,duration]);
 
   useEffect(() => {
     dispatch(getPackege("3"));
@@ -92,40 +96,65 @@ function LastMinuteCleaningPage() {
     dispatch(getServices("3"));
   }, []);
   const calculateTotalPrice = () => {
-    let basePrice = 57.0 * conversionRate;
+    // Calculate base price based on hourly rate and maxTime
+    const hourlyRate = parseInt(services.data.price); // Base price for 1 hour
+    const basePrice = hourlyRate * maxTime * conversionRate;
     let serviceCosts = 0;
     let equipmentCosts = 0;
-
+  
     selectedServices.forEach((service) => {
       serviceCosts += service.price * (service.qty || 1) * conversionRate;
     });
-
+  
     selectedEquipments.forEach((equipment) => {
       equipmentCosts += equipment.price * conversionRate;
     });
-
+  
     const totalPrice = basePrice + serviceCosts + equipmentCosts;
     return {
-      basePrice,
+      hourlyRate,
       serviceCosts,
       equipmentCosts,
       totalPrice,
+      basePrice,
     };
   };
-  const handleEquipmentSelect = (equipment: any, selected: boolean) => {
+  const handleEquipmentSelect = (equipment: Equipment, selected: boolean) => {
     if (selected) {
-      setSelectedEquipments([
-        ...selectedEquipments,
-        { id: equipment.id, price: equipment.price },
-      ]);
+      // Check if the equipment is already in the array
+      if (!selectedEquipments.some((e) => e.id === equipment.id)) {
+        setSelectedEquipments((prev) => [...prev, { id: equipment.id, price: equipment.price }]);
+      }
     } else {
-      setSelectedEquipments(
-        selectedEquipments.filter((e) => e.id !== equipment.id)
-      );
+      // Remove the equipment if it exists
+      setSelectedEquipments((prev) => prev.filter((e) => e.id !== equipment.id));
     }
+  };
+  const handleSolventChange = (solvent: string) => {
+    setSelectedSolvent(solvent);
+  };
+  
+  const handleEquipmentOptionChange = (option: string) => {
+    setSelectedEquipmentOption(option);
   };
 
   const handleBookNow = () => {
+    if (
+      !propertySize ||
+      !duration ||
+      !numCleaners ||
+      !frequency ||
+      !propertyType ||
+      !contactType ||
+      !language ||
+      !selectedDate ||
+      !selectedTime ||
+      !acceptTerms1 ||
+      !acceptTerms2
+    ) {
+      alert("Please fill all required fields before proceeding to checkout.");
+      return;
+    }
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
       service_id: "3",
@@ -149,13 +178,19 @@ function LastMinuteCleaningPage() {
       language,
       business_property: propertyType,
       cleaning_solvents: selectedSolvent,
-      equipmentOption: _selectedEquipmentOption,
+      // equipmentOption: selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
       price: priceBreakdown.totalPrice,
       currency: selectedCurrency,
       note: document.querySelector("textarea")?.value || "",
     };
-    const data = { serviceName: "Last Minute", details: serviceDetails };
+    const data = { serviceName: "Last Minute", details: serviceDetails,orderSummary: {
+      selectedServices,
+      selectedEquipments,
+      basePrice: priceBreakdown.basePrice / conversionRate,
+      currencySymbol,
+      selectedCurrency,
+    }, };
     console.log("Service Details:", serviceDetails);
     navigate("/checkout", { state: { data } });
   };
@@ -201,43 +236,6 @@ function LastMinuteCleaningPage() {
         ],
       },
     ],
-  ];
-
-  const solvents = [
-    { value: "customer", label: "Provided by the Customer" },
-    { value: "company", label: "Request the Company" },
-  ];
-
-  const equipmentOptions = [
-    { value: "basic", label: "Provided by the Customer" },
-    { value: "advanced", label: "Request the Company" },
-  ];
-
-  const equipments = [
-    {
-      id: "cleaning-solvent ",
-      name: "Cleaning Solvent (Eco Friendly Chemicals)",
-      price: 15.99,
-      image: regularServiceEquipment1,
-    },
-    {
-      id: "mop",
-      name: "MOP",
-      price: 11.99,
-      image: regularServiceEquipment2,
-    },
-    {
-      id: "materials",
-      name: "Other Cleaning Materials",
-      price: 19.99,
-      image: regularServiceEquipment3,
-    },
-    {
-      id: "vacuum",
-      name: "Vacuum Cleaner",
-      price: 29.99,
-      image: regularServiceEquipment4,
-    },
   ];
 
   return (
@@ -415,14 +413,16 @@ function LastMinuteCleaningPage() {
 
       {/* Equipment Section */}
       <div>
-        <EquipmentSection
-          title="Select your cleaning solvents and equipment"
-          solvents={solvents}
-          equipmentOptions={equipmentOptions}
-          equipments={equipments}
-          onSolventChange={setSelectedSolvent}
-          onEquipmentOptionChange={setSelectedEquipmentOption}
+      <EquipmentSection
+          onSolventChange={handleSolventChange}
+          onEquipmentOptionChange={handleEquipmentOptionChange}
           onEquipmentSelect={handleEquipmentSelect}
+          solvents={[]}
+          equipmentOptions={[]}
+          equipments={[]}
+          selectedCurrency={selectedCurrency}
+          currencySymbol={currencySymbol}
+          conversionRate={conversionRate}
         />
       </div>
 
@@ -485,6 +485,7 @@ function LastMinuteCleaningPage() {
             setContactType={setContactType}
             language={language}
             setLanguage={setLanguage}
+            onBasePriceChange={(maxTime) => {setMaxTime(maxTime)}}
           />
         </div>
 
