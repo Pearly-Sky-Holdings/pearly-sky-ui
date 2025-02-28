@@ -158,3 +158,9 @@ export const postConstructorImage3: string = "/images/service/postConstructor/po
 export const postConstructorImage4: string = "/images/service/postConstructor/postConstructorImage4.png";
 export const postConstructorImage5: string = "/images/service/postConstructor/postConstructorImage5.png";
 export const postConstructorImage6: string = "/images/service/postConstructor/postConstructorImage6.png";
+
+// Read More Pages
+export const readMoreImage1: string = "/images/readMore/CleaningIndustryRegulation.png";
+export const readMoreImage2: string = "/images/readMore/HygienePublicSpaces.png"; 
+export const readMoreImage3: string = "/images/readMore/CleaningHospitality.png"; 
+export const readMoreImage4: string = "/images/readMore/RoboticsCleaning.png";    

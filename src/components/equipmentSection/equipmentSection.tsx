@@ -41,8 +41,8 @@ const EquipmentSection: React.FC<EquipmentSectionProps> = ({
   onSolventChange,
   onEquipmentOptionChange,
   onEquipmentSelect,
-  selectedCurrency = "USD",
-  currencySymbol = "$",
+  selectedCurrency = "EUR",
+  currencySymbol = "€",
   conversionRate = 1,
 }) => {
   const [cleaningSolvent, setCleaningSolvent] = useState("");
@@ -63,25 +63,25 @@ const EquipmentSection: React.FC<EquipmentSectionProps> = ({
     {
       id: "cleaning-solvent",
       name: "Cleaning Solvent (Eco Friendly Chemicals)",
-      price: 15.00,
+      price: 11.00,
       image: regularServiceEquipment1,
     },
     {
       id: "mop",
       name: "MOP",
-      price: 10.00,
+      price: 6.00,
       image: regularServiceEquipment4,
     },
     {
       id: "materials",
       name: "Other Cleaning Materials",
-      price: 20.00,
+      price: 6.00,
       image: regularServiceEquipment2,
     },
     {
       id: "vacuum",
       name: "Vacuum Cleaner",
-      price: 30.00,
+      price: 8.00,
       image: regularServiceEquipment3,
     },
   ];

@@ -19,7 +19,7 @@ import CleanServices from "./pages/cleanServices/cleanServices";
 import CircularProgress from "@mui/material/CircularProgress";
 import LoginPage from "./pages/loginPage/looginPage.tsx";
 import CheckoutPage from "./pages/checkoutPage/checkoutPage.tsx";
-import WhatsAppButton from "./components/whatsAppButton/whatsAppButton"; 
+import WhatsAppButton from "./components/whatsAppButton/whatsAppButton";
 import RegularBasicCleaning from "./pages/servicesPages/regularbasicCleaningPage.tsx";
 import OneTimeCleaning from "./pages/servicesPages/oneTimeCleaningPage.tsx";
 import LastMinuteCleaningPage from "./pages/servicesPages/lastMinuteCleaningPage.tsx";
@@ -30,6 +30,10 @@ import AirbnbAndShortService from "./pages/servicesPages/AirbnbCleaning.tsx";
 import ChildCareCleaningPage from "./pages/servicesPages/childCareCleaning.tsx";
 import ElderCareCleaningPage from "./pages/servicesPages/elderCareCleaning.tsx";
 import UpdateComingSoon from "./components/updateComingSoon/UpdateComingSoon.tsx";
+import CleaningIndustryRegulation from "./pages/cleanServices/cleaningIndustryRegulation.tsx";
+import RoboticsCleaning from "./pages/cleanServices/roboticsCleaning.tsx";
+import CleaningHospitality from "./pages/cleanServices/cleaningHospitality.tsx";
+import HygienePublicSpaces from "./pages/cleanServices/hygienePublicSpace.tsx";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -196,6 +200,48 @@ function App() {
             element={
               <>
                 <ElderCareCleaningPage />
+                <Footer />
+              </>
+            }
+          />
+
+          {/* Read more pages */}
+          <Route
+            path="/cleaning-industry-regulation"
+            element={
+              <>
+                <CleaningIndustryRegulation />
+                <UiContactUsPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/robotics-cleaning"
+            element={
+              <>
+                <RoboticsCleaning />
+                <UiContactUsPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/cleaning-hospitality"
+            element={
+              <>
+                <CleaningHospitality />
+                <UiContactUsPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/hygiene-public-spaces"
+            element={
+              <>
+                <HygienePublicSpaces />
+                <UiContactUsPage />
                 <Footer />
               </>
             }
