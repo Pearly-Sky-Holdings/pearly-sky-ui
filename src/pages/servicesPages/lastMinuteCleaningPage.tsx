@@ -149,7 +149,7 @@ function LastMinuteCleaningPage() {
       language,
       business_property: propertyType,
       cleaning_solvents: selectedSolvent,
-      equipmentOption: _selectedEquipmentOption,
+      // equipmentOption: selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
       price: priceBreakdown.totalPrice,
       currency: selectedCurrency,

@@ -1,48 +1,47 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useEffect } from "react";
 
 interface VideoItem {
   video: string;
 }
 
-interface CarouselProps {
+interface VideoFrameProps {
   videoItems: VideoItem[];
 }
 
-const Carousel = ({ videoItems }: CarouselProps) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const videoRef = useRef<HTMLVideoElement>(null);
+const VideoFrame = ({ videoItems }: VideoFrameProps) => {
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play();
-    }
-  }, [currentIndex]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % videoItems.length);
-    }, 10000); 
-
-    return () => clearInterval(interval);
-  }, [videoItems.length]);
+    videoRefs.current.forEach((video) => {
+      if (video) {
+        video.play();
+        video.muted = true;
+        video.loop = true;
+      }
+    });
+  }, []);
 
   return (
-    <div className="relative w-full">
-      <div className="flex overflow-hidden">
-        <div className="w-full h-[600px] relative flex-shrink-0">
+    <div className="flex justify-center items-center gap-4 p-4 bg-gray-100">
+      {videoItems.slice(0, 2).map((item, index) => (
+        <div
+          key={index}
+          className="w-1/2 h-[400px] rounded-2xl overflow-hidden shadow-lg transform transition-transform hover:scale-105"
+        >
           <video
-            ref={videoRef}
-            src={videoItems[currentIndex].video}
-            className="w-full h-full"
+            ref={(el) => {
+              videoRefs.current[index] = el;
+            }}
+            src={item.video}
+            className="w-full h-full object-cover"
             autoPlay
             muted
             loop
-            onEnded={() => setCurrentIndex((prevIndex) => (prevIndex + 1) % videoItems.length)}
           />
         </div>
-      </div>
+      ))}
     </div>
   );
 };
 
-export default Carousel;
+export default VideoFrame;

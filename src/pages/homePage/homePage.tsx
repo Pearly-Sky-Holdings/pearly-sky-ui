@@ -4,6 +4,10 @@ import { useState, useEffect } from 'react';
 import { homePageImage1, homePageImage2, homePageImage3, homePageImage4 } from "../../config/images";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { motion, AnimatePresence } from 'framer-motion';
+import NetworkOverlay from '../homePage/networkOverlay';
+import './HomePage.css';
+
 export default function HomePage() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -12,32 +16,65 @@ export default function HomePage() {
   const imagePairs = [[homePageImage1, homePageImage2], [homePageImage3, homePageImage4]];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [refreshNetwork, setRefreshNetwork] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (isMobile) {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % allImages.length);
+        setIsAnimating(true);
+        setTimeout(() => {
+          setCurrentIndex((prevIndex) => (prevIndex + 1) % allImages.length);
+          setIsAnimating(false);
+          setRefreshNetwork(prev => prev + 1);
+        }, 500);
       } else {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % imagePairs.length);
+        setIsAnimating(true);
+        setTimeout(() => {
+          setCurrentIndex((prevIndex) => (prevIndex + 1) % imagePairs.length);
+          setIsAnimating(false);
+          setRefreshNetwork(prev => prev + 1);
+        }, 500);
       }
-    }, 3000);
+    }, 5000);
 
     return () => clearInterval(interval);
-  }, [isMobile]);
+  }, [isMobile, allImages.length, imagePairs.length]);
 
   const handlePrevImage = () => {
-    if (isMobile) {
-      setCurrentIndex((prevIndex) => 
-        prevIndex === 0 ? allImages.length - 1 : prevIndex - 1
-      );
+    if (isMobile && !isAnimating) {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setCurrentIndex((prevIndex) => 
+          prevIndex === 0 ? allImages.length - 1 : prevIndex - 1
+        );
+        setIsAnimating(false);
+        setRefreshNetwork(prev => prev + 1);
+      }, 500);
+    } else if (!isMobile && !isAnimating) {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setCurrentIndex((prevIndex) => 
+          prevIndex === 0 ? imagePairs.length - 1 : prevIndex - 1
+        );
+        setIsAnimating(false);
+        setRefreshNetwork(prev => prev + 1);
+      }, 500);
     }
   };
 
   const handleNextImage = () => {
-    if (isMobile) {
-      setCurrentIndex((prevIndex) => 
-        (prevIndex + 1) % allImages.length
-      );
+    if (!isAnimating) {
+      setIsAnimating(true);
+      setTimeout(() => {
+        if (isMobile) {
+          setCurrentIndex((prevIndex) => (prevIndex + 1) % allImages.length);
+        } else {
+          setCurrentIndex((prevIndex) => (prevIndex + 1) % imagePairs.length);
+        }
+        setIsAnimating(false);
+        setRefreshNetwork(prev => prev + 1);
+      }, 500);
     }
   };
 
@@ -110,31 +147,48 @@ export default function HomePage() {
         {isMobile ? (
           // Mobile View - Single Image Carousel
           <Box sx={{ position: 'relative', height: '300px', mb: 4 }}>
-            {allImages.map((imgSrc, i) => (
-              <Box 
-                key={i}
-                sx={{
-                  position: 'absolute',
-                  width: '100%',
-                  height: '300px',
-                  opacity: currentIndex === i ? 1 : 0,
-                  transition: 'opacity 0.5s ease-in-out',
-                  borderRadius: '12px',
-                  overflow: 'hidden',
-                  boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
-                }}
-              >
-                <img
-                  src={imgSrc}
-                  alt={`homePageImage${i}`}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                  }}
-                />
-              </Box>
-            ))}
+            <AnimatePresence>
+              {allImages.map((imgSrc, i) => (
+                currentIndex === i && (
+                  <motion.div 
+                    key={i}
+                    className={`image-container ${isAnimating ? 'animating' : ''}`}
+                    initial={{ opacity: 0, filter: 'blur(10px)' }}
+                    animate={{ 
+                      opacity: 1, 
+                      filter: 'blur(0px)',
+                      transition: { duration: 0.8 }
+                    }}
+                    exit={{ 
+                      opacity: 0, 
+                      filter: 'blur(10px)',
+                      transition: { duration: 0.5 }
+                    }}
+                    style={{
+                      position: 'absolute',
+                      width: '100%',
+                      height: '300px',
+                      borderRadius: '12px',
+                      overflow: 'hidden',
+                      boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
+                    }}
+                  >
+                    <div className="image-background-animation">
+                      <img
+                        src={imgSrc}
+                        alt={`homePageImage${i}`}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                        }}
+                      />
+                    </div>
+                    {!isAnimating && <NetworkOverlay key={`network-${refreshNetwork}-${i}`} />}
+                  </motion.div>
+                )
+              ))}
+            </AnimatePresence>
 
             {/* Navigation Icons */}
             <IconButton
@@ -184,7 +238,7 @@ export default function HomePage() {
               {allImages.map((_, i) => (
                 <Box
                   key={i}
-                  onClick={() => setCurrentIndex(i)}
+                  onClick={() => !isAnimating && setCurrentIndex(i)}
                   sx={{
                     width: '8px',
                     height: '8px',
@@ -203,30 +257,109 @@ export default function HomePage() {
             display: 'flex',
             justifyContent: 'center', 
             gap: 2,
+            position: 'relative',
           }}>
-            {imagePairs[currentIndex].map((imgSrc, i) => (
-              <Box 
-                key={i} 
-                sx={{ 
-                  width: '50%',
-                  height: '400px',
-                  overflow: 'hidden', 
-                  borderRadius: '12px',
-                  transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
-                  boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
-                }}
-              >
-                <img
-                  src={imgSrc}
-                  alt={`homePageImage${i}`}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
+            <IconButton
+              onClick={handlePrevImage}
+              sx={{
+                position: 'absolute',
+                left: '-20px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                },
+                zIndex: 2
+              }}
+            >
+              <ChevronLeftIcon sx={{ color: '#002F6D' }} />
+            </IconButton>
+
+            <AnimatePresence>
+              {imagePairs[currentIndex].map((imgSrc, i) => (
+                <motion.div 
+                  key={i}
+                  className="image-container"
+                  initial={{ opacity: 0, filter: 'blur(10px)', scale: 0.95 }}
+                  animate={{ 
+                    opacity: 1, 
+                    filter: 'blur(0px)', 
+                    scale: 1,
+                    transition: { duration: 0.8 }
+                  }}
+                  exit={{ 
+                    opacity: 0, 
+                    filter: 'blur(10px)', 
+                    scale: 0.95,
+                    transition: { duration: 0.5 }
+                  }}
+                  style={{ 
+                    width: '45%',
+                    height: '400px',
+                    overflow: 'hidden', 
+                    borderRadius: '12px',
+                    boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
+                  }}
+                >
+                  <div className="image-background-animation">
+                    <img
+                      src={imgSrc}
+                      alt={`homePageImage${i}`}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                      }}
+                    />
+                  </div>
+                  {!isAnimating && <NetworkOverlay key={`network-${refreshNetwork}-${i}`} />}
+                </motion.div>
+              ))}
+            </AnimatePresence>
+
+            <IconButton
+              onClick={handleNextImage}
+              sx={{
+                position: 'absolute',
+                right: '-20px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                },
+                zIndex: 2
+              }}
+            >
+              <ChevronRightIcon sx={{ color: '#002F6D' }} />
+            </IconButton>
+
+            {/* Image Navigation Dots */}
+            <Box sx={{
+              position: 'absolute',
+              bottom: '-25px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              display: 'flex',
+              gap: '8px',
+              zIndex: 1
+            }}>
+              {imagePairs.map((_, i) => (
+                <Box
+                  key={i}
+                  onClick={() => !isAnimating && setCurrentIndex(i)}
+                  sx={{
+                    width: '8px',
+                    height: '8px',
+                    borderRadius: '50%',
+                    backgroundColor: currentIndex === i ? '#002F6D' : '#BBB',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.3s ease'
                   }}
                 />
-              </Box>
-            ))}
+              ))}
+            </Box>
           </Box>
         )}
       </Box>
