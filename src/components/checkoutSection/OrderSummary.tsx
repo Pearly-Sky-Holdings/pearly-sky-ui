@@ -1,24 +1,35 @@
-import  { useState } from "react";
+import React from "react";
 import {
   Box,
   Typography,
   TextField,
   Button,
-  IconButton,
   Paper,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 
-const OrderSummary = () => {
-  const [items, _setItems] = useState([
-    { id: 1, name: "Deep Cleaning", price: 150, quantity: 1 },
-  ]);
-  const [coupon, setCoupon] = useState("");
-  const [discount, setDiscount] = useState(0);
 
-  // const handleRemoveItem = (id) => {
-  //   setItems(items.filter((item) => item.id !== id));
-  // };
+interface OrderSummaryProps {
+  selectedServices: Array<{
+    package_id: number;
+    price: number;
+    qty: number;
+    name?: string;
+  }>;
+  selectedEquipments: Array<{ id: string; price: number; name?: string }>;
+  basePrice: number;
+  currencySymbol: string;
+  selectedCurrency: string;
+}
+
+const OrderSummary: React.FC<OrderSummaryProps> = ({
+  selectedServices = [],
+  selectedEquipments = [],
+  basePrice = 27.0,
+  currencySymbol = "$",
+  selectedCurrency = "USD",
+}) => {
+  const [coupon, setCoupon] = React.useState("");
+  const [discount, setDiscount] = React.useState(0);
 
   const handleApplyCoupon = () => {
     if (coupon === "SAVE10") {
@@ -29,7 +40,10 @@ const OrderSummary = () => {
     }
   };
 
-  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const subtotal = basePrice + 
+    selectedServices.reduce((sum, service) => sum + service.price * (service.qty || 1), 0) +
+    selectedEquipments.reduce((sum, equipment) => sum + equipment.price, 0);
+  
   const total = subtotal - discount;
 
   return (
@@ -38,9 +52,26 @@ const OrderSummary = () => {
         Your Order
       </Typography>
 
-      {items.map((item) => (
+      {/* Base Service */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          backgroundColor: "#fff",
+          padding: "12px",
+          borderRadius: "8px",
+          marginBottom: "16px",
+        }}
+      >
+        <Typography fontWeight="bold">Regular Basic Cleaning</Typography>
+        <Typography>{currencySymbol} {basePrice.toFixed(2)}</Typography>
+      </Box>
+
+      {/* Selected Services */}
+      {selectedServices.map((service) => (
         <Box
-          key={item.id}
+          key={service.package_id}
           sx={{
             display: "flex",
             justifyContent: "space-between",
@@ -48,26 +79,38 @@ const OrderSummary = () => {
             backgroundColor: "#fff",
             padding: "12px",
             borderRadius: "8px",
-            marginBottom: "16px",
+            marginBottom: "8px",
           }}
         >
-          <Typography fontWeight="bold">{item.name}</Typography>
-          <IconButton 
-          // onClick={() => handleRemoveItem(item.id)}
-          >
-            <CloseIcon sx={{ color: "red" }} />
-          </IconButton>
+          <Typography>
+            {service.name || `Service #${service.package_id}`} {service.qty > 1 ? `× ${service.qty}` : ''}
+          </Typography>
+          <Typography>{currencySymbol} {(service.price * (service.qty || 1)).toFixed(2)}</Typography>
         </Box>
       ))}
 
-      <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
-        <Typography color="gray">Deep Cleaning × 1</Typography>
-        <Typography fontWeight="bold">C$ {subtotal.toFixed(2)}</Typography>
-      </Box>
+      {/* Selected Equipment */}
+      {selectedEquipments.map((equipment) => (
+        <Box
+          key={equipment.id}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            backgroundColor: "#fff",
+            padding: "12px",
+            borderRadius: "8px",
+            marginBottom: "8px",
+          }}
+        >
+          <Typography>{equipment.name || `Equipment #${equipment.id}`}</Typography>
+          <Typography>{currencySymbol} {equipment.price.toFixed(2)}</Typography>
+        </Box>
+      ))}
 
       <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: "16px", marginBottom: "8px" }}>
         <Typography color="gray">Subtotal:</Typography>
-        <Typography fontWeight="bold">C$ {subtotal.toFixed(2)}</Typography>
+        <Typography fontWeight="bold">{currencySymbol} {subtotal.toFixed(2)}</Typography>
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
@@ -89,9 +132,16 @@ const OrderSummary = () => {
         </Button>
       </Box>
 
+      {discount > 0 && (
+        <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
+          <Typography color="gray">Discount:</Typography>
+          <Typography fontWeight="bold" color="green">-{currencySymbol} {discount.toFixed(2)}</Typography>
+        </Box>
+      )}
+
       <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: "16px" }}>
         <Typography fontWeight="bold">Final Total:</Typography>
-        <Typography fontWeight="bold">C$ {total.toFixed(2)}</Typography>
+        <Typography fontWeight="bold">{currencySymbol} {total.toFixed(2)}</Typography>
       </Box>
     </Paper>
   );

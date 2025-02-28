@@ -112,7 +112,7 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
         </Grid>
 
         {/* Address Fields */}
-        {/* <Grid item xs={6}>
+        <Grid item xs={6}>
             <FormControl fullWidth size="small">
               <FormLabel>Street Address <span style={{ color: "red" }}>*</span></FormLabel>
               <TextField 
@@ -124,8 +124,8 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
               />
             </FormControl>
-          </Grid> */}
-        {/* <Grid item xs={6}>
+          </Grid> 
+         <Grid item xs={6}>
             <FormControl fullWidth size="small">
               <FormLabel>Apartment, Suite, Unit (Optional)</FormLabel>
               <TextField 
@@ -137,7 +137,7 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
               />
             </FormControl>
-          </Grid> */}
+          </Grid>
 
         {/* City & State */}
         <Grid item xs={6}>

@@ -15,9 +15,7 @@ import CurrencyConverter from "../../components/currencyConverter/CurrencyConver
 import { getPackege, getServices } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
 
-import {
-  regularService1
-} from "../../config/images";
+import { regularService1 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
 
@@ -26,15 +24,23 @@ function RegularBasicCleaningPage() {
     package_id: number;
     price: number;
     qty: number;
+    name?: string;
   };
+
+  type Equipment = {
+    id: string;
+    price: number;
+    name?: string;
+  };
+
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const packages = useSelector((state: any) => state.packagesSlice.package);
   const services = useSelector((state: any) => state.servicesSlice.service);
   const [selectedServices, setSelectedServices] = useState<selectService[]>([]);
-  const [ovenQty, setOvenQty] = useState("0");
+  const [ovenQty, setOvenQty] = useState("1");
   const [showTermsCard, setShowTermsCard] = useState(false);
-  const [fridgeQty, setFridgeQty] = useState("0");
+  const [fridgeQty, setFridgeQty] = useState("1");
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
   const [propertySize, setPropertySize] = useState("");
@@ -48,25 +54,30 @@ function RegularBasicCleaningPage() {
   const [contactType, setContactType] = useState("");
   const [selectedSolvent, setSelectedSolvent] = useState("");
   const [_selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
-  const [selectedEquipments, setSelectedEquipments] = useState<
-    Array<{ id: string; price: number }>
-  >([]);
+  const [selectedEquipments, setSelectedEquipments] = useState<Equipment[]>([]);
   const [checkedList, setCheckedList] = useState<String[]>([]);
-  
+
   // Currency state - Changed default from EUR to USD
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const [currencySymbol, setCurrencySymbol] = useState("$");
   const [conversionRate, setConversionRate] = useState(1);
 
+  const [maxTime, setMaxTime] = useState<number>(1);
+
   const [priceBreakdown, setPriceBreakdown] = useState({
-    basePrice: 27.0,
+    hourlyRate: parseInt(services.data.price),
     serviceCosts: 0,
     equipmentCosts: 0,
     totalPrice: 27.0,
+    basePrice: parseInt(services.data.price),
   });
 
   // Handler for currency changes from CurrencyConverter component
-  const handleCurrencyUpdate = (currency: string, symbol: string, rate: number) => {
+  const handleCurrencyUpdate = (
+    currency: string,
+    symbol: string,
+    rate: number
+  ) => {
     setSelectedCurrency(currency);
     setCurrencySymbol(symbol);
     setConversionRate(rate);
@@ -74,18 +85,19 @@ function RegularBasicCleaningPage() {
 
   useEffect(() => {
     setPriceBreakdown(calculateTotalPrice());
-  }, [selectedServices, selectedEquipments, conversionRate]);
+  }, [selectedServices, selectedEquipments, conversionRate, duration]);
 
   useEffect(() => {
     dispatch(getPackege("1"));
   }, []);
-  
+
   useEffect(() => {
     dispatch(getServices("1"));
   }, []);
-  
+
   const calculateTotalPrice = () => {
-    let basePrice = 27.0 * conversionRate;
+    const hourlyRate = parseInt(services.data.price);
+    const basePrice = hourlyRate * maxTime * conversionRate;
     let serviceCosts = 0;
     let equipmentCosts = 0;
 
@@ -99,35 +111,54 @@ function RegularBasicCleaningPage() {
 
     const totalPrice = basePrice + serviceCosts + equipmentCosts;
     return {
-      basePrice,
+      hourlyRate,
       serviceCosts,
       equipmentCosts,
       totalPrice,
+      basePrice,
     };
   };
-  
-  const handleEquipmentSelect = (equipment: any, selected: boolean) => {
+
+  const handleEquipmentSelect = (equipment: Equipment, selected: boolean) => {
     if (selected) {
-      setSelectedEquipments([
-        ...selectedEquipments,
-        { id: equipment.id, price: equipment.price },
-      ]);
+      if (!selectedEquipments.some((e) => e.id === equipment.id)) {
+        setSelectedEquipments((prev) => [
+          ...prev,
+          { id: equipment.id, price: equipment.price },
+        ]);
+      }
     } else {
-      setSelectedEquipments(
-        selectedEquipments.filter((e) => e.id !== equipment.id)
+      setSelectedEquipments((prev) =>
+        prev.filter((e) => e.id !== equipment.id)
       );
     }
   };
-  
+
   const handleSolventChange = (solvent: string) => {
     setSelectedSolvent(solvent);
   };
-  
+
   const handleEquipmentOptionChange = (option: string) => {
     setSelectedEquipmentOption(option);
   };
 
   const handleBookNow = () => {
+    if (
+      !propertySize ||
+      !duration ||
+      !numCleaners ||
+      !frequency ||
+      !propertyType ||
+      !contactType ||
+      !language ||
+      !selectedDate ||
+      !selectedTime ||
+      !acceptTerms1 ||
+      !acceptTerms2
+    ) {
+      alert("Please fill all required fields before proceeding to checkout.");
+      return;
+    }
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
       service_id: "1",
@@ -157,12 +188,34 @@ function RegularBasicCleaningPage() {
       currency: selectedCurrency,
       note: document.querySelector("textarea")?.value || "",
     };
-    const data = { serviceName: "Regular Basic", details: serviceDetails };
+    const data = {
+      serviceName: "Regular Basic",
+      details: serviceDetails,
+      orderSummary: {
+        selectedServices,
+        selectedEquipments,
+        basePrice: priceBreakdown.basePrice / conversionRate,
+        currencySymbol,
+        selectedCurrency,
+      },
+    };
     console.log("Service Details:", serviceDetails);
     navigate("/checkout", { state: { data } });
   };
 
-
+  // Update service names when packages data is loaded
+  useEffect(() => {
+    if (packages.isSuccess && packages.data) {
+      setSelectedServices((prevServices) =>
+        prevServices.map((service) => {
+          const packageInfo = packages.data.find(
+            (pkg: any) => pkg.package_id === service.package_id
+          );
+          return packageInfo ? { ...service, name: packageInfo.name } : service;
+        })
+      );
+    }
+  }, [packages.isSuccess, packages.data]);
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
@@ -182,8 +235,8 @@ function RegularBasicCleaningPage() {
             </h1>
             <div className="mt-4 mb-4 ml-4">
               {/* Using the CurrencyConverter component with USD as initial currency */}
-              <CurrencyConverter 
-                basePrice={parseFloat(services.data.price)} 
+              <CurrencyConverter
+                basePrice={parseFloat(services.data.price)}
                 onCurrencyChange={handleCurrencyUpdate}
                 initialCurrency="USD"
               />
@@ -210,7 +263,7 @@ function RegularBasicCleaningPage() {
 
       {/* Carousel Section */}
       <div>
-        <ServicesCarosel/>
+        <ServicesCarosel />
       </div>
 
       {/* Checklist Section */}
@@ -238,12 +291,13 @@ function RegularBasicCleaningPage() {
                         {
                           package_id: Number(service.package_id),
                           price: parseInt(service.price),
+                          name: service.name,
                           qty:
                             service.name === "Oven Cleaning"
-                              ? Number(ovenQty)
+                              ? Number(ovenQty) || 1
                               : service.name === "Fridge Cleaning"
-                              ? Number(fridgeQty)
-                              : 0,
+                              ? Number(fridgeQty) || 1
+                              : 1,
                         },
                       ]);
                       setCheckedList([
@@ -299,27 +353,48 @@ function RegularBasicCleaningPage() {
                   </span>
                   {service.price !== "0$" && (
                     <div className="mt-1 text-xs text-gray-500">
-                      <span>{currencySymbol}{(parseInt(service.price) * conversionRate).toFixed(2)}</span>
-                      <select
-                        className="ml-2 border rounded px-1 py-0.5 text-xs"
-                        value={
-                          service.name === "Oven Cleaning" ? ovenQty : fridgeQty
-                        }
-                        onChange={(e) => {
-                          if (service.name === "Oven Cleaning") {
-                            setOvenQty(e.target.value);
-                            console.log("oven", e.target.value);
-                          } else {
-                            setFridgeQty(e.target.value);
-                            console.log("fridge", e.target.value);
+                      <span>
+                        {currencySymbol}
+                        {(parseInt(service.price) * conversionRate).toFixed(2)}
+                      </span>
+                      {(service.name === "Oven Cleaning" ||
+                        service.name === "Fridge Cleaning") && (
+                        <select
+                          className="ml-2 border rounded px-1 py-0.5 text-xs"
+                          value={
+                            service.name === "Oven Cleaning"
+                              ? ovenQty
+                              : fridgeQty
                           }
-                        }}
-                      >
-                        <option>No of pieces</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                      </select>
+                          onChange={(e) => {
+                            if (service.name === "Oven Cleaning") {
+                              setOvenQty(e.target.value);
+                              // Update the quantity in selectedServices
+                              setSelectedServices((prev) =>
+                                prev.map((s) =>
+                                  s.package_id === Number(service.package_id)
+                                    ? { ...s, qty: Number(e.target.value) || 1 }
+                                    : s
+                                )
+                              );
+                            } else {
+                              setFridgeQty(e.target.value);
+                              // Update the quantity in selectedServices
+                              setSelectedServices((prev) =>
+                                prev.map((s) =>
+                                  s.package_id === Number(service.package_id)
+                                    ? { ...s, qty: Number(e.target.value) || 1 }
+                                    : s
+                                )
+                              );
+                            }
+                          }}
+                        >
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                        </select>
+                      )}
                     </div>
                   )}
                 </div>
@@ -342,6 +417,9 @@ function RegularBasicCleaningPage() {
           solvents={[]}
           equipmentOptions={[]}
           equipments={[]}
+          selectedCurrency={selectedCurrency}
+          currencySymbol={currencySymbol}
+          conversionRate={conversionRate}
         />
       </div>
 
@@ -404,6 +482,9 @@ function RegularBasicCleaningPage() {
             setContactType={setContactType}
             language={language}
             setLanguage={setLanguage}
+            onBasePriceChange={(maxTime) => {
+              setMaxTime(maxTime);
+            }}
           />
         </div>
 
@@ -473,9 +554,15 @@ function RegularBasicCleaningPage() {
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              Base Cost <span className="text-gray-400">({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})</span>
+              Base Cost{" "}
+              <span className="text-gray-400">
+                ({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})
+              </span>
             </span>
-            <span>{currencySymbol}{priceBreakdown.basePrice.toFixed(2)}</span>
+            <span>
+              {currencySymbol}
+              {priceBreakdown.basePrice.toFixed(2)}
+            </span>
           </div>
 
           {/* Selected Services Costs */}
@@ -487,7 +574,10 @@ function RegularBasicCleaningPage() {
                   ({selectedServices.length} services)
                 </span>
               </span>
-              <span>{currencySymbol}{priceBreakdown.serviceCosts.toFixed(2)}</span>
+              <span>
+                {currencySymbol}
+                {priceBreakdown.serviceCosts.toFixed(2)}
+              </span>
             </div>
           )}
 
@@ -500,14 +590,20 @@ function RegularBasicCleaningPage() {
                   ({selectedEquipments.length} items)
                 </span>
               </span>
-              <span>{currencySymbol}{priceBreakdown.equipmentCosts.toFixed(2)}</span>
+              <span>
+                {currencySymbol}
+                {priceBreakdown.equipmentCosts.toFixed(2)}
+              </span>
             </div>
           )}
 
           {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
             <span>Total</span>
-            <span>{currencySymbol}{priceBreakdown.totalPrice.toFixed(2)}</span>
+            <span>
+              {currencySymbol}
+              {priceBreakdown.totalPrice.toFixed(2)}
+            </span>
           </div>
         </div>
 

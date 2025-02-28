@@ -31,6 +31,9 @@ interface EquipmentSectionProps {
   onSolventChange: (solvent: string) => void;
   onEquipmentOptionChange: (option: string) => void;
   onEquipmentSelect: (equipment: Equipment, selected: boolean) => void;
+  selectedCurrency: string;
+  currencySymbol: string;
+  conversionRate: number;
 }
 
 const EquipmentSection: React.FC<EquipmentSectionProps> = ({
@@ -38,6 +41,9 @@ const EquipmentSection: React.FC<EquipmentSectionProps> = ({
   onSolventChange,
   onEquipmentOptionChange,
   onEquipmentSelect,
+  selectedCurrency = "USD",
+  currencySymbol = "$",
+  conversionRate = 1,
 }) => {
   const [cleaningSolvent, setCleaningSolvent] = useState("");
   const [cleaningEquipment, setCleaningEquipment] = useState("");
@@ -57,58 +63,68 @@ const EquipmentSection: React.FC<EquipmentSectionProps> = ({
     {
       id: "cleaning-solvent",
       name: "Cleaning Solvent (Eco Friendly Chemicals)",
-      price: 15.99,
+      price: 15.00,
       image: regularServiceEquipment1,
     },
     {
       id: "mop",
       name: "MOP",
-      price: 11.99,
+      price: 10.00,
       image: regularServiceEquipment4,
     },
     {
       id: "materials",
       name: "Other Cleaning Materials",
-      price: 19.99,
+      price: 20.00,
       image: regularServiceEquipment2,
     },
     {
       id: "vacuum",
       name: "Vacuum Cleaner",
-      price: 29.99,
+      price: 30.00,
       image: regularServiceEquipment3,
     },
   ];
 
-  // Automatically select/deselect equipment based on solvent and equipment choices
   useEffect(() => {
     if (cleaningSolvent === "company") {
-      // Automatically select cleaning solvent equipment if provided by the company
       if (!selectedEquipments.includes("cleaning-solvent")) {
-        setSelectedEquipments([...selectedEquipments, "cleaning-solvent"]);
+        setSelectedEquipments((prev) => [...prev, "cleaning-solvent"]);
         onEquipmentSelect(
-          { id: "cleaning-solvent", name: "Cleaning Solvent", price: 15.99, image: "" },
+          equipmentsDetails.find((e) => e.id === "cleaning-solvent") || {
+            id: "cleaning-solvent",
+            name: "Cleaning Solvent",
+            price: 15.99,
+            image: "",
+          },
           true
         );
       }
     } else if (cleaningSolvent === "customer") {
-      // Deselect cleaning solvent equipment if provided by the customer
-      setSelectedEquipments(selectedEquipments.filter((id) => id !== "cleaning-solvent"));
+      setSelectedEquipments((prev) => prev.filter((id) => id !== "cleaning-solvent"));
       onEquipmentSelect(
-        { id: "cleaning-solvent", name: "Cleaning Solvent", price: 15.99, image: "" },
+        equipmentsDetails.find((e) => e.id === "cleaning-solvent") || {
+          id: "cleaning-solvent",
+          name: "Cleaning Solvent",
+          price: 15.99,
+          image: "",
+        },
         false
       );
     }
-  }, [cleaningSolvent, selectedEquipments]);
+  }, [cleaningSolvent]);
 
   useEffect(() => {
     if (cleaningEquipment === "company") {
-      // Automatically select all equipment if provided by the company
       const companyEquipments = ["mop", "materials", "vacuum"];
-      const newSelected = [...new Set([...selectedEquipments, ...companyEquipments])];
+      const newSelected = [...new Set([...selectedEquipments])];
+      companyEquipments.forEach(id => {
+        if (!newSelected.includes(id)) {
+          newSelected.push(id);
+        }
+      });
       setSelectedEquipments(newSelected);
 
-      // Notify parent component about the selected equipment
       companyEquipments.forEach((id) => {
         const equipment = equipmentsDetails.find((e) => e.id === id);
         if (equipment) {
@@ -116,10 +132,8 @@ const EquipmentSection: React.FC<EquipmentSectionProps> = ({
         }
       });
     } else if (cleaningEquipment === "customer") {
-      // Deselect all equipment if provided by the customer
       setSelectedEquipments([]);
 
-      // Notify parent component about the deselected equipment
       equipmentsDetails.forEach((equipment) => {
         onEquipmentSelect(equipment, false);
       });
@@ -136,9 +150,32 @@ const EquipmentSection: React.FC<EquipmentSectionProps> = ({
     const value = e.target.value;
     setCleaningEquipment(value);
     onEquipmentOptionChange(value);
+
+    if (value === "company") {
+      const companyEquipments = ["mop", "materials", "vacuum"];
+      const newSelected = [...new Set([...selectedEquipments])];
+      setSelectedEquipments(newSelected);
+
+      companyEquipments.forEach((id) => {
+        const equipment = equipmentsDetails.find((e) => e.id === id);
+        if (equipment) {
+          onEquipmentSelect(equipment, true);
+        }
+      });
+    } else if (value === "customer") {
+      setSelectedEquipments([]);
+
+      equipmentsDetails.forEach((equipment) => {
+        onEquipmentSelect(equipment, false);
+      });
+    }
   };
 
   const handleEquipmentSelect = (equipment: Equipment) => {
+    if (isEquipmentDisabled(equipment.id)) {
+      return;
+    }
+
     const isSelected = selectedEquipments.includes(equipment.id);
     const newSelected = isSelected
       ? selectedEquipments.filter((id) => id !== equipment.id)
@@ -148,10 +185,12 @@ const EquipmentSection: React.FC<EquipmentSectionProps> = ({
     onEquipmentSelect(equipment, !isSelected);
   };
 
-  // Check if an equipment item should be disabled
   const isEquipmentDisabled = (equipmentId: string) => {
     if (cleaningSolvent === "customer" && equipmentId === "cleaning-solvent") {
-      return true; // Disable cleaning solvent if provided by the customer
+      return true;
+    }
+    if (cleaningEquipment === "customer" && equipmentId !== "cleaning-solvent") {
+      return true;
     }
     return false;
   };
@@ -222,7 +261,9 @@ const EquipmentSection: React.FC<EquipmentSectionProps> = ({
                 />
                 <span>{equipment.name}</span>
               </label>
-              <p className="text-sm text-gray-600">Price: C$ {equipment.price}</p>
+              <p className="text-sm text-gray-600">
+                Price: {currencySymbol} {(equipment.price * conversionRate).toFixed(2)}
+              </p>
             </div>
           ))}
         </div>
