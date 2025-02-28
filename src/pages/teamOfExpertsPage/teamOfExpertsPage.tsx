@@ -18,7 +18,7 @@ const teamMembers = [
   },
   {
     name: "Mr Nipuna Piyumal",
-    title:"IT Supervisor",
+    title:"Administration Manager",
     image: teamExperts3,
     email: "callcenter@company.com",
   },

@@ -98,63 +98,63 @@ const services = [
     title: "Commercial & Office Cleaning",
     description: "Keep your workspace professional and welcoming with our tailored commercial and office cleaning services, designed for businesses of all sizes.",
     image: CommercialService,
-    link: "/vision_update_coming_soon"
+    link: "/upcomming"
   },
   {
     id: 11,
     title: "Sanitization & Disinfection",
     description: "Protect your loved ones with our sanitization and disinfection services, eliminating germs and bacteria for a healthier environment.",
     image: SanitizationService,
-    link: "/vision_update_coming_soon"
+    link: "/upcomming"
   },
   {
     id: 12,
     title: "Carpet & Upholstery Cleaning",
     description: "Restore the beauty of your carpets and furniture with our professional cleaning, removing stains, odors, and dust mites for a fresh finish.",
     image: CarpetCleaningService,
-    link: "/vision_update_coming_soon"
+    link: "/upcomming"
   },
   {
     id: 13,
     title: "Move-In/Out Transport Service",
     description: "Simplify your move with our transport service, ensuring your belongings are handled carefully and transported safely.",
     image: MoveInOutTransportService,
-    link: "/vision_update_coming_soon"
+    link: "/upcomming"
   },
   {
     id: 14,
     title: "Steam Cleaning",
     description: "Harness the power of steam to deep-clean and sanitize your surfaces, removing stubborn dirt, bacteria, and allergens effectively.",
     image: steamService,
-    link: "/vision_update_coming_soon"
+    link: "/upcomming"
   },
   {
     id: 15,
     title: "Laundry Services",
     description: "Save time with our convenient laundry services, offering washing, drying, ironing, and folding to keep your wardrobe fresh and clean.",
     image: laundryService,
-    link: "/vision_update_coming_soon"
+    link: "/upcomming"
   },
   {
     id: 16,
     title: "Event Cleaning",
     description: "Whether it's an annual holiday party or a week of business conferences, an important part of ensuring the event you have planned goes smoothly",
     image: eventService,
-    link: "/vision_update_coming_soon"
+    link: "/upcomming"
   },
   {
     id: 17,
     title: "Pool cleaning",
     description: "Nothing beats relaxing in a pool on these hot days. To make sure your pool is crystal clear and safe for swimming, we offer you all types of indoor and outdoor pool cleaning",
     image: poolService,
-    link: "/vision_update_coming_soon"
+    link: "/upcomming"
   },
   {
     id: 18,
     title: "Pressure Washing",
     description: "Professional Pressure Washing Services Residential and commerical pressure washing service",
     image: pressureService,
-    link: "/vision_update_coming_soon"
+    link: "/upcomming"
   },
 ];
 

@@ -10,7 +10,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 
 const OrderSummary = () => {
-  const [items, setItems] = useState([
+  const [items, _setItems] = useState([
     { id: 1, name: "Deep Cleaning", price: 150, quantity: 1 },
   ]);
   const [coupon, setCoupon] = useState("");

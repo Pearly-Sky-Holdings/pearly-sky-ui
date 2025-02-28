@@ -19,7 +19,7 @@ import CleanServices from "./pages/cleanServices/cleanServices";
 import CircularProgress from "@mui/material/CircularProgress";
 import LoginPage from "./pages/loginPage/looginPage.tsx";
 import CheckoutPage from "./pages/checkoutPage/checkoutPage.tsx";
-
+import WhatsAppButton from "./components/whatsAppButton/whatsAppButton"; 
 import RegularBasicCleaning from "./pages/servicesPages/regularbasicCleaningPage.tsx";
 import OneTimeCleaning from "./pages/servicesPages/oneTimeCleaningPage.tsx";
 import LastMinuteCleaningPage from "./pages/servicesPages/lastMinuteCleaningPage.tsx";
@@ -29,6 +29,7 @@ import PostConstructionCleaningPage from "./pages/servicesPages/postConstruction
 import AirbnbAndShortService from "./pages/servicesPages/AirbnbCleaning.tsx";
 import ChildCareCleaningPage from "./pages/servicesPages/childCareCleaning.tsx";
 import ElderCareCleaningPage from "./pages/servicesPages/elderCareCleaning.tsx";
+import UpdateComingSoon from "./components/updateComingSoon/UpdateComingSoon.tsx";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -77,6 +78,7 @@ function App() {
       <Router>
         <TopBar />
         <NavigationBar />
+        <WhatsAppButton phoneNumber="94123456789" />
         <Routes>
           {/* Main one-page scrollable site */}
           <Route
@@ -202,6 +204,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
 
           <Route path="/checkout" element={<CheckoutPage />} />
+
+          <Route path="/upcomming" element={<UpdateComingSoon />} />
         </Routes>
       </Router>
     </ThemeProvider>
