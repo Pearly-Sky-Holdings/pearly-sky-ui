@@ -34,6 +34,7 @@ import CleaningIndustryRegulation from "./pages/cleanServices/cleaningIndustryRe
 import RoboticsCleaning from "./pages/cleanServices/roboticsCleaning.tsx";
 import CleaningHospitality from "./pages/cleanServices/cleaningHospitality.tsx";
 import HygienePublicSpaces from "./pages/cleanServices/hygienePublicSpace.tsx";
+import CareerPage from "./pages/careerPage/careerPage.tsx";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -232,6 +233,16 @@ function App() {
               <>
                 <CleaningHospitality />
                 <UiContactUsPage />
+                <Footer />
+              </>
+            }
+          />
+          {/* Career Page */}
+          <Route
+            path="/career"
+            element={
+              <>
+                <CareerPage />
                 <Footer />
               </>
             }

@@ -5,7 +5,6 @@ import { homePageImage1, homePageImage2, homePageImage3, homePageImage4 } from "
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { motion, AnimatePresence } from 'framer-motion';
-import NetworkOverlay from '../homePage/networkOverlay';
 import './HomePage.css';
 
 export default function HomePage() {
@@ -17,7 +16,7 @@ export default function HomePage() {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [refreshNetwork, setRefreshNetwork] = useState(0);
+  
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -26,14 +25,14 @@ export default function HomePage() {
         setTimeout(() => {
           setCurrentIndex((prevIndex) => (prevIndex + 1) % allImages.length);
           setIsAnimating(false);
-          setRefreshNetwork(prev => prev + 1);
+         
         }, 500);
       } else {
         setIsAnimating(true);
         setTimeout(() => {
           setCurrentIndex((prevIndex) => (prevIndex + 1) % imagePairs.length);
           setIsAnimating(false);
-          setRefreshNetwork(prev => prev + 1);
+         
         }, 500);
       }
     }, 5000);
@@ -49,7 +48,7 @@ export default function HomePage() {
           prevIndex === 0 ? allImages.length - 1 : prevIndex - 1
         );
         setIsAnimating(false);
-        setRefreshNetwork(prev => prev + 1);
+       
       }, 500);
     } else if (!isMobile && !isAnimating) {
       setIsAnimating(true);
@@ -58,7 +57,7 @@ export default function HomePage() {
           prevIndex === 0 ? imagePairs.length - 1 : prevIndex - 1
         );
         setIsAnimating(false);
-        setRefreshNetwork(prev => prev + 1);
+       
       }, 500);
     }
   };
@@ -73,7 +72,7 @@ export default function HomePage() {
           setCurrentIndex((prevIndex) => (prevIndex + 1) % imagePairs.length);
         }
         setIsAnimating(false);
-        setRefreshNetwork(prev => prev + 1);
+        
       }, 500);
     }
   };
@@ -184,7 +183,6 @@ export default function HomePage() {
                         }}
                       />
                     </div>
-                    {!isAnimating && <NetworkOverlay key={`network-${refreshNetwork}-${i}`} />}
                   </motion.div>
                 )
               ))}
@@ -313,7 +311,6 @@ export default function HomePage() {
                       }}
                     />
                   </div>
-                  {!isAnimating && <NetworkOverlay key={`network-${refreshNetwork}-${i}`} />}
                 </motion.div>
               ))}
             </AnimatePresence>

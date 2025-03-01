@@ -36,7 +36,7 @@ export default function NavigationBar() {
     { label: "Services", path: "/services", isDropdown: true },
     { label: "Company", path: "" },
     { label: "Contact Us", path: "/contactUsPage" },
-    { label: "Careers", path: "" },
+    { label: "Careers", path: "/career" },
     { label: "Other Services", path: "/otherServices", isDropdown2: true },
     { label: "Our Locations", path: "/our-locations" },
   ];

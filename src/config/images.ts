@@ -164,3 +164,7 @@ export const readMoreImage1: string = "/images/readMore/CleaningIndustryRegulati
 export const readMoreImage2: string = "/images/readMore/HygienePublicSpaces.png"; 
 export const readMoreImage3: string = "/images/readMore/CleaningHospitality.png"; 
 export const readMoreImage4: string = "/images/readMore/RoboticsCleaning.png";    
+
+
+//Career Page
+export const careerImage1: string = "/images/career/careerImage1.png";
