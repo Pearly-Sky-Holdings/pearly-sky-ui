@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { saveServices } from "../../../services/CleaningServices/saveRegulrService";
+import { saveServices } from "../../../services/CleaningServices/saveService";
 
 interface PackageDetail {
   package_id: number;

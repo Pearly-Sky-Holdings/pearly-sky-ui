@@ -26,7 +26,7 @@ const VideoFrame = ({ videoItems }: VideoFrameProps) => {
       {videoItems.slice(0, 2).map((item, index) => (
         <div
           key={index}
-          className="w-1/2 h-[400px] rounded-2xl overflow-hidden shadow-lg transform transition-transform hover:scale-105"
+          className="w-1/2 h-[400px] rounded-2xl overflow-hidden shadow-lg transform transition-transform "
         >
           <video
             ref={(el) => {

@@ -38,9 +38,10 @@ function RegularBasicCleaningPage() {
   const packages = useSelector((state: any) => state.packagesSlice.package);
   const services = useSelector((state: any) => state.servicesSlice.service);
   const [selectedServices, setSelectedServices] = useState<selectService[]>([]);
-  const [ovenQty, setOvenQty] = useState("1");
+  
   const [showTermsCard, setShowTermsCard] = useState(false);
   const [fridgeQty, setFridgeQty] = useState("1");
+  const [ovenQty, setOvenQty] = useState("1");
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
   const [propertySize, setPropertySize] = useState("");
@@ -197,9 +198,10 @@ function RegularBasicCleaningPage() {
         basePrice: priceBreakdown.basePrice / conversionRate,
         currencySymbol,
         selectedCurrency,
+        conversionRate,
       },
     };
-    console.log("Service Details:", serviceDetails);
+    console.log("Service Details:", data);
     navigate("/checkout", { state: { data } });
   };
 
@@ -238,7 +240,7 @@ function RegularBasicCleaningPage() {
               <CurrencyConverter
                 basePrice={parseFloat(services.data.price)}
                 onCurrencyChange={handleCurrencyUpdate}
-                initialCurrency="USD"
+                initialCurrency="EUR"
               />
             </div>
           </div>

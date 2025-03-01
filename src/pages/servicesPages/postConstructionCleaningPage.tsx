@@ -186,6 +186,7 @@ function PostConstructionCleaningPage() {
         basePrice: priceBreakdown.basePrice / conversionRate,
         currencySymbol,
         selectedCurrency,
+        conversionRate,
       },
     };
     console.log("Service Details:", serviceDetails);
@@ -268,7 +269,7 @@ function PostConstructionCleaningPage() {
               <CurrencyConverter
                 basePrice={parseFloat(services.data.price)}
                 onCurrencyChange={handleCurrencyUpdate}
-                initialCurrency="USD"
+                initialCurrency="EUR"
               />
             </div>
           </div>

@@ -16,9 +16,10 @@ import {
 import dayjs from "dayjs";
 
 import {
-  MoveInAndOutService1,
+
   elderCareVideo,
   elderCareVideo2,
+  elderCareImage1
 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart2 from "../../components/bookingSectionChildAndElderCart/bookingSectionCart2";
@@ -98,7 +99,7 @@ function ElderCareCleaningPage() {
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col sm:flex-row gap-4 sm:gap-8">
         <div className="w-full sm:w-1/3">
           <img
-            src={MoveInAndOutService1}
+            src={elderCareImage1}
             alt="Cleaning Service"
             className="rounded-lg w-full h-auto"
           />
