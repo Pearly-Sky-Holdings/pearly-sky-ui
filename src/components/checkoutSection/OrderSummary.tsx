@@ -26,7 +26,6 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
   selectedEquipments = [],
   basePrice = 27.0,
   currencySymbol = "$",
-  selectedCurrency = "USD",
 }) => {
   const [coupon, setCoupon] = React.useState("");
   const [discount, setDiscount] = React.useState(0);

@@ -1,18 +1,13 @@
-import React from "react";
 import {
   Grid,
   Typography,
   Container,
   Box,
-  Button,
   Paper,
   IconButton,
-  Divider,
 } from "@mui/material";
-import { Link } from "react-router-dom";
 import CleaningServiceCard from "../../components/ServiceCard/CleaningServiceCard";
 import {
-  chooseClening1,
   chooseClening2,
   chooseClening3,
   chooseClening4,

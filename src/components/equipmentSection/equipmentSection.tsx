@@ -41,7 +41,6 @@ const EquipmentSection: React.FC<EquipmentSectionProps> = ({
   onSolventChange,
   onEquipmentOptionChange,
   onEquipmentSelect,
-  selectedCurrency = "EUR",
   currencySymbol = "€",
   conversionRate = 1,
 }) => {
