@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchItems } from '../../store/slice/CleaningServices/itemsSlice';
 import { RootState, AppDispatch } from '../../store';
 
-// Define Item interface based on your actual data structure
+//  Item interface 
 interface Item {
   id: number;
   name: string;
@@ -12,7 +12,7 @@ interface Item {
   updated_at: string;
 }
 
-// Define structure for grouped items
+// grouped items
 interface GroupedItems {
   [key: string]: Item[];
 }
@@ -20,15 +20,14 @@ interface GroupedItems {
 const RestockingChecklist = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  // Access the nested data structure properly
+  
   const { 
     data = [], 
     isLoading = false, 
     errorMessage = null 
   } = useSelector((state: RootState) => state.itemsSlice.items);
 
-  useEffect(() => {
-    // Now fetchItems is a proper thunk action creator
+  useEffect(() => {   
     dispatch(fetchItems());
   }, [dispatch]);
 
@@ -40,7 +39,7 @@ const RestockingChecklist = () => {
     return <p>Error: {errorMessage}</p>;
   }
 
-  // Check if data is available before reducing
+  
   if (!data || data.length === 0) {
     return <p>No items found.</p>;
   }

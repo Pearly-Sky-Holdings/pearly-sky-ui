@@ -93,7 +93,7 @@ const EquipmentSection: React.FC<EquipmentSectionProps> = ({
           equipmentsDetails.find((e) => e.id === "cleaning-solvent") || {
             id: "cleaning-solvent",
             name: "Cleaning Solvent",
-            price: 15.99,
+            price: 11.00,
             image: "",
           },
           true
@@ -105,7 +105,7 @@ const EquipmentSection: React.FC<EquipmentSectionProps> = ({
         equipmentsDetails.find((e) => e.id === "cleaning-solvent") || {
           id: "cleaning-solvent",
           name: "Cleaning Solvent",
-          price: 15.99,
+          price: 11.00,
           image: "",
         },
         false

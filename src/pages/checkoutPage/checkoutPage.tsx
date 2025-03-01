@@ -10,7 +10,7 @@ import store from "../../store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BillingDetailsForm from "../../components/checkoutSection/BillingDetailsForm";
-import { saveServices } from "../../services/CleaningServices/saveRegulrService";
+import { saveServices } from "../../services/CleaningServices/saveService";
 import { useLocation, useNavigate } from "react-router-dom";
 import OrderSummary from "../../components/checkoutSection/OrderSummary";
 import PaymentMethod from "../../components/checkoutSection/PaymentMethod";
@@ -75,7 +75,7 @@ const CheckoutPage = () => {
       data.serviceName == "Post Construction" ||
       data.serviceName == "Airbnb And Short Term Rental Cleaning"
     ) {
-      const regularBasicServiceData = {
+      const ServiceData = {
         customer: formData,
         service_id: data.details.service_id,
         price: parseInt(data.details.price),
@@ -95,10 +95,13 @@ const CheckoutPage = () => {
       };
 
       setSaveLoader(true);
-      dispatch(saveServices(regularBasicServiceData));
+      dispatch(saveServices(ServiceData));
       console.log("Data", data);
       console.log("Data", _handlePlaceOrder);
-    }  else if (data.serviceName == "Child Care" || data.serviceName == "Elder Care") {
+    } else if (
+      data.serviceName == "Child Care" ||
+      data.serviceName == "Elder Care"
+    ) {
       const childCareServiceData = {
         customer: formData,
         service_id: data.details.service_id,
@@ -109,7 +112,7 @@ const CheckoutPage = () => {
         frequency: data.details.frequency,
         note: data.details.note,
         language: data.details.language,
-        number_of_count : data.details.number_of_count,
+        number_of_count: data.details.number_of_count,
         request_care_professional: data.details.request_care_professional,
         service_providing_place: data.details.service_providing_place,
         special_request: data.details.special_request,
@@ -129,7 +132,6 @@ const CheckoutPage = () => {
         !saveRegularServiceData.isLoading
       ) {
         if (saveRegularServiceData.data.status === "success") {
-          console.log("Saved Successfully");
           setShowSuccess(true);
           setTimeout(() => {
             navigate("/regular-basic-cleaning", {
@@ -147,7 +149,6 @@ const CheckoutPage = () => {
         !saveRegularServiceData.isSuccess &&
         !saveRegularServiceData.isLoading
       ) {
-        console.log("Error", saveRegularServiceData.errorMessage);
         setSaveLoader(false);
       }
     }
@@ -158,7 +159,6 @@ const CheckoutPage = () => {
     if (saveLoader) {
       if (oneTimeServiceData.isSuccess && !oneTimeServiceData.isLoading) {
         if (saveRegularServiceData.data.status === "success") {
-          console.log("Saved Successfully");
           setShowSuccess(true);
           setTimeout(() => {
             navigate("/one-time-cleaning", {
@@ -199,7 +199,6 @@ const CheckoutPage = () => {
           }, 2000);
           setSaveLoader(false);
         } else {
-          console.log("Error", saveLastMinuteServiceData.data.message);
           setErrorMessage(saveLastMinuteServiceData.data.message);
           setShowError(true);
           setSaveLoader(false);
@@ -394,6 +393,8 @@ const CheckoutPage = () => {
               basePrice={data?.orderSummary?.basePrice || 0}
               currencySymbol={data?.orderSummary?.currencySymbol || "$"}
               selectedCurrency={data?.orderSummary?.selectedCurrency || "USD"}
+              conversionRate={data?.orderSummary?.conversionRate || 1}
+              serviceName={data?.serviceName || "Base Service"}
             />
           </div>
           <PaymentMethod />
@@ -422,6 +423,7 @@ const CheckoutPage = () => {
         open={showSuccess}
         autoHideDuration={6000}
         onClose={() => setShowSuccess(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Alert severity="success" onClose={() => setShowSuccess(false)}>
           Order placed successfully!
