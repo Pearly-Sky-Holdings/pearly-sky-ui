@@ -19,6 +19,8 @@ interface OrderSummaryProps {
   basePrice: number;
   currencySymbol: string;
   selectedCurrency: string;
+  conversionRate: number;
+  serviceName: string;
 }
 
 const OrderSummary: React.FC<OrderSummaryProps> = ({
@@ -26,7 +28,8 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
   selectedEquipments = [],
   basePrice = 27.0,
   currencySymbol = "$",
-  selectedCurrency = "USD",
+  conversionRate = 1,
+  serviceName = "Base Service",
 }) => {
   const [coupon, setCoupon] = React.useState("");
   const [discount, setDiscount] = React.useState(0);
@@ -40,9 +43,9 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
     }
   };
 
-  const subtotal = basePrice + 
-    selectedServices.reduce((sum, service) => sum + service.price * (service.qty || 1), 0) +
-    selectedEquipments.reduce((sum, equipment) => sum + equipment.price, 0);
+  const subtotal = basePrice * conversionRate + 
+    selectedServices.reduce((sum, service) => sum + service.price * (service.qty || 1)* conversionRate, 0) +
+    selectedEquipments.reduce((sum, equipment) => sum + equipment.price * conversionRate, 0);
   
   const total = subtotal - discount;
 
@@ -64,7 +67,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
           marginBottom: "16px",
         }}
       >
-        <Typography fontWeight="bold">Regular Basic Cleaning</Typography>
+        <Typography fontWeight="bold">{serviceName}</Typography>
         <Typography>{currencySymbol} {basePrice.toFixed(2)}</Typography>
       </Box>
 
@@ -85,7 +88,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
           <Typography>
             {service.name || `Service #${service.package_id}`} {service.qty > 1 ? `× ${service.qty}` : ''}
           </Typography>
-          <Typography>{currencySymbol} {(service.price * (service.qty || 1)).toFixed(2)}</Typography>
+          <Typography>{currencySymbol} {(service.price * (service.qty || 1) * conversionRate).toFixed(2)}</Typography>
         </Box>
       ))}
 
@@ -104,7 +107,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
           }}
         >
           <Typography>{equipment.name || `Equipment #${equipment.id}`}</Typography>
-          <Typography>{currencySymbol} {equipment.price.toFixed(2)}</Typography>
+          <Typography>{currencySymbol} {(equipment.price * conversionRate).toFixed(2)}</Typography>
         </Box>
       ))}
 

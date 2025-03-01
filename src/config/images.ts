@@ -168,3 +168,7 @@ export const readMoreImage4: string = "/images/readMore/RoboticsCleaning.png";
 
 //Career Page
 export const careerImage1: string = "/images/career/careerImage1.png";
+
+// child care & elder care
+export const childCareImage1: string = "/images/service/childAndElder/ChildCare.png";
+export const elderCareImage1: string = "/images/service/childAndElder/ElderCare.png";
