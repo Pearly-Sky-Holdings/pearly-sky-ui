@@ -9,6 +9,7 @@ import { Button } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import PhoneIcon from "@mui/icons-material/Phone";
 import { useNavigate } from "react-router-dom";
+import FooterNav from "../../components/footerNav/footerNav.tsx";
 
 import {
   companyLogo,
@@ -129,115 +130,10 @@ const Footer = () => {
               to keep your space spotless.
             </Typography>
           </Box>
-
-          {/* Home */}
-          <Box
-            sx={{
-              marginLeft: { xs: 0, md: 2 },
-              display: "flex",
-              flexDirection: "column",
-              alignItems: { xs: "center", md: "flex-start" },
-            }}
-          >
-            <Typography
-              variant="h6"
-              sx={{
-                mb: 2,
-                fontWeight: "bold",
-                textAlign: { xs: "center", md: "left" },
-              }}
-            >
-              Home
-            </Typography>
-            <Stack spacing={2} alignItems={{ xs: "center", md: "flex-start" }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: { xs: "center", md: "flex-start" },
-                }}
-              >
-                <Typography
-                  variant="body1"
-                  sx={{
-                    cursor: "pointer",
-                    "&:hover": { opacity: 0.8 },
-                  }}
-                >
-                  Services
-                </Typography>
-                <KeyboardArrowDownIcon sx={{ ml: 0.5 }} />
-              </Box>
-              <Typography
-                variant="body1"
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.8 },
-                  textAlign: { xs: "center", md: "left" },
-                }}
-              >
-                Company
-              </Typography>
-              <Typography
-                variant="body1"
-                component="a"
-                href="/contactUsPage"
-                onClick={(e) => handleNavigation(e, '/contactUsPage')}
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.8 },
-                  textAlign: { xs: "center", md: "left" },
-                  textDecoration: "none",
-                  color: "inherit"
-                }}
-              >
-                Contact Us
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.8 },
-                  textAlign: { xs: "center", md: "left" },
-                }}
-              >
-                Careers
-              </Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: { xs: "center", md: "flex-start" },
-                }}
-              >
-                <Typography
-                  variant="body1"
-                  sx={{
-                    cursor: "pointer",
-                    "&:hover": { opacity: 0.8 },
-                  }}
-                >
-                  Other Services
-                </Typography>
-                <KeyboardArrowDownIcon sx={{ ml: 0.5 }} />
-              </Box>
-              <Typography
-                component="a"
-                href="/our-locations"
-                onClick={(e) => handleNavigation(e, '/our-locations')}
-                variant="body1"
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.8 },
-                  textAlign: { xs: "center", md: "left" },
-                  textDecoration: "none",
-                  color: "inherit"
-                }}
-              >
-                Our Location
-              </Typography>
-            </Stack>
-          </Box>
-
+          
+          {/* Footer NavigationBar */}
+          <FooterNav/>
+                    
           {/* QR Code and Social Media */}
           <Box
             sx={{
