@@ -176,7 +176,7 @@ const OurSector = () => {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
-                  padding: { xs: 2, sm: 3 },
+                  padding: { xs: 1, sm: 2, },
                 }}
               >
                 <Typography
@@ -185,7 +185,7 @@ const OurSector = () => {
                     fontWeight: "bold",
                     color: "#0D47A1",
                     textAlign: "center",
-                    mb: 2,
+                    mb: 0,
                   }}
                 >
                   {sector.title}

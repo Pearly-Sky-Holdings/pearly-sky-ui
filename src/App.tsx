@@ -19,7 +19,6 @@ import CleanServices from "./pages/cleanServices/cleanServices";
 import CircularProgress from "@mui/material/CircularProgress";
 import LoginPage from "./pages/loginPage/looginPage.tsx";
 import CheckoutPage from "./pages/checkoutPage/checkoutPage.tsx";
-import WhatsAppButton from "./components/whatsAppButton/whatsAppButton";
 import RegularBasicCleaning from "./pages/servicesPages/regularbasicCleaningPage.tsx";
 import OneTimeCleaning from "./pages/servicesPages/oneTimeCleaningPage.tsx";
 import LastMinuteCleaningPage from "./pages/servicesPages/lastMinuteCleaningPage.tsx";
@@ -83,7 +82,7 @@ function App() {
       <Router>
         <TopBar />
         <NavigationBar />
-        <WhatsAppButton phoneNumber="94123456789" />
+        
         <Routes>
           {/* Main one-page scrollable site */}
           <Route

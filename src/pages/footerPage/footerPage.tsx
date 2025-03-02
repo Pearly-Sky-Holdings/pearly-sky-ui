@@ -5,6 +5,9 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { Button } from "@mui/material";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import PhoneIcon from "@mui/icons-material/Phone";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -358,6 +361,63 @@ const Footer = () => {
             >
               Scan the QR code or visit us at iOS App Store or Google Play Store
             </Typography>
+
+            <Stack
+              direction="row"
+              spacing={2}
+              justifyContent={{ xs: "center", md: "flex-start" }}
+              sx={{ width: "100%" }}
+            >
+                {/* Contact Now Button */}
+                <Button
+                  variant="outlined"
+                  href="https://wa.me/phone-number"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    color: "white",
+                    borderColor: "white",
+                    borderRadius: "30px",
+                    padding: "0.5rem 0.5rem",
+                    fontSize: "0.6rem",
+                    textTransform: "none",
+                    "&:hover": {
+                      backgroundColor: "white",
+                      color: "#0A285F",
+                    },
+                  }}
+                >
+                  <WhatsAppIcon fontSize="small" />
+                  <span>Contact Now</span>
+                </Button>
+
+                {/* Hotline Button */}
+                <Button
+                  variant="outlined"
+                  href="tel:phone-number"
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    color: "white",
+                    borderColor: "white",
+                    borderRadius: "30px",
+                    padding: "0.5rem 0.5rem",
+                    fontSize: "0.6rem",
+                    textTransform: "none",
+                    "&:hover": {
+                      backgroundColor: "white",
+                      color: "#0A285F",
+                    },
+                  }}
+                >
+                  <PhoneIcon fontSize="small" />
+                  <span>Hotline</span>
+                </Button>
+              </Stack>
           </Box>
 
           {/* QR Code */}
