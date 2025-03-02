@@ -11,15 +11,13 @@ import {
   ArrowBack as ArrowBackIcon, 
   ArrowForward as ArrowForwardIcon 
 } from '@mui/icons-material';
-import { OurShowcase1, OurShowcase2, OurShowcase3, OurShowcase6,OurShowcase7,OurShowcase8} from "../../config/images";
+import { OurShowcase1, OurShowcase2, OurShowcase3, OurShowcase4} from "../../config/images";
 
 const showcaseImages = [
   OurShowcase1,
   OurShowcase2,
   OurShowcase3,
-  OurShowcase6,
-  OurShowcase7,
-  OurShowcase8
+  OurShowcase4,
 ];
 
 const WorkShowcase = () => {

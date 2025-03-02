@@ -673,7 +673,7 @@ const BookingSectionCart: React.FC<BookingSectionCartProps> = ({
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Dropdown
-          label="Contact Gender"
+          label="Cleaners Gender"
           value={contactType}
           options={contactTypeOptions}
           onChange={setContactType}

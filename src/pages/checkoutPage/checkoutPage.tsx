@@ -78,7 +78,7 @@ const CheckoutPage = () => {
       const ServiceData = {
         customer: formData,
         service_id: data.details.service_id,
-        price: parseInt(data.details.price),
+        price: data.details.price,
         date: data.details.date,
         time: data.details.time,
         property_size: data.details.property_size,
@@ -105,7 +105,7 @@ const CheckoutPage = () => {
       const childCareServiceData = {
         customer: formData,
         service_id: data.details.service_id,
-        price: parseInt(data.details.price),
+        price: data.details.price,
         date: data.details.date,
         time: data.details.time,
         duration: data.details.duration,
@@ -395,6 +395,7 @@ const CheckoutPage = () => {
               selectedCurrency={data?.orderSummary?.selectedCurrency || "USD"}
               conversionRate={data?.orderSummary?.conversionRate || 1}
               serviceName={data?.serviceName || "Base Service"}
+              totalPrice={data?.orderSummary?.totalPrice || 0}
             />
           </div>
           <PaymentMethod />

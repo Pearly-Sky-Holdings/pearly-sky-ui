@@ -68,7 +68,7 @@ function AirbnbAndShortService() {
     hourlyRate: parseInt(services.data.price),
     equipmentCosts: 0,
     serviceCosts: 0,
-    totalPrice: 27.0,
+    totalPrice: parseInt(services.data.price),
     basePrice: parseInt(services.data.price),
   });
 
@@ -123,7 +123,7 @@ function AirbnbAndShortService() {
 
   const calculateTotalPrice = () => {
     // Calculate base price based on hourly rate and maxTime
-    const hourlyRate = parseInt(services.data.price); // Base price for 1 hour
+    const hourlyRate = parseInt(services.data.price,10); // Base price for 1 hour
     const basePrice = hourlyRate * maxTime * conversionRate;
     let serviceCosts = 0;
     let equipmentCosts = 0;
@@ -207,7 +207,8 @@ function AirbnbAndShortService() {
       orderSummary: {
         selectedServices,
         selectedEquipments,
-        basePrice: priceBreakdown.basePrice / conversionRate,
+        basePrice: priceBreakdown.basePrice,
+        totalPrice: priceBreakdown.totalPrice,
         currencySymbol,
         selectedCurrency,
         conversionRate,

@@ -73,7 +73,7 @@ function PostConstructionCleaningPage() {
     hourlyRate: parseInt(services.data.price),
     serviceCosts: 0,
     equipmentCosts: 0,
-    totalPrice: 27.0,
+    totalPrice:  parseInt(services.data.price),
     basePrice: parseInt(services.data.price),
   });
 
@@ -100,7 +100,7 @@ function PostConstructionCleaningPage() {
   }, []);
   const calculateTotalPrice = () => {
     // Calculate base price based on hourly rate and maxTime
-    const hourlyRate = parseInt(services.data.price);
+    const hourlyRate = parseInt(services.data.price,10);
     const basePrice = hourlyRate * maxTime * conversionRate;
     let serviceCosts = 0;
     let equipmentCosts = 0;
@@ -183,13 +183,14 @@ function PostConstructionCleaningPage() {
       details: serviceDetails,
       orderSummary: {
         selectedEquipments,
-        basePrice: priceBreakdown.basePrice / conversionRate,
+        basePrice: priceBreakdown.basePrice,
+        totalPrice: priceBreakdown.totalPrice,
         currencySymbol,
         selectedCurrency,
         conversionRate,
       },
     };
-    console.log("Service Details:", serviceDetails);
+    console.log("Data:", data);
     navigate("/checkout", { state: { data } });
   };
 

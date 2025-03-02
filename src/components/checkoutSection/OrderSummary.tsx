@@ -21,15 +21,17 @@ interface OrderSummaryProps {
   selectedCurrency: string;
   conversionRate: number;
   serviceName: string;
+  totalPrice: number;
 }
 
 const OrderSummary: React.FC<OrderSummaryProps> = ({
   selectedServices = [],
   selectedEquipments = [],
-  basePrice = 27.0,
+  basePrice = 0.0,
   currencySymbol = "$",
   conversionRate = 1,
   serviceName = "Base Service",
+  totalPrice = 0.0,
 }) => {
   const [coupon, setCoupon] = React.useState("");
   const [discount, setDiscount] = React.useState(0);
@@ -43,11 +45,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
     }
   };
 
-  const subtotal = basePrice * conversionRate + 
-    selectedServices.reduce((sum, service) => sum + service.price * (service.qty || 1)* conversionRate, 0) +
-    selectedEquipments.reduce((sum, equipment) => sum + equipment.price * conversionRate, 0);
-  
-  const total = subtotal - discount;
+  const total = totalPrice - discount;
 
   return (
     <Paper sx={{ padding: "24px", borderRadius: "12px", backgroundColor: "#F7F8FC" }}>
@@ -113,7 +111,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
 
       <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: "16px", marginBottom: "8px" }}>
         <Typography color="gray">Subtotal:</Typography>
-        <Typography fontWeight="bold">{currencySymbol} {subtotal.toFixed(2)}</Typography>
+        <Typography fontWeight="bold">{currencySymbol} {totalPrice.toFixed(2)}</Typography>
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
