@@ -1,55 +1,35 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { getRestockList } from "../../../services/CleaningServices/index";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
+// Define async thunk for fetching items
+export const fetchItems = createAsyncThunk("items/fetchItems", async () => {
+  const response = await axios.get("/api/items"); 
+  return response.data;
+});
 
-interface Item {
-  id: number;
-  name: string;
-  category: string;
-  created_at: string;
-  updated_at: string;
-}
-
-interface ItemsState {
-    items:{
-        data: Item[];
-        isLoading: boolean;
-        isSuccess: boolean;
-        errorMessage: string;
-    }  
-}
-
-const initialState: ItemsState = {
-    items:{
-        data: [],
-        isLoading: false,
-        isSuccess: false,
-        errorMessage: "",
-    }
-  
-};
-
-export const itemsSlice = createSlice({
-  name: 'items',
-  initialState,
+const itemsSlice = createSlice({
+  name: "items",
+  initialState: {
+    items: {
+      data: [],
+      isLoading: false,
+      errorMessage: null as string | null,
+    },
+  },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getRestockList.pending, (state) => {
+      .addCase(fetchItems.pending, (state) => {
         state.items.isLoading = true;
-        state.items.isSuccess = false;
-        state.items.errorMessage = "";
       })
-      .addCase(getRestockList.fulfilled, (state, { payload }) => {
-              state.items.isLoading = false;
-              state.items.isSuccess = true;
-              state.items.data = payload;
-            })
-            .addCase(getRestockList.rejected, (state, { payload }) => {
-              state.items.isLoading = false;
-              state.items.isSuccess = false;
-              state.items.errorMessage = payload as string;
-            });
+      .addCase(fetchItems.fulfilled, (state, action) => {
+        state.items.isLoading = false;
+        state.items.data = action.payload;
+      })
+      .addCase(fetchItems.rejected, (state, action) => {
+        state.items.isLoading = false;
+        state.items.errorMessage = action.error.message || "Failed to fetch";
+      });
   },
 });
 

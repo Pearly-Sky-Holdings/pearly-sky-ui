@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchItems } from '../../store/slice/CleaningServices/itemsSlice';
-import { RootState, AppDispatch } from '../../store';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchItems } from "../../store/slice/CleaningServices/itemsSlice";
+import type { RootState, AppDispatch } from "../../store";
 
-//  Item interface 
+// Item interface
 interface Item {
   id: number;
   name: string;
@@ -12,7 +12,7 @@ interface Item {
   updated_at: string;
 }
 
-// grouped items
+// Grouped items
 interface GroupedItems {
   [key: string]: Item[];
 }
@@ -20,15 +20,12 @@ interface GroupedItems {
 const RestockingChecklist = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  
-  const { 
-    data = [], 
-    isLoading = false, 
-    errorMessage = null 
-  } = useSelector((state: RootState) => state.itemsSlice.items);
+  const { data = [], isLoading = false, errorMessage = null } = useSelector(
+    (state: RootState) => state.itemsSlice.items
+  );
 
-  useEffect(() => {   
-    dispatch(fetchItems());
+  useEffect(() => {
+    dispatch(fetchItems()); // This will now work correctly
   }, [dispatch]);
 
   if (isLoading) {
@@ -39,22 +36,24 @@ const RestockingChecklist = () => {
     return <p>Error: {errorMessage}</p>;
   }
 
-  
   if (!data || data.length === 0) {
     return <p>No items found.</p>;
   }
 
   // Group the items by category
-  const groupedItems: GroupedItems = data.reduce((acc: GroupedItems, item: Item) => {
-    const category = item.category || 'Uncategorized';
-    
-    if (!acc[category]) {
-      acc[category] = [];
-    }
-    
-    acc[category].push(item);
-    return acc;
-  }, {} as GroupedItems);
+  const groupedItems: GroupedItems = data.reduce(
+    (acc: GroupedItems, item: Item) => {
+      const category = item.category || "Uncategorized";
+
+      if (!acc[category]) {
+        acc[category] = [];
+      }
+
+      acc[category].push(item);
+      return acc;
+    },
+    {} as GroupedItems
+  );
 
   return (
     <div>
