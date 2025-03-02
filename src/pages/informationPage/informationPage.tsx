@@ -5,14 +5,14 @@ const InformationPage: React.FC = () => {
   return (
     <div className="bg-[#0A285F] min-h-screen p-6">
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 m-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 m-5" >
         {/*Image */}
-        <div className="mt-5">
+        <div className="flex justify-center items-center">
           <img
-            src={inforImage}
-            alt="Company Info"
-            className="w-full rounded-lg shadow-lg"
-          />
+          src={inforImage}
+          alt="Company Info"
+          className="w-full h-100  object-cover rounded-lg shadow-lg "
+        />
         </div>
 
         {/*Details */}
