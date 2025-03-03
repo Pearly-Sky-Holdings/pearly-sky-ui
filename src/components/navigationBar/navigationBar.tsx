@@ -39,6 +39,7 @@ export default function NavigationBar() {
     { label: "Careers", path: "/career" },
     { label: "Other Services", path: "/otherServices", isDropdown2: true },
     { label: "Our Locations", path: "/our-locations" },
+    { label: "Login", path: "/login" },
   ];
 
   const serviceDropdownItems = [

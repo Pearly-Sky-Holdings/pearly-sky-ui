@@ -1,206 +1,162 @@
-import React, { useState } from "react";
-import {
-  Container,
-  Grid,
-  Box,
-  TextField,
-  Button,
-  Typography,
-  Checkbox,
-  FormControlLabel,
-  Paper,
-  InputAdornment,
-} from "@mui/material";
-import { AccountCircle, Lock } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom"; 
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { User, Lock } from 'lucide-react';
 
-const LoginPage = () => {
-  const navigate = useNavigate(); 
-
+const Login: React.FC = () => {
+  const navigate = useNavigate();
+  
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
     rememberMe: false,
   });
-  const [errors, setErrors] = useState({ email: "", password: "" });
+  
+  const [errors, setErrors] = useState({
+    email: '',
+    password: '',
+  });
 
- 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
-  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     let valid = true;
-    let newErrors = { email: "", password: "" };
+    let newErrors = { email: '', password: '' };
 
     if (!formData.email) {
-      newErrors.email = "Email is required";
+      newErrors.email = 'Email is required';
       valid = false;
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Invalid email format";
+      newErrors.email = 'Invalid email format';
       valid = false;
     }
 
     if (!formData.password) {
-      newErrors.password = "Password is required";
+      newErrors.password = 'Password is required';
       valid = false;
     } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
+      newErrors.password = 'Password must be at least 6 characters';
       valid = false;
     }
 
     setErrors(newErrors);
 
     if (valid) {
-      console.log("Login Successful", formData);
-      navigate("/dashboard"); 
+      console.log('Login Successful', formData);
+      navigate('/customer-dashboard');
     }
   };
 
   return (
-    <Box sx={{ minHeight: "100vh", display: "flex", alignItems: "center",  }}>
-      <Container maxWidth="xl">
-        <Grid container justifyContent="center">
-          <Grid item xs={12} md={8} lg={6}>
-            <Paper elevation={6} sx={{ display: "flex", overflow: "hidden", borderRadius: 3, height: "auto" }}>
-             
-              <Box
-                sx={{
-                  flex: 1,
-                  display: { xs: "none", md: "block" },
-                  width: "50%",
-                  minWidth: "300px",
-                  backgroundImage: 'url("/images/uiContactUs/ContactUs.png")',
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              />
-
-              
-              <Box sx={{ flex: 1, p: 4, backgroundColor: "#002F6D", width: "auto", height: "auto",justifyItems:'center'}}>
-                
-                <Box sx={{ textAlign: "center", mb: 2 }}>
-                  <img src="/images/logo.png" alt="Logo" style={{ width: 100, height: "auto" }} />
-                </Box>
-
-                <Typography variant="h5" fontWeight="semibold" align="center" color="white" gutterBottom>
-                  Login
-                </Typography>
-
-                <form onSubmit={handleSubmit} style={{ width: "100%" }}>
-                  
-                  <TextField
-                    fullWidth
-                    placeholder="Username"
-                    variant="outlined"
-                    margin="normal"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    error={!!errors.email}
-                    helperText={errors.email}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <AccountCircle sx={{ color: "#888" }} />
-                        </InputAdornment>
-                      ),
-                      sx: { borderRadius: "12px", backgroundColor: "#f5f5f5", height: "40px" },
-                    }}
-                  />
-
-                  
-                  <TextField
-                    fullWidth
-                    placeholder="Password"
-                    variant="outlined"
-                    type="password"
-                    margin="normal"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    error={!!errors.password}
-                    helperText={errors.password}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <Lock sx={{ color: "#888" }} />
-                        </InputAdornment>
-                      ),
-                      sx: { borderRadius: "12px", backgroundColor: "#f5f5f5", height: "40px" },
-                    }}
-                  />
-
-                 
-                      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 5, gap: 2 }}>
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              name="rememberMe"
-                              checked={formData.rememberMe}
-                              onChange={handleChange}
-                              color="primary"
-                            />
-                          }
-                          label="Remember me"
-                          sx={{ whiteSpace: "nowrap", flexShrink: 0 ,color:'white'}}
-                        />
-                        <Typography
-                          variant="body2"
-                          color="white"
-                          sx={{
-                            cursor: "pointer",
-                            fontWeight: "semibold",
-                            whiteSpace: "nowrap",
-                            flexShrink: 0,
-                          }}
-                        >
-                          Forgot Password?
-                        </Typography>
-                      </Box>
-
-                  
-
-                  
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    fullWidth
-                    sx={{
-                      fontSize: "12px",
-                      fontWeight: "bold",
-                      backgroundColor: "white",
-                      color: "#002F6D",
-                      padding: "8px 8px",
-                      width: "100%",
-                      borderRadius: "12px",
-                      "&:hover": { backgroundColor: "#008CDA" },
-                    }}
-                  >
-                    Login
-                  </Button>
-
-                 
-                  <Typography variant="body2" textAlign="center" sx={{ mt: 2, color: "white" }}>
-                    Don't have an account?{" "}
-                    <Typography component="span" color="white" sx={{ cursor: "pointer", fontWeight: "semibold" }}>
-                      Signup
-                    </Typography>
-                  </Typography>
-                </form>
-              </Box>
-            </Paper>
-          </Grid>
-        </Grid>
-      </Container>
-    </Box>
+    <div className="min-h-screen bg-gradient-to-br flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl w-full flex overflow-hidden rounded-xl shadow-2xl">
+        {/* Left side - Image */}
+        <div className="hidden md:block w-1/2 bg-cover bg-center" 
+             style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80")' }}>
+        </div>
+        
+        {/* Right side - Login Form */}
+        <div className="w-full md:w-1/2 bg-blue-900 p-8">
+          <div className="text-center mb-6">
+            <div className="flex justify-center mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-16 h-16">
+                <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                <path d="M2 17l10 5 10-5" />
+                <path d="M2 12l10 5 10-5" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-white">Login</h2>
+            <p className="mt-2 text-sm text-blue-200">Enter your credentials to access the dashboard</p>
+          </div>
+          
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <User size={18} className="text-gray-500" />
+                </div>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Username"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="pl-10 pr-4 py-2 w-full rounded-xl bg-gray-100 border border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+              {errors.email && (
+                <p className="mt-1 text-xs text-red-300">{errors.email}</p>
+              )}
+            </div>
+            
+            <div>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Lock size={18} className="text-gray-500" />
+                </div>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="pl-10 pr-4 py-2 w-full rounded-xl bg-gray-100 border border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+              {errors.password && (
+                <p className="mt-1 text-xs text-red-300">{errors.password}</p>
+              )}
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <input
+                  id="remember-me"
+                  name="rememberMe"
+                  type="checkbox"
+                  checked={formData.rememberMe}
+                  onChange={handleChange}
+                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                />
+                <label htmlFor="remember-me" className="ml-2 block text-sm text-white">
+                  Remember me
+                </label>
+              </div>
+              <div className="text-sm">
+                <a href="#" className="font-medium text-blue-200 hover:text-white">
+                  Forgot Password?
+                </a>
+              </div>
+            </div>
+            
+            <div>
+              <button
+                type="submit"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-blue-900 bg-white hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+              >
+                Login
+              </button>
+            </div>
+            
+            <div className="text-center mt-6">
+              <p className="text-sm text-blue-200">
+                Don't have an account?{" "}
+                <a href="#" className="font-medium text-white hover:underline">
+                  Signup
+                </a>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default LoginPage;
+export default Login;

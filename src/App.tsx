@@ -34,6 +34,9 @@ import RoboticsCleaning from "./pages/cleanServices/roboticsCleaning.tsx";
 import CleaningHospitality from "./pages/cleanServices/cleaningHospitality.tsx";
 import HygienePublicSpaces from "./pages/cleanServices/hygienePublicSpace.tsx";
 import CareerPage from "./pages/careerPage/careerPage.tsx";
+import CustomerDashboard from "./pages/customerDashboard/customerDashboard.tsx";
+import MainLayout from "./layouts/MainLayout.tsx";
+
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -256,14 +259,26 @@ function App() {
               </>
             }
           />
+          
 
           <Route path="/login" element={<LoginPage />} />
 
           <Route path="/checkout" element={<CheckoutPage />} />
 
           <Route path="/upcomming" element={<UpdateComingSoon />} />
+          <Route
+            path="/customer-dashboard"
+            element={
+              <>
+                <MainLayout />
+                <CustomerDashboard />         
+              </>
+            }
+          />
         </Routes>
+        
       </Router>
+      
     </ThemeProvider>
   );
 }
