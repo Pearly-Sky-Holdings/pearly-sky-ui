@@ -8,25 +8,25 @@ const teamMembers = [
     name: "Mr Oshan Bandarar",
     title:"Operations Manager",
     image: teamExperts1,
-    email: "callcenter@company.com",
+    email: "oshanhb@pearlyskyplc.com",
   },
   {
     name: "Mrs Anusha Niroshini",
     title:"Sales Director",
     image: teamExperts2,
-    email: "callcenter@company.com",
+    email: "anushatan@pearlyskyplc.com",
   },
   {
     name: "Mr Nipuna Piyumal",
     title:"Administration Manager",
     image: teamExperts3,
-    email: "callcenter@company.com",
+    email: "nipunapiyumal@pearlyskyplc.com",
   },
   {
     name: "Mr Shakila Bandara",
     title:"Operations Manager",
     image: teamExperts4,
-    email: "callcenter@company.com",
+    email: "shakilaib@pearlyskyplc.com",
   },
 ];
 
