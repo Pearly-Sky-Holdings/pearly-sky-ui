@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { AccountCircle, Lock } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom"; 
+import { loginPageImage } from "../../config/images.ts";
 
 const LoginPage = () => {
   const navigate = useNavigate(); 
@@ -64,7 +65,7 @@ const LoginPage = () => {
   };
 
   return (
-    <Box sx={{ minHeight: "100vh", display: "flex", alignItems: "center",  }}>
+    <Box sx={{ minHeight: "80vh", display: "flex", alignItems: "center",  }}>
       <Container maxWidth="xl">
         <Grid container justifyContent="center">
           <Grid item xs={12} md={8} lg={6}>
@@ -76,7 +77,7 @@ const LoginPage = () => {
                   display: { xs: "none", md: "block" },
                   width: "50%",
                   minWidth: "300px",
-                  backgroundImage: 'url("/images/uiContactUs/ContactUs.png")',
+                  backgroundImage: `url(${loginPageImage})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}

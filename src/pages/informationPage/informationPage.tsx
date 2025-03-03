@@ -4,18 +4,19 @@ import { inforImage } from "../../config/images.ts";
 const InformationPage: React.FC = () => {
   return (
     <div className="bg-[#0A285F] min-h-screen p-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 m-5">
-        {/* Image */}
-        <div className="flex justify-center items-center">
+      {/* Modified grid with responsive padding */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 m-0 md:m-5">
+        {/* Image container with responsive padding */}
+        <div className="flex justify-center items-center px-0 md:px-4">
           <img
             src={inforImage}
             alt="Company Info"
-            className="w-[800px] h-[590px] object-cover rounded-lg shadow-lg" // Adjusted size
+            className="w-full md:w-[800px] h-auto md:h-[590px] object-cover rounded-lg shadow-lg"
           />
         </div>
 
         {/* Details */}
-        <div className="text-white p-6 rounded-lg ml-5">
+        <div className="text-white p-6 rounded-lg md:ml-5">
           <div className="space-y-6">
             <div className="flex flex-col items-start space-y-2">
               <img

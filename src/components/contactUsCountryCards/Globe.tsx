@@ -40,7 +40,7 @@ const Globe: React.FC = () => {
     // Animation
     const animate = () => {
       requestAnimationFrame(animate);
-      globe.rotation.y += 0.003;
+      globe.rotation.y += 0.001;
       renderer.render(scene, camera);
     };
 
@@ -68,7 +68,11 @@ const Globe: React.FC = () => {
     };
   }, []);
 
-  return <div ref={mountRef} style={{width: '100%', height: '100%', borderRadius: '12px' }} />;
+  return <div ref={mountRef} 
+  style={{
+    width: '100%', height: '145%', borderRadius: '12px', marginTop:'-15%',
+  
+  }} />;
 };
 
 export default Globe;

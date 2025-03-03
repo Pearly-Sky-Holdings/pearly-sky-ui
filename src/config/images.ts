@@ -177,3 +177,5 @@ export const elderCareImage1: string = "/images/service/childAndElder/ElderCare.
 
 // Terms and Conditions
 export const termsAndConditionsImage1: string = "/images/termAndConditions/termAndConditions.png";
+
+export const loginPageImage: string = "/images/loginPage/loginPageImage.png";

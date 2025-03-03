@@ -33,6 +33,7 @@ const QuantityControl: React.FC<QuantityControlProps> = ({
       <button 
         className="px-2 py-0.2   disabled:opacity-20 text-white bg-gray-700"
         onClick={decrement}
+        style={{backgroundColor:"#1c398e"}}
         disabled={currentQuantity <= min}
         type="button"
       >
@@ -42,6 +43,7 @@ const QuantityControl: React.FC<QuantityControlProps> = ({
       <button 
         className="px-1 py-0.5 transition-colors-hover disabled:opacity-20 text-white bg-gray-700"
         onClick={increment}
+        style={{backgroundColor:"#1c398e"}}
         disabled={currentQuantity >= max}
         type="button"
       >

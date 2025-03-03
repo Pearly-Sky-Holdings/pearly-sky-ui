@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Grid, Typography, Box } from "@mui/material";
+import { Container, Grid, Typography, Box, useMediaQuery, useTheme } from "@mui/material";
 import CountryCard from "../../components/contactUsCountryCards/contactUsCountryCards";
 import { contactImage1 } from "../../config/images.ts";
 import Globe from "../../components/contactUsCountryCards/Globe";
@@ -41,6 +41,9 @@ const emails = [
 ];
 
 const ContactUsPage: React.FC = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  
   const midPoint = Math.ceil(countries.length / 2);
   const leftColumnCountries = countries.slice(0, midPoint);
   const rightColumnCountries = countries.slice(midPoint);
@@ -76,10 +79,10 @@ const ContactUsPage: React.FC = () => {
             height: "100%",
             borderRadius: "12px",
             overflow: "hidden",
-            backgroundColor:"#ecf0f1",
+            backgroundColor:"black",
             boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
             transition: "transform 0.3s ease-in-out, boxShadow 0.3s ease-in-out",
-            "&:hover": { transform: "scale(1.01)", backgroundColor: "#dfe6e9"}
+            "&:hover": { transform: "scale(1.01)", backgroundColor: "#2f3542"}
           }}>
             <Globe />
           </Box>
@@ -100,42 +103,65 @@ const ContactUsPage: React.FC = () => {
         </Grid>
       </Grid>
 
-      {/* Email Section */}
-        <Box sx={{ mt: 5, textAlign: "center" }}>
-          <Typography variant="h5" fontWeight="bold" color="#002F6D" sx={{ mb: 3 }}>
-            Get in Touch
-          </Typography>
-          <Grid container spacing={2} justifyContent="center" alignItems="center" wrap="nowrap">
-            {emails.map((email, index) => (
-              <Grid item key={index} xs="auto">
+      {/* Email Section - Now Responsive */}
+      <Box sx={{ mt: 5, textAlign: "center" }}>
+        <Typography variant="h5" fontWeight="bold" color="#002F6D" sx={{ mb: 3 }}>
+          Get in Touch
+        </Typography>
+        <Grid 
+          container 
+          spacing={isMobile ? 2 : 1}
+          justifyContent="center" 
+          alignItems="center" 
+          // Remove nowrap to allow wrapping on mobile
+          sx={{
+            flexDirection: isMobile ? 'column' : 'row'
+          }}
+        >
+          {emails.map((email, index) => (
+            <Grid 
+              item 
+              key={index} 
+              xs={isMobile ? 12 : 'auto'}
+              sx={{
+                width: isMobile ? '100%' : 'auto',
+                mb: isMobile ? 0 : 1,
+                fontSize : isMobile ? '12px' : ''
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  padding: "10px",
+                  border: "1px solid #ddd",
+                  borderRadius: "8px",
+                  boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
+                  transition: "transform 0.3s ease-in-out",
+                  "&:hover": { transform: "scale(1.05)" },
+                  width: isMobile ? '100%' : 'auto',
+                }}
+              >
                 <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    padding: "10px",
-                    border: "1px solid #ddd",
-                    borderRadius: "8px",
-                    boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
-                    transition: "transform 0.3s ease-in-out",
-                    "&:hover": { transform: "scale(1.05)" },
-                  }}
-                >
-                  <Box
-                    component="img"
-                    src={emailIcon}
-                    alt="Email Icon"
-                    sx={{ width: "24px", height: "24px", marginBottom: "8px" }}
-                  />
-                  <a href={`mailto:${email.address}`} style={{ textDecoration: "none", color: "#257ebe", fontWeight: "bold" }}>
-                    {email.address}
-                  </a>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-
+                  component="img"
+                  src={emailIcon}
+                  alt="Email Icon"
+                  sx={{ width: "24px", height: "24px", marginBottom: "8px" }}
+                />
+                <a href={`mailto:${email.address}`} style={{ 
+                  textDecoration: "none", 
+                  color: "#257ebe", 
+                  fontWeight: "bold",
+                  wordBreak: "break-word" // Prevent email overflow
+                }}>
+                  {email.address}
+                </a>
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </Container>
   );
 };

@@ -676,9 +676,7 @@ const BookingSectionCart: React.FC<BookingSectionCartProps> = ({
           <div
             className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
             onClick={() => {
-              setNumCleaners((prev: any) =>
-                Math.max(1, Number(prev) - 1).toString()
-              );
+              setNumCleaners(Math.max(1, Number(numCleaners) - 1).toString());
             }}
           >
             <FaMinus />
@@ -686,9 +684,7 @@ const BookingSectionCart: React.FC<BookingSectionCartProps> = ({
           <div
             className="p-2 bg-blue-900 text-white rounded-lg hover:bg-blue-950 transition-colors"
             onClick={() => {
-              setNumCleaners((prev: any) =>
-                Math.min(5, Number(prev) + 1).toString()
-              );
+              setNumCleaners(Math.min(5, Number(numCleaners) + 1).toString());
             }}
           >
             <FaPlus />

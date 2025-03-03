@@ -51,7 +51,6 @@ export default function NavigationBar() {
     { label: "Airbnb And Short Term Rental Cleaning", path: "/airbnb_and_short_service" },
     { label: "Child Care Cleaning", path: "/child_care_cleaning" },
     { label: "Elder Care Cleaning", path: "/elder_care_cleaning" },
-
     { label: "Sanitization & Disinfection Booking", path: "/upcomming" },
     { label: "Office and Commercial Cleaning", path: "/upcomming" },
     { label: "Carpet & Upholstery Cleaning Booking", path: "/upcomming" },
@@ -67,7 +66,7 @@ export default function NavigationBar() {
     { label: "Pearly Sky cleaning services", path: "/upcomming" },
     { label: "Pearly Sky Engineering and Construction", path: "/upcomming" },
     { label: "Pearly Sky facility maintenance", path: "/upcomming" },
-    { label: "Pearly Sky  interior and architectural designing", path: "/upcomming" },
+    { label: "Pearly Sky interior and architectural designing", path: "/upcomming" },
     { label: "Pearly Sky swimming pool and landscaping", path: "/upcomming" },
     { label: "Pearly Sky Hotel and restaurant ", path: "/upcomming" },
     { label: "Pearly Sky cargo services", path: "/upcomming" },
@@ -75,16 +74,17 @@ export default function NavigationBar() {
     { label: "Pearly Sky real estate", path: "/upcomming" },
   ];
 
-
-  const handleServicesMouseEnter = (event: React.MouseEvent<HTMLElement>) => {
+  const handleServicesClick = (event: React.MouseEvent<HTMLElement>) => {
     setServicesAnchorEl(event.currentTarget);
+    setOtherServicesAnchorEl(null); // Close other dropdown if open
   };
 
-  const handleOtherServicesMouseEnter = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOtherServicesClick = (event: React.MouseEvent<HTMLElement>) => {
     setOtherServicesAnchorEl(event.currentTarget);
+    setServicesAnchorEl(null); // Close services dropdown if open
   };
 
-  const handleMouseLeave = () => {
+  const handleCloseDropdowns = () => {
     setServicesAnchorEl(null);
     setOtherServicesAnchorEl(null);
   };
@@ -99,7 +99,7 @@ export default function NavigationBar() {
 
   const handleMenuItemClick = (path: string) => {
     navigate(path); 
-    handleMouseLeave(); 
+    handleCloseDropdowns(); 
   };
 
   const MobileDrawer = () => (
@@ -233,18 +233,11 @@ export default function NavigationBar() {
               <Box
                 key={label}
                 sx={{ display: "flex", alignItems: "center" }}
-                onMouseEnter={
-                  isDropdown || isDropdown2
-                    ? label === "Services"
-                      ? handleServicesMouseEnter
-                      : handleOtherServicesMouseEnter
-                    : undefined
-                }
-                onMouseLeave={isDropdown || isDropdown2 ? handleMouseLeave : undefined}
               >
                 {isDropdown || isDropdown2 ? (
                   <>
                     <IconButton
+                      onClick={isDropdown ? handleServicesClick : handleOtherServicesClick}
                       sx={{
                         color: "white",
                         fontWeight: location.pathname.includes(path)
@@ -258,7 +251,14 @@ export default function NavigationBar() {
                     >
                       <Typography>{label}</Typography>
                       <KeyboardArrowDownIcon
-                        sx={{ color: "white", fontSize: "20px" }}
+                        sx={{ 
+                          color: "white", 
+                          fontSize: "20px",
+                          transform: Boolean(
+                            label === "Services" ? servicesAnchorEl : otherServicesAnchorEl
+                          ) ? "rotate(180deg)" : "rotate(0deg)",
+                          transition: "transform 0.3s"
+                        }}
                       />
                     </IconButton>
                     <Menu
@@ -268,8 +268,8 @@ export default function NavigationBar() {
                       open={Boolean(
                         label === "Services" ? servicesAnchorEl : otherServicesAnchorEl
                       )}
-                      onClose={handleMouseLeave}
-                      disableScrollLock // Prevents page shift
+                      onClose={handleCloseDropdowns}
+                      disableScrollLock
                       anchorOrigin={{
                         vertical: "bottom",
                         horizontal: "center",
@@ -280,14 +280,14 @@ export default function NavigationBar() {
                       }}
                       sx={{
                         "& .MuiPaper-root": {
-                          marginTop: "8px", // Adjust as needed
+                          marginTop: "8px",
                         },
                       }}
                     >
                       {(label === "Services" ? serviceDropdownItems : otherServiceDropdownItems).map((subItem) => (
                         <MenuItem
                           key={subItem.label}
-                          onClick={() => handleMenuItemClick(subItem.path)} // Navigate and close dropdown
+                          onClick={() => handleMenuItemClick(subItem.path)}
                         >
                           <Typography>{subItem.label}</Typography>
                         </MenuItem>

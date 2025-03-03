@@ -1,11 +1,10 @@
-import { Box, Container, Typography, IconButton, Stack } from "@mui/material";
+import { Box, Container, Typography, IconButton, Stack, Button } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import PhoneIcon from "@mui/icons-material/Phone";
 import FooterNav from "../../components/footerNav/footerNav.tsx";
@@ -275,7 +274,7 @@ const Footer = () => {
                     borderColor: "white",
                     borderRadius: "30px",
                     padding: "0.5rem 0.5rem",
-                    fontSize: "0.6rem",
+                    fontSize: "0.7rem",
                     textTransform: "none",
                     "&:hover": {
                       backgroundColor: "white",
@@ -284,7 +283,7 @@ const Footer = () => {
                   }}
                 >
                   <WhatsAppIcon fontSize="small" />
-                  <span>Contact Now</span>
+                  <span>Whats app</span>
                 </Button>
 
                 {/* Hotline Button */}
@@ -299,7 +298,7 @@ const Footer = () => {
                     borderColor: "white",
                     borderRadius: "30px",
                     padding: "0.5rem 0.5rem",
-                    fontSize: "0.6rem",
+                    fontSize: "0.8rem",
                     textTransform: "none",
                     "&:hover": {
                       backgroundColor: "white",
@@ -308,7 +307,7 @@ const Footer = () => {
                   }}
                 >
                   <PhoneIcon fontSize="small" />
-                  <span>Hotline</span>
+                  <span>Hotline. . .</span>
                 </Button>
               </Stack>
           </Box>

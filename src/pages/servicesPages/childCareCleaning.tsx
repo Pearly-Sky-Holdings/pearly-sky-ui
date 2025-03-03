@@ -8,7 +8,6 @@ import "react-calendar/dist/Calendar.css";
 import TimeSlots from "../../components/timeSlot/timeSlot";
 import "./CustomCalendar.css";
 import Carousel2 from "../../components/carouselSection2/carousel2";
-import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
 import { getServices } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";

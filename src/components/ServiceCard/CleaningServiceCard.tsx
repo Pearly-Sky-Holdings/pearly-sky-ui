@@ -70,6 +70,7 @@ const CleaningServiceCard = ({ title, image, link }: CleaningServiceCardProps) =
               '&:hover': {
                 backgroundColor: 'primary.main',
                 color: 'white',
+                padding:"5px",
                 textDecoration: 'none',
               },
             }}
