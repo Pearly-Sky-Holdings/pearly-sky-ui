@@ -47,7 +47,7 @@ function RegularBasicCleaningPage() {
   const [selectedTime, setSelectedTime] = useState("");
   const [propertySize, setPropertySize] = useState("");
   const [duration, setDuration] = useState("");
-  const [numCleaners, setNumCleaners] = useState("");
+  const [numCleaners, setNumCleaners] = useState("1");
   const [frequency, setFrequency] = useState("");
   const [acceptTerms1, setAcceptTerms1] = useState(false);
   const [acceptTerms2, setAcceptTerms2] = useState(false);
@@ -168,16 +168,18 @@ function RegularBasicCleaningPage() {
       return;
     }
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
+    
     const totalPriceInSelectedCurrency = priceBreakdown.totalPrice;
-    // Convert the total price to USD using the conversion rate
     const totalPriceInUSD = totalPriceInSelectedCurrency / conversionRate;
     const serviceDetails = {
       service_id: "1",
+      price: totalPriceInUSD.toString(),
       date,
       time: selectedTime,
       property_size: propertySize,
       duration: parseInt(duration),
       number_of_cleaners: parseInt(numCleaners),
+      note: document.querySelector("textarea")?.value || "",
       frequency,
       package_details: selectedServices.some(
         (service) => service.package_id === 21 || service.package_id === 22
@@ -189,15 +191,14 @@ function RegularBasicCleaningPage() {
             return obj;
           })
         : selectedServices,
-      person_type: contactType,
-      language,
+      request_gender: contactType,
+      request_language :language,
       business_property: propertyType,
       cleaning_solvents: selectedSolvent,
-      equipmentOption: _selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
-      price: totalPriceInUSD,
+      
       currency: "USD",
-      note: document.querySelector("textarea")?.value || "",
+      
     };
     const data = {
       serviceName: "Regular Basic",

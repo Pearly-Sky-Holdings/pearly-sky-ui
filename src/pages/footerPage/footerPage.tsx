@@ -3,11 +3,11 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { Button } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import PhoneIcon from "@mui/icons-material/Phone";
-import { useNavigate } from "react-router-dom";
 import FooterNav from "../../components/footerNav/footerNav.tsx";
 
 import {
@@ -70,8 +70,8 @@ const countries = [
 ];
 
 const Footer = () => {
-   useNavigate();
 
+   useNavigate();
 
 
   return (
@@ -151,6 +151,7 @@ const Footer = () => {
                   width: 40,
                   height: 40,
                 }}
+                onClick={() => window.open("https://www.facebook.com/profile.php?id=61561165376278", "_blank")}
               >
                 <FacebookIcon sx={{ fontSize: 20 }} />
               </IconButton>
@@ -166,6 +167,7 @@ const Footer = () => {
                   width: 40,
                   height: 40,
                 }}
+                onClick={() => window.open("https://www.instagram.com/pearlyskycleaning/?next=%2F", "_blank")}
               >
                 <InstagramIcon sx={{ fontSize: 20 }} />
               </IconButton>
@@ -181,6 +183,7 @@ const Footer = () => {
                   width: 40,
                   height: 40,
                 }}
+                onClick={() => window.open("https://x.com/PEARLYSKYPVTLTD", "_blank")}
               >
                 <TwitterIcon sx={{ fontSize: 20 }} />
               </IconButton>
@@ -196,6 +199,7 @@ const Footer = () => {
                   width: 40,
                   height: 40,
                 }}
+                onClick={() => window.open("https://www.youtube.com/@pearlyskycleaningservice", "_blank")}
               >
                 <YouTubeIcon sx={{ fontSize: 20 }} />
               </IconButton>
@@ -206,14 +210,16 @@ const Footer = () => {
                   bgcolor: "rgba(255, 255, 255, 0.2)",
                   "&:hover": {
                     bgcolor: "rgba(255, 255, 255, 0.3)",
-                    color: "black",
+                    color: "red",
                   },
                   width: 40,
                   height: 40,
                 }}
+                onClick={() => window.open("", "_blank")}
               >
-                <GitHubIcon sx={{ fontSize: 20 }} />
+                <LinkedInIcon sx={{ fontSize: 20 }} />
               </IconButton>
+              
             </Stack>
 
             <Stack

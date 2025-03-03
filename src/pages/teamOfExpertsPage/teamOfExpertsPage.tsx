@@ -1,14 +1,14 @@
 import React from "react";
 import TeamCard from "../../components/teamCard/teamCard";
 const emailIcon = "./images/teamExperts/email_icon.png";
-import { teamExperts1, teamExperts2, teamExperts3, teamExperts4 } from "../../config/images";
+import { teamExperts6 } from "../../config/images";
 
 const teamMembers = [
   {
-    name: "Mr Oshan Bandarar",
+    name: "Mr Oshan Bandara",
     title:"Operations Manager",
-    image: teamExperts1,
-    email: "oshanhb@pearlyskyplc.com",
+    image: teamExperts6,
+    email: "oshanhb@pearlyskyplc.com ",
   },
   {
     name: "Mrs Anusha Niroshini",
