@@ -73,7 +73,7 @@ const CountryCard: React.FC<CountryProps> = ({ name, hasOffice, mapSrc }) => {
               color="primary"
               sx={{ display: "block", mt: 1, fontWeight: "bold" }}
             >
-              VIEW IN MAP →
+              {/* VIEW IN MAP → */}
             </Typography>
           )}
         </CardContent>
