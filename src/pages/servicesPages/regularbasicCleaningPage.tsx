@@ -18,6 +18,7 @@ import dayjs from "dayjs";
 import { regularService1 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
+import QuantityControl from "../../components/QuantityControl/quantityControl";
 
 function RegularBasicCleaningPage() {
   type selectService = {
@@ -38,7 +39,7 @@ function RegularBasicCleaningPage() {
   const packages = useSelector((state: any) => state.packagesSlice.package);
   const services = useSelector((state: any) => state.servicesSlice.service);
   const [selectedServices, setSelectedServices] = useState<selectService[]>([]);
-  
+
   const [showTermsCard, setShowTermsCard] = useState(false);
   const [fridgeQty, setFridgeQty] = useState("1");
   const [ovenQty, setOvenQty] = useState("1");
@@ -69,7 +70,7 @@ function RegularBasicCleaningPage() {
     hourlyRate: parseInt(services.data.price),
     serviceCosts: 0,
     equipmentCosts: 0,
-    totalPrice: 27.0,
+    totalPrice: parseInt(services.data.price),
     basePrice: parseInt(services.data.price),
   });
 
@@ -97,26 +98,32 @@ function RegularBasicCleaningPage() {
   }, []);
 
   const calculateTotalPrice = () => {
-    const hourlyRate = parseInt(services.data.price);
-    const basePrice = hourlyRate * maxTime * conversionRate;
+    const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
+    const basePrice = hourlyRate * maxTime; // Base price in USD
+
     let serviceCosts = 0;
     let equipmentCosts = 0;
 
+    // Calculate service costs in USD
     selectedServices.forEach((service) => {
-      serviceCosts += service.price * (service.qty || 1) * conversionRate;
+      serviceCosts += service.price * (service.qty || 1);
     });
 
+    // Calculate equipment costs in USD
     selectedEquipments.forEach((equipment) => {
-      equipmentCosts += equipment.price * conversionRate;
+      equipmentCosts += equipment.price;
     });
 
-    const totalPrice = basePrice + serviceCosts + equipmentCosts;
+    // Calculate total price in the user's selected currency
+    const totalPriceInSelectedCurrency =
+      (basePrice + serviceCosts + equipmentCosts) * conversionRate;
+
     return {
       hourlyRate,
       serviceCosts,
       equipmentCosts,
-      totalPrice,
-      basePrice,
+      totalPrice: totalPriceInSelectedCurrency, // Total price in the selected currency
+      basePrice: basePrice * conversionRate, // Base price in the selected currency
     };
   };
 
@@ -161,6 +168,9 @@ function RegularBasicCleaningPage() {
       return;
     }
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
+    const totalPriceInSelectedCurrency = priceBreakdown.totalPrice;
+    // Convert the total price to USD using the conversion rate
+    const totalPriceInUSD = totalPriceInSelectedCurrency / conversionRate;
     const serviceDetails = {
       service_id: "1",
       date,
@@ -185,8 +195,8 @@ function RegularBasicCleaningPage() {
       cleaning_solvents: selectedSolvent,
       equipmentOption: _selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
-      price: priceBreakdown.totalPrice,
-      currency: selectedCurrency,
+      price: totalPriceInUSD,
+      currency: "USD",
       note: document.querySelector("textarea")?.value || "",
     };
     const data = {
@@ -195,7 +205,8 @@ function RegularBasicCleaningPage() {
       orderSummary: {
         selectedServices,
         selectedEquipments,
-        basePrice: priceBreakdown.basePrice / conversionRate,
+        basePrice: priceBreakdown.basePrice,
+        totalPrice: priceBreakdown.totalPrice,
         currencySymbol,
         selectedCurrency,
         conversionRate,
@@ -270,145 +281,137 @@ function RegularBasicCleaningPage() {
 
       {/* Checklist Section */}
       <div className="bg-white rounded-lg p-4 sm:p-6 mb-8 shadow-lg">
-        <h2 className="text-xl font-semibold mb-4 text-blue-900">
-          Select Additional Service Including to Your Package Checklist
-        </h2>
-        {packages.isLoading ? (
-          <div className="text-center py-4">Loading packages...</div>
-        ) : packages.isSuccess ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {packages.data.map((service: any) => (
-              <label
-                key={service.package_id}
-                className="flex items-center space-x-2 text-blue-900 cursor-pointer"
+      <h2 className="text-xl font-semibold mb-4 text-blue-900">
+        Select Additional Service Including to Your Package Checklist
+      </h2>
+      {packages.isLoading ? (
+        <div className="text-center py-4">Loading packages...</div>
+      ) : packages.isSuccess ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {packages.data.map((service: any) => (
+            <label
+              key={service.package_id}
+              className="flex items-center space-x-2 text-blue-900 cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                className="hidden"
+                checked={checkedList.includes(service.package_id.toString())}
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setSelectedServices([
+                      ...selectedServices,
+                      {
+                        package_id: Number(service.package_id),
+                        price: parseInt(service.price),
+                        name: service.name,
+                        qty:
+                          service.name === "Oven Cleaning"
+                            ? Number(ovenQty) || 1
+                            : service.name === "Fridge Cleaning"
+                            ? Number(fridgeQty) || 1
+                            : 1,
+                      },
+                    ]);
+                    setCheckedList([
+                      ...checkedList,
+                      service.package_id.toString(),
+                    ]);
+                  } else {
+                    setSelectedServices(
+                      selectedServices.filter(
+                        (item) =>
+                          item.package_id.toString() !==
+                          service.package_id.toString()
+                      )
+                    );
+                    setCheckedList(
+                      checkedList.filter(
+                        (id) => id !== service.package_id.toString()
+                      )
+                    );
+                  }
+                }}
+                disabled={service.status !== "active"}
+              />
+              {/* Custom checkbox */}
+              <div
+                className={`w-5 h-5 border-2 border-gray-400 rounded flex items-center justify-center transition-colors ${
+                  checkedList.includes(service.package_id.toString())
+                    ? "bg-blue-500 border-blue-500"
+                    : "bg-white border-gray-400"
+                } ${service.status !== "active" ? "opacity-50" : ""}`}
               >
-                <input
-                  type="checkbox"
-                  className="hidden"
-                  checked={checkedList.includes(service.package_id.toString())}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setSelectedServices([
-                        ...selectedServices,
-                        {
-                          package_id: Number(service.package_id),
-                          price: parseInt(service.price),
-                          name: service.name,
-                          qty:
-                            service.name === "Oven Cleaning"
-                              ? Number(ovenQty) || 1
-                              : service.name === "Fridge Cleaning"
-                              ? Number(fridgeQty) || 1
-                              : 1,
-                        },
-                      ]);
-                      setCheckedList([
-                        ...checkedList,
-                        service.package_id.toString(),
-                      ]);
-                    } else {
-                      setSelectedServices(
-                        selectedServices.filter(
-                          (item) =>
-                            item.package_id.toString() !==
-                            service.package_id.toString()
-                        )
-                      );
-                      setCheckedList(
-                        checkedList.filter(
-                          (id) => id !== service.package_id.toString()
-                        )
-                      );
-                    }
-                  }}
-                  disabled={service.status !== "active"}
-                />
-                {/* Custom checkbox */}
-                <div
-                  className={`w-5 h-5 border-2 border-gray-400 rounded flex items-center justify-center transition-colors ${
-                    checkedList.includes(service.package_id.toString())
-                      ? "bg-blue-500 border-blue-500"
-                      : "bg-white border-gray-400"
-                  } ${service.status !== "active" ? "opacity-50" : ""}`}
-                >
-                  {/* Checkmark icon */}
-                  {checkedList.includes(service.package_id.toString()) && (
-                    <svg
-                      className="w-3 h-3 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                  )}
-                </div>
-                <div className="flex-1">
-                  <span className="text-sm font-medium group-hover:text-black">
-                    {service.name}
-                  </span>
-                  {service.price !== "0$" && (
-                    <div className="mt-1 text-xs text-gray-500">
-                      <span>
-                        {currencySymbol}
-                        {(parseInt(service.price) * conversionRate).toFixed(2)}
-                      </span>
-                      {(service.name === "Oven Cleaning" ||
-                        service.name === "Fridge Cleaning") && (
-                        <select
-                          className="ml-2 border rounded px-1 py-0.5 text-xs"
-                          value={
-                            service.name === "Oven Cleaning"
-                              ? ovenQty
-                              : fridgeQty
+                {/* Checkmark icon */}
+                {checkedList.includes(service.package_id.toString()) && (
+                  <svg
+                    className="w-3 h-3 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                )}
+              </div>
+              <div className="flex-1">
+                <span className="text-sm font-medium group-hover:text-black">
+                  {service.name}
+                </span>
+                {service.price !== "0$" && (
+                  <div className="mt-1 text-xs text-gray-500 flex items-center space-x-5">
+                    <span>
+                      {currencySymbol}
+                      {(parseInt(service.price) * conversionRate).toFixed(2)}
+                    </span>
+                    {(service.name === "Oven Cleaning" ||
+                      service.name === "Fridge Cleaning") && 
+                      checkedList.includes(service.package_id.toString()) && (
+                      <QuantityControl
+                        quantity={service.name === "Oven Cleaning" ? ovenQty : fridgeQty}
+                        onChange={(newQuantity) => {
+                          if (service.name === "Oven Cleaning") {
+                            setOvenQty(newQuantity);
+                            // Update the quantity in selectedServices
+                            setSelectedServices((prev) =>
+                              prev.map((s) =>
+                                s.package_id === Number(service.package_id)
+                                  ? { ...s, qty: Number(newQuantity) || 1 }
+                                  : s
+                              )
+                            );
+                          } else {
+                            setFridgeQty(newQuantity);
+                            // Update the quantity in selectedServices
+                            setSelectedServices((prev) =>
+                              prev.map((s) =>
+                                s.package_id === Number(service.package_id)
+                                  ? { ...s, qty: Number(newQuantity) || 1 }
+                                  : s
+                              )
+                            );
                           }
-                          onChange={(e) => {
-                            if (service.name === "Oven Cleaning") {
-                              setOvenQty(e.target.value);
-                              // Update the quantity in selectedServices
-                              setSelectedServices((prev) =>
-                                prev.map((s) =>
-                                  s.package_id === Number(service.package_id)
-                                    ? { ...s, qty: Number(e.target.value) || 1 }
-                                    : s
-                                )
-                              );
-                            } else {
-                              setFridgeQty(e.target.value);
-                              // Update the quantity in selectedServices
-                              setSelectedServices((prev) =>
-                                prev.map((s) =>
-                                  s.package_id === Number(service.package_id)
-                                    ? { ...s, qty: Number(e.target.value) || 1 }
-                                    : s
-                                )
-                              );
-                            }
-                          }}
-                        >
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                        </select>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </label>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-4 text-red-500">
-            {packages.errorMessage}
-          </div>
-        )}
-      </div>
+                        }}
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
+            </label>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-4 text-red-500">
+          {packages.errorMessage}
+        </div>
+      )}
+    </div>
 
       {/* Equipment Section */}
       <div>

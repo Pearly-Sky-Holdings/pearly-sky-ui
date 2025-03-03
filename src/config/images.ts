@@ -146,10 +146,7 @@ export const MoveInAndOutService1: string = "/images/service/moveInOutCleaning/M
 export const OurShowcase1: string = "/images/ourShowCase/OurShowcase1.jpg";
 export const OurShowcase2: string = "/images/ourShowCase/OurShowcase2.jpg";
 export const OurShowcase3: string = "/images/ourShowCase/OurShowcase3.jpg";
-export const OurShowcase6: string = "/images/ourShowCase/OurShowcase6.jpg";
-export const OurShowcase7: string = "/images/ourShowCase/OurShowcase7.jpg";
-export const OurShowcase8: string = "/images/ourShowCase/OurShowcase8.jpg";
-
+export const OurShowcase4: string = "/images/ourShowCase/OurShowcase4.jpg";
 
 //post Constructor image
 export const postConstructorImage1: string = "/images/service/postConstructor/postConstructorImage1.png";
