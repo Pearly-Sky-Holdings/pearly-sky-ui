@@ -13,19 +13,19 @@ const teamMembers = [
   {
     name: "Mrs Anusha Niroshini",
     title:"Sales Director",
-    image: teamExperts6,
+    image: teamExperts2,
     email: "anushatan@pearlyskyplc.com",
   },
   {
     name: "Mr Nipuna Piyumal",
     title:"Administration Manager",
-    image: teamExperts6,
+    image: teamExperts3,
     email: "nipunapiyumal@pearlyskyplc.com",
   },
   {
     name: "Mr Shakila Bandara",
     title:"Operations Manager",
-    image: teamExperts6,
+    image: teamExperts4,
     email: "shakilaib@pearlyskyplc.com",
   },
 ];
