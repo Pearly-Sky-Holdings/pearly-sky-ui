@@ -12,7 +12,7 @@ import TermsAndConditions from "../../components/termsAndConditions/termsAndCond
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
 import { getPackege } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
-import ServicesCarosel from "../../components/oneTimeCleaning/servicesCarousel";
+import ServicesCarosel from "../../components/servicesCarousel/regularOneTime";
 import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
 import {
   OneTimeService1,

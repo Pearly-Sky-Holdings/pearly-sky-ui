@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import "react-calendar/dist/Calendar.css";
 import TimeSlots from "../../components/timeSlot/timeSlot";
 import "./CustomCalendar.css";
-import ServicesCarosel from "../../components/oneTimeCleaning/servicesCarousel";
+import ServicesCarosel from "../../components/servicesCarousel/regularOneTime";
 import EquipmentSection from "../../components/equipmentSection/equipmentSection";
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";

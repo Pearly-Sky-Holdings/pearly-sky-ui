@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import "react-calendar/dist/Calendar.css";
 import TimeSlots from "../../components/timeSlot/timeSlot";
 import "./CustomCalendar.css";
-import Carousel from "../../components/carouselSection/carousel";
+import Carousel from "../../components/servicesCarousel/moveInAndOut";
 import EquipmentSection from "../../components/equipmentSection/equipmentSection";
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
@@ -16,11 +16,7 @@ import CurrencyConverter from "../../components/currencyConverter/CurrencyConver
 import dayjs from "dayjs";
 
 import {
-  regularService2,
-  regularService3,
-  regularService4,
-  regularService5,
-  MoveInAndOutService1,
+   MoveInAndOutService1,
 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
@@ -201,51 +197,7 @@ function MoveInOutCleaningPage() {
     console.log("Service Details:", serviceDetails);
     navigate("/checkout", { state: { data } });
   };
-
-  const imagePairs = [
-    [
-      {
-        img: regularService2,
-        title: "Bedroom Cleaning",
-        features: [
-          "Dust all cleanable surfaces",
-          "Make the bed",
-          "Clean floor surfaces",
-        ],
-      },
-      {
-        img: regularService3,
-        title: "Bedroom Cleaning",
-        features: [
-          "Dust all cleanable surfaces",
-          "Make the bed",
-          "Clean floor surfaces",
-        ],
-      },
-    ],
-    [
-      {
-        img: regularService4,
-        title: "Bedroom Cleaning",
-        features: [
-          "Dust all cleanable surfaces",
-          "Make the bed",
-          "Clean floor surfaces",
-        ],
-      },
-      {
-        img: regularService5,
-        title: "Bedroom Cleaning",
-        features: [
-          "Dust all cleanable surfaces",
-          "Make the bed",
-          "Clean floor surfaces",
-        ],
-      },
-    ],
-  ];
-
-  
+ 
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
@@ -300,7 +252,7 @@ function MoveInOutCleaningPage() {
 
       {/* Carousel Section */}
       <div>
-        <Carousel imagePairs={imagePairs} />
+        <Carousel />
       </div>
 
       {/* Checklist Section */}
