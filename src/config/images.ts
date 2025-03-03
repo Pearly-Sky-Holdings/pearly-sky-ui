@@ -61,6 +61,9 @@ export const teamExperts1: string = "/images/teamExperts/oshan(OM1).png";
 export const teamExperts3: string = "/images/teamExperts/nipuna.png";
 export const teamExperts2: string = "/images/teamExperts/anusha.png";
 export const teamExperts4: string = "/images/teamExperts/chooseClening4.png";
+export const teamExperts5: string = "/images/teamExperts/profile.jpg";
+export const teamExperts6: string = "/images/teamExperts/profile2.png";
+
 
 export const contactImage1: string = "/images/uiContactUs/ContactUs.png";
 
@@ -147,6 +150,8 @@ export const OurShowcase1: string = "/images/ourShowCase/OurShowcase1.jpg";
 export const OurShowcase2: string = "/images/ourShowCase/OurShowcase2.jpg";
 export const OurShowcase3: string = "/images/ourShowCase/OurShowcase3.jpg";
 export const OurShowcase4: string = "/images/ourShowCase/OurShowcase4.jpg";
+export const OurShowcase5: string = "/images/ourShowCase/OurShowcase5.jpg";
+export const OurShowcase6: string = "/images/ourShowCase/OurShowcase6.jpg";
 
 //post Constructor image
 export const postConstructorImage1: string = "/images/service/postConstructor/postConstructorImage1.png";
@@ -169,3 +174,6 @@ export const careerImage1: string = "/images/career/careerImage1.png";
 // child care & elder care
 export const childCareImage1: string = "/images/service/childAndElder/ChildCare.png";
 export const elderCareImage1: string = "/images/service/childAndElder/ElderCare.png";
+
+// Terms and Conditions
+export const termsAndConditionsImage1: string = "/images/termAndConditions/termAndConditions.png";

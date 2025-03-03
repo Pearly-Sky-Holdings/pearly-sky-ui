@@ -22,11 +22,11 @@ const VideoFrame = ({ videoItems }: VideoFrameProps) => {
   }, []);
 
   return (
-    <div className="flex justify-center items-center gap-4 p-4 bg-gray-100">
+    <div className="flex flex-col md:flex-row justify-center items-center gap-4 p-4 bg-gray-100">
       {videoItems.slice(0, 2).map((item, index) => (
         <div
           key={index}
-          className="w-1/2 h-[400px] rounded-2xl overflow-hidden shadow-lg transform transition-transform "
+          className="w-full md:w-1/2 h-[400px] rounded-2xl overflow-hidden shadow-lg transform transition-transform"
         >
           <video
             ref={(el) => {

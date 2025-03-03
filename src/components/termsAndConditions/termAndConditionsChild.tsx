@@ -14,7 +14,7 @@ interface TermsAndConditionsProps {
   className?: string;
 }
 
-const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({
+const TermsAndConditionsChild: React.FC<TermsAndConditionsProps> = ({
   title = "Before you book",
   showCheckbox = true,
   isAccepted = false,
@@ -24,27 +24,6 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({
 }) => {
   // Integrated bookingTerms data directly into the component
   const terms: TermsItem[] = [
-    {
-      title: "Consider Property Size and Architecture",
-      items: [
-        "Evaluate the size and layout of your property before deciding on the number of cleaners",
-        "Larger properties or complex layouts may require more time or additional cleaners",
-      ],
-    },
-    {
-      title: "Factor in Additional Cleaning Services",
-      items: [
-        "Some services may require specialized cleaning or additional time",
-        "Consider bundling services for better value",
-      ],
-    },
-    {
-      title: "Limitations or Continuous Working Hours",
-      items: [
-        "Maximum continuous working hours apply",
-        "Plan the number of cleaners accordingly",
-      ],
-    },
     {
       title: "Booking cancellation",
       items: [
@@ -60,8 +39,7 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({
 
   return (
     <div
-      className={` bg-blue-950 bg-cover bg-center text-white rounded-lg p-4 md:p-6 ${className}`}
-     
+      className={`bg-blue-950 text-white rounded-lg p-4 md:p-6 ${className}`}
     >
       <h3 className="text-lg md:text-xl font-semibold mb-4">{title}</h3>
       <ol className="list-decimal pl-4 md:pl-5 space-y-4">
@@ -95,4 +73,4 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({
   );
 };
 
-export default TermsAndConditions;
+export default TermsAndConditionsChild;

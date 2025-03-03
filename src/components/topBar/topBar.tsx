@@ -1,9 +1,10 @@
-import { AppBar, Toolbar, Select, MenuItem, Box, IconButton, useTheme, useMediaQuery } from "@mui/material";
+import { AppBar, Toolbar, Select, MenuItem, Box, IconButton, useTheme, useMediaQuery, Button } from "@mui/material";
 import { LinkedIn } from "@mui/icons-material";
 import { FaFacebookF, FaYoutube } from "react-icons/fa";
 import { AiFillInstagram, AiFillTikTok } from "react-icons/ai";
 import { FaXTwitter } from "react-icons/fa6";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const countries = [
   { code: "us", name: "United States" },
@@ -14,16 +15,17 @@ const countries = [
 ];
 
 export default function TopBar() {
+  const navigate = useNavigate();
   const [selectedCountry, setSelectedCountry] = useState("us");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const socialIcons = [
-    { icon: <FaFacebookF />, link: "https://facebook.com" },
-    { icon: <AiFillInstagram />, link: "https://instagram.com" },
-    { icon: <FaXTwitter />, link: "https://x.com" },
-    { icon: <FaYoutube />, link: "https://youtube.com" },
-    { icon: <AiFillTikTok />, link: "https://tiktok.com" },
+    { icon: <FaFacebookF />, link: "https://www.facebook.com/profile.php?id=61561165376278" },
+    { icon: <AiFillInstagram />, link: "https://www.instagram.com/pearlyskycleaning/?next=%2F" },
+    { icon: <FaXTwitter />, link: "https://x.com/PEARLYSKYPVTLTD" },
+    { icon: <FaYoutube />, link: "https://www.youtube.com/@pearlyskycleaningservice" },
+    { icon: <AiFillTikTok />, link: "https://www.tiktok.com/@pearlyskycleaningservice?_t=ZN-8uNBR57FgaU&_r=1" },
     { icon: <LinkedIn />, link: "https://linkedin.com" }
   ];
 
@@ -74,17 +76,21 @@ export default function TopBar() {
           </Box>
         )}
 
-        {/* Right Side - Social Media Links (Centered on mobile) */}
+        {/* Right Side - Social Media Links and Login Button */}
         <Box 
           sx={{ 
             display: "flex", 
-            gap: isMobile ? 1 : 1.5,
+            alignItems: "center",
+            gap: isMobile ? 1 : 2, // Add gap between login button and social icons
             marginRight: isMobile ? 0 : "5%",
             flexWrap: "wrap",
             justifyContent: "center",
             py: { xs: 1, sm: 0 }
           }}
         >
+          
+
+          {/* Social Media Icons */}
           {socialIcons.map(({ icon, link }) => (
             <IconButton
               key={link}
@@ -107,6 +113,26 @@ export default function TopBar() {
               <Box sx={{ fontSize: isMobile ? 16 : 20 }}>{icon}</Box>
             </IconButton>
           ))}
+
+          <Box sx={{ display: "flex", gap: 2 }}></Box>
+          {/* Login Button */}
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#002F6D", // Blue color
+              color: "white",
+              borderRadius: "10px",
+              textTransform: "none",
+              fontWeight: "bold",
+              padding: "6px 16px",
+              "&:hover": {
+                backgroundColor: "#002F6D", // Darker blue on hover
+              },
+            }}
+            onClick= {() => navigate("/login")}
+          >
+            Login
+          </Button>
         </Box>
       </Toolbar>
     </AppBar>

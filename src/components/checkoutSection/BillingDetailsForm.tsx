@@ -121,7 +121,7 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
                 variant="outlined" 
                 size="small"
                 InputProps={{ sx: { borderRadius: "12px", border: "1px solid #0D90C8" } }} 
-                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                onChange={(e) => setFormData({ ...formData, street_address: e.target.value })}
               />
             </FormControl>
           </Grid> 
@@ -134,7 +134,7 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
                 variant="outlined" 
                 size="small"
                 InputProps={{ sx: { borderRadius: "12px", border: "1px solid #0D90C8" } }} 
-                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                onChange={(e) => setFormData({ ...formData, apartment_type: e.target.value })}
               />
             </FormControl>
           </Grid>

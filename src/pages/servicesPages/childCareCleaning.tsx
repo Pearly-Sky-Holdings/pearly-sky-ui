@@ -16,6 +16,7 @@ import dayjs from "dayjs";
 import {childCareImage1, childCareVideo,childCareVideo2 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart2 from "../../components/bookingSectionChildAndElderCart/bookingSectionCart2";
+import TermsAndConditionsChild from "../../components/termsAndConditions/termAndConditionsChild";
 
 function ChildCareCleaningPage() {
   const navigate = useNavigate();
@@ -286,7 +287,7 @@ function ChildCareCleaningPage() {
 
         {/* Terms and Conditions */}
         {showTermsCard && (
-          <TermsAndConditions
+          <TermsAndConditionsChild
             isAccepted={acceptTerms1}
             onAcceptChange={setAcceptTerms1}
             className="mb-6"

@@ -21,31 +21,11 @@ const CheckoutPage = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const saveRegularServiceData = useSelector(
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
+  const saveServiceData = useSelector(
     (state: any) => state.serviceDetailsSlice.service
   );
-  const saveLastMinuteServiceData = useSelector(
-    (state: any) => state.serviceDetailsSlice.service
-  );
-  const saveDeepServiceData = useSelector(
-    (state: any) => state.serviceDetailsSlice.service
-  );
-  const saveMoveInOutServiceData = useSelector(
-    (state: any) => state.serviceDetailsSlice.service
-  );
-  const savePostConstructionServiceData = useSelector(
-    (state: any) => state.serviceDetailsSlice.service
-  );
-
-  const oneTimeServiceData = useSelector(
-    (state: any) => state.serviceDetailsSlice.service
-  );
-  const childCareServiceData = useSelector(
-    (state: any) => state.serviceDetailsSlice.service
-  );
-  const elderCareServiceData = useSelector(
-    (state: any) => state.serviceDetailsSlice.service
-  );
+  
   const [saveLoader, setSaveLoader] = useState(false);
 
   const location = useLocation();
@@ -58,7 +38,8 @@ const CheckoutPage = () => {
     country: "",
     city: "",
     province: "",
-    address: "",
+    street_address: "",
+    apartment_type: "",
     postal_code: "",
     contact: "",
     email: "",
@@ -78,7 +59,7 @@ const CheckoutPage = () => {
       const ServiceData = {
         customer: formData,
         service_id: data.details.service_id,
-        price: data.details.price,
+        price: data.details.price.toString(),
         date: data.details.date,
         time: data.details.time,
         property_size: data.details.property_size,
@@ -87,16 +68,17 @@ const CheckoutPage = () => {
         frequency: data.details.frequency,
         package_details: data.details.package_details,
         note: data.details.note,
-        language: data.details.language,
-        person_type: data.details.person_type,
+        request_language: data.details.request_language,
+        request_gender: data.details.request_gender,
         Equipment: data.details.Equipment,
         cleaning_solvents: data.details.cleaning_solvents,
         business_property: data.details.business_property,
+        payment_method: selectedPaymentMethod,
       };
 
       setSaveLoader(true);
       dispatch(saveServices(ServiceData));
-      console.log("Data", data);
+      console.log("Data", ServiceData);
       console.log("Data", _handlePlaceOrder);
     } else if (
       data.serviceName == "Child Care" ||
@@ -128,244 +110,48 @@ const CheckoutPage = () => {
   useEffect(() => {
     if (saveLoader) {
       if (
-        saveRegularServiceData.isSuccess &&
-        !saveRegularServiceData.isLoading
+        saveServiceData.isSuccess &&
+        !saveServiceData.isLoading
       ) {
-        if (saveRegularServiceData.data.status === "success") {
+        if (saveServiceData.data.status === "success") {
           setShowSuccess(true);
           setTimeout(() => {
-            navigate("/regular-basic-cleaning", {
+            if(data.serviceName == "Regular Basic"){navigate("/regular-basic-cleaning", {
               state: { showSuccessPopup: true },
-            });
+            });}else if(data.serviceName == "Deep Cleaning"){navigate("/deep-cleaning", {
+              state: { showSuccessPopup: true },
+            });}
+            else if(data.serviceName == "One Time Cleaning"){navigate("/one-time-cleaning", {
+              state: { showSuccessPopup: true },
+            });}
+            else if(data.serviceName == "Last Minute"){navigate("/last-minute-cleaning", {
+              state: { showSuccessPopup: true },
+            });}
+            else if(data.serviceName == "Move In/Out Cleaning"){navigate("/move-in-out-cleaning", {
+              state: { showSuccessPopup: true },
+            });}
+            else if(data.serviceName == "Post Construction"){navigate("/post-construction-cleaning", {
+              state: { showSuccessPopup: true },
+            });}
+            else if(data.serviceName == "Airbnb And Short Term Rental Cleaning"){navigate("/airbnb-and-short-term-rental-cleaning", {
+              state: { showSuccessPopup: true },
+            });}  
           }, 2000);
           setSaveLoader(false);
         } else {
-          console.log("Error", saveRegularServiceData.data.message);
-          setErrorMessage(saveRegularServiceData.data.message);
+          console.log("Error", saveServiceData.data.message);
+          setErrorMessage(saveServiceData.data.message);
           setShowError(true);
           setSaveLoader(false);
         }
       } else if (
-        !saveRegularServiceData.isSuccess &&
-        !saveRegularServiceData.isLoading
+        !saveServiceData.isSuccess &&
+        !saveServiceData.isLoading
       ) {
         setSaveLoader(false);
       }
     }
-  }, [saveRegularServiceData.data, saveRegularServiceData.errorMessage]);
-
-  // Save One Time Service
-  useEffect(() => {
-    if (saveLoader) {
-      if (oneTimeServiceData.isSuccess && !oneTimeServiceData.isLoading) {
-        if (saveRegularServiceData.data.status === "success") {
-          setShowSuccess(true);
-          setTimeout(() => {
-            navigate("/one-time-cleaning", {
-              state: { showSuccessPopup: true },
-            });
-          }, 2000);
-          setSaveLoader(false);
-        } else {
-          console.log("Error", oneTimeServiceData.data.message);
-          setErrorMessage(oneTimeServiceData.data.message);
-          setShowError(true);
-          setSaveLoader(false);
-        }
-      } else if (
-        !oneTimeServiceData.isSuccess &&
-        !oneTimeServiceData.isLoading
-      ) {
-        console.log("Error", oneTimeServiceData.errorMessage);
-        setSaveLoader(false);
-      }
-    }
-  }, [saveRegularServiceData.data, oneTimeServiceData.errorMessage]);
-
-  // Save Last Minute Service
-  useEffect(() => {
-    if (saveLoader) {
-      if (
-        saveLastMinuteServiceData.isSuccess &&
-        !saveLastMinuteServiceData.isLoading
-      ) {
-        if (saveLastMinuteServiceData.data.status === "success") {
-          console.log("Saved Successfully");
-          setShowSuccess(true);
-          setTimeout(() => {
-            navigate("/last-minute-cleaning", {
-              state: { showSuccessPopup: true },
-            });
-          }, 2000);
-          setSaveLoader(false);
-        } else {
-          setErrorMessage(saveLastMinuteServiceData.data.message);
-          setShowError(true);
-          setSaveLoader(false);
-        }
-      } else if (
-        !saveLastMinuteServiceData.isSuccess &&
-        !saveLastMinuteServiceData.isLoading
-      ) {
-        console.log("Error", saveLastMinuteServiceData.errorMessage);
-        setSaveLoader(false);
-      }
-    }
-  }, [saveLastMinuteServiceData.data, saveLastMinuteServiceData.errorMessage]);
-
-  // Save Deep Service
-  useEffect(() => {
-    if (saveLoader) {
-      if (saveDeepServiceData.isSuccess && !saveDeepServiceData.isLoading) {
-        if (saveDeepServiceData.data.status === "success") {
-          console.log("Saved Successfully");
-          setShowSuccess(true);
-          setTimeout(() => {
-            navigate("/deep_cleaning", {
-              state: { showSuccessPopup: true },
-            });
-          }, 2000);
-          setSaveLoader(false);
-        } else {
-          console.log("Error", saveDeepServiceData.data.message);
-          setErrorMessage(saveDeepServiceData.data.message);
-          setShowError(true);
-          setSaveLoader(false);
-        }
-      } else if (
-        !saveDeepServiceData.isSuccess &&
-        !saveDeepServiceData.isLoading
-      ) {
-        console.log("Error", saveDeepServiceData.errorMessage);
-        setSaveLoader(false);
-      }
-    }
-  }, [saveDeepServiceData.data, saveDeepServiceData.errorMessage]);
-
-  // Save Move In/Out Service
-  useEffect(() => {
-    if (saveLoader) {
-      if (
-        saveMoveInOutServiceData.isSuccess &&
-        !saveMoveInOutServiceData.isLoading
-      ) {
-        if (saveMoveInOutServiceData.data.status === "success") {
-          console.log("Saved Successfully");
-          setShowSuccess(true);
-          setTimeout(() => {
-            navigate("/move_in_out_cleaning", {
-              state: { showSuccessPopup: true },
-            });
-          }, 2000);
-          setSaveLoader(false);
-        } else {
-          console.log("Error", saveMoveInOutServiceData.data.message);
-          setErrorMessage(saveMoveInOutServiceData.data.message);
-          setShowError(true);
-          setSaveLoader(false);
-        }
-      } else if (
-        !saveMoveInOutServiceData.isSuccess &&
-        !saveMoveInOutServiceData.isLoading
-      ) {
-        console.log("Error", saveMoveInOutServiceData.errorMessage);
-        setSaveLoader(false);
-      }
-    }
-  }, [saveMoveInOutServiceData.data, saveMoveInOutServiceData.errorMessage]);
-
-  // postConstruction service
-  useEffect(() => {
-    if (saveLoader) {
-      if (
-        savePostConstructionServiceData.isSuccess &&
-        !savePostConstructionServiceData.isLoading
-      ) {
-        if (savePostConstructionServiceData.data.status === "success") {
-          console.log("Saved Successfully");
-          setShowSuccess(true);
-          setTimeout(() => {
-            navigate("/post_constructor_cleaning", {
-              state: { showSuccessPopup: true },
-            });
-          }, 2000);
-          setSaveLoader(false);
-        } else {
-          console.log("Error", savePostConstructionServiceData.data.message);
-          setErrorMessage(savePostConstructionServiceData.data.message);
-          setShowError(true);
-          setSaveLoader(false);
-        }
-      } else if (
-        !savePostConstructionServiceData.isSuccess &&
-        !savePostConstructionServiceData.isLoading
-      ) {
-        console.log("Error", savePostConstructionServiceData.errorMessage);
-        setSaveLoader(false);
-      }
-    }
-  }, [
-    savePostConstructionServiceData.data,
-    savePostConstructionServiceData.errorMessage,
-  ]);
-
-  // childCare service
-  useEffect(() => {
-    if (saveLoader) {
-      if (childCareServiceData.isSuccess && !childCareServiceData.isLoading) {
-        if (childCareServiceData.data.status === "success") {
-          console.log("Saved Successfully");
-          setShowSuccess(true);
-          setTimeout(() => {
-            navigate("/child_care_cleaning", {
-              state: { showSuccessPopup: true },
-            });
-          }, 2000);
-          setSaveLoader(false);
-        } else {
-          console.log("Error", childCareServiceData.data.message);
-          setErrorMessage(childCareServiceData.data.message);
-          setShowError(true);
-          setSaveLoader(false);
-        }
-      } else if (
-        !childCareServiceData.isSuccess &&
-        !childCareServiceData.isLoading
-      ) {
-        console.log("Error", childCareServiceData.errorMessage);
-        setSaveLoader(false);
-      }
-    }
-  }, [childCareServiceData.data, childCareServiceData.errorMessage]);
-
-  // Elder care service
-  useEffect(() => {
-    if (saveLoader) {
-      if (elderCareServiceData.isSuccess && !elderCareServiceData.isLoading) {
-        if (elderCareServiceData.data.status === "success") {
-          console.log("Saved Successfully");
-          setShowSuccess(true);
-          setTimeout(() => {
-            navigate("/elder_care_cleaning", {
-              state: { showSuccessPopup: true },
-            });
-          }, 2000);
-          setSaveLoader(false);
-        } else {
-          console.log("Error", elderCareServiceData.data.message);
-          setErrorMessage(elderCareServiceData.data.message);
-          setShowError(true);
-          setSaveLoader(false);
-        }
-      } else if (
-        !elderCareServiceData.isSuccess &&
-        !elderCareServiceData.isLoading
-      ) {
-        console.log("Error", elderCareServiceData.errorMessage);
-        setSaveLoader(false);
-      }
-    }
-  }, [elderCareServiceData.data, elderCareServiceData.errorMessage]);
+  }, [saveServiceData.data, saveServiceData.errorMessage]);
   return (
     <Container maxWidth="xl" sx={{ marginBottom: "5%", color: "black" }}>
       <Typography
@@ -398,7 +184,16 @@ const CheckoutPage = () => {
               totalPrice={data?.orderSummary?.totalPrice || 0}
             />
           </div>
-          <PaymentMethod />
+          <PaymentMethod onPaymentMethodChange={setSelectedPaymentMethod} />
+
+          <Typography sx={{ color: "#737375", fontSize: "12px" }}>
+            Your personal data will be used to process your order, support your
+            experience throughout this website, and for other purposes described
+            in our{" "}
+            <Typography sx={{ color: "#0D90C8", fontSize: "12px" }}>
+              privacy policy.
+            </Typography>
+          </Typography>
 
           <Button
             variant="contained"

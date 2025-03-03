@@ -24,6 +24,7 @@ import {
 import store from "../../store";
 import BookingSectionCart2 from "../../components/bookingSectionChildAndElderCart/bookingSectionCart2";
 import Carousel2 from "../../components/carouselSection2/carousel2";
+import TermsAndConditionsChild from "../../components/termsAndConditions/termAndConditionsChild";
 
 function ElderCareCleaningPage() {
   const navigate = useNavigate();
@@ -295,7 +296,7 @@ function ElderCareCleaningPage() {
 
         {/* Terms and Conditions */}
         {showTermsCard && (
-          <TermsAndConditions
+          <TermsAndConditionsChild
             isAccepted={acceptTerms1}
             onAcceptChange={setAcceptTerms1}
             className="mb-6"
