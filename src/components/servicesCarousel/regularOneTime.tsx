@@ -2,9 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {
-  regularService2, regularService3, regularService4, regularService5, LimescaleService,
-  FridgeCleaning, BalconyCleaning, OvenCleaning, ironing, AfterPartyCleanup
-} from "../../config/images";
+  regularService2, regularService3, regularService4, regularService5} from "../../config/images";
 
 const imagePairs = [
   [
@@ -47,67 +45,7 @@ const imagePairs = [
       ],
     },
   ],
-  [
-    {
-      img: LimescaleService,
-      title: "Limescale Removal",
-      features: [
-        "Clean the balcony/terrace floor.",
-        "De-limescale & polish the shower cabin.",
-        "De-limescale & polish the sink area.",
-        "Remove limescale from other surfaces in the bathroom."
-      ],
-    },
-    {
-      img: FridgeCleaning,
-      title: "Fridge Cleaning",
-      features: [
-        "Clean the fridge door and handle with a damp cloth and mild soap.",
-        "Dust the back of the fridge and vacuum the condenser coils.",
-        "Check and clean the drip pan."
-      ],
-    },
-  ],
-  [
-    {
-      img: BalconyCleaning,
-      title: "Balcony Cleaning",
-      features: [
-        "Clean the balcony/terrace floor.",
-        "Clean railings.",
-        "Dust and wipe down outdoor furniture and fixtures."
-      ],
-    },
-    {
-      img: OvenCleaning,
-      title: "Oven Cleaning",
-      features: [
-        "Cleaning the Oven Interior.",
-        "Cleaning Oven Racks and Trays.",
-        "Cleaning the Oven Door."
-      ],
-    },
-  ],
-  [
-    {
-      img: ironing,
-      title: "Ironing",
-      features: [
-        "Iron the clothes.",
-        "Fold the clothes.",
-        "Place the clothes in the wardrobe."
-      ],
-    },
-    {
-      img: AfterPartyCleanup,
-      title: "After-Party Cleanup",
-      features: [
-        "Wash dishes & glassware.",
-        "Empty garbage cans.",
-        "Clean up vomit stains (ask for quotation)."
-      ],
-    },
-  ],
+  
 ];
 
 const ServicesCarousel = ({ index = 0 }) => {
