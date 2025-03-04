@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import store from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -13,62 +14,39 @@ import { getPackege, getServices } from "../../services/CleaningServices/index";
 import Images from "../../components/sanitizationPage/images";
 import dayjs from "dayjs";
 
-import {
-  Card,
-  CardContent,
-  Grid,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-} from "@mui/material";
 
 import {
   SanitizationService,
-  postConstructorImage1,
-  postConstructorImage2,
-  postConstructorImage3,
-  postConstructorImage4,
-  postConstructorImage5,
-  postConstructorImage6,
-  postConstructionService,
 } from "../../config/images";
-import store from "../../store";
-import BookingCart from "../../components/sanitizationPage/bookingCart";
 
-type Equipment = {
-  id: string;
-  price: number;
-  name?: string;
-};
 
-function sanitizationAndDisinfection() {
+function SanitizationAndDisinfection() {
   const navigate = useNavigate();
-  const dispatch = useDispatch<typeof store.dispatch>();
+  const dispatch =  useDispatch<typeof store.dispatch>();
   const services = useSelector((state: any) => state.servicesSlice.service);
   const [_selectedServices, _setSelectedServices] = useState<object[]>([]);
   const [showTermsCard, setShowTermsCard] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
-  const [propertySize, setPropertySize] = useState("");
-  const [duration, setDuration] = useState("");
-  const [numCleaners, setNumCleaners] = useState("");
-  const [frequency, setFrequency] = useState("");
+  const [propertySize, _setPropertySize] = useState("");
+  const [duration, _setDuration] = useState("");
+  const [numCleaners, _setNumCleaners] = useState("");
+  const [frequency, _setFrequency] = useState("");
   const [acceptTerms1, setAcceptTerms1] = useState(false);
   const [acceptTerms2, setAcceptTerms2] = useState(false);
-  const [language, setLanguage] = useState("");
-  const [propertyType, setPropertyType] = useState("");
-  const [contactType, setContactType] = useState("");
-  const [selectedSolvent, setSelectedSolvent] = useState("");
-  const [_selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
-  const [selectedEquipments, setSelectedEquipments] = useState<
+  const [language, _setLanguage] = useState("");
+  const [propertyType, _setPropertyType] = useState("");
+  const [contactType, _setContactType] = useState("");
+  const [selectedSolvent, _setSelectedSolvent] = useState("");
+  const [selectedEquipmentOption, _setSelectedEquipmentOption] = useState("");
+  const [selectedEquipments, _setSelectedEquipments] = useState<
     Array<{ id: string; price: number }>
   >([]);
 
-  const [selectedCurrency, setSelectedCurrency] = useState("USD");
-  const [currencySymbol, setCurrencySymbol] = useState("$");
-  const [conversionRate, setConversionRate] = useState(1);
-  const [maxTime, setMaxTime] = useState<number>(1);
+  const [selectedCurrency, _setSelectedCurrency] = useState("USD");
+  const [currencySymbol, _setCurrencySymbol] = useState("$");
+  const [conversionRate, _setConversionRate] = useState(1);
+  const [maxTime, _setMaxTime] = useState<number>(1);
 
   const [priceBreakdown, setPriceBreakdown] = useState({
     hourlyRate: parseInt(services.data.price),
@@ -78,15 +56,7 @@ function sanitizationAndDisinfection() {
     basePrice: parseInt(services.data.price),
   });
 
-  const handleCurrencyUpdate = (
-    currency: string,
-    symbol: string,
-    rate: number
-  ) => {
-    setSelectedCurrency(currency);
-    setCurrencySymbol(symbol);
-    setConversionRate(rate);
-  };
+ 
 
   useEffect(() => {
     setPriceBreakdown(calculateTotalPrice());
@@ -119,29 +89,8 @@ function sanitizationAndDisinfection() {
       basePrice,
     };
   };
-  const handleEquipmentSelect = (equipment: Equipment, selected: boolean) => {
-    if (selected) {
-      // Check if the equipment is already in the array
-      if (!selectedEquipments.some((e) => e.id === equipment.id)) {
-        setSelectedEquipments((prev) => [
-          ...prev,
-          { id: equipment.id, price: equipment.price },
-        ]);
-      }
-    } else {
-      // Remove the equipment if it exists
-      setSelectedEquipments((prev) =>
-        prev.filter((e) => e.id !== equipment.id)
-      );
-    }
-  };
-  const handleSolventChange = (solvent: string) => {
-    setSelectedSolvent(solvent);
-  };
-
-  const handleEquipmentOptionChange = (option: string) => {
-    setSelectedEquipmentOption(option);
-  };
+ 
+ 
 
   const handleBookNow = () => {
     if (
@@ -173,7 +122,7 @@ function sanitizationAndDisinfection() {
       language,
       business_property: propertyType,
       cleaning_solvents: selectedSolvent,
-      equipmentOption: _selectedEquipmentOption,
+      equipmentOption: selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
       price: priceBreakdown.totalPrice,
       currency: selectedCurrency,
@@ -195,62 +144,7 @@ function sanitizationAndDisinfection() {
     navigate("/checkout", { state: { data } });
   };
 
-  const cleaningPackages = [
-    {
-      icon: postConstructorImage1,
-      items: [
-        "Floor cleaning",
-        "Removing debris",
-        "Mopping",
-        "Mirrors cleaning",
-      ],
-    },
-    {
-      icon: postConstructorImage2,
-      items: [
-        "Clean windows",
-        "Clean the doors",
-        "Cleaning fixtures",
-        "Cleaning solutions",
-      ],
-    },
-    {
-      icon: postConstructorImage3,
-      items: [
-        "Vacuuming",
-        "Wipe down hard surfaces",
-        "Bathroom cleaning",
-        "Buckets and scrub brushes",
-      ],
-    },
-    {
-      icon: postConstructorImage4,
-      items: [
-        "Sweep and vacuum/mop floors",
-        "Vacuum cleaner",
-        "Window cleaning",
-        "Appliance cleaning",
-      ],
-    },
-    {
-      icon: postConstructorImage5,
-      items: [
-        "Dust fans and ceiling",
-        "Dust removal",
-        "Remove trash",
-        "Dusting",
-      ],
-    },
-    {
-      icon: postConstructorImage6,
-      items: [
-        "Clean all gates",
-        "Clean inside cabinets and drawers",
-        "Clean sink and food spaces",
-        "Trash bags",
-      ],
-    },
-  ];
+  
   return (
     <div className="max-w-7xl mx-auto p-4 mt-6 sm:p-2">
       {/* Header Section */}
@@ -485,4 +379,4 @@ function sanitizationAndDisinfection() {
   );
 }
 
-export default sanitizationAndDisinfection;
+export default SanitizationAndDisinfection;

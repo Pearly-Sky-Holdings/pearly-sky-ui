@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import CountryCard from "../../components/contactUsCountryCards/contactUsCountryCards";
 import { contactImage1, worldMap } from "../../config/images.ts";
-import Globe from "../../components/contactUsCountryCards/Globe";
 const emailIcon = "./images/uiContactUs/mailicon.png";
 
 const countries = [
@@ -122,7 +121,7 @@ const ContactUsPage: React.FC = () => {
             sx={{
               width: "100%",
               height: "100%",
-              objectFit: "cover",
+              objectFit: "fill",
               borderRadius: "12px",
               boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
               transition:

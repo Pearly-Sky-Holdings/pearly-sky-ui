@@ -4,7 +4,6 @@ import {
   Grid,
   MenuItem,
   Select,
-  InputLabel,
   FormControl,
   Button,
   Typography,

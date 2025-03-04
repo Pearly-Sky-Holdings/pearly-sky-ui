@@ -34,6 +34,7 @@ import RoboticsCleaning from "./pages/cleanServices/roboticsCleaning.tsx";
 import CleaningHospitality from "./pages/cleanServices/cleaningHospitality.tsx";
 import HygienePublicSpaces from "./pages/cleanServices/hygienePublicSpace.tsx";
 import CareerPage from "./pages/careerPage/careerPage.tsx";
+import SanitizationAndDisinfection from "./pages/servicesPages/SanitizationAndDisinfection.tsx";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -200,6 +201,15 @@ function App() {
             element={
               <>
                 <ElderCareCleaningPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/sanitization_cleaning"
+            element={
+              <>
+                <SanitizationAndDisinfection />
                 <Footer />
               </>
             }

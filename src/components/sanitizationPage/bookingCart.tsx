@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+
 import Dropdown from "../dropDown/dropDown";
 
 interface BookingSectionCartProps {
@@ -16,7 +16,6 @@ interface BookingSectionCartProps {
   setContactType: (contactType: string) => void;
   language: string;
   setLanguage: (language: string) => void;
-  onBasePriceChange: (maxTime: number) => void;
 }
 
 const BookingCart: React.FC<BookingSectionCartProps> = ({
@@ -28,7 +27,6 @@ const BookingCart: React.FC<BookingSectionCartProps> = ({
   setContactType,
   language,
   setLanguage,
-  onBasePriceChange,
 }) => {
   
 
