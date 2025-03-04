@@ -13,15 +13,6 @@ import { getPackege, getServices } from "../../services/CleaningServices/index";
 import Images from "../../components/sanitizationPage/images";
 import dayjs from "dayjs";
 
-import {
-  Card,
-  CardContent,
-  Grid,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-} from "@mui/material";
 
 import {
   SanitizationService,
@@ -31,10 +22,8 @@ import {
   postConstructorImage4,
   postConstructorImage5,
   postConstructorImage6,
-  postConstructionService,
 } from "../../config/images";
-import store from "../../store";
-import BookingCart from "../../components/sanitizationPage/bookingCart";
+
 
 type Equipment = {
   id: string;

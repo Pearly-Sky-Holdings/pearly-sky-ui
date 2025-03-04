@@ -51,7 +51,7 @@ export default function NavigationBar() {
     { label: "Airbnb And Short Term Rental Cleaning", path: "/airbnb_and_short_service" },
     { label: "Child Care Cleaning", path: "/child_care_cleaning" },
     { label: "Elder Care Cleaning", path: "/elder_care_cleaning" },
-    { label: "Sanitization & Disinfection Booking", path: "/upcomming" },
+    { label: "Sanitization & Disinfection Booking", path: "/sanitization_cleaning" },
     { label: "Office and Commercial Cleaning", path: "/upcomming" },
     { label: "Carpet & Upholstery Cleaning Booking", path: "/upcomming" },
     { label: "Move In/Out Transport Service Booking", path: "/upcomming" },
