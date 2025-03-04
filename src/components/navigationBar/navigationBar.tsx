@@ -49,6 +49,16 @@ export default function NavigationBar() {
     { label: "Airbnb And Short Term Rental Cleaning", path: "/airbnb_and_short_service" },
     { label: "Child Care Cleaning", path: "/child_care_cleaning" },
     { label: "Elder Care Cleaning", path: "/elder_care_cleaning" },
+
+    { label: "Sanitization & Disinfection Booking", path: "/sanitization_cleaning" },
+    { label: "Office and Commercial Cleaning", path: "/upcomming" },
+    { label: "Carpet & Upholstery Cleaning Booking", path: "/upcomming" },
+    { label: "Move In/Out Transport Service Booking", path: "/upcomming" },
+    { label: "Steam Cleaning Booking", path: "/upcomming" },
+    { label: "Pressure Washing Booking", path: "/upcomming",},
+    { label: "Event Cleaning", path: "/upcomming" },
+    { label: "Pool cleaning Booking", path: "/upcomming" },
+    { label: "Laundry Services", path: "/upcomming" },
   ];
 
   const handleServicesClick = (event: React.MouseEvent<HTMLElement>) => {
