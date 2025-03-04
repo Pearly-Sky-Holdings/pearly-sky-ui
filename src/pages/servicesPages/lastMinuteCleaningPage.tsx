@@ -63,23 +63,26 @@ function LastMinuteCleaningPage() {
   const [currencySymbol, setCurrencySymbol] = useState("$");
   const [conversionRate, setConversionRate] = useState(1);
   const [maxTime, setMaxTime] = useState<number>(1);
+  const [conversionRateBaseEur, setConversionRateBaseEur] = useState(1);
 
   const [priceBreakdown, setPriceBreakdown] = useState({
-    hourlyRate : parseInt(services.data.price),
+    hourlyRate: parseInt(services.data.price),
     serviceCosts: 0,
     equipmentCosts: 0,
-    totalPrice: parseInt(services.data.price),
-    basePrice: parseInt(services.data.price),
-  });
+    totalPrice: 40,
+    basePrice: 40,
+  });;
 
   const handleCurrencyUpdate = (
     currency: string,
     symbol: string,
-    rate: number
+    rate: number,
+    rateBaseEur: number
   ) => {
     setSelectedCurrency(currency);
     setCurrencySymbol(symbol);
     setConversionRate(rate);
+    setConversionRateBaseEur(rateBaseEur);
   };
 
   useEffect(() => {
@@ -93,27 +96,32 @@ function LastMinuteCleaningPage() {
     dispatch(getServices("3"));
   }, []);
   const calculateTotalPrice = () => {
-    // Calculate base price based on hourly rate and maxTime
-    const hourlyRate = parseInt(services.data.price,10); // Base price for 1 hour
-    const basePrice = hourlyRate * maxTime * conversionRate;
+    const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
+    const basePrice = hourlyRate * maxTime ; // Base price in USD
+
     let serviceCosts = 0;
     let equipmentCosts = 0;
-  
+
+    // Calculate service costs in USD
     selectedServices.forEach((service) => {
       serviceCosts += service.price * (service.qty || 1) * conversionRate;
     });
-  
+
+    // Calculate equipment costs in USD
     selectedEquipments.forEach((equipment) => {
       equipmentCosts += equipment.price * conversionRate;
     });
-  
-    const totalPrice = basePrice + serviceCosts + equipmentCosts;
+
+    // Calculate total price in the user's selected currency
+    const totalPriceInSelectedCurrency =
+      (basePrice) * conversionRate +equipmentCosts + serviceCosts;
+
     return {
       hourlyRate,
       serviceCosts,
       equipmentCosts,
-      totalPrice,
-      basePrice,
+      totalPrice: totalPriceInSelectedCurrency, // Total price in the selected currency
+      basePrice: basePrice * conversionRate, // Base price in the selected currency
     };
   };
   const handleEquipmentSelect = (equipment: Equipment, selected: boolean) => {
@@ -393,7 +401,7 @@ function LastMinuteCleaningPage() {
           equipments={[]}
           selectedCurrency={selectedCurrency}
           currencySymbol={currencySymbol}
-          conversionRate={conversionRate}
+          conversionRate={conversionRateBaseEur}
         />
       </div>
 
@@ -522,13 +530,19 @@ function LastMinuteCleaningPage() {
           />
         )}
 
-        <div className="pt-4 mb-6">
+<div className="pt-4 mb-6">
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
-          <span className="mb-2 md:mb-0">
-              Base Cost <span className="text-gray-400">({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})</span>
+            <span className="mb-2 md:mb-0">
+              Base Cost{" "}
+              <span className="text-gray-400">
+                ({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})
+              </span>
             </span>
-            <span>{currencySymbol}{priceBreakdown.basePrice.toFixed(2)}</span>
+            <span>
+              {currencySymbol}
+              {priceBreakdown.basePrice.toFixed(2)}
+            </span>
           </div>
 
           {/* Selected Services Costs */}
@@ -540,7 +554,10 @@ function LastMinuteCleaningPage() {
                   ({selectedServices.length} services)
                 </span>
               </span>
-              <span>{currencySymbol}{priceBreakdown.serviceCosts.toFixed(2)}</span>
+              <span>
+                {currencySymbol}
+                {priceBreakdown.serviceCosts.toFixed(2)}
+              </span>
             </div>
           )}
 
@@ -553,14 +570,20 @@ function LastMinuteCleaningPage() {
                   ({selectedEquipments.length} items)
                 </span>
               </span>
-              <span>{currencySymbol}{priceBreakdown.equipmentCosts.toFixed(2)}</span>
+              <span>
+                {currencySymbol}
+                {priceBreakdown.equipmentCosts.toFixed(2)}
+              </span>
             </div>
           )}
 
           {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
             <span>Total</span>
-            <span>{currencySymbol}{priceBreakdown.totalPrice.toFixed(2)}</span>
+            <span>
+              {currencySymbol}
+              {priceBreakdown.totalPrice.toFixed(2)}
+            </span>
           </div>
         </div>
 
