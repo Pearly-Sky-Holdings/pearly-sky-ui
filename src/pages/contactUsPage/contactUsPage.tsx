@@ -8,7 +8,7 @@ import {
   useTheme,
 } from "@mui/material";
 import CountryCard from "../../components/contactUsCountryCards/contactUsCountryCards";
-import { contactImage1, worldMap } from "../../config/images.ts";
+import { contactImage1, worldMapVideo } from "../../config/images.ts";
 const emailIcon = "./images/uiContactUs/mailicon.png";
 
 const countries = [
@@ -83,7 +83,7 @@ const ContactUsPage: React.FC = () => {
 
       {/* Images Section - Top Row */}
       <Grid container spacing={3} sx={{ mb: 5 }}>
-        <Grid item xs={12} md={6} style={{ height: "60vh" }}>
+        <Grid item xs={12} md={6}>
           <Box
             component="img"
             src={contactImage1}
@@ -100,35 +100,35 @@ const ContactUsPage: React.FC = () => {
             }}
           />
         </Grid>
-        <Grid item xs={12} md={6} style={{ height: "60vh" }}>
-          {/* <Box sx={{
-            width: "100%",
-            height: "100%",
-            borderRadius: "12px",
-            overflow: "hidden",
-            backgroundColor:"black",
-            boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
-            transition: "transform 0.3s ease-in-out, boxShadow 0.3s ease-in-out",
-            "&:hover": { transform: "scale(1.01)", backgroundColor: "#2f3542"}
-          }}>
-            <Globe />
-          </Box> */}
-
+        <Grid item xs={12} md={6}>
           <Box
-            component="img"
-            src={worldMap}
-            alt="Customer Support"
             sx={{
               width: "100%",
               height: "100%",
-              objectFit: "fill",
               borderRadius: "12px",
+              overflow: "hidden",
               boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
-              transition:
-                "transform 0.3s ease-in-out, boxShadow 0.3s ease-in-out",
-              "&:hover": { transform: "scale(1.01)" },
+              transition: "transform 0.3s ease-in-out",
+              position: "relative",
+              "&:hover": {
+                transform: "scale(1.01)",
+              },
             }}
-          />
+          >
+            <video
+              src={worldMapVideo}
+              autoPlay
+              loop
+              muted
+              playsInline
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: isMobile ? "contain" : "cover",
+                borderRadius: "12px",
+              }}
+            />
+          </Box>
         </Grid>
       </Grid>
 
