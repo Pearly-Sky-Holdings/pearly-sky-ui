@@ -66,6 +66,7 @@ export const teamExperts6: string = "/images/teamExperts/profile2.png";
 
 
 export const contactImage1: string = "/images/uiContactUs/ContactUs.png";
+export const worldMap: string = "/images/uiContactUs/worldMap.png";
 
 export const footerImage2: string = "/images/footer/footerImage2.png";
 export const footerImage3: string = "/images/footer/footerImage3.png";
