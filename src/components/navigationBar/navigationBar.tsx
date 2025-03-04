@@ -27,18 +27,16 @@ export default function NavigationBar() {
   const navigate = useNavigate();
 
   const [servicesAnchorEl, setServicesAnchorEl] = React.useState<HTMLElement | null>(null);
-  const [otherServicesAnchorEl, setOtherServicesAnchorEl] = React.useState<HTMLElement | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
-  const [openDropdown, setOpenDropdown] = React.useState<string | null>(null);
 
   const navItems = [
     { label: "Home", path: "/" },
     { label: "Services", path: "/services", isDropdown: true },
-    { label: "Company", path: "" },
+    { label: "Company", path: "https://pearlyskyplc.com" },
     { label: "Contact Us", path: "/contactUsPage" },
     { label: "Careers", path: "/career" },
-    { label: "Other Services", path: "/otherServices", isDropdown2: true },
     { label: "Our Locations", path: "/our-locations" },
+    { label: "About Us", path: "/about-us" },
   ];
 
   const serviceDropdownItems = [
@@ -47,61 +45,35 @@ export default function NavigationBar() {
     { label: "Last Minute Cleaning", path: "/last-minute-cleaning" },
     { label: "Deep Cleaning", path: "/deep_cleaning" },
     { label: "Move In/Out Cleaning", path: "/move_in_out_cleaning" },
-    {label: "Post Construction & Renovation Cleaning", path: "/post_constructor_cleaning",},
+    { label: "Post Construction & Renovation Cleaning", path: "/post_constructor_cleaning" },
     { label: "Airbnb And Short Term Rental Cleaning", path: "/airbnb_and_short_service" },
     { label: "Child Care Cleaning", path: "/child_care_cleaning" },
     { label: "Elder Care Cleaning", path: "/elder_care_cleaning" },
-    { label: "Sanitization & Disinfection Booking", path: "/upcomming" },
-    { label: "Office and Commercial Cleaning", path: "/upcomming" },
-    { label: "Carpet & Upholstery Cleaning Booking", path: "/upcomming" },
-    { label: "Move In/Out Transport Service Booking", path: "/upcomming" },
-    { label: "Steam Cleaning Booking", path: "/upcomming" },
-    { label: "Pressure Washing Booking", path: "/upcomming",},
-    { label: "Event Cleaning", path: "/upcomming" },
-    { label: "Pool cleaning Booking", path: "/upcomming" },
-    { label: "Laundry Services", path: "/upcomming" },
-  ];
-
-  const otherServiceDropdownItems = [
-    { label: "Pearly Sky cleaning services", path: "/upcomming" },
-    { label: "Pearly Sky Engineering and Construction", path: "/upcomming" },
-    { label: "Pearly Sky facility maintenance", path: "/upcomming" },
-    { label: "Pearly Sky interior and architectural designing", path: "/upcomming" },
-    { label: "Pearly Sky swimming pool and landscaping", path: "/upcomming" },
-    { label: "Pearly Sky Hotel and restaurant ", path: "/upcomming" },
-    { label: "Pearly Sky cargo services", path: "/upcomming" },
-    { label: "Pearly Sky propety magment ", path: "/upcomming" },
-    { label: "Pearly Sky real estate", path: "/upcomming" },
   ];
 
   const handleServicesClick = (event: React.MouseEvent<HTMLElement>) => {
     setServicesAnchorEl(event.currentTarget);
-    setOtherServicesAnchorEl(null); // Close other dropdown if open
-  };
-
-  const handleOtherServicesClick = (event: React.MouseEvent<HTMLElement>) => {
-    setOtherServicesAnchorEl(event.currentTarget);
-    setServicesAnchorEl(null); // Close services dropdown if open
   };
 
   const handleCloseDropdowns = () => {
     setServicesAnchorEl(null);
-    setOtherServicesAnchorEl(null);
   };
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  const handleDropdownClick = (label: string) => {
-    setOpenDropdown(openDropdown === label ? null : label);
-  };
-
   const handleMenuItemClick = (path: string) => {
-    navigate(path); 
-    handleCloseDropdowns(); 
+    navigate(path);
+    handleCloseDropdowns();
   };
 
+  const [servicesOpen, setServicesOpen] = React.useState(false);
+
+  const toggleServicesDropdown = () => {
+    setServicesOpen(!servicesOpen);
+  };
+  
   const MobileDrawer = () => (
     <Drawer
       anchor="top"
@@ -117,178 +89,120 @@ export default function NavigationBar() {
     >
       <List>
         {navItems.map((item) => (
-          <React.Fragment key={item.label}>
+          item.isDropdown ? (
+            <React.Fragment key={item.label}>
+              <ListItem
+          component="div"
+          onClick={toggleServicesDropdown}
+          sx={{
+            color: "white",
+            display: "flex",
+            justifyContent: "space-between",
+            cursor: "pointer",
+            padding: "10px 16px",
+          }}
+        >
+          <ListItemText primary="Services" />
+          <KeyboardArrowDownIcon
+            sx={{
+              transform: servicesOpen ? "rotate(180deg)" : "rotate(0deg)",
+              transition: "transform 0.3s",
+            }}
+          />
+        </ListItem>
+
+              {servicesOpen && (
+                <List sx={{ pl: 4, backgroundColor: "#003366" }}>
+                  {serviceDropdownItems.map((subItem) => (
+                    <ListItem
+                      key={subItem.label}
+                      component={Link}
+                      to={subItem.path}
+                      onClick={toggleMobileMenu}
+                      sx={{
+                        color: "white",
+                        "&:hover": {
+                          backgroundColor: "rgba(111, 163, 179, 0.1)",
+                        },
+                      }}
+                    >
+                      <ListItemText primary={subItem.label} />
+                    </ListItem>
+                  ))}
+                </List>
+              )}
+            </React.Fragment>
+          ) : (
             <ListItem
-              component={item.isDropdown || item.isDropdown2 ? "div" : Link}
-              to={!item.isDropdown && !item.isDropdown2 ? item.path : undefined}
-              onClick={() => {
-                if (!item.isDropdown && !item.isDropdown2) {
-                  toggleMobileMenu();
-                } else {
-                  handleDropdownClick(item.label);
-                }
-              }}
+              key={item.label}
+              component={Link}
+              to={item.path}
+              onClick={toggleMobileMenu}
               sx={{
                 color: "white",
-                display: "flex",
-                justifyContent: "space-between",
                 "&:hover": {
                   backgroundColor: "rgba(111, 163, 179, 0.1)",
                 },
               }}
             >
               <ListItemText primary={item.label} />
-              {(item.isDropdown || item.isDropdown2) && (
-                <KeyboardArrowDownIcon
-                  sx={{
-                    color: "white",
-                    fontSize: "20px",
-                    transform:
-                      openDropdown === item.label ? "rotate(180deg)" : "rotate(0deg)",
-                    transition: "transform 0.3s",
-                  }}
-                />
-              )}
             </ListItem>
-
-            {item.isDropdown && openDropdown === item.label && (
-              <Box sx={{ pl: 4, backgroundColor: "#003F7D" }}>
-                {serviceDropdownItems.map((subItem) => (
-                  <ListItem
-                    key={subItem.label}
-                    component={Link}
-                    to={subItem.path}
-                    onClick={toggleMobileMenu}
-                    sx={{
-                      color: "white",
-                      "&:hover": {
-                        backgroundColor: "rgba(111, 163, 179, 0.2)",
-                      },
-                    }}
-                  >
-                    <ListItemText primary={subItem.label} />
-                  </ListItem>
-                ))}
-              </Box>
-            )}
-
-            {item.isDropdown2 && openDropdown === item.label && (
-              <Box sx={{ pl: 4, backgroundColor: "#003F7D" }}>
-                {otherServiceDropdownItems.map((subItem) => (
-                  <ListItem
-                    key={subItem.label}
-                    component={Link}
-                    to={subItem.path}
-                    onClick={toggleMobileMenu}
-                    sx={{
-                      color: "white",
-                      "&:hover": {
-                        backgroundColor: "rgba(111, 163, 179, 0.2)",
-                      },
-                    }}
-                  >
-                    <ListItemText primary={subItem.label} />
-                  </ListItem>
-                ))}
-              </Box>
-            )}
-          </React.Fragment>
+          )
         ))}
       </List>
     </Drawer>
   );
+  
 
   return (
-    <AppBar
-      position="sticky"
-      sx={{ backgroundColor: "#002F6D", width: "100%", left: 0, top: 0 }}
-    >
+    <AppBar position="sticky" sx={{ backgroundColor: "#002F6D", width: "100%", left: 0, top: 0 }}>
       <ScrollToTop />
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", px: 2 }}>
-        {/* Left side: Company Logo */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-            <img
-              src={companyLogo}
-              alt="logo"
-              style={{ width: isMobile ? "30%" : "40%" }}
-            />
+            <img src={companyLogo} alt="logo" style={{ width: isMobile ? "30%" : "40%" }} />
           </Link>
         </Box>
-
-        {/* Mobile Menu Icon */}
         {isMobile ? (
-          <IconButton
-            color="inherit"
-            aria-label="menu"
-            onClick={toggleMobileMenu}
-            edge="start"
-          >
+          <IconButton color="inherit" aria-label="menu" onClick={toggleMobileMenu} edge="start">
             <MenuIcon />
           </IconButton>
         ) : (
-          /* Desktop Navigation Items */
           <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
-            {navItems.map(({ label, path, isDropdown, isDropdown2 }) => (
-              <Box
-                key={label}
-                sx={{ display: "flex", alignItems: "center" }}
-              >
-                {isDropdown || isDropdown2 ? (
+            {navItems.map(({ label, path, isDropdown }) => (
+              <Box key={label} sx={{ display: "flex", alignItems: "center" }}>
+                {isDropdown ? (
                   <>
                     <IconButton
-                      onClick={isDropdown ? handleServicesClick : handleOtherServicesClick}
+                      onClick={handleServicesClick}
                       sx={{
                         color: "white",
-                        fontWeight: location.pathname.includes(path)
-                          ? "bold"
-                          : "normal",
-                        borderBottom: location.pathname.includes(path)
-                          ? "2px solid white"
-                          : "none",
+                        fontWeight: location.pathname.includes(path) ? "bold" : "normal",
+                        borderBottom: location.pathname.includes(path) ? "2px solid white" : "none",
                         transition: "border-bottom 0.3s",
                       }}
                     >
                       <Typography>{label}</Typography>
                       <KeyboardArrowDownIcon
-                        sx={{ 
-                          color: "white", 
+                        sx={{
+                          color: "white",
                           fontSize: "20px",
-                          transform: Boolean(
-                            label === "Services" ? servicesAnchorEl : otherServicesAnchorEl
-                          ) ? "rotate(180deg)" : "rotate(0deg)",
-                          transition: "transform 0.3s"
+                          transform: servicesAnchorEl ? "rotate(180deg)" : "rotate(0deg)",
+                          transition: "transform 0.3s",
                         }}
                       />
                     </IconButton>
                     <Menu
-                      anchorEl={
-                        label === "Services" ? servicesAnchorEl : otherServicesAnchorEl
-                      }
-                      open={Boolean(
-                        label === "Services" ? servicesAnchorEl : otherServicesAnchorEl
-                      )}
+                      anchorEl={servicesAnchorEl}
+                      open={Boolean(servicesAnchorEl)}
                       onClose={handleCloseDropdowns}
                       disableScrollLock
-                      anchorOrigin={{
-                        vertical: "bottom",
-                        horizontal: "center",
-                      }}
-                      transformOrigin={{
-                        vertical: "top",
-                        horizontal: "center",
-                      }}
-                      sx={{
-                        "& .MuiPaper-root": {
-                          marginTop: "8px",
-                        },
-                      }}
+                      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                      transformOrigin={{ vertical: "top", horizontal: "center" }}
+                      sx={{ "& .MuiPaper-root": { marginTop: "8px" } }}
                     >
-                      {(label === "Services" ? serviceDropdownItems : otherServiceDropdownItems).map((subItem) => (
-                        <MenuItem
-                          key={subItem.label}
-                          onClick={() => handleMenuItemClick(subItem.path)}
-                        >
+                      {serviceDropdownItems.map((subItem) => (
+                        <MenuItem key={subItem.label} onClick={() => handleMenuItemClick(subItem.path)}>
                           <Typography>{subItem.label}</Typography>
                         </MenuItem>
                       ))}
@@ -313,10 +227,8 @@ export default function NavigationBar() {
             ))}
           </Box>
         )}
-
-        {/* Mobile Menu Drawer */}
         {isMobile && <MobileDrawer />}
       </Toolbar>
     </AppBar>
   );
-}
+} 
