@@ -651,7 +651,7 @@ const BookingSectionCart: React.FC<BookingSectionCartProps> = ({
           placeholder="Auto-suggested / Hours : minutes"
         />
         {/* Add the message below the dropdown */}
-        <div className="text-sm text-gray-500 mt-1">
+        <div className="text-sm text-white mt-1 bg-blue-700 px-1">
           Depending on your space's conditions, the cleaning duration will be decreased or extended.
         </div>
       </div>
