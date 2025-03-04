@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Dropdown from "../dropDown/dropDown";
 import { FaMinus, FaPlus } from "react-icons/fa";
+import InfoIcon from '@mui/icons-material/Info';
 
 interface BookingSectionCartProps {
   propertySize: string;
@@ -651,7 +652,8 @@ const BookingSectionCart: React.FC<BookingSectionCartProps> = ({
           placeholder="Auto-suggested / Hours : minutes"
         />
         {/* Add the message below the dropdown */}
-        <div className="text-sm text-white mt-1 bg-blue-700 px-1">
+        <div className="text-sm text-white  bg-blue-400 px-1">
+        <InfoIcon  sx={{ color: 'red', mx:1 }} />
           Depending on your space's conditions, the cleaning duration will be decreased or extended.
         </div>
       </div>
