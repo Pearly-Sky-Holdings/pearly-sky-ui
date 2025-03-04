@@ -275,18 +275,12 @@ function RegularBasicCleaningPage() {
         </div>
       </div>
 
-      <div>
-      <h2 className="text-xl font-semibold mb-4 text-blue-900" style={{textAlign: "center"}}>
-      Regular basic cleaning Package Checklist
-      </h2>
-      </div>
-
       {/* Carousel Section */}
       <div>
         <ServicesCarosel />
       </div>
 
-      {/* Checklist Section - Improved Mobile Responsiveness */}
+      {/* Checklist Section */}
       <div className="bg-white rounded-lg p-4 sm:p-6 mb-8 shadow-lg">
       <h2 className="text-xl font-semibold mb-4 text-blue-900">
         Select Additional Service Including to Your Package Checklist
@@ -298,7 +292,7 @@ function RegularBasicCleaningPage() {
           {packages.data.map((service: any) => (
             <label
               key={service.package_id}
-              className="flex items-center space-x-2 text-blue-900 cursor-pointer p-2 border border-gray-100 rounded-md hover:bg-gray-50"
+              className="flex items-center space-x-2 text-blue-900 cursor-pointer"
             >
               <input
                 type="checkbox"
@@ -372,7 +366,7 @@ function RegularBasicCleaningPage() {
                   {service.name}
                 </span>
                 {service.price !== "0$" && (
-                  <div className="mt-1 text-xs text-gray-500 flex flex-wrap items-center justify-between">
+                  <div className="mt-1 text-xs text-gray-500 flex items-center space-x-5">
                     <span>
                       {currencySymbol}
                       {(parseInt(service.price) * conversionRate).toFixed(2)}
@@ -380,35 +374,32 @@ function RegularBasicCleaningPage() {
                     {(service.name === "Oven Cleaning" ||
                       service.name === "Fridge Cleaning") && 
                       checkedList.includes(service.package_id.toString()) && (
-                      <div className="w-full mt-2 md:w-auto md:mt-0"
-                      >
-                        <QuantityControl
-                          quantity={service.name === "Oven Cleaning" ? ovenQty : fridgeQty}
-                          onChange={(newQuantity) => {
-                            if (service.name === "Oven Cleaning") {
-                              setOvenQty(newQuantity);
-                              // Update the quantity in selectedServices
-                              setSelectedServices((prev) =>
-                                prev.map((s) =>
-                                  s.package_id === Number(service.package_id)
-                                    ? { ...s, qty: Number(newQuantity) || 1 }
-                                    : s
-                                )
-                              );
-                            } else {
-                              setFridgeQty(newQuantity);
-                              // Update the quantity in selectedServices
-                              setSelectedServices((prev) =>
-                                prev.map((s) =>
-                                  s.package_id === Number(service.package_id)
-                                    ? { ...s, qty: Number(newQuantity) || 1 }
-                                    : s
-                                )
-                              );
-                            }
-                          }}
-                        />
-                      </div>
+                      <QuantityControl
+                        quantity={service.name === "Oven Cleaning" ? ovenQty : fridgeQty}
+                        onChange={(newQuantity) => {
+                          if (service.name === "Oven Cleaning") {
+                            setOvenQty(newQuantity);
+                            // Update the quantity in selectedServices
+                            setSelectedServices((prev) =>
+                              prev.map((s) =>
+                                s.package_id === Number(service.package_id)
+                                  ? { ...s, qty: Number(newQuantity) || 1 }
+                                  : s
+                              )
+                            );
+                          } else {
+                            setFridgeQty(newQuantity);
+                            // Update the quantity in selectedServices
+                            setSelectedServices((prev) =>
+                              prev.map((s) =>
+                                s.package_id === Number(service.package_id)
+                                  ? { ...s, qty: Number(newQuantity) || 1 }
+                                  : s
+                              )
+                            );
+                          }
+                        }}
+                      />
                     )}
                   </div>
                 )}
@@ -538,7 +529,7 @@ function RegularBasicCleaningPage() {
           </div>
 
           {/* Terms Checkbox */}
-          <div className="md:col-span-2 mb-6">
+          <div className="mb-6">
             <label className="flex items-start space-x-2 text-black">
               <input
                 type="checkbox"
@@ -591,7 +582,7 @@ function RegularBasicCleaningPage() {
               </span>
               <span>
                 {currencySymbol}
-                {(priceBreakdown.serviceCosts * conversionRate).toFixed(2)}
+                {priceBreakdown.serviceCosts.toFixed(2)}
               </span>
             </div>
           )}
@@ -607,7 +598,7 @@ function RegularBasicCleaningPage() {
               </span>
               <span>
                 {currencySymbol}
-                {(priceBreakdown.equipmentCosts * conversionRate).toFixed(2)}
+                {priceBreakdown.equipmentCosts.toFixed(2)}
               </span>
             </div>
           )}
@@ -622,11 +613,10 @@ function RegularBasicCleaningPage() {
           </div>
         </div>
 
-        {/* Book Now Button - Fixed for Mobile */}
+        {/* Book Now Button */}
         <button
-          className="w-full mt-8 bg-blue-900 text-white py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed bottom-0 z-10 left-0 shadow-lg"
+          className="w-full mt-8 bg-blue-900 text-white py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={!acceptTerms1 || !acceptTerms2}
-          style={{backgroundColor:"#1c398e"}}
           onClick={handleBookNow}
         >
           Book Now

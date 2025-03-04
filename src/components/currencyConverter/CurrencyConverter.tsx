@@ -28,7 +28,7 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({
   const fetchExchangeRates = async () => {
     try {
       const response = await fetch(
-        `https://api.exchangerate-api.com/v4/latest/EUR` 
+        `https://api.exchangerate-api.com/v4/latest/USD` 
       );
       const data = await response.json();
       setConversionRates(data.rates);

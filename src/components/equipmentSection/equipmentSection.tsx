@@ -41,7 +41,7 @@ const EquipmentSection: React.FC<EquipmentSectionProps> = ({
   onSolventChange,
   onEquipmentOptionChange,
   onEquipmentSelect,
-  currencySymbol = "€",
+  currencySymbol = "$",
   conversionRate = 1,
 }) => {
   const [cleaningSolvent, setCleaningSolvent] = useState("");
