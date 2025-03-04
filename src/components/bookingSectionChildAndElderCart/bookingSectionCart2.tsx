@@ -197,19 +197,11 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
     { value: "home", label: "Home" },
     { value: "apartment", label: "Apartment" },
     { value: "villa", label: "Villa" },
-    { value: "commercial property", label: "Commercial property" },
-    { value: "government office", label: "Government office" },
-    { value: "public office", label: "Public office" },
-    { value: "private office", label: "Private office " },
-    { value: "daycare centre", label: "Daycare centre " },
+    { value: "child care centre", label: "Child care centre " },
     { value: "elders care centre", label: "Elder's Care Centre" },
-    { value: "shopping mall", label: "Shopping mall" },
     { value: "government hospital", label: "Government hospital" },
     { value: "private hospital", label: "Private hospital" },
-    { value: "sport centre", label: "Sport centre" },
-    { value: "gym", label: "Gym " },
-    { value: "restaurant", label: "Restaurant" },
-    { value: "hotel", label: "Hotel" },
+    { value: "other", label: "Other" },
   ];
 
   return (

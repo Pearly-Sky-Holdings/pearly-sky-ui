@@ -1,19 +1,18 @@
 import {
-    Grid,
-    TextField,
-    Typography,
-    FormControl,
-    Paper,
-    FormLabel,
-  } from "@mui/material";
-  
-  
-  interface BillingDetailsFormProps {
-    setFormData: React.Dispatch<React.SetStateAction<any>>;
-    formData: any;
-  }
+  Grid,
+  TextField,
+  Typography,
+  FormControl,
+  Paper,
+  FormLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 
-
+interface BillingDetailsFormProps {
+  setFormData: React.Dispatch<React.SetStateAction<any>>;
+  formData: any;
+}
 
 interface BillingDetailsFormProps {
   setFormData: React.Dispatch<React.SetStateAction<any>>;
@@ -96,48 +95,94 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
             <FormLabel>
               Country / Region <span style={{ color: "red" }}>*</span>
             </FormLabel>
+            <Select
+              fullWidth
+              displayEmpty
+              variant="outlined"
+              size="small"
+              value={formData.country || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, country: e.target.value })
+              }
+              sx={{ borderRadius: "12px", border: "1px solid #0D90C8" }}
+            >
+              <MenuItem value="" disabled>
+                Select country/region
+              </MenuItem>
+              {[
+                "United States",
+                "Austria",
+                "Belgium",
+                "Canada",
+                "Denmark",
+                "United Kingdom",
+                "Australia",
+                "Germany",
+                "France",
+                "Italy",
+                "Spain",
+                "Netherlands",
+                "Brazil",
+                "India",
+                "Ireland",
+                "China",
+                "Japan",
+                "South Korea",
+                "Russia",
+                "Mexico",
+                "South Africa",
+                "Sweden",
+                "Switzerland",
+                "Norway",
+                "New Zealand",
+                "Singapore",
+                "United Arab Emirates",
+              ].map((country) => (
+                <MenuItem key={country} value={country}>
+                  {country}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+
+        {/* Address Fields */}
+        <Grid item xs={6}>
+          <FormControl fullWidth size="small">
+            <FormLabel>
+              Street Address <span style={{ color: "red" }}>*</span>
+            </FormLabel>
             <TextField
               fullWidth
-              placeholder="Enter country/region"
+              placeholder="Enter street address"
               variant="outlined"
               size="small"
               InputProps={{
                 sx: { borderRadius: "12px", border: "1px solid #0D90C8" },
               }}
               onChange={(e) =>
-                setFormData({ ...formData, country: e.target.value })
+                setFormData({ ...formData, street_address: e.target.value })
               }
             />
           </FormControl>
         </Grid>
-
-        {/* Address Fields */}
         <Grid item xs={6}>
-            <FormControl fullWidth size="small">
-              <FormLabel>Street Address <span style={{ color: "red" }}>*</span></FormLabel>
-              <TextField 
-                fullWidth 
-                placeholder="Enter street address" 
-                variant="outlined" 
-                size="small"
-                InputProps={{ sx: { borderRadius: "12px", border: "1px solid #0D90C8" } }} 
-                onChange={(e) => setFormData({ ...formData, street_address: e.target.value })}
-              />
-            </FormControl>
-          </Grid> 
-         <Grid item xs={6}>
-            <FormControl fullWidth size="small">
-              <FormLabel>Apartment, Suite, Unit (Optional)</FormLabel>
-              <TextField 
-                fullWidth 
-                placeholder="Enter apartment/suite" 
-                variant="outlined" 
-                size="small"
-                InputProps={{ sx: { borderRadius: "12px", border: "1px solid #0D90C8" } }} 
-                onChange={(e) => setFormData({ ...formData, apartment_type: e.target.value })}
-              />
-            </FormControl>
-          </Grid>
+          <FormControl fullWidth size="small">
+            <FormLabel>Apartment, Suite, Unit (Optional)</FormLabel>
+            <TextField
+              fullWidth
+              placeholder="Enter apartment/suite"
+              variant="outlined"
+              size="small"
+              InputProps={{
+                sx: { borderRadius: "12px", border: "1px solid #0D90C8" },
+              }}
+              onChange={(e) =>
+                setFormData({ ...formData, apartment_type: e.target.value })
+              }
+            />
+          </FormControl>
+        </Grid>
 
         {/* City & State */}
         <Grid item xs={6}>

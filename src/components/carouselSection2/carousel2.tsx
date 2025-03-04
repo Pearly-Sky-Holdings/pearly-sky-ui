@@ -26,14 +26,14 @@ const VideoFrame = ({ videoItems }: VideoFrameProps) => {
       {videoItems.slice(0, 2).map((item, index) => (
         <div
           key={index}
-          className="w-full md:w-1/2 h-[400px] rounded-2xl overflow-hidden shadow-lg transform transition-transform"
+          className="w-full md:w-1/2 rounded-2xl overflow-hidden shadow-lg transform transition-transform"
         >
           <video
             ref={(el) => {
               videoRefs.current[index] = el;
             }}
             src={item.video}
-            className="w-full h-full object-cover"
+            className="w-full h-[250px] md:h-[400px] object-cover rounded-2xl"
             autoPlay
             muted
             loop
