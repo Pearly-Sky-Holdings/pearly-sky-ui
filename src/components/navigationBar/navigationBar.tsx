@@ -34,9 +34,10 @@ export default function NavigationBar() {
     { label: "Services", path: "/services", isDropdown: true },
     { label: "Company", path: "https://pearlyskyplc.com" },
     { label: "Contact Us", path: "/contactUsPage" },
-    { label: "Careers", path: "/career" },
+    { label: "Careers", path: "/career" },    
+    { label: "About Us", path: "/aboutUs" },
     { label: "Our Locations", path: "/our-locations" },
-    { label: "About Us", path: "/about-us" },
+    { label: "Our Customers", path: "/customer_page" },
   ];
 
   const serviceDropdownItems = [

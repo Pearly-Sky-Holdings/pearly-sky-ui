@@ -35,6 +35,8 @@ import CleaningHospitality from "./pages/cleanServices/cleaningHospitality.tsx";
 import HygienePublicSpaces from "./pages/cleanServices/hygienePublicSpace.tsx";
 import CareerPage from "./pages/careerPage/careerPage.tsx";
 import SanitizationAndDisinfection from "./pages/servicesPages/SanitizationAndDisinfection.tsx";
+import CustomerPage from "./pages/customerPage/customerPage.tsx";
+import AboutUsPage from "./pages/aboutUsPage/aboutUsPage.tsx";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -266,7 +268,26 @@ function App() {
               </>
             }
           />
-
+          {/* Customer Page */}
+          <Route
+            path="/customer_page"
+            element={
+              <>
+                <CustomerPage/>                
+                <Footer />
+              </>
+            }
+          />
+          {/* AboutUs Page */}
+          <Route
+            path="/aboutUs"
+            element={
+              <>
+                <AboutUsPage/>                  
+                <Footer />
+              </>
+            }
+          />
           <Route path="/login" element={<LoginPage />} />
 
           <Route path="/checkout" element={<CheckoutPage />} />
