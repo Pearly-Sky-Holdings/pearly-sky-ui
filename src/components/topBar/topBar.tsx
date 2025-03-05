@@ -34,7 +34,8 @@ export default function TopBar() {
       <Toolbar 
         sx={{ 
           display: "flex", 
-          justifyContent: isMobile ? "center" : "space-between",
+          justifyContent: "space-between", // Space between left and right sections
+          alignItems: "center", // Vertically center items
           minHeight: "0.1vh", 
           paddingY: "0.1vh",
           px: isMobile ? 1 : 2
@@ -76,21 +77,17 @@ export default function TopBar() {
           </Box>
         )}
 
-        {/* Right Side - Social Media Links and Login Button */}
+        {/* Center - Social Media Icons */}
         <Box 
           sx={{ 
             display: "flex", 
             alignItems: "center",
-            gap: isMobile ? 1 : 2, // Add gap between login button and social icons
-            marginRight: isMobile ? 0 : "5%",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            py: { xs: 1, sm: 0 }
+            gap: isMobile ? 1 : 2, // Gap between icons
+            position: "absolute", // Position absolutely to center
+            left: isMobile ? "35%" : "70%", // Center horizontally
+            transform: "translateX(-50%)", // Adjust for exact center
           }}
         >
-          
-
-          {/* Social Media Icons */}
           {socialIcons.map(({ icon, link }) => (
             <IconButton
               key={link}
@@ -113,23 +110,32 @@ export default function TopBar() {
               <Box sx={{ fontSize: isMobile ? 16 : 20 }}>{icon}</Box>
             </IconButton>
           ))}
+        </Box>
 
-          <Box sx={{ display: "flex", gap: 2 }}></Box>
-          {/* Login Button */}
+        {/* Right Side - Login Button */}
+        <Box 
+          sx={{ 
+            display: "flex", 
+            alignItems: "center",
+            marginLeft: "auto", // Push the box to the right
+            marginRight: isMobile ? "8px" : "1%", // Add some margin for mobile
+          }}
+        >
           <Button
             variant="contained"
             sx={{
-              backgroundColor: "#002F6D", // Blue color
+              backgroundColor: "#002F6D",
               color: "white",
               borderRadius: "10px",
               textTransform: "none",
               fontWeight: "bold",
               padding: "6px 16px",
               "&:hover": {
-                backgroundColor: "#002F6D", // Darker blue on hover
+                backgroundColor: "#002F6D",
               },
+              px: isMobile ? 3 : 3, // Adjust horizontal padding for mobile
             }}
-            onClick= {() => navigate("/login")}
+            onClick={() => navigate("/login")}
           >
             Login
           </Button>

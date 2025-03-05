@@ -253,6 +253,11 @@ function OneTimeCleaningPage() {
           </p>
         </div>
       </div>
+      <div>
+        <h2 className="text-xl font-semibold mb-4 text-blue-900">
+          Package checklist
+        </h2>
+      </div>
 
       {/* Carousel Section */}
       <div>
