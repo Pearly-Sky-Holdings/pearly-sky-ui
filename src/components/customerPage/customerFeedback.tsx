@@ -5,8 +5,8 @@ import {
   Card,
   CardContent,
   Avatar,
-  TextField,
-  Button,
+  // TextField,
+  // Button,
   Rating,
 } from "@mui/material";
 
@@ -116,7 +116,7 @@ const CustomerFeedback: React.FC = () => {
       </Box>
 
       {/* Feedback Form */}
-      <Box
+      {/* <Box
         sx={{
           maxWidth: 600,
           mx: "auto",
@@ -170,7 +170,7 @@ const CustomerFeedback: React.FC = () => {
         >
           Submit Feedback
         </Button>
-      </Box>
+      </Box> */}
 
     </Box>
   );
