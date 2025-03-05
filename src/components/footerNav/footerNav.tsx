@@ -8,7 +8,10 @@ const FooterNav: React.FC = () => {
   const navigate = useNavigate();
   const [openServices, setOpenServices] = useState(false);
 
-  const toggleServices = () => setOpenServices(!openServices);
+  const toggleServices = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault(); // Prevent default behavior (navigation)
+    setOpenServices(!openServices);
+  };
 
   // Function to handle navigation to any page and scroll to top
   const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
@@ -16,7 +19,7 @@ const FooterNav: React.FC = () => {
     navigate(path);
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   };
 
@@ -26,42 +29,51 @@ const FooterNav: React.FC = () => {
         marginLeft: { xs: 0, md: 2 },
         display: "flex",
         flexDirection: "column",
-        alignItems: { xs: "center", md: "flex-start" },
+        alignItems: { xs: "center", md: "flex-start" }, // Center align on mobile, left align on desktop
       }}
     >
       <Stack spacing={2} alignItems={{ xs: "center", md: "flex-start" }}>
-        <Typography 
-          component="a" 
-          href="/" 
-          onClick={(e) => handleNavigation(e, '/')} 
+        <Typography
+          component="a"
+          href="/"
+          onClick={(e) => handleNavigation(e, "/")}
           sx={linkStyle}
         >
           Home
         </Typography>
-        
+
         {/* Services with Collapsible Dropdown */}
-        <Box>
+        <Box sx={{ textAlign: "center" }}> {/* Center the entire dropdown section */}
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
               cursor: "pointer",
               "&:hover": { opacity: 0.8 },
+              justifyContent: "center", // Center the Services label and arrow
             }}
-            onClick={toggleServices}
+            onClick={toggleServices} // Use the toggleServices function
           >
-            <Typography variant="body1">Services</Typography>
+            <Typography variant="body1" sx={linkStyle}>
+              Services
+            </Typography>
             {openServices ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </Box>
           {openServices && (
-            <Stack spacing={1} sx={{ pl: 2, mt: 1, fontSize: 1 }}>
+            <Stack
+              spacing={1}
+              sx={{
+                mt: 1,
+                alignItems: "center", // Center align dropdown items
+              }}
+            >
               {serviceLinks.map((service, index) => (
                 <Typography
                   key={index}
                   component="a"
                   href={service.path}
                   onClick={(e) => handleNavigation(e, service.path)}
-                  sx={{ ...linkStyle, fontSize: '0.7rem' }}
+                  sx={{ ...linkStyle, fontSize: "0.9rem" }}
                 >
                   {service.label}
                 </Typography>

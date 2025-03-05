@@ -1,22 +1,42 @@
-import { Box, Button, Typography, useTheme, useMediaQuery, IconButton } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { homePageImage1, homePageImage2, homePageImage3, homePageImage4 } from "../../config/images";
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { motion, AnimatePresence } from 'framer-motion';
-import './HomePage.css';
+import {
+  Box,
+  Button,
+  Typography,
+  useTheme,
+  useMediaQuery,
+  IconButton,
+  colors,
+} from "@mui/material";
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import {
+  homePageImage1,
+  homePageImage2,
+  homePageImage3,
+  homePageImage4,
+} from "../../config/images";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { motion, AnimatePresence } from "framer-motion";
+import "./HomePage.css";
 
 export default function HomePage() {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const allImages = [homePageImage1, homePageImage2, homePageImage3, homePageImage4];
-  const imagePairs = [[homePageImage1, homePageImage2], [homePageImage3, homePageImage4]];
+  const allImages = [
+    homePageImage1,
+    homePageImage2,
+    homePageImage3,
+    homePageImage4,
+  ];
+  const imagePairs = [
+    [homePageImage1, homePageImage2],
+    [homePageImage3, homePageImage4],
+  ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -25,14 +45,12 @@ export default function HomePage() {
         setTimeout(() => {
           setCurrentIndex((prevIndex) => (prevIndex + 1) % allImages.length);
           setIsAnimating(false);
-         
         }, 500);
       } else {
         setIsAnimating(true);
         setTimeout(() => {
           setCurrentIndex((prevIndex) => (prevIndex + 1) % imagePairs.length);
           setIsAnimating(false);
-         
         }, 500);
       }
     }, 5000);
@@ -44,20 +62,18 @@ export default function HomePage() {
     if (isMobile && !isAnimating) {
       setIsAnimating(true);
       setTimeout(() => {
-        setCurrentIndex((prevIndex) => 
+        setCurrentIndex((prevIndex) =>
           prevIndex === 0 ? allImages.length - 1 : prevIndex - 1
         );
         setIsAnimating(false);
-       
       }, 500);
     } else if (!isMobile && !isAnimating) {
       setIsAnimating(true);
       setTimeout(() => {
-        setCurrentIndex((prevIndex) => 
+        setCurrentIndex((prevIndex) =>
           prevIndex === 0 ? imagePairs.length - 1 : prevIndex - 1
         );
         setIsAnimating(false);
-       
       }, 500);
     }
   };
@@ -72,46 +88,48 @@ export default function HomePage() {
           setCurrentIndex((prevIndex) => (prevIndex + 1) % imagePairs.length);
         }
         setIsAnimating(false);
-        
       }, 500);
     }
   };
 
   return (
-    <Box sx={{ 
-      textAlign: 'center', 
-      p: isMobile ? 2 : 6,
-      width: '100%',
-      boxSizing: 'border-box'
-    }}>
-      
+    <Box
+      sx={{
+        textAlign: "center",
+        p: isMobile ? 2 : 6,
+        width: "100%",
+        boxSizing: "border-box",
+      }}
+    >
       {/* Header */}
-      <Typography 
-        variant={isMobile ? "h5" : "h4"} 
-        sx={{ 
-          fontWeight: 'bold', 
-          color: '#002F6D', 
+      <Typography
+        variant={isMobile ? "h5" : "h4"}
+        sx={{
+          fontWeight: "bold",
+          background: "linear-gradient(90deg, #002F6D, #0D90C8)", // Gradient from #002F6D to #0D90C8
+          WebkitBackgroundClip: "text", // Clip the background to the text
+          WebkitTextFillColor: "transparent", // Make the text transparent
           mb: 2,
           mt: 5,
-          px: isMobile ? 2 : 0
+          px: isMobile ? 2 : 0,
         }}
       >
         Welcome to Pearly Sky Cleaning Services
       </Typography>
 
       {/* Sub-description */}
-      <Typography 
-        variant={isMobile ? "body1" : "h6"} 
-        sx={{ 
-          color: '#555', 
-          mb: 3, 
-          maxWidth: '700px', 
-          margin: 'auto',
-          px: isMobile ? 2 : 0
+      <Typography
+        variant={isMobile ? "body1" : "h6"}
+        sx={{
+          color: "#555",
+          mb: 3,
+          maxWidth: "700px",
+          margin: "auto",
+          px: isMobile ? 2 : 0,
         }}
       >
-        You are our most valued asset at PearlySky Company Pvt. Ltd. 
-        We are committed to providing you with the best care and service.
+        You are our most valued asset at PearlySky Company Pvt. Ltd. We are
+        committed to providing you with the best care and service.
       </Typography>
 
       {/* Contact Us Button */}
@@ -120,14 +138,14 @@ export default function HomePage() {
         component={Link}
         to="/contactUsPage"
         sx={{
-          backgroundColor: '#002F6D', 
-          borderRadius: '12px', 
-          padding: '6px 20px',
-          fontSize: isMobile ? '14px' : '16px',
-          textTransform: 'none',
-          marginTop: '3%',
-          fontWeight: 'bold',
-          '&:hover': { backgroundColor: '#125ea6' }, 
+          backgroundColor: "#002F6D",
+          borderRadius: "12px",
+          padding: "6px 20px",
+          fontSize: isMobile ? "14px" : "16px",
+          textTransform: "none",
+          marginTop: "3%",
+          fontWeight: "bold",
+          "&:hover": { backgroundColor: "#125ea6" },
         }}
       >
         Contact Us
@@ -137,113 +155,120 @@ export default function HomePage() {
       <Box sx={{ height: isMobile ? 2 : 1 }} />
 
       {/* Images Section */}
-      <Box sx={{ 
-        mt: 5,
-        px: isMobile ? 2 : 0,
-        position: 'relative',
-        overflow: 'hidden'
-      }}>
+      <Box
+        sx={{
+          mt: 5,
+          px: isMobile ? 2 : 0,
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
         {isMobile ? (
           // Mobile View - Single Image Carousel
-          <Box sx={{ position: 'relative', height: '300px', mb: 4 }}>
+          <Box sx={{ position: "relative", height: "300px", mb: 4 }}>
             <AnimatePresence>
-              {allImages.map((imgSrc, i) => (
-                currentIndex === i && (
-                  <motion.div 
-                    key={i}
-                    className={`image-container ${isAnimating ? 'animating' : ''}`}
-                    initial={{ opacity: 0, filter: 'blur(10px)' }}
-                    animate={{ 
-                      opacity: 1, 
-                      filter: 'blur(0px)',
-                      transition: { duration: 0.8 }
-                    }}
-                    exit={{ 
-                      opacity: 0, 
-                      filter: 'blur(10px)',
-                      transition: { duration: 0.5 }
-                    }}
-                    style={{
-                      position: 'absolute',
-                      width: '100%',
-                      height: '300px',
-                      borderRadius: '12px',
-                      overflow: 'hidden',
-                      boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
-                    }}
-                  >
-                    <div className="image-background-animation">
-                      <img
-                        src={imgSrc}
-                        alt={`homePageImage${i}`}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                        }}
-                      />
-                    </div>
-                  </motion.div>
-                )
-              ))}
+              {allImages.map(
+                (imgSrc, i) =>
+                  currentIndex === i && (
+                    <motion.div
+                      key={i}
+                      className={`image-container ${
+                        isAnimating ? "animating" : ""
+                      }`}
+                      initial={{ opacity: 0, filter: "blur(10px)" }}
+                      animate={{
+                        opacity: 1,
+                        filter: "blur(0px)",
+                        transition: { duration: 0.8 },
+                      }}
+                      exit={{
+                        opacity: 0,
+                        filter: "blur(10px)",
+                        transition: { duration: 0.5 },
+                      }}
+                      style={{
+                        position: "absolute",
+                        width: "100%",
+                        height: "300px",
+                        borderRadius: "12px",
+                        overflow: "hidden",
+                        boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
+                      }}
+                    >
+                      <div className="image-background-animation">
+                        <img
+                          src={imgSrc}
+                          alt={`homePageImage${i}`}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                          }}
+                        />
+                      </div>
+                    </motion.div>
+                  )
+              )}
             </AnimatePresence>
 
             {/* Navigation Icons */}
             <IconButton
               onClick={handlePrevImage}
               sx={{
-                position: 'absolute',
-                left: '10px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                backgroundColor: 'rgba(255, 255, 255, 0.7)',
-                '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                position: "absolute",
+                left: "10px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                backgroundColor: "rgba(255, 255, 255, 0.7)",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 255, 255, 0.9)",
                 },
-                zIndex: 2
+                zIndex: 2,
               }}
             >
-              <ChevronLeftIcon sx={{ color: '#002F6D' }} />
+              <ChevronLeftIcon sx={{ color: "#002F6D" }} />
             </IconButton>
 
             <IconButton
               onClick={handleNextImage}
               sx={{
-                position: 'absolute',
-                right: '10px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                backgroundColor: 'rgba(255, 255, 255, 0.7)',
-                '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                position: "absolute",
+                right: "10px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                backgroundColor: "rgba(255, 255, 255, 0.7)",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 255, 255, 0.9)",
                 },
-                zIndex: 2
+                zIndex: 2,
               }}
             >
-              <ChevronRightIcon sx={{ color: '#002F6D' }} />
+              <ChevronRightIcon sx={{ color: "#002F6D" }} />
             </IconButton>
 
             {/* Image Navigation Dots */}
-            <Box sx={{
-              position: 'absolute',
-              bottom: '15px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              display: 'flex',
-              gap: '8px',
-              zIndex: 1
-            }}>
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: "15px",
+                left: "50%",
+                transform: "translateX(-50%)",
+                display: "flex",
+                gap: "8px",
+                zIndex: 1,
+              }}
+            >
               {allImages.map((_, i) => (
                 <Box
                   key={i}
                   onClick={() => !isAnimating && setCurrentIndex(i)}
                   sx={{
-                    width: '8px',
-                    height: '8px',
-                    borderRadius: '50%',
-                    backgroundColor: currentIndex === i ? '#002F6D' : '#BBB',
-                    cursor: 'pointer',
-                    transition: 'background-color 0.3s ease'
+                    width: "8px",
+                    height: "8px",
+                    borderRadius: "50%",
+                    backgroundColor: currentIndex === i ? "#002F6D" : "#BBB",
+                    cursor: "pointer",
+                    transition: "background-color 0.3s ease",
                   }}
                 />
               ))}
@@ -251,52 +276,54 @@ export default function HomePage() {
           </Box>
         ) : (
           // Desktop View - Image Pairs
-          <Box sx={{ 
-            display: 'flex',
-            justifyContent: 'center', 
-            gap: 2,
-            position: 'relative',
-          }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              gap: 2,
+              position: "relative",
+            }}
+          >
             <IconButton
               onClick={handlePrevImage}
               sx={{
-                position: 'absolute',
-                left: '-20px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                backgroundColor: 'rgba(255, 255, 255, 0.7)',
-                '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                position: "absolute",
+                left: "-20px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                backgroundColor: "rgba(255, 255, 255, 0.7)",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 255, 255, 0.9)",
                 },
-                zIndex: 2
+                zIndex: 2,
               }}
             >
-              <ChevronLeftIcon sx={{ color: '#002F6D' }} />
+              <ChevronLeftIcon sx={{ color: "#002F6D" }} />
             </IconButton>
 
             <AnimatePresence>
               {imagePairs[currentIndex].map((imgSrc, i) => (
-                <motion.div 
+                <motion.div
                   key={i}
                   className="image-container"
-                  initial={{ opacity: 0, filter: 'blur(10px)', scale: 0.95 }}
-                  animate={{ 
-                    opacity: 1, 
-                    filter: 'blur(0px)', 
+                  initial={{ opacity: 0, filter: "blur(10px)", scale: 0.95 }}
+                  animate={{
+                    opacity: 1,
+                    filter: "blur(0px)",
                     scale: 1,
-                    transition: { duration: 0.8 }
+                    transition: { duration: 0.8 },
                   }}
-                  exit={{ 
-                    opacity: 0, 
-                    filter: 'blur(10px)', 
+                  exit={{
+                    opacity: 0,
+                    filter: "blur(10px)",
                     scale: 0.95,
-                    transition: { duration: 0.5 }
+                    transition: { duration: 0.5 },
                   }}
-                  style={{ 
-                    width: '45%',
-                    height: '400px',
-                    overflow: 'hidden', 
-                    borderRadius: '12px',
+                  style={{
+                    width: "45%",
+                    height: "400px",
+                    overflow: "hidden",
+                    borderRadius: "12px",
                     boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
                   }}
                 >
@@ -305,9 +332,9 @@ export default function HomePage() {
                       src={imgSrc}
                       alt={`homePageImage${i}`}
                       style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
                       }}
                     />
                   </div>
@@ -318,41 +345,43 @@ export default function HomePage() {
             <IconButton
               onClick={handleNextImage}
               sx={{
-                position: 'absolute',
-                right: '-20px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                backgroundColor: 'rgba(255, 255, 255, 0.7)',
-                '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                position: "absolute",
+                right: "-20px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                backgroundColor: "rgba(255, 255, 255, 0.7)",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 255, 255, 0.9)",
                 },
-                zIndex: 2
+                zIndex: 2,
               }}
             >
-              <ChevronRightIcon sx={{ color: '#002F6D' }} />
+              <ChevronRightIcon sx={{ color: "#002F6D" }} />
             </IconButton>
 
             {/* Image Navigation Dots */}
-            <Box sx={{
-              position: 'absolute',
-              bottom: '-25px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              display: 'flex',
-              gap: '8px',
-              zIndex: 1
-            }}>
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: "-25px",
+                left: "50%",
+                transform: "translateX(-50%)",
+                display: "flex",
+                gap: "8px",
+                zIndex: 1,
+              }}
+            >
               {imagePairs.map((_, i) => (
                 <Box
                   key={i}
                   onClick={() => !isAnimating && setCurrentIndex(i)}
                   sx={{
-                    width: '8px',
-                    height: '8px',
-                    borderRadius: '50%',
-                    backgroundColor: currentIndex === i ? '#002F6D' : '#BBB',
-                    cursor: 'pointer',
-                    transition: 'background-color 0.3s ease'
+                    width: "8px",
+                    height: "8px",
+                    borderRadius: "50%",
+                    backgroundColor: currentIndex === i ? "#002F6D" : "#BBB",
+                    cursor: "pointer",
+                    transition: "background-color 0.3s ease",
                   }}
                 />
               ))}

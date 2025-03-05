@@ -122,7 +122,7 @@ const WorkShowcase = () => {
                 sx={{
                   width: '100%',
                   height: '100%',
-                  objectFit: 'cover',
+                  objectFit: 'fill',
                   borderRadius: 2,
                   boxShadow: index === 1 
                     ? '0 20px 40px rgba(0,0,0,0.3), 0 15px 12px rgba(0,0,0,0.22)'
