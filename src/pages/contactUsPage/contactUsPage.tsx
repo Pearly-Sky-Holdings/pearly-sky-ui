@@ -1,6 +1,9 @@
 import React from "react";
+import UiContactUsPage from "../../pages/HomeContactUsPage/uiContactUsPage.tsx";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import PhoneIcon from "@mui/icons-material/Phone";
+
 import {
-  Container,
   Grid,
   Typography,
   Box,
@@ -8,7 +11,7 @@ import {
   useTheme,
 } from "@mui/material";
 import CountryCard from "../../components/contactUsCountryCards/contactUsCountryCards";
-import { contactImage1, worldMapVideo } from "../../config/images.ts";
+import {  worldMapVideo } from "../../config/images.ts";
 const emailIcon = "./images/uiContactUs/mailicon.png";
 
 const countries = [
@@ -70,92 +73,21 @@ const ContactUsPage: React.FC = () => {
   const rightColumnCountries = countries.slice(midPoint);
 
   return (
-    <Container sx={{ minHeight: "100vh", py: 5 }}>
+    <Box sx={{ py: 5 ,backgroundColor:"white",px:3}}>
+    
       <Typography
-        variant="h4"
+        variant="h3"
         align="center"
         fontWeight="bold"
         color="#002F6D"
-        sx={{ mb: 3 }}
+        sx={{ mb: 1 }}
       >
         Contact Us
       </Typography>
+      <UiContactUsPage/>
 
-      {/* Images Section - Top Row */}
-      <Grid container spacing={3} sx={{ mb: 5 }}>
-        <Grid item xs={12} md={6}>
-          <Box
-            component="img"
-            src={contactImage1}
-            alt="Customer Support"
-            sx={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              borderRadius: "12px",
-              boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
-              transition:
-                "transform 0.3s ease-in-out, boxShadow 0.3s ease-in-out",
-              "&:hover": { transform: "scale(1.01)" },
-            }}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Box
-            sx={{
-              width: "100%",
-              height: "100%",
-              borderRadius: "12px",
-              overflow: "hidden",
-              boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
-              transition: "transform 0.3s ease-in-out",
-              position: "relative",
-              "&:hover": {
-                transform: "scale(1.01)",
-              },
-            }}
-          >
-            <video
-              src={worldMapVideo}
-              autoPlay
-              loop
-              muted
-              playsInline
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: isMobile ? "contain" : "cover",
-                borderRadius: "12px",
-              }}
-            />
-          </Box>
-        </Grid>
-      </Grid>
-
-      {/* Countries List - Two Columns */}
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
-          {leftColumnCountries.map((country, index) => (
-            <CountryCard key={index} {...country} />
-          ))}
-        </Grid>
-        <Grid item xs={12} md={6}>
-          {rightColumnCountries.map((country, index) => (
-            <CountryCard key={index + midPoint} {...country} />
-          ))}
-        </Grid>
-      </Grid>
-
-      {/* Email Section - Now Responsive */}
-      <Box sx={{ mt: 5, textAlign: "center" }}>
-        <Typography
-          variant="h5"
-          fontWeight="bold"
-          color="#002F6D"
-          sx={{ mb: 3 }}
-        >
-          Get in Touch
-        </Typography>
+       {/* Email Section - Now Responsive */}
+       <Box sx={{ mt: 1, textAlign: "center",mb:5 }}>
         <Grid
           container
           spacing={isMobile ? 2 : 1}
@@ -182,10 +114,8 @@ const ContactUsPage: React.FC = () => {
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  padding: "10px",
-                  border: "1px solid #ddd",
+                  padding: "20px",
                   borderRadius: "8px",
-                  boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
                   transition: "transform 0.3s ease-in-out",
                   "&:hover": { transform: "scale(1.05)" },
                   width: isMobile ? "100%" : "auto",
@@ -213,7 +143,149 @@ const ContactUsPage: React.FC = () => {
           ))}
         </Grid>
       </Box>
-    </Container>
+
+      {/* Images Section - Top Row */}
+      <Grid container spacing={3} sx={{ mb: 5, px: 3 }}>
+            {/* Video Section */}
+            <Grid item xs={12} md={6}>
+              <Box
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "12px",
+                  overflow: "hidden",
+                  boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
+                  transition: "transform 0.3s ease-in-out",
+                  position: "relative",
+                  "&:hover": {
+                    transform: "scale(1.01)",
+                  },
+                }}
+              >
+                <video
+                  src={worldMapVideo}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: isMobile ? "contain" : "cover",
+                    borderRadius: "12px",
+                  }}
+                />
+              </Box>
+            </Grid>
+
+                          
+              {/* Contact Info Section */}
+            <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: 3 }}>
+              {/* Hotline */}
+              <Box
+                component="a"
+                href="tel:+94775678335"
+                sx={{
+                  textDecoration: "none",
+                  color: "inherit",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  padding: 2,
+                  borderRadius: "12px",
+                  backgroundColor: "#F3F8FF",      
+                  transition: "all 0.3s ease-in-out",
+                  "&:hover": {        
+                    transform: "scale(1.05)",        
+                  },
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "40px",
+                    height: "40px",
+                    borderRadius: "50%",
+                    backgroundColor: "#D0E8FF",
+                    mb: 1,
+                  }}
+                >
+                  <PhoneIcon fontSize="medium" sx={{ color: "#002F6D" }} />
+                </Box>
+                <Typography variant="body1" fontWeight="bold" color="#002F6D">
+                  Our Hotline Number
+                </Typography>
+                <Typography variant="body2" color="black">
+                  +94775678335
+                </Typography>
+              </Box>
+
+              {/* WhatsApp */}
+              <Box
+                component="a"
+                href="https://wa.me/94775678335"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  textDecoration: "none",
+                  color: "inherit",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  padding: 2,
+                  borderRadius: "12px",
+                  backgroundColor: "#F3F8FF",
+                
+                  transition: "all 0.3s ease-in-out",
+                  "&:hover": {
+                    
+                    transform: "scale(1.05)",
+                  
+                  },
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "40px",
+                    height: "40px",
+                    borderRadius: "50%",
+                    backgroundColor: "#D0E8FF",
+                    mb: 1,
+                  }}
+                >
+                  <WhatsAppIcon fontSize="medium" sx={{ color: "#002F6D" }} />
+                </Box>
+                <Typography variant="body1" fontWeight="bold" color="#002F6D">
+                  Our WhatsApp Number
+                </Typography>
+                <Typography variant="body2" color="black">
+                  +94775678335
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>         
+
+
+      {/* Countries List - Two Columns */}
+      <Grid container spacing={3} sx={{ py: 5 ,px:3}}>
+        <Grid item xs={12} md={6}>
+          {leftColumnCountries.map((country, index) => (
+            <CountryCard key={index} {...country} />
+          ))}
+        </Grid>
+        <Grid item xs={12} md={6}>
+          {rightColumnCountries.map((country, index) => (
+            <CountryCard key={index + midPoint} {...country} />
+          ))}
+        </Grid>
+      </Grid> 
+
+    </Box>
   );
 };
 
