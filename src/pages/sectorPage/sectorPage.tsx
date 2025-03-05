@@ -11,7 +11,7 @@ import {
   privateProperties,
   retail,
   sports,
-  residential
+  residential,
 } from "../../config/images";
 
 const sectors = [
@@ -25,7 +25,7 @@ const sectors = [
     description: "Elevating performance and passion through every game.",
     image: sports,
   },
- {
+  {
     title: "Private Properties",
     description: "Exclusive spaces tailored for comfort and luxury.",
     image: privateProperties,
@@ -45,21 +45,16 @@ const sectors = [
     description: "Empowering minds through knowledge and innovation.",
     image: sectorImage4,
   },
-{
+  {
     title: "Healthcare",
     description: "Transforming healthcare for a healthier tomorrow.",
     image: healthcare,
   },
-{
+  {
     title: "Finance",
     description: "Unlocking financial growth and security.",
     image: finance,
   },
-// {
-//     title: "Government",
-//     description: "Shaping effective governance for a better society.",
-//     image: "",
-//   },
   {
     title: "Leisure & Hospitality",
     description: "Elevating experiences in leisure and hospitality.",
@@ -74,7 +69,7 @@ const sectors = [
     title: "Retail",
     description: "Redefining the shopping experience with innovation and convenience.",
     image: retail,
-  }
+  },
 ];
 
 const OurSector = () => {
@@ -143,12 +138,12 @@ const OurSector = () => {
             <Card
               key={index}
               sx={{
-                minWidth: 200, 
+                minWidth: 200,
                 maxWidth: 250,
                 borderRadius: 6,
                 display: "flex",
                 flexDirection: "column",
-                height: { xs: "400px", sm: "450px", md: "400px" },
+                height: { xs: "350px", sm: "400px", md: "350px" }, // Reduced height
                 boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
                 transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
                 "&:hover": {
@@ -163,9 +158,9 @@ const OurSector = () => {
                 sx={{
                   borderTopLeftRadius: "130%",
                   borderTopRightRadius: "130%",
-                  height: { xs: "50%", sm: "60%" },
+                  height: { xs: "45%", sm: "50%" }, // Reduced image height
                   objectFit: "cover",
-                  padding: { xs: "1vh", sm: "2vh", md: "3vh" },
+                  padding: { xs: "0.5vh", sm: "1vh", md: "1.5vh" }, // Reduced padding
                 }}
                 image={sector.image}
                 alt={sector.title}
@@ -176,7 +171,7 @@ const OurSector = () => {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
-                  padding: { xs: 1, sm: 2, },
+                  padding: { xs: "8px", sm: "12px" }, // Reduced padding
                 }}
               >
                 <Typography

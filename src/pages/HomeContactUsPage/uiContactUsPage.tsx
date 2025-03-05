@@ -108,7 +108,7 @@ const UIContactUs: React.FC = () => {
               "&:hover": { backgroundColor: "#008CDA" },
             }}
           >
-            Contact Us
+            Submit
           </Button>
           </form>
         </div>
