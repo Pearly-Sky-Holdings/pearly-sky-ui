@@ -134,6 +134,8 @@ export const elderCareVideo: string = "/video/carousel/carouselVideo3(elder).mp4
 export const airbnbVideo2: string = "/video/carousel/carouselVideo1(Airbnb2).mp4";
 export const childCareVideo2: string = "/video/carousel/carouselVideo2(child2).mp4";
 export const elderCareVideo2: string = "/video/carousel/carouselVideo3(elder2).mp4";
+export const worldMapVideo: string = "/video/uiContactUs/flags.mp4";
+
 
 //one time cleaning
 export const OneTimeService1: string = "/images/service/oneTime/oneTimeCleaner.png";

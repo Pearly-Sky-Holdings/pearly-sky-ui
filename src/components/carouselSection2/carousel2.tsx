@@ -1,4 +1,5 @@
 import { useRef, useEffect } from "react";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 
 interface VideoItem {
   video: string;
@@ -11,6 +12,8 @@ interface VideoFrameProps {
 const VideoFrame = ({ videoItems }: VideoFrameProps) => {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   useEffect(() => {
     videoRefs.current.forEach((video) => {
       if (video) {
@@ -22,25 +25,60 @@ const VideoFrame = ({ videoItems }: VideoFrameProps) => {
   }, []);
 
   return (
-    <div className="flex flex-col md:flex-row justify-center items-center gap-4 p-4 bg-gray-100">
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: {
+          xs: "column",
+          md: "row",
+        },
+        justifyContent: "center",
+        alignItems: "center",
+        gap: 2,
+        p: 2,
+        bgcolor: "grey.100",
+      }}
+    >
       {videoItems.slice(0, 2).map((item, index) => (
-        <div
+        <Box
           key={index}
-          className="w-full md:w-1/2 h-[400px] rounded-2xl overflow-hidden shadow-lg transform transition-transform"
+          sx={{
+            width: {
+              xs: "100%",
+              md: "50%",
+            },
+            height: {
+              xs: "250px",
+              md: "400px",
+            },
+            borderRadius: "12px",
+            overflow: "hidden",
+            boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
+            transition: "transform 0.3s ease-in-out",
+            "&:hover": {
+              transform: "scale(1.01)",
+            },
+          }}
         >
           <video
             ref={(el) => {
               videoRefs.current[index] = el;
             }}
             src={item.video}
-            className="w-full h-full object-cover"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: isMobile ? "contain" : "fill",
+              borderRadius: "12px",
+            }}
             autoPlay
             muted
             loop
+            playsInline
           />
-        </div>
+        </Box>
       ))}
-    </div>
+    </Box>
   );
 };
 

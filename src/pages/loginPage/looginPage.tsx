@@ -95,6 +95,7 @@ const LoginPage = () => {
                   backgroundImage: `url(${loginPageImage})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
+                  
                 }}
               />
 
@@ -109,17 +110,24 @@ const LoginPage = () => {
                 }}
               >
                 {/* Logo */}
-                <Box sx={{ textAlign: "center", mb: 2 }}>
-                  <img 
-                    src="/images/logo.png" 
-                    alt="Logo" 
-                    style={{ 
-                      width: isMobile ? 80 : 100,
-                      height: "auto" 
-                    }} 
-                  />
-                </Box>
-
+                <Box 
+                    sx={{ 
+                      display: "flex", 
+                      justifyContent: "center", 
+                      alignItems: "center", 
+                      mb: 2 
+                    }}
+                  >
+                    <img 
+                      src="/images/logo.png" 
+                      alt="Logo" 
+                      style={{ 
+                        width: isMobile ? 80 : 100,
+                        height: "auto",
+                      }} 
+                    />
+                  </Box>
+                  
                 <Typography 
                   variant={isMobile ? "h6" : "h5"} 
                   fontWeight="semibold" 
