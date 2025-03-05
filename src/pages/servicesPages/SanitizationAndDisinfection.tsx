@@ -366,6 +366,7 @@ function SanitizationAndDisinfection() {
           className="w-full mt-8 bg-blue-900 text-white py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={!acceptTerms1 || !acceptTerms2}
           onClick={handleBookNow}
+          style={{backgroundColor:"#1c398e"}}
         >
           Book Now
         </button>
