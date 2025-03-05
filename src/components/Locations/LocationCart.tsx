@@ -6,7 +6,11 @@ type Location = {
     id: string;
     name: string;
     flag: string; // Assuming this is the image URL
-    email?: string;
+    email1?: string;
+    email2?: string;
+    email3?: string;
+    email4?: string;
+    email5?: string;
     address?: string;
     serviceCities?: string[];
 };
@@ -48,10 +52,34 @@ function LocationCard({
 
             {isExpanded && (
                 <div className="mt-4 space-y-4">
-                    {location.email && (
+                    {location.email1 && (
                         <div className="flex items-center space-x-2 text-gray-500">
                             <Mail size={24} />
-                            <span>{location.email}</span>
+                            <span>{location.email1}</span>
+                        </div>
+                    )}
+                    {location.email2 && (
+                        <div className="flex items-center space-x-2 text-gray-500">
+                            <Mail size={24} />
+                            <span>{location.email2}</span>
+                        </div>
+                    )}
+                    {location.email3 && (
+                        <div className="flex items-center space-x-2 text-gray-500">
+                            <Mail size={24} />
+                            <span>{location.email3}</span>
+                        </div>
+                    )}
+                    {location.email4 && (
+                        <div className="flex items-center space-x-2 text-gray-500">
+                            <Mail size={24} />
+                            <span>{location.email4}</span>
+                        </div>
+                    )}
+                    {location.email5 && (
+                        <div className="flex items-center space-x-2 text-gray-500">
+                            <Mail size={24} />
+                            <span>{location.email5}</span>
                         </div>
                     )}
                     {location.address && (
