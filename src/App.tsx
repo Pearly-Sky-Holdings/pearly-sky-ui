@@ -223,7 +223,7 @@ function App() {
             element={
               <>
                 <CleaningIndustryRegulation />
-                <UiContactUsPage />
+                
                 <Footer />
               </>
             }
@@ -233,7 +233,7 @@ function App() {
             element={
               <>
                 <RoboticsCleaning />
-                <UiContactUsPage />
+                
                 <Footer />
               </>
             }
@@ -243,11 +243,23 @@ function App() {
             element={
               <>
                 <CleaningHospitality />
-                <UiContactUsPage />
+                
                 <Footer />
               </>
             }
           />
+          
+          <Route
+            path="/hygiene-public-spaces"
+            element={
+              <>
+                <HygienePublicSpaces />
+                
+                <Footer />
+              </>
+            }
+          />
+
           {/* Career Page */}
           <Route
             path="/career"
@@ -258,16 +270,7 @@ function App() {
               </>
             }
           />
-          <Route
-            path="/hygiene-public-spaces"
-            element={
-              <>
-                <HygienePublicSpaces />
-                <UiContactUsPage />
-                <Footer />
-              </>
-            }
-          />
+
           {/* Customer Page */}
           <Route
             path="/customer_page"
