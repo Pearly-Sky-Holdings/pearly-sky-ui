@@ -47,34 +47,48 @@ const allServices = [
 
 const ServicesCarousel = ({ index = 0 }) => {
   const [currentIndex, setCurrentIndex] = useState(index);
+  const [slidesToShow, setSlidesToShow] = useState(1);
   const carouselRef = useRef(null);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 640) {
+        setSlidesToShow(2);
+      } else {
+        setSlidesToShow(1);
+      }
+    };
+
+    handleResize(); // Set initial value
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : allServices.length - 1));
+    setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : allServices.length - slidesToShow));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex < allServices.length - 1 ? prevIndex + 1 : 0));
+    setCurrentIndex((prevIndex) => (prevIndex < allServices.length - slidesToShow ? prevIndex + 1 : 0));
   };
 
   // Auto-rotation effect
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % allServices.length);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % (allServices.length - slidesToShow + 1));
     }, 3000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [slidesToShow]);
 
   return (
     <div className="relative mb-8">
       <div className="flex overflow-hidden" ref={carouselRef}>
-        {allServices.map((item, idx) => (
+        {allServices.slice(currentIndex, currentIndex + slidesToShow).map((item, idx) => (
           <div
             key={item.title}
-            className={`w-full sm:w-1/2 relative flex-shrink-0 ${
-              idx === currentIndex ? "block" : "hidden"
-            }`}
+            className="w-full sm:w-1/2 relative flex-shrink-0"
           >
             <img
               src={item.img}
