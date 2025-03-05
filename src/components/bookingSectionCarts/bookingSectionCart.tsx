@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Dropdown from "../dropDown/dropDown";
 import { FaMinus, FaPlus } from "react-icons/fa";
+import { Info as InfoIcon } from "@mui/icons-material";
 
 interface BookingSectionCartProps {
   propertySize: string;
