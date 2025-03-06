@@ -4,10 +4,26 @@ import {
   Grid,
   MenuItem,
   Select,
-  FormControl,
-  Button,
+  FormControl,  
   Typography,
 } from "@mui/material";
+import { styled } from "@mui/system";
+
+
+const StyledTextField = styled(TextField)({
+  '& .MuiOutlinedInput-root': {
+    borderRadius: '12px',
+    '& fieldset': {
+      borderColor: 'blue',
+    },
+    '&:hover fieldset': {
+      borderColor: 'darkblue',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: 'blue',
+    },
+  },
+});
 
 const prefixes = ["Mr.", "Ms.", "Mrs.", "Dr."];
 const countries = [
@@ -56,11 +72,12 @@ const PersonalInformationForm = () => {
   );
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Typography variant="h6" gutterBottom>
+    <form onSubmit={handleSubmit(onSubmit)} 
+    style={{color:"black"}}>
+      <Typography variant="h5" gutterBottom sx={{mb:5, textDecoration:'underline'}}>
         Personal Information
       </Typography>
-      <Grid container spacing={2}>
+      <Grid container spacing={3}>
         {/* Prefix */}
         <Grid item xs={12} sm={2}>
           {renderLabel("Prefix")}
@@ -69,7 +86,19 @@ const PersonalInformationForm = () => {
               name="prefix"
               control={control}
               render={({ field }) => (
-                <Select {...field} displayEmpty>
+                <Select {...field} displayEmpty
+                sx={{
+                  borderRadius: '12px',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'blue',
+                  },
+                  '&:hover .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'darkblue',
+                  },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'blue',
+                  },
+                }}>
                   <MenuItem value="" disabled>
                     Select Prefix
                   </MenuItem>
@@ -92,12 +121,12 @@ const PersonalInformationForm = () => {
             control={control}
             rules={{ required: "First Name is required" }}
             render={({ field }) => (
-              <TextField
+              <StyledTextField
                 {...field}
                 placeholder="Ex: John"
                 fullWidth
                 error={!!errors.firstName}
-                helperText={errors.firstName?.message}
+                helperText={errors.firstName?.message}                
               />
             )}
           />
@@ -110,7 +139,8 @@ const PersonalInformationForm = () => {
             name="middleName"
             control={control}
             render={({ field }) => (
-              <TextField {...field} placeholder="Ex: Michael" fullWidth />
+              <StyledTextField {...field} placeholder="Ex: Michael" fullWidth 
+          />
             )}
           />
         </Grid>
@@ -123,12 +153,12 @@ const PersonalInformationForm = () => {
             control={control}
             rules={{ required: "Last Name is required" }}
             render={({ field }) => (
-              <TextField
+              <StyledTextField
                 {...field}
                 placeholder="Ex: Doe"
                 fullWidth
                 error={!!errors.lastName}
-                helperText={errors.lastName?.message}
+                helperText={errors.lastName?.message}                
               />
             )}
           />
@@ -148,12 +178,12 @@ const PersonalInformationForm = () => {
               },
             }}
             render={({ field }) => (
-              <TextField
+              <StyledTextField
                 {...field}
                 placeholder="Ex: john@gmail.com"
                 fullWidth
                 error={!!errors.email}
-                helperText={errors.email?.message}
+                helperText={errors.email?.message}                
               />
             )}
           />
@@ -172,12 +202,12 @@ const PersonalInformationForm = () => {
               },
             }}
             render={({ field }) => (
-              <TextField
+              <StyledTextField
                 {...field}
                 placeholder="Ex: +1 300 400 5000"
                 fullWidth
                 error={!!errors.phone}
-                helperText={errors.phone?.message}
+                helperText={errors.phone?.message}               
               />
             )}
           />
@@ -191,12 +221,12 @@ const PersonalInformationForm = () => {
             control={control}
             rules={{ required: "Address is required" }}
             render={({ field }) => (
-              <TextField
+              <StyledTextField
                 {...field}
                 placeholder="Ex: Wallaby Way"
                 fullWidth
                 error={!!errors.address}
-                helperText={errors.address?.message}
+                helperText={errors.address?.message}               
               />
             )}
           />
@@ -209,7 +239,8 @@ const PersonalInformationForm = () => {
             name="apartment"
             control={control}
             render={({ field }) => (
-              <TextField {...field} placeholder="Ex: Apt 101" fullWidth />
+              <StyledTextField {...field} placeholder="Ex: Apt 101" fullWidth 
+              />
             )}
           />
         </Grid>
@@ -222,12 +253,12 @@ const PersonalInformationForm = () => {
             control={control}
             rules={{ required: "City is required" }}
             render={({ field }) => (
-              <TextField
+              <StyledTextField
                 {...field}
                 placeholder="Ex: Sydney"
                 fullWidth
                 error={!!errors.city}
-                helperText={errors.city?.message}
+                helperText={errors.city?.message}                
               />
             )}
           />
@@ -241,12 +272,12 @@ const PersonalInformationForm = () => {
             control={control}
             rules={{ required: "State is required" }}
             render={({ field }) => (
-              <TextField
+              <StyledTextField
                 {...field}
                 placeholder="Ex: New South Wales"
                 fullWidth
                 error={!!errors.state}
-                helperText={errors.state?.message}
+                helperText={errors.state?.message}               
               />
             )}
           />
@@ -266,12 +297,12 @@ const PersonalInformationForm = () => {
               },
             }}
             render={({ field }) => (
-              <TextField
+              <StyledTextField
                 {...field}
                 placeholder="Ex: 2000"
                 fullWidth
                 error={!!errors.zip}
-                helperText={errors.zip?.message}
+                helperText={errors.zip?.message}                
               />
             )}
           />
@@ -286,7 +317,19 @@ const PersonalInformationForm = () => {
               control={control}
               rules={{ required: "Country is required" }}
               render={({ field }) => (
-                <Select {...field} displayEmpty>
+                <Select {...field} displayEmpty
+                sx={{
+                  borderRadius: '12px',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'blue',
+                  },
+                  '&:hover .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'darkblue',
+                  },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'blue',
+                  },
+                }}>
                   <MenuItem value="" disabled>
                     Select Country
                   </MenuItem>
@@ -306,12 +349,7 @@ const PersonalInformationForm = () => {
           )}
         </Grid>
 
-        {/* Submit */}
-        <Grid item xs={12}>
-          <Button type="submit" variant="contained" color="primary" fullWidth>
-            Submit
-          </Button>
-        </Grid>
+        
       </Grid>
     </form>
   );
