@@ -36,7 +36,7 @@ const CustomerSlider: React.FC = () => {
       <Box
         sx={{
           display: "flex",
-          gap: { xs: 5, md: 25},
+          gap: { xs: 5, md: 10},
           animation: "scroll 30s linear infinite",
           "@keyframes scroll": {
             "0%": { transform: "translateX(0%)" },
@@ -59,8 +59,8 @@ const CustomerSlider: React.FC = () => {
           >
             <Box
               sx={{
-                width: { xs: "100px", md: "300px" },
-                height: { xs: "100px", md: "300px" },
+                width: { xs: "100px", md: "200px" },
+                height: { xs: "100px", md: "200px" },
                 borderRadius: "50%",
                 display: "flex",
                 alignItems: "center",
