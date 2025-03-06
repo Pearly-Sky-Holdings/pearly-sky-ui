@@ -28,11 +28,10 @@ const FooterNav: React.FC = () => {
       sx={{
         marginLeft: { xs: 0, md: 2 },
         display: "flex",
-        flexDirection: "column",
-        alignItems: { xs: "center", md: "flex-start" }, // Center align on mobile, left align on desktop
+        flexDirection: "column", // Center align on mobile, left align on desktop
       }}
     >
-      <Stack spacing={2} alignItems={{ xs: "center", md: "flex-start" }}>
+      <Stack spacing={2} alignItems={{ xs: "center"}}>
         <Typography
           component="a"
           href="/"
@@ -49,7 +48,7 @@ const FooterNav: React.FC = () => {
               display: "flex",
               alignItems: "center",
               cursor: "pointer",
-              "&:hover": { opacity: 0.8 },
+              "&:hover": { opacity: 0.8, color:"GrayText" },
               justifyContent: "center", // Center the Services label and arrow
             }}
             onClick={toggleServices} // Use the toggleServices function

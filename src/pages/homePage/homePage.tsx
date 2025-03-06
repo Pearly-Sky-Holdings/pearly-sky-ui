@@ -4,8 +4,7 @@ import {
   Typography,
   useTheme,
   useMediaQuery,
-  IconButton,
-  colors,
+  IconButton
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";

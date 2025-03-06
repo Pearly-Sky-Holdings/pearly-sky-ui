@@ -85,7 +85,7 @@ const ServicesCarousel = ({ index = 0 }) => {
   return (
     <div className="relative mb-8">
       <div className="flex overflow-hidden" ref={carouselRef}>
-        {allServices.slice(currentIndex, currentIndex + slidesToShow).map((item, idx) => (
+        {allServices.slice(currentIndex, currentIndex + slidesToShow).map((item) => (
           <div
             key={item.title}
             className="w-full sm:w-1/2 relative flex-shrink-0"

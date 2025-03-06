@@ -55,29 +55,29 @@ const initialFeedback: Feedback[] = [
 ];
 
 const CustomerFeedback: React.FC = () => {
-  const [feedback, setFeedback] = useState<Feedback[]>(initialFeedback);
-  const [newFeedback, setNewFeedback] = useState({
+  const [feedback, _setFeedback] = useState<Feedback[]>(initialFeedback);
+  const [_newFeedback, _setNewFeedback] = useState({
     name: "",
     rating: 0,
     comment: "",
   });
 
-  const handleSubmit = () => {
-    if (!newFeedback.name || !newFeedback.comment || newFeedback.rating === 0)
-      return;
+  // const handleSubmit = () => {
+  //   if (!newFeedback.name || !newFeedback.comment || newFeedback.rating === 0)
+  //     return;
 
-    const newEntry: Feedback = {
-      id: feedback.length + 1,
-      name: newFeedback.name,
-      avatar: "/avatars/default.png",
-      rating: newFeedback.rating,
-      comment: newFeedback.comment,
-      date: "Just now",
-    };
+  //   const newEntry: Feedback = {
+  //     id: feedback.length + 1,
+  //     name: newFeedback.name,
+  //     avatar: "/avatars/default.png",
+  //     rating: newFeedback.rating,
+  //     comment: newFeedback.comment,
+  //     date: "Just now",
+  //   };
 
-    setFeedback([newEntry, ...feedback].sort((a, b) => b.rating - a.rating));
-    setNewFeedback({ name: "", rating: 0, comment: "" });
-  };
+  //   setFeedback([newEntry, ...feedback].sort((a, b) => b.rating - a.rating));
+  //   setNewFeedback({ name: "", rating: 0, comment: "" });
+  // };
 
   return (
     <Box sx={{ py: 5, backgroundColor: "#f0f8ff" ,mt:5}}>
