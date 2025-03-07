@@ -40,6 +40,8 @@ type Location = {
   address?: string;
   serviceCities?: string[];
   Company_number?:string;
+  siren?: string;
+  register_number?: string;
 };
 
 function OurLocations() {
@@ -55,7 +57,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "15 Rue Des Halles, 75001 Paris.",
-      Company_number:"930 651 625",
+      siren:"930 651 625",
       serviceCities: [
         "Paris",
         "Nice",
@@ -137,7 +139,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "No - 188/2 Kandy Road , Pahala Imbulgoda, Imbulgoda, Sri Lanka",
-      Company_number: "PV 00295748",
+      register_number: "PV 00295748",
       serviceCities: ["Colombo", "Kandy", "Negombo", "Nuwara Eliya"],
     },
     {

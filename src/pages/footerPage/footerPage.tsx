@@ -11,7 +11,7 @@ import FooterNav from "../../components/footerNav/footerNav.tsx";
 
 import {
   companyLogo,
-  footerImage2,
+  qrCode,
   footerImage3,
   footerImage4,
   flagAustralia,
@@ -321,7 +321,7 @@ const Footer = () => {
             }}
           >
             <img
-              src={footerImage2}
+              src={qrCode}
               alt="QR Code"
               style={{ width: "200px", height: "200px" }}
             />

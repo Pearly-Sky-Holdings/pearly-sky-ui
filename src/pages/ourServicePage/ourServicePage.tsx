@@ -17,7 +17,7 @@ import {
   steamService,
   laundryService,
   eventService,
-  poolService,
+  homePageImage4,
   pressureService
 } from "../../config/images";
 
@@ -146,7 +146,7 @@ const services = [
     id: 17,
     title: "Pool cleaning",
     description: "Nothing beats relaxing in a pool on these hot days. To make sure your pool is crystal clear and safe for swimming, we offer you all types of indoor and outdoor pool cleaning",
-    image: poolService,
+    image: homePageImage4,
     link: "/upcomming"
   },
   {
