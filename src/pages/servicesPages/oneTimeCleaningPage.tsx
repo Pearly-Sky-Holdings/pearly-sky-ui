@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"; // Add useRef
 import { useDispatch, useSelector } from "react-redux";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -61,13 +61,15 @@ function OneTimeCleaningPage() {
   const [conversionRate, setConversionRate] = useState(1);
   const [maxTime, setMaxTime] = useState<number>(1);
   const [conversionRateBaseEur, setConversionRateBaseEur] = useState(1);
+  const [changeValue, setChangeValue] = useState<boolean>(false);
+  const [count , setCount] = useState(0);
 
   const [priceBreakdown, setPriceBreakdown] = useState({
     hourlyRate: parseInt(services.data.price),
     serviceCosts: 0,
     equipmentCosts: 0,
-    totalPrice: 27,
-    basePrice: 27,
+    totalPrice: 27.00,
+    basePrice: 27.00,
   });
 
   const handleCurrencyUpdate = (
@@ -76,22 +78,28 @@ function OneTimeCleaningPage() {
     rate: number,
     rateBaseEur: number
   ) => {
+    if(count >= 2){
+      setChangeValue(true);
+    }
     setSelectedCurrency(currency);
     setCurrencySymbol(symbol);
     setConversionRate(rate);
     setConversionRateBaseEur(rateBaseEur);
+    setCount(count + 1);
   };
 
   useEffect(() => {
-    setPriceBreakdown(calculateTotalPrice());
+    if (changeValue) {
+      setChangeValue(false);
+      setPriceBreakdown(calculateTotalPrice());
+    }
   }, [selectedServices, selectedEquipments, conversionRate, duration]);
 
   useEffect(() => {
     dispatch(getPackege("2"));
-  }, []);
-  useEffect(() => {
     dispatch(getServices("2"));
   }, []);
+  
   const calculateTotalPrice = () => {
     const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
     const basePrice = hourlyRate * maxTime ; // Base price in USD
@@ -121,7 +129,9 @@ function OneTimeCleaningPage() {
       basePrice: basePrice * conversionRate, // Base price in the selected currency
     };
   };
+
   const handleEquipmentSelect = (equipment: Equipment, selected: boolean) => {
+    setChangeValue(true);
     if (selected) {
       // Check if the equipment is already in the array
       if (!selectedEquipments.some((e) => e.id === equipment.id)) {
@@ -137,6 +147,7 @@ function OneTimeCleaningPage() {
       );
     }
   };
+
   const handleSolventChange = (solvent: string) => {
     setSelectedSolvent(solvent);
   };
@@ -283,6 +294,7 @@ function OneTimeCleaningPage() {
                   className="hidden"
                   checked={checkedList.includes(service.package_id.toString())}
                   onChange={(e) => {
+                    setChangeValue(true);
                     if (e.target.checked) {
                       setSelectedServices([
                         ...selectedServices,
@@ -365,6 +377,7 @@ function OneTimeCleaningPage() {
                                 : fridgeQty
                             }
                             onChange={(newQuantity) => {
+                              setChangeValue(true);
                               if (service.name === "Oven Cleaning") {
                                 setOvenQty(newQuantity);
                                 // Update the quantity in selectedServices
@@ -467,7 +480,10 @@ function OneTimeCleaningPage() {
             numCleaners={numCleaners}
             setNumCleaners={setNumCleaners}
             duration={duration}
-            setDuration={setDuration}
+            setDuration={(val) => {
+              setChangeValue(true);
+              setDuration(val);
+            }}
             propertyType={propertyType}
             setPropertyType={setPropertyType}
             frequency={frequency}
@@ -544,7 +560,7 @@ function OneTimeCleaningPage() {
           />
         )}
 
-<div className="pt-4 mb-6">
+        <div className="pt-4 mb-6">
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
@@ -606,7 +622,7 @@ function OneTimeCleaningPage() {
           className="w-full mt-8 bg-blue-900 text-white py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={!acceptTerms1 || !acceptTerms2}
           onClick={handleBookNow}
-          style={{backgroundColor:"#1c398e"}}
+          style={{ backgroundColor: "#1c398e" }}
         >
           Book Now
         </button>
