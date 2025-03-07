@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import "react-calendar/dist/Calendar.css";
 import TimeSlots from "../../components/timeSlot/timeSlot";
 import "./CustomCalendar.css";
-import Carousel from "../../components/servicesCarousel/lastMinute";
+import ServicesCarosel from "../../components/servicesCarousel/lastMinutes";
 import EquipmentSection from "../../components/equipmentSection/equipmentSection";
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
@@ -260,7 +260,7 @@ function LastMinuteCleaningPage() {
 
       {/* Carousel Section */}
       <div>
-        <Carousel  />
+      <ServicesCarosel />
       </div>
 
       {/* Checklist Section */}

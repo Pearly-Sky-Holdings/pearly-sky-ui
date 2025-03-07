@@ -38,7 +38,8 @@ export default function TopBar() {
           alignItems: "center", // Vertically center items
           minHeight: "0.1vh", 
           paddingY: "0.1vh",
-          px: isMobile ? 1 : 2
+          px: isMobile ? 1 : 2,
+          py: isMobile ? 1 : 0
         }}
       >
         {/* Left Side - Country Selector (Hidden on mobile) */}
@@ -84,7 +85,7 @@ export default function TopBar() {
             alignItems: "center",
             gap: isMobile ? 1 : 2, // Gap between icons
             position: "absolute", // Position absolutely to center
-            left: isMobile ? "35%" : "70%", // Center horizontally
+            left: isMobile ? "35%" : "80%", // Center horizontally
             transform: "translateX(-50%)", // Adjust for exact center
           }}
         >

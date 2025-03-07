@@ -160,7 +160,7 @@ const OurSector = () => {
                   borderTopRightRadius: "130%",
                   height: { xs: "45%", sm: "50%" }, // Reduced image height
                   objectFit: "cover",
-                  padding: { xs: "0.5vh", sm: "1vh", md: "1.5vh" }, // Reduced padding
+                  padding: { xs: "0.5vh", sm: "1vh", md: "1vh" }, // Reduced padding
                 }}
                 image={sector.image}
                 alt={sector.title}
@@ -171,20 +171,9 @@ const OurSector = () => {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
-                  padding: { xs: "8px", sm: "12px" }, // Reduced padding
+                  padding: { xs: "8px", sm: "8px" }, // Reduced padding
                 }}
               >
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontWeight: "bold",
-                    color: "#0D47A1",
-                    textAlign: "center",
-                    mb: 0,
-                  }}
-                >
-                  {sector.title}
-                </Typography>
                 <Typography
                   variant="body2"
                   color="textSecondary"
@@ -197,6 +186,19 @@ const OurSector = () => {
                     WebkitBoxOrient: "vertical",
                   }}
                 >
+                  
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: "bold",
+                    color: "#0D47A1",
+                    textAlign: "center",
+                   
+                  }}
+                >
+                  {sector.title}
+                </Typography>
+                  
                   {sector.description}
                 </Typography>
               </CardContent>

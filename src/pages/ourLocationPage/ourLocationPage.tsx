@@ -39,6 +39,7 @@ type Location = {
   email5?: string;
   address?: string;
   serviceCities?: string[];
+  Company_number?:string;
 };
 
 function OurLocations() {
@@ -51,10 +52,10 @@ function OurLocations() {
       flag: flagFrance,
       email1: "Info@Pearlyskyplc.com",
       email2: "support@pearlyskyplc.com",
-      email3: "Recruiting@pearlyskyplc.com",
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "15 Rue Des Halles, 75001 Paris.",
+      Company_number:"930 651 625",
       serviceCities: [
         "Paris",
         "Nice",
@@ -87,11 +88,11 @@ function OurLocations() {
       flag: flagUk,
       email1: "Info@Pearlyskyplc.com",
       email2: "support@pearlyskyplc.com",
-      email3: "Recruiting@pearlyskyplc.com",
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address:
         "3rd Floor, 45 Albemarle Street, London, England , W1s 4JL United Kingdom",
+      Company_number: "15307255",
       serviceCities: [
         "London",
         "Yake",
@@ -133,10 +134,10 @@ function OurLocations() {
       flag: flagSrilanka,
       email1: "Info@Pearlyskyplc.com",
       email2: "support@pearlyskyplc.com",
-      email3: "Recruiting@pearlyskyplc.com",
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "No - 188/2 Kandy Road , Pahala Imbulgoda, Imbulgoda, Sri Lanka",
+      Company_number: "PV 00295748",
       serviceCities: ["Colombo", "Kandy", "Negombo", "Nuwara Eliya"],
     },
     {
@@ -472,7 +473,8 @@ function OurLocations() {
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">
+        <h1 className="text-3xl font-bold text-center mb-8"
+        style={{color:"#002F6B"}}>
           Our Locations
         </h1>
 

@@ -68,7 +68,7 @@ const LoginPage = () => {
 
   return (
     <Box sx={{ 
-      minHeight: "100vh", 
+      minHeight: "80vh", 
       display: "flex", 
       alignItems: "center",
       py: { xs: 2, sm: 3, md: 4 }
