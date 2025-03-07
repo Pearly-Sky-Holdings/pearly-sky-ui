@@ -69,6 +69,7 @@ export const contactImage1: string = "/images/uiContactUs/ContactUs.png";
 export const worldMap: string = "/images/uiContactUs/worldMap.png";
 
 export const footerImage2: string = "/images/footer/footerImage2.png";
+export const qrCode: string = "/images/footer/qrCode.jpeg";
 export const footerImage3: string = "/images/footer/footerImage3.png";
 export const footerImage4: string = "/images/footer/footerImage4.png";
 

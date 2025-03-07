@@ -10,9 +10,9 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
   homePageImage1,
+  homePageImage4,
   homePageImage2,
   homePageImage3,
-  homePageImage4,
 } from "../../config/images";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
