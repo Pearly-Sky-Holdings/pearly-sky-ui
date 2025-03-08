@@ -39,3 +39,15 @@ export const getRestockList = createAsyncThunk('getItems', async (_, { rejectWit
 });
 
 
+export const getFeedbackList = createAsyncThunk('getFeedback', async (_, { rejectWithValue }) => {
+    try {
+        const { data } = await instance.get(`getFeedback`);        
+        return data;
+    } catch (error) {
+        if (error instanceof Error) {
+            return rejectWithValue(error.message);
+        }
+        return rejectWithValue('An unknown error occurred');
+    }
+});
+

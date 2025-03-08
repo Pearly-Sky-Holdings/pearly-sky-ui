@@ -108,6 +108,7 @@ function ChildCareCleaningPage() {
       type,
       contactType,
       numChild,
+      age: `[${childAge.join(",")}]`,
       special_request: specialRequest,
       price: priceBreakdown.totalPrice,
       service_providing_place: propertyType,

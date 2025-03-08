@@ -12,8 +12,8 @@ import {
 
 const paymentMethods = [
   {
-    id: "card",
-    name: "Card Payment",
+    id: "stripe",
+    name: "Stripe Payment",
     img: "./images/paymentMethods/visaMaster.png",
   },
   { id: "eps", name: "EPS", img: "./images/paymentMethods/eps.png" },
