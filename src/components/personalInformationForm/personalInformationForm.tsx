@@ -4,47 +4,48 @@ import {
   Grid,
   MenuItem,
   Select,
-  FormControl,  
+  FormControl,
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
-
+import { useEffect, useState } from "react"; // Add useState
+import { useDebounce } from "use-debounce"; // Install and use use-debounce
 
 const StyledTextField = styled(TextField)({
-  '& .MuiOutlinedInput-root': {
-    borderRadius: '12px',
-    '& fieldset': {
-      borderColor: 'blue',
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "12px",
+    "& fieldset": {
+      borderColor: "blue",
     },
-    '&:hover fieldset': {
-      borderColor: 'darkblue',
+    "&:hover fieldset": {
+      borderColor: "darkblue",
     },
-    '&.Mui-focused fieldset': {
-      borderColor: 'blue',
+    "&.Mui-focused fieldset": {
+      borderColor: "blue",
     },
   },
 });
 
 const prefixes = ["Mr.", "Ms.", "Mrs.", "Dr."];
-const countries = [
-  "Australia",
-  "United States",
-  "Canada",
-  "United Kingdom",
-  "India",
-  "Germany",
-  "France",
-  "Japan",
-  "China",
-  
-];
+const countries = ["Australia", "United States", "Canada", "India", "Japan"];
 
-const PersonalInformationForm = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+type FormValues = {
+  prefix: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  apartment: string;
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
+};
+
+const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data: FormValues) => void }) => {
+  const { control, watch } = useForm<FormValues>({
     defaultValues: {
       prefix: "",
       firstName: "",
@@ -61,9 +62,15 @@ const PersonalInformationForm = () => {
     },
   });
 
-  const onSubmit = (data: any) => {
-    console.log("Form Data:", data);
-  };
+  const formValues = watch();
+
+  // Debounce the form values
+  const [debouncedFormValues] = useDebounce(formValues, 300); // 300ms delay
+
+  useEffect(() => {
+    // Call the callback with debounced values
+    onChangeCallback(debouncedFormValues);
+  }, [debouncedFormValues, onChangeCallback]);
 
   const renderLabel = (label: string, required = false) => (
     <Typography variant="subtitle2" gutterBottom>
@@ -72,33 +79,32 @@ const PersonalInformationForm = () => {
   );
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} 
-    style={{color:"black"}}>
-      <Typography variant="h5" gutterBottom sx={{mb:5, textDecoration:'underline'}}>
+    <form style={{ color: "black" }}>
+      <Typography variant="h5" gutterBottom sx={{ mb: 5, textDecoration: 'underline' }}>
         Personal Information
       </Typography>
       <Grid container spacing={3}>
         {/* Prefix */}
         <Grid item xs={12} sm={2}>
-          {renderLabel("Prefix")}
+          {renderLabel("Prefix",true)}
           <FormControl fullWidth>
             <Controller
               name="prefix"
               control={control}
               render={({ field }) => (
                 <Select {...field} displayEmpty
-                sx={{
-                  borderRadius: '12px',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: 'blue',
-                  },
-                  '&:hover .MuiOutlinedInput-notchedOutline': {
-                    borderColor: 'darkblue',
-                  },
-                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                    borderColor: 'blue',
-                  },
-                }}>
+                  sx={{
+                    borderRadius: '12px',
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      borderColor: 'blue',
+                    },
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                      borderColor: 'darkblue',
+                    },
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      borderColor: 'blue',
+                    },
+                  }}>
                   <MenuItem value="" disabled>
                     Select Prefix
                   </MenuItem>
@@ -121,12 +127,9 @@ const PersonalInformationForm = () => {
             control={control}
             rules={{ required: "First Name is required" }}
             render={({ field }) => (
-              <StyledTextField
-                {...field}
+              <StyledTextField  {...field}
                 placeholder="Ex: John"
                 fullWidth
-                error={!!errors.firstName}
-                helperText={errors.firstName?.message}                
               />
             )}
           />
@@ -139,8 +142,8 @@ const PersonalInformationForm = () => {
             name="middleName"
             control={control}
             render={({ field }) => (
-              <StyledTextField {...field} placeholder="Ex: Michael" fullWidth 
-          />
+              <StyledTextField {...field} placeholder="Ex: Michael" fullWidth
+              />
             )}
           />
         </Grid>
@@ -157,8 +160,6 @@ const PersonalInformationForm = () => {
                 {...field}
                 placeholder="Ex: Doe"
                 fullWidth
-                error={!!errors.lastName}
-                helperText={errors.lastName?.message}                
               />
             )}
           />
@@ -182,8 +183,6 @@ const PersonalInformationForm = () => {
                 {...field}
                 placeholder="Ex: john@gmail.com"
                 fullWidth
-                error={!!errors.email}
-                helperText={errors.email?.message}                
               />
             )}
           />
@@ -191,11 +190,12 @@ const PersonalInformationForm = () => {
 
         {/* Phone */}
         <Grid item xs={12} sm={6}>
-          {renderLabel("Phone")}
+          {renderLabel("Phone",true)}
           <Controller
             name="phone"
             control={control}
             rules={{
+              required: "Phone Number is required",
               pattern: {
                 value: /^[+\d]?[0-9 ]{7,15}$/,
                 message: "Invalid phone number",
@@ -206,8 +206,6 @@ const PersonalInformationForm = () => {
                 {...field}
                 placeholder="Ex: +1 300 400 5000"
                 fullWidth
-                error={!!errors.phone}
-                helperText={errors.phone?.message}               
               />
             )}
           />
@@ -225,8 +223,6 @@ const PersonalInformationForm = () => {
                 {...field}
                 placeholder="Ex: Wallaby Way"
                 fullWidth
-                error={!!errors.address}
-                helperText={errors.address?.message}               
               />
             )}
           />
@@ -239,7 +235,7 @@ const PersonalInformationForm = () => {
             name="apartment"
             control={control}
             render={({ field }) => (
-              <StyledTextField {...field} placeholder="Ex: Apt 101" fullWidth 
+              <StyledTextField {...field} placeholder="Ex: Apt 101" fullWidth
               />
             )}
           />
@@ -257,8 +253,6 @@ const PersonalInformationForm = () => {
                 {...field}
                 placeholder="Ex: Sydney"
                 fullWidth
-                error={!!errors.city}
-                helperText={errors.city?.message}                
               />
             )}
           />
@@ -276,8 +270,6 @@ const PersonalInformationForm = () => {
                 {...field}
                 placeholder="Ex: New South Wales"
                 fullWidth
-                error={!!errors.state}
-                helperText={errors.state?.message}               
               />
             )}
           />
@@ -301,8 +293,6 @@ const PersonalInformationForm = () => {
                 {...field}
                 placeholder="Ex: 2000"
                 fullWidth
-                error={!!errors.zip}
-                helperText={errors.zip?.message}                
               />
             )}
           />
@@ -318,18 +308,18 @@ const PersonalInformationForm = () => {
               rules={{ required: "Country is required" }}
               render={({ field }) => (
                 <Select {...field} displayEmpty
-                sx={{
-                  borderRadius: '12px',
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: 'blue',
-                  },
-                  '&:hover .MuiOutlinedInput-notchedOutline': {
-                    borderColor: 'darkblue',
-                  },
-                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                    borderColor: 'blue',
-                  },
-                }}>
+                  sx={{
+                    borderRadius: '12px',
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      borderColor: 'blue',
+                    },
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                      borderColor: 'darkblue',
+                    },
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      borderColor: 'blue',
+                    },
+                  }}>
                   <MenuItem value="" disabled>
                     Select Country
                   </MenuItem>
@@ -342,14 +332,7 @@ const PersonalInformationForm = () => {
               )}
             />
           </FormControl>
-          {errors.country && (
-            <Typography color="error" variant="caption">
-              {errors.country?.message}
-            </Typography>
-          )}
         </Grid>
-
-        
       </Grid>
     </form>
   );
