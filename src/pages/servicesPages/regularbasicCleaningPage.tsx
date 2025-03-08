@@ -66,6 +66,8 @@ function RegularBasicCleaningPage() {
   const [conversionRateBaseEur, setConversionRateBaseEur] = useState(1);
 
   const [maxTime, setMaxTime] = useState<number>(1);
+  const [changeValue, setChangeValue] = useState<boolean>(false);
+  const [count , setCount] = useState(0);
 
   const [priceBreakdown, setPriceBreakdown] = useState({
     hourlyRate: parseInt(services.data.price),
@@ -82,21 +84,25 @@ function RegularBasicCleaningPage() {
     rate: number,
     rateBaseEur: number
   ) => {
+    if(count >= 2){
+      setChangeValue(true);
+    }
     setSelectedCurrency(currency);
     setCurrencySymbol(symbol);
     setConversionRate(rate);
     setConversionRateBaseEur(rateBaseEur);
+    setCount(count + 1);
   };
 
   useEffect(() => {
-    setPriceBreakdown(calculateTotalPrice());
+    if (changeValue) {
+      setChangeValue(false);
+      setPriceBreakdown(calculateTotalPrice());
+    }
   }, [selectedServices, selectedEquipments, conversionRate, duration]);
 
   useEffect(() => {
     dispatch(getPackege("1"));
-  }, []);
-
-  useEffect(() => {
     dispatch(getServices("1"));
   }, []);
 
@@ -131,6 +137,7 @@ function RegularBasicCleaningPage() {
   };
 
   const handleEquipmentSelect = (equipment: Equipment, selected: boolean) => {
+    setChangeValue(true);
     if (selected) {
       if (!selectedEquipments.some((e) => e.id === equipment.id)) {
         setSelectedEquipments((prev) => [
@@ -307,6 +314,7 @@ function RegularBasicCleaningPage() {
                   className="hidden"
                   checked={checkedList.includes(service.package_id.toString())}
                   onChange={(e) => {
+                    setChangeValue(true);
                     if (e.target.checked) {
                       setSelectedServices([
                         ...selectedServices,
@@ -389,6 +397,7 @@ function RegularBasicCleaningPage() {
                                 : fridgeQty
                             }
                             onChange={(newQuantity) => {
+                              setChangeValue(true);
                               if (service.name === "Oven Cleaning") {
                                 setOvenQty(newQuantity);
                                 // Update the quantity in selectedServices
@@ -491,7 +500,10 @@ function RegularBasicCleaningPage() {
             numCleaners={numCleaners}
             setNumCleaners={setNumCleaners}
             duration={duration}
-            setDuration={setDuration}
+            setDuration={(val) => {
+              setChangeValue(true);
+              setDuration(val);
+            }}
             propertyType={propertyType}
             setPropertyType={setPropertyType}
             frequency={frequency}

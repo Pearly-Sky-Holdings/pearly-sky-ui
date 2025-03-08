@@ -70,6 +70,9 @@ function PostConstructionCleaningPage() {
   const [maxTime, setMaxTime] = useState<number>(1);
   const [conversionRateBaseEur, setConversionRateBaseEur] = useState(1);
 
+  const [changeValue, setChangeValue] = useState<boolean>(false);
+    const [count , setCount] = useState(0);
+
   const [priceBreakdown, setPriceBreakdown] = useState({
     hourlyRate: parseInt(services.data.price),
     serviceCosts: 0,
@@ -84,14 +87,21 @@ function PostConstructionCleaningPage() {
     rate: number,
     rateBaseEur: number
   ) => {
+    if(count >= 2){
+      setChangeValue(true);
+    }
     setSelectedCurrency(currency);
     setCurrencySymbol(symbol);
     setConversionRate(rate);
     setConversionRateBaseEur(rateBaseEur);
+    setCount(count + 1);
   };
 
   useEffect(() => {
-    setPriceBreakdown(calculateTotalPrice());
+    if (changeValue) {
+      setChangeValue(false);
+      setPriceBreakdown(calculateTotalPrice());
+    }
   }, [selectedEquipments, conversionRate, duration]);
 
   useEffect(() => {
@@ -128,6 +138,7 @@ function PostConstructionCleaningPage() {
     };
   };
   const handleEquipmentSelect = (equipment: Equipment, selected: boolean) => {
+    setChangeValue(true);
     if (selected) {
       // Check if the equipment is already in the array
       if (!selectedEquipments.some((e) => e.id === equipment.id)) {
@@ -440,7 +451,10 @@ function PostConstructionCleaningPage() {
             numCleaners={numCleaners}
             setNumCleaners={setNumCleaners}
             duration={duration}
-            setDuration={setDuration}
+            setDuration={(val) => {
+              setChangeValue(true);
+              setDuration(val);
+            }}
             propertyType={propertyType}
             setPropertyType={setPropertyType}
             frequency={frequency}

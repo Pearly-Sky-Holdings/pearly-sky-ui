@@ -1,4 +1,6 @@
+
 import Dropdown from "../dropDown/dropDown";
+import { Info as InfoIcon } from "@mui/icons-material";
 
 interface BookingSectionCartProps {
   numChild: string;
@@ -11,8 +13,8 @@ interface BookingSectionCartProps {
   setContactType: (contactType: string) => void;
   language: string;
   setLanguage: (language: string) => void;
-  childAge: string;
-  setChildAge: (age: string) => void;
+  childAge: string[];
+  setChildAge: (ages: string[]) => void;
   type: string;
   setType: (type: string) => void;
   numProfession: string;
@@ -110,17 +112,8 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
     { value: "8", label: "8" },
     { value: "9", label: "9" },
     { value: "10", label: "10" },
-    { value: "11", label: "11" },
-    { value: "12", label: "12" },
-    { value: "13", label: "13" },
-    { value: "14", label: "14" },
-    { value: "15", label: "15" },
-    { value: "16", label: "16" },
-    { value: "17", label: "17" },
-    { value: "18", label: "18" },
-    { value: "19", label: "19" },
-    { value: "20", label: "20" },
   ];
+
   const numCareProfession = [
     { value: "1", label: "1 " },
     { value: "2", label: "2 " },
@@ -132,16 +125,6 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
     { value: "8", label: "8" },
     { value: "9", label: "9" },
     { value: "10", label: "10" },
-    { value: "11", label: "11" },
-    { value: "12", label: "12" },
-    { value: "13", label: "13" },
-    { value: "14", label: "14" },
-    { value: "15", label: "15" },
-    { value: "16", label: "16" },
-    { value: "17", label: "17" },
-    { value: "18", label: "18" },
-    { value: "19", label: "19" },
-    { value: "20", label: "20" },
   ];
 
   const frequencyOptions = [
@@ -163,6 +146,7 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
     { value: "french", label: "French" },
     { value: "spanish", label: "Spanish" },
   ];
+
   const childageOption = [
     { value: "1 month", label: "1 Month" },
     { value: "6 month", label: "6 Month" },
@@ -177,17 +161,19 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
     { value: "9 years", label: "9 Years" },
     { value: "10 years", label: "10 Years" },
   ];
+
   const elderageOption = [
-    { value: "1 month", label: "60" },
-    { value: "6 month", label: "65" },
-    { value: "1 year", label: "70" },
-    { value: "2 years", label: "75" },
-    { value: "3 years", label: "80" },
-    { value: "4 years", label: "85" },
-    { value: "5 years", label: "90" },
-    { value: "6 years", label: "95" },
-    { value: "7 years", label: "100" },
+    { value: "60", label: "60" },
+    { value: "65", label: "65" },
+    { value: "70", label: "70" },
+    { value: "75", label: "75" },
+    { value: "80", label: "80" },
+    { value: "85", label: "85" },
+    { value: "90", label: "90" },
+    { value: "95", label: "95" },
+    { value: "100", label: "100" },
   ];
+
   const specialRequestOptions = [
     { value: "disable", label: "Disable" },
     { value: "non-disable", label: "Non-Disable" },
@@ -197,20 +183,29 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
     { value: "home", label: "Home" },
     { value: "apartment", label: "Apartment" },
     { value: "villa", label: "Villa" },
-    { value: "commercial property", label: "Commercial property" },
-    { value: "government office", label: "Government office" },
-    { value: "public office", label: "Public office" },
-    { value: "private office", label: "Private office " },
-    { value: "daycare centre", label: "Daycare centre " },
+    { value: "child care center", label: "Child Care Center " },
     { value: "elders care centre", label: "Elder's Care Centre" },
-    { value: "shopping mall", label: "Shopping mall" },
     { value: "government hospital", label: "Government hospital" },
     { value: "private hospital", label: "Private hospital" },
-    { value: "sport centre", label: "Sport centre" },
-    { value: "gym", label: "Gym " },
-    { value: "restaurant", label: "Restaurant" },
-    { value: "hotel", label: "Hotel" },
+    { value: "other", label: "Other" },
   ];
+
+  const handleDurationChange = (value: string) => {
+    setDuration(value);
+  };
+
+  const handleNumChildChange = (value: string) => {
+    setNumChild(value);
+    const numChildren = parseInt(value, 10);
+    const newChildAges = Array(numChildren).fill("");
+    setChildAge(newChildAges);
+  };
+
+  const handleChildAgeChange = (index: number, value: string) => {
+    const newChildAges = [...childAge];
+    newChildAges[index] = value;
+    setChildAge(newChildAges);
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -218,14 +213,24 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
         label="Duration (in hours)"
         value={duration}
         options={durationOptions}
-        onChange={setDuration}
+        onChange={handleDurationChange}
       />
+
+    <div>
       <Dropdown
         label="Request Care Professionals"
         value={numProfession}
         options={numCareProfession}
         onChange={setNumProfession}
       />
+      {parseFloat(duration) > 8 && (
+        <div className="text-sm text-blue-500   px-1">
+          <InfoIcon sx={{ color: "black", mx: 1 }} />
+          If you need more than 8 hours, please select additional care professionals.
+        </div>
+      )}
+      </div>
+
       <Dropdown
         label="Select Frequency"
         value={frequency}
@@ -254,14 +259,20 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
         label={pageType === "child" ? "Number of Children" : "Number of Elders"}
         value={numChild}
         options={numchildOptions}
-        onChange={setNumChild}
+        onChange={handleNumChildChange}
       />
-      <Dropdown
-        label={pageType === "child" ? "Child Age" : "Elder Age"}
-        value={childAge}
-        options={pageType === "child" ? childageOption : elderageOption}
-        onChange={setChildAge}
-      />
+      {parseInt(numChild, 10) > 0 &&
+        Array.from({ length: parseInt(numChild, 10) }, (_, index) => (
+          <Dropdown
+            key={index}
+            label={`${pageType === "child" ? "Child" : "Elder"} Age ${
+              index + 1
+            }`}
+            value={childAge[index] || ""}
+            options={pageType === "child" ? childageOption : elderageOption}
+            onChange={(value) => handleChildAgeChange(index, value)}
+          />
+        ))}
       <Dropdown
         label="Special Request"
         value={specialRequest}
