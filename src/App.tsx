@@ -37,6 +37,7 @@ import CareerPage from "./pages/careerPage/careerPage.tsx";
 import SanitizationAndDisinfection from "./pages/servicesPages/SanitizationAndDisinfection.tsx";
 import CustomerPage from "./pages/customerPage/customerPage.tsx";
 import AboutUsPage from "./pages/aboutUsPage/aboutUsPage.tsx";
+import Quotation from "./components/quotation/quotation.tsx";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -294,6 +295,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
 
           <Route path="/checkout" element={<CheckoutPage />} />
+
+          <Route path="/quotation" element={<Quotation />} />
 
           <Route path="/upcomming" element={<UpdateComingSoon />} />
         </Routes>
