@@ -8,60 +8,29 @@ import { format } from "date-fns";
 import "react-calendar/dist/Calendar.css";
 import TimeSlots from "../../components/timeSlot/timeSlot";
 import "./CustomCalendar.css";
-import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
 import { getPackege, getServices } from "../../services/CleaningServices/index";
 import Images from "../../components/sanitizationPage/images";
 import dayjs from "dayjs";
-
-
-import {
-  SanitizationService,
-} from "../../config/images";
+import SanitizationBookingCart from "../../components/sanitizationPage/bookingCart";
+import PersonalInformationForm from "../../components/personalInformationForm/personalInformationForm";
+import {  SanitizationService,} from "../../config/images";
 
 
 function SanitizationAndDisinfection() {
   const navigate = useNavigate();
   const dispatch =  useDispatch<typeof store.dispatch>();
   const services = useSelector((state: any) => state.servicesSlice.service);
-  const [_selectedServices, _setSelectedServices] = useState<object[]>([]);
-  const [showTermsCard, setShowTermsCard] = useState(false);
+  const [_selectedServices, setSelectedServices] = useState<object[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [selectedTime, setSelectedTime] = useState("");
-  const [propertySize, _setPropertySize] = useState("");
-  const [duration, _setDuration] = useState("");
-  const [numCleaners, _setNumCleaners] = useState("");
-  const [frequency, _setFrequency] = useState("");
-  const [acceptTerms1, setAcceptTerms1] = useState(false);
   const [acceptTerms2, setAcceptTerms2] = useState(false);
-  const [language, _setLanguage] = useState("");
-  const [propertyType, _setPropertyType] = useState("");
-  const [contactType, _setContactType] = useState("");
-  const [selectedSolvent, _setSelectedSolvent] = useState("");
-  const [selectedEquipmentOption, _setSelectedEquipmentOption] = useState("");
-  const [selectedEquipments, _setSelectedEquipments] = useState<
-    Array<{ id: string; price: number }>
-  >([]);
-
-  const [selectedCurrency, _setSelectedCurrency] = useState("USD");
-  const [currencySymbol, _setCurrencySymbol] = useState("$");
-  const [conversionRate, _setConversionRate] = useState(1);
-  const [maxTime, _setMaxTime] = useState<number>(1);
-
-  const [priceBreakdown, setPriceBreakdown] = useState({
-    hourlyRate: parseInt(services.data.price),
-    serviceCosts: 0,
-    equipmentCosts: 0,
-    totalPrice:  parseInt(services.data.price),
-    basePrice: parseInt(services.data.price),
-  });
-
+  const [selectedTime, setSelectedTime] = useState("");
+  const [frequency, setFrequency] = useState("");
+  const [language, setLanguage] = useState("");
+  const [timeZone, setTimeZone] = useState("");
+  const [propertyType, setPropertyType] = useState("");
+  const [contactType, setContactType] = useState("");
  
-
-  useEffect(() => {
-    setPriceBreakdown(calculateTotalPrice());
-  }, [selectedEquipments, conversionRate, duration]);
-
   useEffect(() => {
     dispatch(getPackege("6"));
   }, []);
@@ -69,41 +38,17 @@ function SanitizationAndDisinfection() {
   useEffect(() => {
     dispatch(getServices("6"));
   }, []);
-  const calculateTotalPrice = () => {
-    // Calculate base price based on hourly rate and maxTime
-    const hourlyRate = parseInt(services.data.price,10);
-    const basePrice = hourlyRate * maxTime * conversionRate;
-    let serviceCosts = 0;
-    let equipmentCosts = 0;
-
-    selectedEquipments.forEach((equipment) => {
-      equipmentCosts += equipment.price * conversionRate;
-    });
-
-    const totalPrice = basePrice + serviceCosts + equipmentCosts;
-    return {
-      hourlyRate,
-      serviceCosts,
-      equipmentCosts,
-      totalPrice,
-      basePrice,
-    };
-  };
- 
- 
+  
 
   const handleBookNow = () => {
-    if (
-      !propertySize ||
-      !duration ||
-      !numCleaners ||
+    if (      
       !frequency ||
       !propertyType ||
       !contactType ||
       !language ||
+      !timeZone||
       !selectedDate ||
-      !selectedTime ||
-      !acceptTerms1 ||
+      !selectedTime ||      
       !acceptTerms2
     ) {
       alert("Please fill all required fields before proceeding to checkout.");
@@ -114,31 +59,16 @@ function SanitizationAndDisinfection() {
       service_id: "6",
       date,
       time: selectedTime,
-      property_size: propertySize,
-      duration: Number(duration),
-      number_of_cleaners: Number(numCleaners),
       frequency,
       person_type: contactType,
       language,
-      business_property: propertyType,
-      cleaning_solvents: selectedSolvent,
-      equipmentOption: selectedEquipmentOption,
-      Equipment: selectedEquipments.map((e) => e.id).join(","),
-      price: priceBreakdown.totalPrice,
-      currency: selectedCurrency,
+      timeZone,
+      business_property: propertyType,    
       note: document.querySelector("textarea")?.value || "",
     };
     const data = {
-      serviceName: "Post Construction",
-      details: serviceDetails,
-      orderSummary: {
-        selectedEquipments,
-        basePrice: priceBreakdown.basePrice,
-        totalPrice: priceBreakdown.totalPrice,
-        currencySymbol,
-        selectedCurrency,
-        conversionRate,
-      },
+      serviceName: "Sanitization & Disinfection",
+      details: serviceDetails,      
     };
     console.log("Data:", data);
     navigate("/checkout", { state: { data } });
@@ -234,14 +164,8 @@ function SanitizationAndDisinfection() {
         </div>
 
         {/* Booking Details */}
-        {/* <div>
-          <BookingCart
-            // propertySize={propertySize}
-            // setPropertySize={setPropertySize}
-            // numCleaners={numCleaners}
-            // setNumCleaners={setNumCleaners}
-            // duration={duration}
-            // setDuration={setDuration}
+        <div className="mt-10">
+          <SanitizationBookingCart           
             propertyType={propertyType}
             setPropertyType={setPropertyType}
             frequency={frequency}
@@ -250,13 +174,11 @@ function SanitizationAndDisinfection() {
             setContactType={setContactType}
             language={language}
             setLanguage={setLanguage}
-            onBasePriceChange={(maxTime) => {
-              setMaxTime(maxTime);
-            }}
+            timeZone={timeZone}
+            setTimeZone={setTimeZone}
+            
           />
-        </div> */}
-
-       
+        </div>
 
         {/* File Upload and Additional Note */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -290,85 +212,70 @@ function SanitizationAndDisinfection() {
               className="w-full min-h-[150px] border border-blue-900 rounded p-2 text-gray-700 resize-none"
               placeholder="Type your note here..."
             ></textarea>
+          </div>          
+        </div>
+
+        <div className="flex flex-wrap  p-8 gap-10 md:gap-100 mb-10">
+          {/* Equipment Section */}
+          <div className="w-full md:w-auto">
+            <h2 className="text-lg text-black font-bold mb-4">Equipment</h2>
+            <div className="space-y-2 text-black ">
+              <label className="flex items-center space-x-2">
+                <input type="checkbox" className="w-4 h-4" />
+                <span>Provide by customer</span>
+              </label>
+              <label className="flex items-center space-x-2">
+                <input type="checkbox" className="w-4 h-4" />
+                <span>Provide by company</span>
+              </label>
+            </div>
           </div>
 
-          {/* Terms Checkbox */}
-          <div className="mb-6">
+          {/* Chemical Section */}
+          <div className="w-full md:w-auto">
+            <h2 className="text-lg text-black font-bold mb-4">Chemical</h2>
+            <div className="space-y-2 text-black">
+              <label className="flex items-center space-x-2">
+                <input type="checkbox" className="w-4 h-4" />
+                <span>Provide by customer</span>
+              </label>
+              <label className="flex items-center space-x-2">
+                <input type="checkbox" className="w-4 h-4" />
+                <span>Provide by company</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div>
+        <PersonalInformationForm/>
+        </div>
+
+        {/* Terms Checkbox */}
+         <div className="mb-6 mt-10">
             <label className="flex items-start space-x-2 text-black">
               <input
                 type="checkbox"
                 className="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 checked={acceptTerms2}
                 onChange={(e) => {
-                  setAcceptTerms2(e.target.checked);
-                  setShowTermsCard(e.target.checked);
+                  setAcceptTerms2(e.target.checked);                  
                 }}
               />
               <span className="text-sm">
-                By selecting this I accept terms and conditions
+              By Booking or Requesting a quotation, you agree with our terms and conditions and privacy policy.
               </span>
             </label>
           </div>
-        </div>
 
-        {/* Terms and Conditions */}
-        {showTermsCard && (
-          <TermsAndConditions
-            isAccepted={acceptTerms1}
-            onAcceptChange={setAcceptTerms1}
-            className="mb-6"
-          />
-        )}
-
-        <div className="pt-4 mb-6">
-          {/* Base Price */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
-            <span className="mb-2 md:mb-0">
-              Base Cost{" "}
-              <span className="text-gray-400">
-                ({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})
-              </span>
-            </span>
-            <span>
-              {currencySymbol}
-              {priceBreakdown.basePrice.toFixed(2)}
-            </span>
-          </div>
-
-          {/* Selected Equipment Costs */}
-          {selectedEquipments.length > 0 && (
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
-              <span className="mb-2 md:mb-0">
-                Selected Equipment{" "}
-                <span className="text-gray-400">
-                  ({selectedEquipments.length} items)
-                </span>
-              </span>
-              <span>
-                {currencySymbol}
-                {priceBreakdown.equipmentCosts.toFixed(2)}
-              </span>
-            </div>
-          )}
-
-          {/* Total Price */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
-            <span>Total</span>
-            <span>
-              {currencySymbol}
-              {priceBreakdown.totalPrice.toFixed(2)}
-            </span>
-          </div>
-        </div>
-
-        {/* Book Now Button */}
+        
+        {/* Request Quotation Button */}
         <button
-          className="w-full mt-8 bg-blue-900 text-white py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          disabled={!acceptTerms1 || !acceptTerms2}
+          className="w-50 h-10 mt-8  "          
           onClick={handleBookNow}
-          style={{backgroundColor:"#1c398e"}}
+          style={{background:"#0D90C8",fontSize:"15px",color:"white"}}
         >
-          Book Now
+         Request Quotation
         </button>
       </div>
 

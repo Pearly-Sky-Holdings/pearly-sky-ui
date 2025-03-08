@@ -1,13 +1,7 @@
 
 import Dropdown from "../dropDown/dropDown";
 
-interface BookingSectionCartProps {
-  propertySize: string;
-  setPropertySize: (size: string) => void;
-  numCleaners: string;
-  setNumCleaners: (num: string) => void;
-  duration: string;
-  setDuration: (duration: string) => void;
+interface SanitizationBookingCartProps { 
   propertyType: string;
   setPropertyType: (type: string) => void;
   frequency: string;
@@ -16,9 +10,11 @@ interface BookingSectionCartProps {
   setContactType: (contactType: string) => void;
   language: string;
   setLanguage: (language: string) => void;
+  timeZone: string;
+  setTimeZone: (timeZone: string) => void;
 }
 
-const BookingCart: React.FC<BookingSectionCartProps> = ({
+const SanitizationBookingCart: React.FC<SanitizationBookingCartProps> = ({
   propertyType,
   setPropertyType,
   frequency,
@@ -27,6 +23,8 @@ const BookingCart: React.FC<BookingSectionCartProps> = ({
   setContactType,
   language,
   setLanguage,
+  timeZone,
+  setTimeZone,
 }) => {
   
 
@@ -76,37 +74,79 @@ const BookingCart: React.FC<BookingSectionCartProps> = ({
     { value: "Arabic", label: "Arabic" },
   ];
 
+  const timeZoneOptions = [
+    { value: "UTC-12:00", label: "(UTC-12:00) International Date Line West" },
+    { value: "UTC-11:00", label: "(UTC-11:00) Coordinated Universal Time-11" },
+    { value: "UTC-10:00", label: "(UTC-10:00) Hawaii" },
+    { value: "UTC-09:00", label: "(UTC-09:00) Alaska" },
+    { value: "UTC-08:00", label: "(UTC-08:00) Pacific Time (US & Canada)" },
+    { value: "UTC-07:00", label: "(UTC-07:00) Mountain Time (US & Canada)" },
+    { value: "UTC-06:00", label: "(UTC-06:00) Central Time (US & Canada)" },
+    { value: "UTC-05:00", label: "(UTC-05:00) Eastern Time (US & Canada)" },
+    { value: "UTC-04:00", label: "(UTC-04:00) Atlantic Time (Canada)" },
+    { value: "UTC-03:00", label: "(UTC-03:00) Buenos Aires" },
+    { value: "UTC-02:00", label: "(UTC-02:00) Mid-Atlantic" },
+    { value: "UTC-01:00", label: "(UTC-01:00) Azores" },
+    { value: "UTC+00:00", label: "(UTC+00:00) Greenwich Mean Time" },
+    { value: "UTC+01:00", label: "(UTC+01:00) Central European Time" },
+    { value: "UTC+02:00", label: "(UTC+02:00) Eastern European Time" },
+    { value: "UTC+03:00", label: "(UTC+03:00) Moscow Standard Time" },
+    { value: "UTC+04:00", label: "(UTC+04:00) Gulf Standard Time" },
+    { value: "UTC+05:00", label: "(UTC+05:00) Pakistan Standard Time" },
+    { value: "UTC+06:00", label: "(UTC+06:00) Bangladesh Standard Time" },
+    { value: "UTC+07:00", label: "(UTC+07:00) Indochina Time" },
+    { value: "UTC+08:00", label: "(UTC+08:00) China Standard Time" },
+    { value: "UTC+09:00", label: "(UTC+09:00) Japan Standard Time" },
+    { value: "UTC+10:00", label: "(UTC+10:00) Australian Eastern Time" },
+    { value: "UTC+11:00", label: "(UTC+11:00) Solomon Islands Time" },
+    { value: "UTC+12:00", label: "(UTC+12:00) Fiji Time" },
+  ];
+
   
- return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">      
-      <Dropdown
+
+return (
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5 mt-5">
+    <Dropdown
         label="Select your business or property"
         value={propertyType}
         options={propertyTypeOptions}
         onChange={setPropertyType}
       />
-      <Dropdown
+     
+     <div>
+     <Dropdown
         label="Choose Frequency"
         value={frequency}
         options={frequencyOptions}
         onChange={setFrequency}
+      /> 
+     
+      </div>
+
+      <Dropdown
+            label="Select Time Zone"
+            value={timeZone}
+            options={timeZoneOptions}
+            onChange={setTimeZone}
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Dropdown
-          label="Request Cleanr's Gender"
-          value={contactType}
-          options={contactTypeOptions}
-          onChange={setContactType}
-        />
-        <Dropdown
-          label="Select Language"
-          value={language}
-          options={languageOptions}
-          onChange={setLanguage}
-        />
-      </div>
+      <Dropdown
+        label="Gender Required"
+        value={contactType}
+        options={contactTypeOptions}
+        onChange={setContactType}
+      />
+      <Dropdown
+        label="Select Language"
+        value={language}
+        options={languageOptions}
+        onChange={setLanguage}
+      />
     </div>
-  );
+  </div>
+);
 };
 
-export default BookingCart;
+
+
+export default SanitizationBookingCart;
