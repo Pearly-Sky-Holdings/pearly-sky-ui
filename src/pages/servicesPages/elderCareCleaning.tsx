@@ -30,7 +30,6 @@ function ElderCareCleaningPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const services = useSelector((state: any) => state.servicesSlice.service);
-  const [selectedServices] = useState<object[]>([]);
   const [showTermsCard, setShowTermsCard] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
@@ -57,8 +56,8 @@ function ElderCareCleaningPage() {
 
   const [priceBreakdown, setPriceBreakdown] = useState({
     hourlyRate: parseInt(services.data.price),
-    totalPrice: parseInt(services.data.price),
-    basePrice: parseInt(services.data.price),
+    totalPrice: 29.00,
+    basePrice: 29.00,
   });
 
   const handleCurrencyUpdate = (
@@ -82,7 +81,7 @@ function ElderCareCleaningPage() {
   }, [conversionRate, duration]);
 
   useEffect(() => {
-    dispatch(getServices("8"));
+    dispatch(getServices("9"));
   }, []);
   const calculateTotalPrice = () => {
     const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD

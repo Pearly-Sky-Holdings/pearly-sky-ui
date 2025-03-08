@@ -184,3 +184,9 @@ export const elderCareImage1: string = "/images/service/childAndElder/ElderCarea
 export const termsAndConditionsImage1: string = "/images/termAndConditions/termAndConditions.png";
 
 export const loginPageImage: string = "/images/loginPage/loginPageImage.png";
+
+// Customer Feedback
+export const google: string = "/images/customerFeedback/google.png";
+export const facebook: string = "/images/customerFeedback/facebook.png";
+export const trustpilot: string = "/images/customerFeedback/trustpilot.png";
+export const yelp: string = "/images/customerFeedback/yelp.png";

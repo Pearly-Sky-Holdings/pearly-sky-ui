@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -9,58 +9,61 @@ import {
   // Button,
   Rating,
 } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { getFeedbackList } from "../../services/CleaningServices/index";
+import store from "../../store";
+import { google, facebook, trustpilot, yelp } from "../../config/images";
 
 type Feedback = {
   id: number;
   name: string;
   avatar: string;
-  rating: number;
-  comment: string;
+  star_count: string;
+  social_media_type: string;
+  description: string;
   date: string;
 };
 
-const initialFeedback: Feedback[] = [
-  {
-    id: 1,
-    name: "Viktoriya Fromm",
-    avatar: "/images/customerPage/customer.png",
-    rating: 5,
-    comment:"I booked a cleaning Service in september 2024 . Two Cleaners did a good  job , for a 5 hours work ,  they also cleaned  the windows    and  fridge , were very punctual , friendly and reliable . I can Stron   gly recommend this company as a good and responsible partner.    Best regards, V.F  ",                                                                                             
-    date: "4 months ago",
-  },
-  {
-    id: 2,
-    name: "Viktoriya Fromm",
-    avatar: "/images/customerPage/customer.png",
-    rating: 4,
-    comment:"I booked a cleaning Service in september 2024 . Two Cleaners did a good  job , for a 5 hours work ,  they also cleaned  the windows    and  fridge , were very punctual , friendly and reliable . I can Stron   gly recommend this company as a good and responsible partner.    Best regards, V.F  ",                                                                                             
-    date: "3 months ago",
-  },
-  {
-    id: 1,
-    name: "Viktoriya Fromm",
-    avatar: "/images/customerPage/customer.png",
-    rating: 5,
-    comment:"I booked a cleaning Service in september 2024 . Two Cleaners did a good  job , for a 5 hours work ,  they also cleaned  the windows    and  fridge , were very punctual , friendly and reliable . I can Stron   gly recommend this company as a good and responsible partner.    Best regards, V.F  ",                                                                                             
-    date: "4 months ago",
-  },
-  {
-    id: 2,
-    name: "Viktoriya Fromm",
-    avatar: "/images/customerPage/customer.png",
-    rating: 4,
-    comment:"I booked a cleaning Service in september 2024 . Two Cleaners did a good  job , for a 5 hours work ,  they also cleaned  the windows    and  fridge , were very punctual , friendly and reliable . I can Stron   gly recommend this company as a good and responsible partner.    Best regards, V.F  ",                                                                                             
-    date: "3 months ago",
-  },
-];
-
 const CustomerFeedback: React.FC = () => {
-  const [feedback, _setFeedback] = useState<Feedback[]>(initialFeedback);
-  const [_newFeedback, _setNewFeedback] = useState({
-    name: "",
-    rating: 0,
-    comment: "",
-  });
+  // Import the AppDispatch type
+
+  const dispatch = useDispatch<typeof store.dispatch>();
+  const feedbackState = useSelector(
+    (state: any) => state.feedbaackSlice.feedback
+  );
+  const [feedback, setFeedback] = useState<Feedback[]>([]);
+
+  useEffect(() => {
+    dispatch(getFeedbackList());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (feedbackState.isSuccess) {
+      setFeedback(feedbackState.data);
+    }
+  }, [feedbackState]);
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInMonths =
+      (now.getFullYear() - date.getFullYear()) * 12 +
+      (now.getMonth() - date.getMonth());
+    return `${diffInMonths} months ago`;
+  };
+
+  const getSocialMediaIcon = (type: string) => {
+    switch (type) {
+      case "facebook":
+        return <img src={facebook} alt="facebok" />;
+      case "google":
+        return <img src={google} alt="google" />;
+      case "trustpilot":
+        return <img src={trustpilot} alt="trustpilot" />;
+      case "yelp":
+        return <img src={yelp} alt="yelp" />;
+    }
+  };
 
   // const handleSubmit = () => {
   //   if (!newFeedback.name || !newFeedback.comment || newFeedback.rating === 0)
@@ -80,8 +83,14 @@ const CustomerFeedback: React.FC = () => {
   // };
 
   return (
-    <Box sx={{ py: 5, backgroundColor: "#f0f8ff" ,mt:5}}>
-      <Typography variant="h4" fontWeight="bold" textAlign="center" mb={4} sx={{color:"#002F6D"}}>
+    <Box sx={{ py: 5, backgroundColor: "#f0f8ff", mt: 5 }}>
+      <Typography
+        variant="h4"
+        fontWeight="bold"
+        textAlign="center"
+        mb={4}
+        sx={{ color: "#002F6D" }}
+      >
         Customer Feedback
       </Typography>
 
@@ -95,21 +104,31 @@ const CustomerFeedback: React.FC = () => {
         }}
       >
         {feedback.map((item) => (
-          <Card key={item.id} sx={{ borderRadius: 2, boxShadow: "0 4px 12px rgba(0,0,0,0.1)" ,border: "2px solid #002F6D",}}>
+          <Card
+            key={item.id}
+            sx={{
+              borderRadius: 2,
+              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+              border: "2px solid #002F6D",
+            }}
+          >
             <CardContent>
               <Box display="flex" alignItems="center" gap={1} mb={2}>
                 <Avatar src={item.avatar} alt={item.name} />
-                <Box>                
-                  <Typography variant="h6">{item.name}</Typography>                 
-                  <Rating value={item.rating} readOnly />  
-                  </Box>               
+                <Box>
+                  <Typography variant="h6">{item.name}</Typography>
+                  <Rating value={parseInt(item.star_count)} readOnly />
                 </Box>
+              </Box>
               <Typography variant="body1" mb={2}>
-                {item.comment}
+                {item.description}
               </Typography>
-              <Typography variant="caption" color="gray">
-                {item.date}
-              </Typography>
+              <Box display="flex" alignItems="center" gap={1}>
+                {getSocialMediaIcon(item.social_media_type)}
+                <Typography variant="caption" color="gray">
+                  {formatDate(item.date)}
+                </Typography>
+              </Box>
             </CardContent>
           </Card>
         ))}
@@ -171,7 +190,6 @@ const CustomerFeedback: React.FC = () => {
           Submit Feedback
         </Button>
       </Box> */}
-
     </Box>
   );
 };
