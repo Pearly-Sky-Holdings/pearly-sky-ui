@@ -21,8 +21,8 @@ import EstimateList from "../../components/sanitizationPage/estimateList";
 function SanitizationAndDisinfection() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
-  const services = useSelector((state: any) => state.servicesSlice.service);
-  const [_selectedServices, setSelectedServices] = useState<object[]>([]);
+  useSelector((state: any) => state.servicesSlice.service);
+  const [_selectedServices, _setSelectedServices] = useState<object[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [acceptTerms2, setAcceptTerms2] = useState(false);
   const [selectedTime, setSelectedTime] = useState("");

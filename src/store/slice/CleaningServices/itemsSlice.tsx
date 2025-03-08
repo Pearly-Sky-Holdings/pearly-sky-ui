@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { getRestockList } from "../../../services/CleaningServices/index";
+// First, let's fix the itemsSlice.ts file
 
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { getRestockList } from "../../../services/CleaningServices/index";
 
 interface Item {
   id: number;
@@ -11,7 +12,7 @@ interface Item {
 }
 
 interface ItemsState {
-    items:{
+    items: {
         data: Item[];
         isLoading: boolean;
         isSuccess: boolean;
@@ -20,14 +21,26 @@ interface ItemsState {
 }
 
 const initialState: ItemsState = {
-    items:{
+    items: {
         data: [],
         isLoading: false,
         isSuccess: false,
         errorMessage: "",
     }
-  
 };
+
+// Define the fetchItems action creator properly
+export const fetchItems = createAsyncThunk(
+  'items/fetchItems',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await getRestockList();
+      return response;
+    } catch (error) {
+      return rejectWithValue(error instanceof Error ? error.message : 'An error occurred');
+    }
+  }
+);
 
 export const itemsSlice = createSlice({
   name: 'items',
@@ -35,21 +48,21 @@ export const itemsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getRestockList.pending, (state) => {
+      .addCase(fetchItems.pending, (state) => {
         state.items.isLoading = true;
         state.items.isSuccess = false;
         state.items.errorMessage = "";
       })
-      .addCase(getRestockList.fulfilled, (state, { payload }) => {
-              state.items.isLoading = false;
-              state.items.isSuccess = true;
-              state.items.data = payload;
-            })
-            .addCase(getRestockList.rejected, (state, { payload }) => {
-              state.items.isLoading = false;
-              state.items.isSuccess = false;
-              state.items.errorMessage = payload as string;
-            });
+      .addCase(fetchItems.fulfilled, (state, { payload }) => {
+        state.items.isLoading = false;
+        state.items.isSuccess = true;
+        state.items.data = payload;
+      })
+      .addCase(fetchItems.rejected, (state, { payload }) => {
+        state.items.isLoading = false;
+        state.items.isSuccess = false;
+        state.items.errorMessage = payload as string;
+      });
   },
 });
 
