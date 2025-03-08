@@ -11,20 +11,14 @@ import EquipmentSection from "../../components/equipmentSection/equipmentSection
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
 import {
-  getPackege,
   getRestockList,
   getServices,
 } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
 
-import {
-  airbnbAndShortService,
-  airbnbVideo3,
-  airbnbVideo2,
-} from "../../config/images";
+import { airbnbAndShortService } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
-import Carousel2 from "../../components/carouselSection2/carousel2";
 import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
 
 type Equipment = {
@@ -37,9 +31,6 @@ function AirbnbAndShortService() {
   const dispatch = useDispatch<typeof store.dispatch>();
   const services = useSelector((state: any) => state.servicesSlice.service);
   const items = useSelector((state: any) => state.itemsSlice.items);
-  const [_ovenQty, _setOvenQty] = useState("0");
-  const [_fridgeQty, _setFridgeQty] = useState("0");
-  const [selectedServices, _setSelectedServices] = useState<object[]>([]);
   const [showTermsCard, setShowTermsCard] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
@@ -53,54 +44,36 @@ function AirbnbAndShortService() {
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
   const [selectedSolvent, setSelectedSolvent] = useState("");
-  const [_selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
+  const [selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
   const [selectedEquipments, setSelectedEquipments] = useState<
     Array<{ id: string; price: number }>
   >([]);
+  // Currency state - Changed default from EUR to USD
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const [currencySymbol, setCurrencySymbol] = useState("$");
   const [conversionRate, setConversionRate] = useState(1);
-  const [checkedList, setCheckedList] = useState<String[]>([]);
-  const [groupedItems, setGroupedItems] = useState<any>({});
-  const [maxTime, setMaxTime] = useState<number>(1);
   const [conversionRateBaseEur, setConversionRateBaseEur] = useState(1);
 
+  const [changeValue, setChangeValue] = useState<boolean>(false);
+  const [count , setCount] = useState(0);
+
+  const [maxTime, setMaxTime] = useState<number>(1);
+
+  const [checkedList, setCheckedList] = useState<string[]>([]);
+  const [groupedItems, setGroupedItems] = useState<any>({});
   const [priceBreakdown, setPriceBreakdown] = useState({
     hourlyRate: parseInt(services.data.price),
-    serviceCosts: 0,
     equipmentCosts: 0,
-    totalPrice: 29,
-    basePrice: 29,
+    totalPrice: 29.00,
+    basePrice: 29.00,
   });
 
-  /*************  ✨ Codeium Command ⭐  *************/
-  /**
-   * Updates the selected currency, its symbol, and conversion rate.
-   *
-   * @param currency - The new currency code (e.g., 'USD', 'EUR').
-   * @param symbol - The symbol corresponding to the new currency (e.g., '$', '€').
-   * @param rate - The conversion rate of the new currency relative to the base currency.
-   */
-
-  /******  9bf0025a-19df-4633-8864-e3c73e855073  *******/ 
-  const handleCurrencyUpdate = (
-    currency: string,
-    symbol: string,
-    rate: number,
-    rateBaseEur: number
-  ) => {
-    setSelectedCurrency(currency);
-    setCurrencySymbol(symbol);
-    setConversionRate(rate);
-    setConversionRateBaseEur(rateBaseEur);
-  };
   useEffect(() => {
-    setPriceBreakdown(calculateTotalPrice());
-  }, [selectedServices, selectedEquipments, conversionRate, duration]);
-
-  useEffect(() => {
-    dispatch(getPackege("7"));
-  }, []);
+    if (changeValue) {
+      setChangeValue(false);
+      setPriceBreakdown(calculateTotalPrice());
+    }
+  }, [selectedEquipments, conversionRate, duration]);
 
   useEffect(() => {
     dispatch(getServices("7"));
@@ -110,10 +83,48 @@ function AirbnbAndShortService() {
     if (items.data.length === 0) {
       dispatch(getRestockList());
     }
-    console.log(items.data);
-    console.log("Grouped Items:", groupedItems);
   });
+  // Handler for currency changes from CurrencyConverter component
+  const handleCurrencyUpdate = (
+    currency: string,
+    symbol: string,
+    rate: number,
+    rateBaseEur: number
+  ) => {
+    if(count >= 2){
+      setChangeValue(true);
+    }
+    setSelectedCurrency(currency);
+    setCurrencySymbol(symbol);
+    setConversionRate(rate);
+    setConversionRateBaseEur(rateBaseEur);
+    setCount(count + 1);
+  };
 
+  const calculateTotalPrice = () => {
+    const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
+    const basePrice = hourlyRate * maxTime; // Base price in USD
+
+    let serviceCosts = 0;
+    let equipmentCosts = 0;
+
+    // Calculate equipment costs in USD
+    selectedEquipments.forEach((equipment) => {
+      equipmentCosts += equipment.price * conversionRate;
+    });
+
+    // Calculate total price in the user's selected currency
+    const totalPriceInSelectedCurrency =
+      basePrice * conversionRate + equipmentCosts + serviceCosts;
+
+    return {
+      hourlyRate,
+      
+      equipmentCosts,
+      totalPrice: totalPriceInSelectedCurrency, // Total price in the selected currency
+      basePrice: basePrice * conversionRate, // Base price in the selected currency
+    };
+  };
   useEffect(() => {
     if (items.data.length > 0) {
       const grouped = items.data.reduce((acc: any, item: any) => {
@@ -124,36 +135,12 @@ function AirbnbAndShortService() {
         return acc;
       }, {});
       setGroupedItems(grouped);
-      console.log(groupedItems);
     }
   }, [items.data]);
 
-  const calculateTotalPrice = () => {
-    const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
-    const basePrice = hourlyRate * maxTime ; // Base price in USD
-
-    let serviceCosts = 0;
-    let equipmentCosts = 0;
-    // Calculate equipment costs in USD
-    selectedEquipments.forEach((equipment) => {
-      equipmentCosts += equipment.price * conversionRate;
-    });
-
-    // Calculate total price in the user's selected currency
-    const totalPriceInSelectedCurrency =
-      (basePrice) * conversionRate +equipmentCosts + serviceCosts;
-
-    return {
-      hourlyRate,
-      serviceCosts,
-      equipmentCosts,
-      totalPrice: totalPriceInSelectedCurrency, // Total price in the selected currency
-      basePrice: basePrice * conversionRate, // Base price in the selected currency
-    };
-  };
   const handleEquipmentSelect = (equipment: Equipment, selected: boolean) => {
+    setChangeValue(true);
     if (selected) {
-      // Check if the equipment is already in the array
       if (!selectedEquipments.some((e) => e.id === equipment.id)) {
         setSelectedEquipments((prev) => [
           ...prev,
@@ -161,12 +148,12 @@ function AirbnbAndShortService() {
         ]);
       }
     } else {
-      // Remove the equipment if it exists
       setSelectedEquipments((prev) =>
         prev.filter((e) => e.id !== equipment.id)
       );
     }
   };
+
   const handleSolventChange = (solvent: string) => {
     setSelectedSolvent(solvent);
   };
@@ -174,51 +161,36 @@ function AirbnbAndShortService() {
   const handleEquipmentOptionChange = (option: string) => {
     setSelectedEquipmentOption(option);
   };
-
   const handleBookNow = () => {
-    if (
-      !propertySize ||
-      !duration ||
-      !numCleaners ||
-      !frequency ||
-      !propertyType ||
-      !contactType ||
-      !language ||
-      !selectedDate ||
-      !selectedTime ||
-      !acceptTerms1 ||
-      !acceptTerms2
-    ) {
-      alert("Please fill all required fields before proceeding to checkout.");
-      return;
-    }
+    const totalPriceInSelectedCurrency = priceBreakdown.totalPrice;
+    const totalPriceInUSD = totalPriceInSelectedCurrency / conversionRate;
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
       service_id: "7",
+      price: totalPriceInUSD.toString(),
       date,
       time: selectedTime,
       property_size: propertySize,
       duration: parseInt(duration),
       number_of_cleaners: parseInt(numCleaners),
+      note: document.querySelector("textarea")?.value || "",
       frequency,
-      package_details: selectedServices,
-      person_type: contactType,
-      language,
+      request_gender: contactType,
+      request_language: language,
       business_property: propertyType,
       cleaning_solvents: selectedSolvent,
-      equipmentOption: _selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
-      price: priceBreakdown.totalPrice,
-      note: document.querySelector("textarea")?.value || "",
+      reStock_details: checkedList.map((id) => ({
+        re_stocking_checklist_id: id,
+      })),
     };
     const data = {
       serviceName: "Airbnb And Short Term Rental Cleaning",
       details: serviceDetails,
       orderSummary: {
-        selectedServices,
         selectedEquipments,
         basePrice: priceBreakdown.basePrice,
-        totalPrice: priceBreakdown.totalPrice,
+        totalPrice: priceBreakdown.totalPrice,  
         currencySymbol,
         selectedCurrency,
         conversionRate,
@@ -241,6 +213,7 @@ function AirbnbAndShortService() {
       );
     }
   };
+
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
       {/* Header Section */}
@@ -270,7 +243,7 @@ function AirbnbAndShortService() {
             companies and is prepared for individuals transitioning into or out
             of a property. This subtle cleaning procedure is specially made to
             prepare a space for new occupants or ensure the departure leaves the
-            premises in impeccable condition. 
+            premises in impeccable condition.
           </p>
           <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
             <li>
@@ -292,20 +265,6 @@ function AirbnbAndShortService() {
             stay and boosting positive reviews.
           </p>
         </div>
-      </div>
-
-      {/* Carousel Section */}
-      <div>
-        <Carousel2
-          videoItems={[
-            {
-              video: airbnbVideo3,
-            },
-            {
-              video: airbnbVideo2,
-            },
-          ]}
-        />
       </div>
 
       {/* Checklist Section */}
@@ -334,7 +293,9 @@ function AirbnbAndShortService() {
                         type="checkbox"
                         className="hidden"
                         checked={checkedList.includes(item.id.toString())}
-                        onChange={(e) => handleCheckboxChange(item.id, e)}
+                        onChange={(e) => {
+                          setChangeValue(true);
+                          handleCheckboxChange(item.id, e)}}
                       />
                       <div
                         className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-colors ${
@@ -379,7 +340,9 @@ function AirbnbAndShortService() {
                         type="checkbox"
                         className="hidden"
                         checked={checkedList.includes(item.id.toString())}
-                        onChange={(e) => handleCheckboxChange(item.id, e)}
+                        onChange={(e) => {
+                          setChangeValue(true);
+                          handleCheckboxChange(item.id, e)}}
                       />
                       <div
                         className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-colors ${
@@ -426,7 +389,9 @@ function AirbnbAndShortService() {
                         type="checkbox"
                         className="hidden"
                         checked={checkedList.includes(item.id.toString())}
-                        onChange={(e) => handleCheckboxChange(item.id, e)}
+                        onChange={(e) => {
+                          setChangeValue(true);
+                          handleCheckboxChange(item.id, e)}}
                       />
                       <div
                         className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-colors ${
@@ -473,7 +438,9 @@ function AirbnbAndShortService() {
                         type="checkbox"
                         className="hidden"
                         checked={checkedList.includes(item.id.toString())}
-                        onChange={(e) => handleCheckboxChange(item.id, e)}
+                        onChange={(e) => {
+                          setChangeValue(true);
+                          handleCheckboxChange(item.id, e)}}
                       />
                       <div
                         className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-colors ${
@@ -578,7 +545,10 @@ function AirbnbAndShortService() {
             numCleaners={numCleaners}
             setNumCleaners={setNumCleaners}
             duration={duration}
-            setDuration={setDuration}
+            setDuration={(val) => {
+              setChangeValue(true);
+              setDuration(val);
+            }}
             propertyType={propertyType}
             setPropertyType={setPropertyType}
             frequency={frequency}
@@ -670,21 +640,23 @@ function AirbnbAndShortService() {
             </span>
           </div>
 
-          {/* Selected Services Costs */}
-          {selectedServices.length > 0 && (
+          {/* Selected Re-Stocking Items Section */}
+          {checkedList.length > 0 && (
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
               <span className="mb-2 md:mb-0">
-                Selected Services{" "}
+                Selected Re-Stocking Items{""}
                 <span className="text-gray-400">
-                  ({selectedServices.length} services)
+                  ({checkedList.length} items)
                 </span>
               </span>
               <span>
                 {currencySymbol}
-                {priceBreakdown.serviceCosts.toFixed(2)}
+                {"0.00"}
               </span>
             </div>
           )}
+
+         
 
           {/* Selected Equipment Costs */}
           {selectedEquipments.length > 0 && (
@@ -717,7 +689,6 @@ function AirbnbAndShortService() {
           className="w-full mt-8 bg-blue-900 text-white py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={!acceptTerms1 || !acceptTerms2}
           onClick={handleBookNow}
-          style={{backgroundColor:"#1c398e"}}
         >
           Book Now
         </button>

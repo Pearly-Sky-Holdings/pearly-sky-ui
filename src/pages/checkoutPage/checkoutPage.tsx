@@ -74,6 +74,7 @@ const CheckoutPage = () => {
         cleaning_solvents: data.details.cleaning_solvents,
         business_property: data.details.business_property,
         payment_method: selectedPaymentMethod,
+        reStock_details: data.details.reStock_details,
       };
 
       setSaveLoader(true);
@@ -94,10 +95,12 @@ const CheckoutPage = () => {
         frequency: data.details.frequency,
         note: data.details.note,
         language: data.details.language,
-        number_of_count: data.details.number_of_count,
+        number_of_count: data.details.numChild,
         request_care_professional: data.details.request_care_professional,
         service_providing_place: data.details.service_providing_place,
         special_request: data.details.special_request,
+        gender: data.details.type,
+        age: data.details.age,
       };
       setSaveLoader(true);
       dispatch(saveServices(childCareServiceData));
@@ -133,7 +136,7 @@ const CheckoutPage = () => {
             else if(data.serviceName == "Post Construction"){navigate("/post-construction-cleaning", {
               state: { showSuccessPopup: true },
             });}
-            else if(data.serviceName == "Airbnb And Short Term Rental Cleaning"){navigate("/airbnb-and-short-term-rental-cleaning", {
+            else if(data.serviceName == "Airbnb And Short Term Rental Cleaning"){navigate("/airbnb_and_short_service", {
               state: { showSuccessPopup: true },
             });}  
           }, 2000);

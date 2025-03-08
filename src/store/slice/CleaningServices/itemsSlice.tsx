@@ -1,35 +1,55 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice } from '@reduxjs/toolkit';
+import { getRestockList } from "../../../services/CleaningServices/index";
 
-// Define async thunk for fetching items
-export const fetchItems = createAsyncThunk("items/fetchItems", async () => {
-  const response = await axios.get("/api/items"); 
-  return response.data;
-});
 
-const itemsSlice = createSlice({
-  name: "items",
-  initialState: {
-    items: {
-      data: [],
-      isLoading: false,
-      errorMessage: null as string | null,
-    },
-  },
+interface Item {
+  id: number;
+  name: string;
+  category: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface ItemsState {
+    items:{
+        data: Item[];
+        isLoading: boolean;
+        isSuccess: boolean;
+        errorMessage: string;
+    }  
+}
+
+const initialState: ItemsState = {
+    items:{
+        data: [],
+        isLoading: false,
+        isSuccess: false,
+        errorMessage: "",
+    }
+  
+};
+
+export const itemsSlice = createSlice({
+  name: 'items',
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchItems.pending, (state) => {
+      .addCase(getRestockList.pending, (state) => {
         state.items.isLoading = true;
+        state.items.isSuccess = false;
+        state.items.errorMessage = "";
       })
-      .addCase(fetchItems.fulfilled, (state, action) => {
-        state.items.isLoading = false;
-        state.items.data = action.payload;
-      })
-      .addCase(fetchItems.rejected, (state, action) => {
-        state.items.isLoading = false;
-        state.items.errorMessage = action.error.message || "Failed to fetch";
-      });
+      .addCase(getRestockList.fulfilled, (state, { payload }) => {
+              state.items.isLoading = false;
+              state.items.isSuccess = true;
+              state.items.data = payload;
+            })
+            .addCase(getRestockList.rejected, (state, { payload }) => {
+              state.items.isLoading = false;
+              state.items.isSuccess = false;
+              state.items.errorMessage = payload as string;
+            });
   },
 });
 

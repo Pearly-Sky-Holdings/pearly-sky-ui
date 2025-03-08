@@ -12,24 +12,28 @@ import PaymentSupportSection from "../../components/paymentSupportSection/paymen
 import { getServices } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
 
-import {childCareImage1, childCareVideo,childCareVideo2 } from "../../config/images";
+import {
+  childCareImage1,
+  childCareVideo,
+  childCareVideo2,
+} from "../../config/images";
 import store from "../../store";
 import BookingSectionCart2 from "../../components/bookingSectionChildAndElderCart/bookingSectionCart2";
 import TermsAndConditionsChild from "../../components/termsAndConditions/termAndConditionsChild";
+import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
 
 function ChildCareCleaningPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const services = useSelector((state: any) => state.servicesSlice.service);
-  const [selectedServices, _setSelectedServices] = useState<object[]>([]);
   const [showTermsCard, setShowTermsCard] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
   const [acceptTerms1, setAcceptTerms1] = useState(false);
   const [acceptTerms2, setAcceptTerms2] = useState(false);
   const [numChild, setNumChild] = useState("");
-  const [duration, setDuration] = useState("");
-  const [childAge, setChildAge] = useState("");
+  const [duration, setDuration] = useState("1");
+  const [childAge, setChildAge] = useState<string[]>([]);
   const [language, setLanguage] = useState("");
   const [frequency, setFrequency] = useState("");
   const [contactType, setContactType] = useState("");
@@ -39,48 +43,89 @@ function ChildCareCleaningPage() {
   const [propertyType, setPropertyType] = useState("");
   const [specialRequest, setSpecialRequest] = useState("");
 
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const [currencySymbol, setCurrencySymbol] = useState("$");
+  const [conversionRate, setConversionRate] = useState(1);
+
+  const [changeValue, setChangeValue] = useState<boolean>(false);
+  const [count , setCount] = useState(0);
+
   const [priceBreakdown, setPriceBreakdown] = useState({
-    basePrice: 59.0,
-    totalPrice: 59.0,
+    hourlyRate: parseInt(services.data.price),
+    totalPrice: 29.00,
+    basePrice: 29.00,
   });
 
+  const handleCurrencyUpdate = (
+    currency: string,
+    symbol: string,
+    rate: number,
+  ) => {
+    if(count >= 2){
+      setChangeValue(true);
+    }
+    setSelectedCurrency(currency);
+    setCurrencySymbol(symbol);
+    setConversionRate(rate);
+    setCount(count + 1);
+  };
+
+  const calculateTotalPrice = () => {
+    const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
+    const basePrice = hourlyRate * parseFloat(duration); // Base price in USD
+
+    // Calculate total price in the user's selected currency
+    const totalPriceInSelectedCurrency = basePrice * conversionRate;
+
+    return {
+      hourlyRate,
+      totalPrice: totalPriceInSelectedCurrency, // Total price in the selected currency
+      basePrice: basePrice * conversionRate, // Base price in the selected currency
+    };
+  };
+
   useEffect(() => {
-    setPriceBreakdown(calculateTotalPrice());
-  }, []);
+    if (changeValue) {
+      setChangeValue(false);
+      setPriceBreakdown(calculateTotalPrice());
+    }
+  }, [conversionRate, duration]);
 
   useEffect(() => {
     dispatch(getServices("8"));
   }, []);
 
-  const calculateTotalPrice = () => {
-    let basePrice = 58.0;
-
-    const totalPrice = basePrice;
-    return {
-      basePrice,
-      totalPrice,
-    };
-  };
-
   const handleBookNow = () => {
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
       service_id: "8",
-      duration: parseInt(duration),
       date,
       time: selectedTime,
-      frequency,
-      package_details: selectedServices,
-      language,
-      price: priceBreakdown.totalPrice,
-      note: document.querySelector("textarea")?.value || "",
-      number_of_count: numChild,
+      duration: parseInt(duration),
       request_care_professional: numProfession,
-      service_providing_place: propertyType,
+      frequency,
+      language,
+      type,
+      contactType,
+      numChild,
+      age: `[${childAge.join(",")}]`,
       special_request: specialRequest,
+      price: priceBreakdown.totalPrice,
+      service_providing_place: propertyType,
+      note: document.querySelector("textarea")?.value || "",
     };
-    const data = { serviceName: "Child Care", details: serviceDetails };
-    console.log("Service Details:", serviceDetails);
+    const data = {
+      serviceName: "Child Care",
+      details: serviceDetails,
+      orderSummary: {
+        basePrice: priceBreakdown.basePrice,
+        totalPrice: priceBreakdown.totalPrice,
+        currencySymbol,
+        selectedCurrency,
+        conversionRate,
+      },
+    };
+    console.log("Service data:", data);
     navigate("/checkout", { state: { data } });
   };
 
@@ -101,25 +146,18 @@ function ChildCareCleaningPage() {
               {services.data.name}
             </h1>
             <div className="mt-4 mb-4 ml-4">
-              <div className="flex gap-3">
-                <p className="text-xl sm:text-2xl font-semibold text-black">
-                  {services.data.price}
-                </p>
-                <select className="border rounded p-0.5 text-blue-900 h-7">
-                  <option>EUR</option>
-                  <option>USD</option>
-                  <option>GBP</option>
-                  <option>AED</option>
-                  <option>NZD</option>
-                </select>
-              </div>
+              <CurrencyConverter
+                basePrice={parseFloat(services.data.price)}
+                onCurrencyChange={handleCurrencyUpdate}
+                initialCurrency="EUR"
+              />
             </div>
           </div>
           <p className="text-gray-600 mb-4 text-sm sm:text-base">
             Child Care Services provide a safe, nurturing, and enriching
             environment for children, ensuring their well-being and development.
             Whether at home or on the go, caregivers offer personalized support
-            to meet each child’s needs with care and attention. 
+            to meet each child’s needs with care and attention. 
           </p>
           <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
             <li>
@@ -206,7 +244,10 @@ function ChildCareCleaningPage() {
         <div>
           <BookingSectionCart2
             duration={duration}
-            setDuration={setDuration}
+            setDuration={(val) => {
+              setChangeValue(true);
+              setDuration(val);
+            }}
             frequency={frequency}
             setFrequency={setFrequency}
             childAge={childAge}
@@ -223,10 +264,10 @@ function ChildCareCleaningPage() {
             setContactType={setContactType}
             language={language}
             setLanguage={setLanguage}
-            specialRequest={specialRequest} 
-            setSpecialRequest={setSpecialRequest} 
-            propertyType={propertyType} 
-            setPropertyType={setPropertyType} 
+            specialRequest={specialRequest}
+            setSpecialRequest={setSpecialRequest}
+            propertyType={propertyType}
+            setPropertyType={setPropertyType}
             pageType={"child"}
           />
         </div>
@@ -297,15 +338,24 @@ function ChildCareCleaningPage() {
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              Base Cost <span className="text-gray-400">(C$ 59.00)</span>
+              Base Cost{" "}
+              <span className="text-gray-400">
+                ({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})
+              </span>
             </span>
-            <span>C${priceBreakdown.basePrice.toFixed(2)}</span>
+            <span>
+              {currencySymbol}
+              {priceBreakdown.basePrice.toFixed(2)}
+            </span>
           </div>
 
           {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
             <span>Total</span>
-            <span>C${priceBreakdown.totalPrice.toFixed(2)}</span>
+            <span>
+              {currencySymbol}
+              {priceBreakdown.totalPrice.toFixed(2)}
+            </span>
           </div>
         </div>
 
@@ -314,7 +364,7 @@ function ChildCareCleaningPage() {
           className="w-full mt-8 bg-blue-900 text-white py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={!acceptTerms1 || !acceptTerms2}
           onClick={handleBookNow}
-          style={{backgroundColor:"#1c398e"}}
+          style={{ backgroundColor: "#1c398e" }}
         >
           Book Now
         </button>

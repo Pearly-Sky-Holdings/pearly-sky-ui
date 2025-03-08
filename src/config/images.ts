@@ -24,7 +24,7 @@ export const CommercialService: string = "/images/service/CommercialService.png"
 export const steamService: string = "/images/service/steamService.png";
 export const laundryService: string = "/images/service/laundryService.png";
 export const eventService: string = "/images/service/eventService.png";
-export const poolService: string = "/images/service/poolService.png";
+export const poolService: string = "/images/service/poolService.jpg";
 export const pressureService: string = "/images/service/pressureService.png";
 export const SanitizationService: string = "/images/service/Sanitization & Disinfection.png";
 export const CarpetCleaningService: string = "/images/service/Carpet & Upholstery Cleaning.png";
@@ -69,6 +69,7 @@ export const contactImage1: string = "/images/uiContactUs/ContactUs.png";
 export const worldMap: string = "/images/uiContactUs/worldMap.png";
 
 export const footerImage2: string = "/images/footer/footerImage2.png";
+export const qrCode: string = "/images/footer/qrCode.jpeg";
 export const footerImage3: string = "/images/footer/footerImage3.png";
 export const footerImage4: string = "/images/footer/footerImage4.png";
 
@@ -183,3 +184,9 @@ export const elderCareImage1: string = "/images/service/childAndElder/ElderCarea
 export const termsAndConditionsImage1: string = "/images/termAndConditions/termAndConditions.png";
 
 export const loginPageImage: string = "/images/loginPage/loginPageImage.png";
+
+// Customer Feedback
+export const google: string = "/images/customerFeedback/google.png";
+export const facebook: string = "/images/customerFeedback/facebook.png";
+export const trustpilot: string = "/images/customerFeedback/trustpilot.png";
+export const yelp: string = "/images/customerFeedback/yelp.png";

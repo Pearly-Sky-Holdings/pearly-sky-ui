@@ -17,6 +17,7 @@ import PersonalInformationForm from "../../components/personalInformationForm/pe
 import { SanitizationService } from "../../config/images";
 import EstimateList from "../../components/sanitizationPage/estimateList";
 
+
 function SanitizationAndDisinfection() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
@@ -30,6 +31,7 @@ function SanitizationAndDisinfection() {
   const [timeZone, setTimeZone] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
+
   const [formData, setFormData] = useState({});
   const [selectedData, setSelectedData] = useState<{ category: string; items: string[] }[]>([]);
 
@@ -54,12 +56,14 @@ function SanitizationAndDisinfection() {
   }, []);
 
   // Fetch package and services data
+
   useEffect(() => {
     dispatch(getPackege("6"));
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(getServices("6"));
+
   }, [dispatch]);
 
   const handleCheckboxChange = (
@@ -75,13 +79,16 @@ function SanitizationAndDisinfection() {
 
   const handleBookNow = () => {
     if (
+
       !frequency ||
       !propertyType ||
       !contactType ||
       !language ||
+
       !timeZone ||
       !selectedDate ||
       !selectedTime ||
+
       !acceptTerms2
     ) {
       alert("Please fill all required fields before proceeding to checkout.");
@@ -96,7 +103,9 @@ function SanitizationAndDisinfection() {
       person_type: contactType,
       language,
       timeZone,
+
       business_property: propertyType,
+
       note: document.querySelector("textarea")?.value || "",
     };
 
@@ -219,7 +228,9 @@ function SanitizationAndDisinfection() {
 
         {/* Booking Details */}
         <div className="mt-10">
-          <SanitizationBookingCart
+
+          <SanitizationBookingCart           
+
             propertyType={propertyType}
             setPropertyType={setPropertyType}
             frequency={frequency}
@@ -230,6 +241,7 @@ function SanitizationAndDisinfection() {
             setLanguage={setLanguage}
             timeZone={timeZone}
             setTimeZone={setTimeZone}
+
           />
         </div>
 
@@ -256,8 +268,41 @@ function SanitizationAndDisinfection() {
               className="w-full min-h-[150px] border border-blue-900 rounded p-2 text-gray-700 resize-none"
               placeholder="Type your note here..."
             ></textarea>
+          </div>          
+        </div>
+
+        <div className="flex flex-wrap  p-8 gap-10 md:gap-100 mb-10">
+          {/* Equipment Section */}
+          <div className="w-full md:w-auto">
+            <h2 className="text-lg text-black font-bold mb-4">Equipment</h2>
+            <div className="space-y-2 text-black ">
+              <label className="flex items-center space-x-2">
+                <input type="checkbox" className="w-4 h-4" />
+                <span>Provide by customer</span>
+              </label>
+              <label className="flex items-center space-x-2">
+                <input type="checkbox" className="w-4 h-4" />
+                <span>Provide by company</span>
+              </label>
+            </div>
+          </div>
+
+          {/* Chemical Section */}
+          <div className="w-full md:w-auto">
+            <h2 className="text-lg text-black font-bold mb-4">Chemical</h2>
+            <div className="space-y-2 text-black">
+              <label className="flex items-center space-x-2">
+                <input type="checkbox" className="w-4 h-4" />
+                <span>Provide by customer</span>
+              </label>
+              <label className="flex items-center space-x-2">
+                <input type="checkbox" className="w-4 h-4" />
+                <span>Provide by company</span>
+              </label>
+            </div>
           </div>
         </div>
+
 
         <div className="flex flex-wrap p-8 gap-10 md:gap-100 mb-10">
           {/* Equipment Section */}

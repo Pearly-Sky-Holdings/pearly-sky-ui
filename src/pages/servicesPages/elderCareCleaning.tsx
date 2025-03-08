@@ -24,22 +24,22 @@ import store from "../../store";
 import BookingSectionCart2 from "../../components/bookingSectionChildAndElderCart/bookingSectionCart2";
 import Carousel2 from "../../components/carouselSection2/carousel2";
 import TermsAndConditionsChild from "../../components/termsAndConditions/termAndConditionsChild";
+import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
 
 function ElderCareCleaningPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const services = useSelector((state: any) => state.servicesSlice.service);
-  const [selectedServices] = useState<object[]>([]);
   const [showTermsCard, setShowTermsCard] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
-  const [duration, setDuration] = useState("");
+  const [duration, setDuration] = useState("1");
   const [frequency, setFrequency] = useState("");
   const [acceptTerms1, setAcceptTerms1] = useState(false);
   const [acceptTerms2, setAcceptTerms2] = useState(false);
   const [language, setLanguage] = useState("");
   const [contactType, setContactType] = useState("");
-  const [childAge, setChildAge] = useState("");
+  const [childAge, setChildAge] = useState<string[]>([]);
   const [type, setType] = useState("");
   const [numProfession, setNumProfession] = useState("");
   const [profession, setProfession] = useState("");
@@ -47,51 +47,89 @@ function ElderCareCleaningPage() {
   const [propertyType, setPropertyType] = useState("");
   const [specialRequest, setSpecialRequest] = useState("");
 
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const [currencySymbol, setCurrencySymbol] = useState("$");
+  const [conversionRate, setConversionRate] = useState(1);
+  
+  const [changeValue, setChangeValue] = useState<boolean>(false);
+    const [count , setCount] = useState(0);
+
   const [priceBreakdown, setPriceBreakdown] = useState({
-    basePrice: 59.0,
-    totalPrice: 59.0,
+    hourlyRate: parseInt(services.data.price),
+    totalPrice: 29.00,
+    basePrice: 29.00,
   });
 
+  const handleCurrencyUpdate = (
+    currency: string,
+    symbol: string,
+    rate: number,
+  ) => {
+    if(count >= 2){
+      setChangeValue(true);
+    }
+    setSelectedCurrency(currency);
+    setCurrencySymbol(symbol);
+    setConversionRate(rate);
+    setCount(count + 1);
+  };
   useEffect(() => {
-    setPriceBreakdown(calculateTotalPrice());
-  },[] );
+    if (changeValue) {
+      setChangeValue(false);
+      setPriceBreakdown(calculateTotalPrice());
+    }
+  }, [conversionRate, duration]);
 
   useEffect(() => {
     dispatch(getServices("9"));
   }, []);
-
   const calculateTotalPrice = () => {
-    let basePrice = 58.0;
-  
-    const totalPrice = basePrice;
+    const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
+    const basePrice = hourlyRate * parseFloat(duration); // Base price in USD
+
+    // Calculate total price in the user's selected currency
+    const totalPriceInSelectedCurrency = basePrice * conversionRate;
+
     return {
-      basePrice,
-      totalPrice,
+      hourlyRate,
+      totalPrice: totalPriceInSelectedCurrency, // Total price in the selected currency
+      basePrice: basePrice * conversionRate, // Base price in the selected currency
     };
   };
 
   const handleBookNow = () => {
-    const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
-    const serviceDetails = {
-      service_id: "9",
-      date,
-      time: selectedTime,  
-      duration: parseInt(duration),  
-      frequency,
-      package_details: selectedServices,
-      person_type: contactType,
-      language,
-      price: priceBreakdown.totalPrice,
-      note: document.querySelector("textarea")?.value || "",
-      number_of_count: numChild,
-      request_care_professional: numProfession,
-      service_providing_place: propertyType,
-      special_request: specialRequest,
+      const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
+      const serviceDetails = {
+        service_id: "8",
+        date,
+        time: selectedTime,
+        duration: parseInt(duration),
+        request_care_professional: numProfession,
+        frequency,
+        language,
+        type,
+        contactType,
+        numChild,
+        special_request: specialRequest,
+        price: priceBreakdown.totalPrice,
+        service_providing_place: propertyType,
+        note: document.querySelector("textarea")?.value || "",
+        selectedCurrency,
+      };
+      const data = {
+        serviceName: "Elder Care",
+        details: serviceDetails,
+        orderSummary: {
+          basePrice: priceBreakdown.basePrice,
+          totalPrice: priceBreakdown.totalPrice,
+          currencySymbol,
+          selectedCurrency,
+          conversionRate,
+        },
+      };
+      console.log("Service data:", data);
+      navigate("/checkout", { state: { data } });
     };
-    const data = { serviceName: "Elder Care", details: serviceDetails };
-    console.log("Service Details:", serviceDetails);
-    navigate("/checkout", { state: { data } });
-  };
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
@@ -110,18 +148,11 @@ function ElderCareCleaningPage() {
               {services.data.name}
             </h1>
             <div className="mt-4 mb-4 ml-4">
-              <div className="flex gap-3">
-                <p className="text-xl sm:text-2xl font-semibold text-black">
-                  {services.data.price}
-                </p>
-                <select className="border rounded p-0.5 text-blue-900 h-7">
-                  <option>EUR</option>
-                  <option>USD</option>
-                  <option>GBP</option>
-                  <option>AED</option>
-                  <option>NZD</option>
-                </select>
-              </div>
+            <CurrencyConverter
+                basePrice={parseFloat(services.data.price)}
+                onCurrencyChange={handleCurrencyUpdate}
+                initialCurrency="EUR"
+              />
             </div>
           </div>
           <p className="text-gray-600 mb-4 text-sm sm:text-base">
@@ -215,7 +246,10 @@ function ElderCareCleaningPage() {
         <div>
         <BookingSectionCart2
             duration={duration}
-            setDuration={setDuration}
+            setDuration={(val) => {
+              setChangeValue(true);
+              setDuration(val);
+            }}
             frequency={frequency}
             setFrequency={setFrequency}
             childAge={childAge}
@@ -302,19 +336,28 @@ function ElderCareCleaningPage() {
           />
         )}
 
-        <div className="pt-4 mb-6">
+<div className="pt-4 mb-6">
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              Base Cost <span className="text-gray-400">(C$ 59.00)</span>
+              Base Cost{" "}
+              <span className="text-gray-400">
+                ({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})
+              </span>
             </span>
-            <span>C${priceBreakdown.basePrice.toFixed(2)}</span>
+            <span>
+              {currencySymbol}
+              {priceBreakdown.basePrice.toFixed(2)}
+            </span>
           </div>
 
           {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
             <span>Total</span>
-            <span>C${priceBreakdown.totalPrice.toFixed(2)}</span>
+            <span>
+              {currencySymbol}
+              {priceBreakdown.totalPrice.toFixed(2)}
+            </span>
           </div>
         </div>
 

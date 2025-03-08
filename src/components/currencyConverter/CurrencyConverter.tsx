@@ -61,7 +61,7 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({
     if (conversionRates[selectedCurrency]) {
       onCurrencyChange(selectedCurrency, getCurrencySymbol(selectedCurrency), conversionRates[selectedCurrency], conversionRatesBaseEur[selectedCurrency]);
     }
-  }, [selectedCurrency, conversionRates, onCurrencyChange]);
+  }, [selectedCurrency, conversionRates]);
 
   return (
     <div className="flex items-center gap-3">
