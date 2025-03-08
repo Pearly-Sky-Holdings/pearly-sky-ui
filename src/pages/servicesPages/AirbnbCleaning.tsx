@@ -55,7 +55,7 @@ function AirbnbAndShortService() {
   const [conversionRateBaseEur, setConversionRateBaseEur] = useState(1);
 
   const [changeValue, setChangeValue] = useState<boolean>(false);
-  const [count , setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
   const [maxTime, setMaxTime] = useState<number>(1);
 
@@ -64,8 +64,8 @@ function AirbnbAndShortService() {
   const [priceBreakdown, setPriceBreakdown] = useState({
     hourlyRate: parseInt(services.data.price),
     equipmentCosts: 0,
-    totalPrice: 29.00,
-    basePrice: 29.00,
+    totalPrice: 29.0,
+    basePrice: 29.0,
   });
 
   useEffect(() => {
@@ -91,7 +91,7 @@ function AirbnbAndShortService() {
     rate: number,
     rateBaseEur: number
   ) => {
-    if(count >= 2){
+    if (count >= 2) {
       setChangeValue(true);
     }
     setSelectedCurrency(currency);
@@ -119,7 +119,7 @@ function AirbnbAndShortService() {
 
     return {
       hourlyRate,
-      
+
       equipmentCosts,
       totalPrice: totalPriceInSelectedCurrency, // Total price in the selected currency
       basePrice: basePrice * conversionRate, // Base price in the selected currency
@@ -190,7 +190,7 @@ function AirbnbAndShortService() {
       orderSummary: {
         selectedEquipments,
         basePrice: priceBreakdown.basePrice,
-        totalPrice: priceBreakdown.totalPrice,  
+        totalPrice: priceBreakdown.totalPrice,
         currencySymbol,
         selectedCurrency,
         conversionRate,
@@ -295,7 +295,8 @@ function AirbnbAndShortService() {
                         checked={checkedList.includes(item.id.toString())}
                         onChange={(e) => {
                           setChangeValue(true);
-                          handleCheckboxChange(item.id, e)}}
+                          handleCheckboxChange(item.id, e);
+                        }}
                       />
                       <div
                         className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-colors ${
@@ -342,7 +343,8 @@ function AirbnbAndShortService() {
                         checked={checkedList.includes(item.id.toString())}
                         onChange={(e) => {
                           setChangeValue(true);
-                          handleCheckboxChange(item.id, e)}}
+                          handleCheckboxChange(item.id, e);
+                        }}
                       />
                       <div
                         className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-colors ${
@@ -391,7 +393,8 @@ function AirbnbAndShortService() {
                         checked={checkedList.includes(item.id.toString())}
                         onChange={(e) => {
                           setChangeValue(true);
-                          handleCheckboxChange(item.id, e)}}
+                          handleCheckboxChange(item.id, e);
+                        }}
                       />
                       <div
                         className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-colors ${
@@ -440,7 +443,8 @@ function AirbnbAndShortService() {
                         checked={checkedList.includes(item.id.toString())}
                         onChange={(e) => {
                           setChangeValue(true);
-                          handleCheckboxChange(item.id, e)}}
+                          handleCheckboxChange(item.id, e);
+                        }}
                       />
                       <div
                         className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-colors ${
@@ -655,8 +659,6 @@ function AirbnbAndShortService() {
               </span>
             </div>
           )}
-
-         
 
           {/* Selected Equipment Costs */}
           {selectedEquipments.length > 0 && (
