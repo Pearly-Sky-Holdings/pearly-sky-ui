@@ -56,7 +56,7 @@ const Quotation = () => {
   const handleDownloadPDF = () => {
     const input = document.getElementById("quotation-content");
     if (input) {
-      html2canvas(input).then((canvas) => {
+      html2canvas(input).then((canvas: HTMLCanvasElement) => {
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF("p", "mm", "a4");
         const imgWidth = 210; // A4 width in mm

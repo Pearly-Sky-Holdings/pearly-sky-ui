@@ -19,42 +19,40 @@ interface GroupedItems {
 
 const RestockingChecklist = () => {
   const dispatch = useDispatch<AppDispatch>();
-
-  const { data = [], isLoading = false, errorMessage = null } = useSelector(
+  
+  const { data = [], isLoading = false, errorMessage = "" } = useSelector(
     (state: RootState) => state.itemsSlice.items
   );
-
+  
   useEffect(() => {
-    dispatch(fetchItems()); // This will now work correctly
+    dispatch(fetchItems());
   }, [dispatch]);
-
+  
   if (isLoading) {
     return <p>Loading...</p>;
   }
-
+  
   if (errorMessage) {
     return <p>Error: {errorMessage}</p>;
   }
-
+  
   if (!data || data.length === 0) {
     return <p>No items found.</p>;
   }
-
+  
   // Group the items by category
   const groupedItems: GroupedItems = data.reduce(
     (acc: GroupedItems, item: Item) => {
       const category = item.category || "Uncategorized";
-
       if (!acc[category]) {
         acc[category] = [];
       }
-
       acc[category].push(item);
       return acc;
     },
     {} as GroupedItems
   );
-
+  
   return (
     <div>
       {Object.keys(groupedItems).map((category) => (
