@@ -205,7 +205,7 @@ function MoveInOutCleaningPage() {
       cleaning_solvents: selectedSolvent,
       equipmentOption: _selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
-      price: priceBreakdown.totalPrice,
+      price: currencySymbol +priceBreakdown.totalPrice.toString(),
       currency: selectedCurrency,
       note: document.querySelector("textarea")?.value || "",
     };

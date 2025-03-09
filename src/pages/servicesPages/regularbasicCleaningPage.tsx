@@ -188,15 +188,10 @@ function RegularBasicCleaningPage() {
       return `${hours}.${formattedMinutes} - ${endHours}.${endMinutes}`;
     };
     const formattedDuration = formatDuration(duration);
-
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
-    
-
-    const totalPriceInSelectedCurrency = priceBreakdown.totalPrice;
-    const totalPriceInUSD = totalPriceInSelectedCurrency / conversionRate;
     const serviceDetails = {
       service_id: "1",
-      price: totalPriceInUSD.toString(),
+      price: currencySymbol +priceBreakdown.totalPrice.toString(),
       date,
       time: selectedTime,
       property_size: propertySize,
