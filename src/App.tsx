@@ -38,6 +38,10 @@ import SanitizationAndDisinfection from "./pages/servicesPages/SanitizationAndDi
 import CustomerPage from "./pages/customerPage/customerPage.tsx";
 import AboutUsPage from "./pages/aboutUsPage/aboutUsPage.tsx";
 import Quotation from "./components/quotation/quotation.tsx";
+import CustomerDashboard from "./pages/customerDashboard/customerDashboard.tsx";
+import MainLayout from "./layouts/MainLayout.tsx";
+import Settings from "./pages/customerDashboard/setting.tsx";
+import Help from "./pages/customerDashboard/help.tsx";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -84,9 +88,18 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <TopBar />
-        <NavigationBar />
+      <TopBar />
+        <Routes>
+        <Route element={<MainLayout />}>
+          <Route path="/customer-dashboard" element={<CustomerDashboard />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/help" element={<Help />} />
+        </Route>
+        </Routes>
         
+
+        <NavigationBar />
+
         <Routes>
           {/* Main one-page scrollable site */}
           <Route
@@ -102,7 +115,7 @@ function App() {
                 <TeamOfExpertsPage />
                 <OurShowcasePage />
                 <CleanServices />
-                <UiContactUsPage/>
+                <UiContactUsPage />
                 <Footer />
               </>
             }
@@ -224,7 +237,7 @@ function App() {
             element={
               <>
                 <CleaningIndustryRegulation />
-                
+
                 <Footer />
               </>
             }
@@ -234,7 +247,7 @@ function App() {
             element={
               <>
                 <RoboticsCleaning />
-                
+
                 <Footer />
               </>
             }
@@ -244,18 +257,18 @@ function App() {
             element={
               <>
                 <CleaningHospitality />
-                
+
                 <Footer />
               </>
             }
           />
-          
+
           <Route
             path="/hygiene-public-spaces"
             element={
               <>
                 <HygienePublicSpaces />
-                
+
                 <Footer />
               </>
             }
@@ -277,7 +290,7 @@ function App() {
             path="/customer_page"
             element={
               <>
-                <CustomerPage/>                
+                <CustomerPage />
                 <Footer />
               </>
             }
@@ -287,7 +300,7 @@ function App() {
             path="/aboutUs"
             element={
               <>
-                <AboutUsPage/>                  
+                <AboutUsPage />
                 <Footer />
               </>
             }

@@ -162,6 +162,17 @@ function AirbnbAndShortService() {
     setSelectedEquipmentOption(option);
   };
   const handleBookNow = () => {
+    const formatDuration = (duration: any) => {
+      const [hours, minutes] = String(duration).split(".");
+
+      const formattedMinutes = minutes ? `${minutes}0`.slice(0, 2) : "00";
+
+      const endHours = parseInt(hours, 10) + 1;
+      const endMinutes = formattedMinutes;
+
+      return `${hours}.${formattedMinutes} - ${endHours}.${endMinutes}`;
+    };
+    const formattedDuration = formatDuration(duration);
     const totalPriceInSelectedCurrency = priceBreakdown.totalPrice;
     const totalPriceInUSD = totalPriceInSelectedCurrency / conversionRate;
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
@@ -171,7 +182,7 @@ function AirbnbAndShortService() {
       date,
       time: selectedTime,
       property_size: propertySize,
-      duration: parseInt(duration),
+      duration: formattedDuration,
       number_of_cleaners: parseInt(numCleaners),
       note: document.querySelector("textarea")?.value || "",
       frequency,

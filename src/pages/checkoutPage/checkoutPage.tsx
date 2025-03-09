@@ -116,6 +116,9 @@ const CheckoutPage = () => {
         saveServiceData.isSuccess &&
         !saveServiceData.isLoading
       ) {
+        if(saveServiceData.data.status === "pending_payment"){
+          window.location.href = saveServiceData.data.payment_url;
+        }   
         if (saveServiceData.data.status === "success") {
           setShowSuccess(true);
           setTimeout(() => {
