@@ -53,10 +53,9 @@ export const itemsSlice = createSlice({
         state.items.isSuccess = false;
         state.items.errorMessage = "";
       })
-      .addCase(fetchItems.fulfilled, (state, { payload }) => {
+      .addCase(fetchItems.fulfilled, (state) => {
         state.items.isLoading = false;
         state.items.isSuccess = true;
-        state.items.data = payload;
       })
       .addCase(fetchItems.rejected, (state, { payload }) => {
         state.items.isLoading = false;
