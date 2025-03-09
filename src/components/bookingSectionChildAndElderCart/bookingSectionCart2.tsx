@@ -145,6 +145,9 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
     { value: "english", label: "English" },
     { value: "french", label: "French" },
     { value: "spanish", label: "Spanish" },
+    { value: "Dutch", label: "Dutch" },
+    { value: "German", label: "German" },
+    { value: "Arabic", label: "Arabic" },
   ];
 
   const childageOption = [

@@ -144,8 +144,7 @@ const CheckoutPage = () => {
             });}  
           }, 2000);
           setSaveLoader(false);
-        } else {
-          console.log("Error", saveServiceData.data.message);
+        } else if(saveServiceData.data.status === "error"){ 
           setErrorMessage(saveServiceData.data.message);
           setShowError(true);
           setSaveLoader(false);

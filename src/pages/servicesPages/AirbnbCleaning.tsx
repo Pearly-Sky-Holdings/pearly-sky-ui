@@ -162,6 +162,24 @@ function AirbnbAndShortService() {
     setSelectedEquipmentOption(option);
   };
   const handleBookNow = () => {
+    if(
+      !selectedDate ||
+      !selectedTime ||
+      !propertySize ||
+      !duration ||
+      !numCleaners ||
+      !frequency ||
+      !contactType ||
+      !language ||
+      !propertyType ||
+      !selectedSolvent ||
+      checkedList.length === 0
+    ){
+      alert("Please fill all the fields");
+      return;
+    }
+    
+    
     const formatDuration = (duration: any) => {
       const [hours, minutes] = String(duration).split(".");
 
@@ -173,12 +191,12 @@ function AirbnbAndShortService() {
       return `${hours}.${formattedMinutes} - ${endHours}.${endMinutes}`;
     };
     const formattedDuration = formatDuration(duration);
-    const totalPriceInSelectedCurrency = priceBreakdown.totalPrice;
-    const totalPriceInUSD = totalPriceInSelectedCurrency / conversionRate;
+    
+    
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
       service_id: "7",
-      price: totalPriceInUSD.toString(),
+      price: currencySymbol +priceBreakdown.totalPrice.toString(),
       date,
       time: selectedTime,
       property_size: propertySize,
@@ -384,6 +402,9 @@ function AirbnbAndShortService() {
                       <span className="text-sm">{item.name}</span>
                     </label>
                   ))}
+                </div>
+                <div className="mt-9 text-blue-950">
+                  <h1>Refill costs will be added up in the final payment</h1>
                 </div>
               </div>
 

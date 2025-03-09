@@ -94,6 +94,21 @@ function ElderCareCleaningPage() {
   };
 
   const handleBookNow = () => {
+    if (
+      !selectedDate ||
+      !selectedTime ||
+      !duration ||
+      !frequency ||
+      !language ||
+      !type ||
+      !contactType ||
+      !propertyType ||
+      !numChild ||
+      !specialRequest
+    ) {
+      alert("Please fill all required fields before proceeding to checkout.");
+      return;
+    }
     const formatDuration = (duration: any) => {
       const [hours, minutes] = String(duration).split(".");
 
@@ -118,7 +133,7 @@ function ElderCareCleaningPage() {
       contactType,
       numChild,
       special_request: specialRequest,
-      price: priceBreakdown.totalPrice,
+      price: currencySymbol + priceBreakdown.totalPrice.toString(),
       service_providing_place: propertyType,
       note: document.querySelector("textarea")?.value || "",
       selectedCurrency,
