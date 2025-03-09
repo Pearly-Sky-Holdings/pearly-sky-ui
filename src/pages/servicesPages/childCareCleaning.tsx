@@ -72,7 +72,7 @@ function ChildCareCleaningPage() {
 
   const calculateTotalPrice = () => {
     const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
-    const basePrice = hourlyRate * parseFloat(duration); // Base price in USD
+    const basePrice = hourlyRate * parseFloat(duration) * (parseInt(numProfession) || 1);  // Base price in USD
 
     // Calculate total price in the user's selected currency
     const totalPriceInSelectedCurrency = basePrice * conversionRate;
