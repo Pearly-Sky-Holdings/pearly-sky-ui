@@ -96,12 +96,23 @@ function ChildCareCleaningPage() {
   }, []);
 
   const handleBookNow = () => {
+    const formatDuration = (duration: any) => {
+      const [hours, minutes] = String(duration).split(".");
+
+      const formattedMinutes = minutes ? `${minutes}0`.slice(0, 2) : "00";
+
+      const endHours = parseInt(hours, 10) + 1;
+      const endMinutes = formattedMinutes;
+
+      return `${hours}.${formattedMinutes} - ${endHours}.${endMinutes}`;
+    };
+    const formattedDuration = formatDuration(duration);
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
       service_id: "8",
       date,
       time: selectedTime,
-      duration: parseInt(duration),
+      duration: formattedDuration,
       request_care_professional: numProfession,
       frequency,
       language,

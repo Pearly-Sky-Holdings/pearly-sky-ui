@@ -4,6 +4,7 @@ import serviceDetailsSlice from "./slice/CleaningServices/serviceDetailsSlice";
 import servicesSlice from "./slice/CleaningServices/serviceSlice";
 import itemsSlice from "./slice/CleaningServices/itemsSlice";
 import feedbaackSlice from "./slice/Customer/customerFeedbackSlice";
+import customerDetailsSlice from "./slice/Customer/customerDetailsSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     servicesSlice,
     itemsSlice,
     feedbaackSlice,
+    customerDetailsSlice
   },
 });
 

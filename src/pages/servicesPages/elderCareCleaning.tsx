@@ -8,17 +8,13 @@ import "react-calendar/dist/Calendar.css";
 import TimeSlots from "../../components/timeSlot/timeSlot";
 import "./CustomCalendar.css";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
-import {
-  getServices,
-
-} from "../../services/CleaningServices/index";
+import { getServices } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
 
 import {
-
   elderCareVideo,
   elderCareVideo2,
-  elderCareImage1
+  elderCareImage1,
 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart2 from "../../components/bookingSectionChildAndElderCart/bookingSectionCart2";
@@ -50,22 +46,22 @@ function ElderCareCleaningPage() {
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const [currencySymbol, setCurrencySymbol] = useState("$");
   const [conversionRate, setConversionRate] = useState(1);
-  
+
   const [changeValue, setChangeValue] = useState<boolean>(false);
-    const [count , setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
   const [priceBreakdown, setPriceBreakdown] = useState({
     hourlyRate: parseInt(services.data.price),
-    totalPrice: 29.00,
-    basePrice: 29.00,
+    totalPrice: 29.0,
+    basePrice: 29.0,
   });
 
   const handleCurrencyUpdate = (
     currency: string,
     symbol: string,
-    rate: number,
+    rate: number
   ) => {
-    if(count >= 2){
+    if (count >= 2) {
       setChangeValue(true);
     }
     setSelectedCurrency(currency);
@@ -98,38 +94,49 @@ function ElderCareCleaningPage() {
   };
 
   const handleBookNow = () => {
-      const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
-      const serviceDetails = {
-        service_id: "8",
-        date,
-        time: selectedTime,
-        duration: parseInt(duration),
-        request_care_professional: numProfession,
-        frequency,
-        language,
-        type,
-        contactType,
-        numChild,
-        special_request: specialRequest,
-        price: priceBreakdown.totalPrice,
-        service_providing_place: propertyType,
-        note: document.querySelector("textarea")?.value || "",
-        selectedCurrency,
-      };
-      const data = {
-        serviceName: "Elder Care",
-        details: serviceDetails,
-        orderSummary: {
-          basePrice: priceBreakdown.basePrice,
-          totalPrice: priceBreakdown.totalPrice,
-          currencySymbol,
-          selectedCurrency,
-          conversionRate,
-        },
-      };
-      console.log("Service data:", data);
-      navigate("/checkout", { state: { data } });
+    const formatDuration = (duration: any) => {
+      const [hours, minutes] = String(duration).split(".");
+
+      const formattedMinutes = minutes ? `${minutes}0`.slice(0, 2) : "00";
+
+      const endHours = parseInt(hours, 10) + 1;
+      const endMinutes = formattedMinutes;
+
+      return `${hours}.${formattedMinutes} - ${endHours}.${endMinutes}`;
     };
+    const formattedDuration = formatDuration(duration);
+    const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
+    const serviceDetails = {
+      service_id: "8",
+      date,
+      time: selectedTime,
+      duration: formattedDuration,
+      request_care_professional: numProfession,
+      frequency,
+      language,
+      type,
+      contactType,
+      numChild,
+      special_request: specialRequest,
+      price: priceBreakdown.totalPrice,
+      service_providing_place: propertyType,
+      note: document.querySelector("textarea")?.value || "",
+      selectedCurrency,
+    };
+    const data = {
+      serviceName: "Elder Care",
+      details: serviceDetails,
+      orderSummary: {
+        basePrice: priceBreakdown.basePrice,
+        totalPrice: priceBreakdown.totalPrice,
+        currencySymbol,
+        selectedCurrency,
+        conversionRate,
+      },
+    };
+    console.log("Service data:", data);
+    navigate("/checkout", { state: { data } });
+  };
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
@@ -148,7 +155,7 @@ function ElderCareCleaningPage() {
               {services.data.name}
             </h1>
             <div className="mt-4 mb-4 ml-4">
-            <CurrencyConverter
+              <CurrencyConverter
                 basePrice={parseFloat(services.data.price)}
                 onCurrencyChange={handleCurrencyUpdate}
                 initialCurrency="EUR"
@@ -191,7 +198,7 @@ function ElderCareCleaningPage() {
         <Carousel2
           videoItems={[
             {
-              video: elderCareVideo,     
+              video: elderCareVideo,
             },
             {
               video: elderCareVideo2,
@@ -244,7 +251,7 @@ function ElderCareCleaningPage() {
 
         {/* Booking Details */}
         <div>
-        <BookingSectionCart2
+          <BookingSectionCart2
             duration={duration}
             setDuration={(val) => {
               setChangeValue(true);
@@ -266,10 +273,10 @@ function ElderCareCleaningPage() {
             setContactType={setContactType}
             language={language}
             setLanguage={setLanguage}
-            specialRequest={specialRequest} 
-            setSpecialRequest={setSpecialRequest} 
-            propertyType={propertyType} 
-            setPropertyType={setPropertyType} 
+            specialRequest={specialRequest}
+            setSpecialRequest={setSpecialRequest}
+            propertyType={propertyType}
+            setPropertyType={setPropertyType}
             pageType={"elder"}
           />
         </div>
@@ -336,7 +343,7 @@ function ElderCareCleaningPage() {
           />
         )}
 
-<div className="pt-4 mb-6">
+        <div className="pt-4 mb-6">
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
@@ -366,7 +373,7 @@ function ElderCareCleaningPage() {
           className="w-full mt-8 bg-blue-900 text-white py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={!acceptTerms1 || !acceptTerms2}
           onClick={handleBookNow}
-          style={{backgroundColor:"#1c398e"}}
+          style={{ backgroundColor: "#1c398e" }}
         >
           Book Now
         </button>
