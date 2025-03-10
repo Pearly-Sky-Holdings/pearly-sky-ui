@@ -190,3 +190,11 @@ export const google: string = "/images/customerFeedback/google.png";
 export const facebook: string = "/images/customerFeedback/facebook.png";
 export const trustpilot: string = "/images/customerFeedback/trustpilot.png";
 export const yelp: string = "/images/customerFeedback/yelp.png";
+
+// Carpet Cleaning
+export const carpetimg1: string = "/images/service/carpetCleaning/carpertCleaning1.png";
+export const carpetimg2: string = "/images/service/carpetCleaning/carpertCleaning2.png";
+export const carpetimg3: string = "/images/service/carpetCleaning/carpertCleaning3.png";
+export const carpetimg4: string = "/images/service/carpetCleaning/carpertCleaning4.png";
+export const carpetimg5: string = "/images/service/carpetCleaning/carpertCleaning5.png";
+export const carpetimg6: string = "/images/service/carpetCleaning/carpetCleaning6.png";
