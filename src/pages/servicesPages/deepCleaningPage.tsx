@@ -174,24 +174,14 @@ function DeepCleaningPage() {
       alert("Please fill all required fields before proceeding to checkout.");
       return;
     }
-    const formatDuration = (duration: any) => {
-      const [hours, minutes] = String(duration).split(".");
-
-      const formattedMinutes = minutes ? `${minutes}0`.slice(0, 2) : "00";
-
-      const endHours = parseInt(hours, 10) + 1;
-      const endMinutes = formattedMinutes;
-
-      return `${hours}.${formattedMinutes} - ${endHours}.${endMinutes}`;
-    };
-    const formattedDuration = formatDuration(duration);
+    
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
       service_id: "4",
       date,
       time: selectedTime,
       property_size: propertySize,
-      duration: formattedDuration,
+      duration: duration,
       number_of_cleaners: parseInt(numCleaners),
       frequency,
       package_details: selectedServices.some(

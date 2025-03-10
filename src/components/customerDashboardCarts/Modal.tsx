@@ -38,10 +38,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center ">
+    <div className="fixed inset-0 z-50  flex items-center justify-center ">
       <div
         ref={modalRef}
-        className="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 overflow-hidden"
+        className="bg-white rounded-lg shadow-xl w-full max-w-max mx-4 overflow-hidden p-4"
       >
         <div className="flex items-center justify-between px-6 py-4 border-b">
           <h3 className="text-lg font-medium text-black">{title}</h3>
