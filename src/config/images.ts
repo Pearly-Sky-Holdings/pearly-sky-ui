@@ -35,6 +35,15 @@ export const galleryImage2: string = "/images/gallery/galleryImage2.png";
 export const galleryImage3: string = "/images/gallery/galleryImage3.png";
 export const galleryImage4: string = "/images/gallery/galleryImage4.png";
 export const galleryImage5: string = "/images/gallery/galleryImage5.png";
+export const galleryImage6: string = "/images/gallery/galleryImage6.jpg";
+export const galleryImage7: string = "/images/gallery/galleryImage7.jpg";
+export const galleryImage8: string = "/images/gallery/galleryImage8.jpg";
+export const galleryImage9: string = "/images/gallery/galleryImage9.jpg";
+export const galleryImage10: string = "/images/gallery/galleryImage10.jpg";
+export const galleryImage11: string = "/images/gallery/galleryImage11.jpg";
+export const galleryImage12: string = "/images/gallery/galleryImage12.jpg";
+export const galleryImage13: string = "/images/gallery/galleryImage13.jpg";
+export const galleryImage14: string = "/images/gallery/galleryImage14.jpg";
 
 
 //sector

@@ -2,22 +2,26 @@ import React from "react";
 
 interface DataTableProps {
   customer: {
+    name: string;
     contact: string;
-    service: string;
+    email: string;
+    country: string;
+    city: string;
+    street_address: string;
+    province: string;
+    postal_code: string;
+    package: string;
+    package_checklist: any;
     date: string;
     time: string;
-    total: string;
-    status: string;
-    first_name: string;
-    last_name: string;
-    email: string;
-    street_address: string;
-    package_checklist: string;
-    cleaning_solvent: string;
-    cleaning_equipment: string;
+    price: string;
     property_size: string;
-    service_type: string;
+    service_name: string;
+    status: string;
+    solvent: string;
+    equipment: string;
   };
+
 }
 
 const CustomerDetails: React.FC<DataTableProps> = ({ customer }) => {
@@ -30,11 +34,11 @@ const CustomerDetails: React.FC<DataTableProps> = ({ customer }) => {
         </div>
         <div>
           <p className="text-sm text-gray-500">Service Type</p>
-          <p className="font-medium text-black">{customer.service_type}</p>
+          <p className="font-medium text-black">{customer.service_name}</p>
         </div>
         <div>
-          <p className="text-sm text-gray-500">Date</p>
-          <p className="font-medium text-black">{customer.date}</p>
+        <p className="text-sm text-gray-500">Date</p>
+          <p className="text-sm text-black">{customer.date}</p>
         </div>
         <div>
           <p className="text-sm text-gray-500">Time</p>
@@ -42,7 +46,7 @@ const CustomerDetails: React.FC<DataTableProps> = ({ customer }) => {
         </div>
         <div>
           <p className="text-sm text-gray-500">Total Amount</p>
-          <p className="font-medium text-black">${customer.total}</p>
+          <p className="font-medium text-black">{customer.price}</p>
         </div>
         <div>
           <p className="text-sm text-gray-500">Status</p>
@@ -59,7 +63,7 @@ const CustomerDetails: React.FC<DataTableProps> = ({ customer }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <p className="text-sm text-gray-500">Name</p>
-            <p className="font-medium text-black">{customer.first_name + " " + customer.last_name}</p>
+            <p className="font-medium text-black">{customer.name}</p>
           </div>
           <div>
             <p className="text-sm text-gray-500">Email</p>
@@ -76,24 +80,16 @@ const CustomerDetails: React.FC<DataTableProps> = ({ customer }) => {
         <h4 className="font-medium mb-2 text-black">Service Details</h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <p className="text-sm text-gray-500">Package Checklist</p>
-            <p className="font-medium text-black">{customer.package_checklist}</p>
-          </div>
-          <div>
             <p className="text-sm text-gray-500">Cleaning Solvent</p>
-            <p className="font-medium text-black">{customer.cleaning_solvent}</p>
+            <p className="font-medium text-black">{customer.solvent}</p>
           </div>
           <div>
             <p className="text-sm text-gray-500">Cleaning Equipment</p>
-            <p className="font-medium text-black">{customer.cleaning_equipment}</p>
+            <p className="font-medium text-black">{customer.equipment}</p>
           </div>
           <div>
             <p className="text-sm text-gray-500">Property Size</p>
             <p className="font-medium text-black">{customer.property_size}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">Service Type</p>
-            <p className="font-medium text-black">{customer.service_type}</p>
           </div>
         </div>
       </div>
