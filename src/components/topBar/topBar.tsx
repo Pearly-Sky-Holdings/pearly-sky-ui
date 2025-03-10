@@ -26,7 +26,7 @@ export default function TopBar() {
     { icon: <FaXTwitter />, link: "https://x.com/PEARLYSKYPVTLTD" },
     { icon: <FaYoutube />, link: "https://www.youtube.com/@pearlyskycleaningservice" },
     { icon: <AiFillTikTok />, link: "https://www.tiktok.com/@pearlyskycleaningservice?_t=ZN-8uNBR57FgaU&_r=1" },
-    { icon: <LinkedIn />, link: "https://linkedin.com" }
+    { icon: <LinkedIn />, link: "https://www.linkedin.com/company/pearly-sky-company-private-ltd/" }
   ];
 
   return (

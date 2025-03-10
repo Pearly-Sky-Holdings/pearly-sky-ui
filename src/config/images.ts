@@ -56,13 +56,11 @@ export const chooseClening2: string = "/images/chooseClening/chooseClening2.png"
 export const chooseClening3: string = "/images/chooseClening/chooseClening3.png";
 export const chooseClening4: string = "/images/chooseClening/chooseClening4.png";
 
-//choos our cleaning
-export const teamExperts1: string = "/images/teamExperts/oshan(OM1).png";
-export const teamExperts3: string = "/images/teamExperts/nipuna.png";
-export const teamExperts2: string = "/images/teamExperts/anusha.png";
-export const teamExperts4: string = "/images/teamExperts/chooseClening4.png";
-export const teamExperts5: string = "/images/teamExperts/profile.jpg";
-export const teamExperts6: string = "/images/teamExperts/profile2.png";
+//team expert
+export const oshan: string = "/images/teamExperts/oshan.png";
+export const nipuna: string = "/images/teamExperts/nipuna.png";
+export const anusha: string = "/images/teamExperts/anusha.png";
+export const Shakila: string = "/images/teamExperts/Shakila.png";
 
 
 export const contactImage1: string = "/images/uiContactUs/ContactUs.png";
