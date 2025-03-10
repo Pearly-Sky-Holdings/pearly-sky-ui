@@ -32,7 +32,7 @@ function SanitizationAndDisinfection() {
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
 
-  const [formData, setFormData] = useState({});
+   
   const [selectedData, setSelectedData] = useState<{ category: string; items: string[] }[]>([]);
 
   // Memoize the callback function to prevent unnecessary re-renders
@@ -41,15 +41,7 @@ function SanitizationAndDisinfection() {
     console.log("Selected Data:", data);
   }, []);
 
-  const [equipment, setEquipment] = useState({
-    customer: false,
-    company: false,
-  });
-  const [chemical, setChemical] = useState({
-    customer: false,
-    company: false,
-  });
-
+ 
   // Memoize the form change handler
   const handleFormChange = useCallback((data: any) => {
     setFormData(data);
@@ -58,68 +50,160 @@ function SanitizationAndDisinfection() {
   // Fetch package and services data
 
   useEffect(() => {
-    dispatch(getPackege("6"));
+    dispatch(getPackege("10"));
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getServices("6"));
+    dispatch(getServices("10"));
 
   }, [dispatch]);
+  
+const [equipment, setEquipment] = useState({ customer: false, company: false });
+const [chemical, setChemical] = useState({ customer: false, company: false });
 
-  const handleCheckboxChange = (
-    section: "equipment" | "chemical",
-    type: "customer" | "company"
-  ) => {
-    if (section === "equipment") {
-      setEquipment((prev) => ({ ...prev, [type]: !prev[type] }));
-    } else if (section === "chemical") {
-      setChemical((prev) => ({ ...prev, [type]: !prev[type] }));
-    }
-  };
+type Section = "equipment" | "chemical";
+type Option = "customer" | "company";
 
-  const handleBookNow = () => {
+const handleCheckboxChange = (section: Section, option: Option) => {
+  if (section === "equipment") {
+    setEquipment({
+      customer: option === "customer",
+      company: option === "company",
+    });
+  } else if (section === "chemical") {
+    setChemical({
+      customer: option === "customer",
+      company: option === "company",
+    });
+  }
+};
+
+  interface FormData {
+    firstName: string;
+    lastName: string;
+    company?: string; // Optional field
+    country: string;
+    address: string;
+    apartment?: string; // Optional field
+    city: string;
+    state: string;
+    zip: string;
+    phone: string;
+    email: string;
+  }
+
+  const [formData, setFormData] = useState<FormData>({
+    firstName: "",
+    lastName: "",
+    company: "",
+    country: "",
+    address: "",
+    apartment: "",
+    city: "",
+    state: "",
+    zip: "",
+    phone: "",
+    email: "",
+  });
+
+  const handleBookNow = async () => {
+    // Validate required fields
     if (
-
       !frequency ||
       !propertyType ||
       !contactType ||
       !language ||
-
       !timeZone ||
       !selectedDate ||
       !selectedTime ||
-
       !acceptTerms2
     ) {
       alert("Please fill all required fields before proceeding to checkout.");
       return;
     }
+  
+    // selected date
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
+  
+    // customer object
+    const customer = {
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+      company: formData.company || "", // Optional field
+      country: formData.country,
+      street_address: formData.address,
+      apartment_type: formData.apartment || "", // Optional field
+      city: formData.city,
+      province: formData.state,
+      postal_code: formData.zip,
+      contact: formData.phone,
+      email: formData.email,
+      password: " 1234", // Default password or generate one
+    };
+  
+    // service details
     const serviceDetails = {
-      service_id: "6",
+      customer, // Include customer details
+      service_id: "10", 
+      price: "00.00", 
       date,
       time: selectedTime,
-      frequency,
-      person_type: contactType,
-      language,
-      timeZone,
-
-      business_property: propertyType,
-
+      property_size: "0 sqft", 
+      duration: "0", 
+       
       note: document.querySelector("textarea")?.value || "",
+      request_gender: contactType, 
+      request_language: language,
+      business_property: propertyType,
+      cleaning_solvents: "eco-friendly", 
+      frequency, 
+      timeZone,
+      Equipment: equipment.customer ? "Provided by customer" : "Provided by company",
+      payment_method: "cash", 
+      reStock_details: selectedData.map((category) => ({
+        re_stocking_checklist_id: category.items.length, 
+      })),
     };
+  
+    console.log("Data to be sent:", serviceDetails);
 
     const data = {
-      serviceName: "Sanitization & Disinfection",
+      serviceName: " Sanitization & Disinfection",
       details: serviceDetails,
       personalInformation: formData,
       equipment,
       chemical,
       selectedCategories: selectedData,
     };
-
     console.log("Data:", data);
-    navigate("/quotation", { state: { data } });
+  
+    try {
+      // Make the API call
+      const response = await fetch("https://back.pearlyskyplc.com/api/saveServiceDetails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(serviceDetails),
+      });
+  
+      // Check if the request was successful
+      if (response.ok) {
+        const result = await response.json();
+        console.log("API Response:", result);
+  
+        // Navigate to the quotation page
+        navigate("/quotation", { state: { data } });
+      } else {
+        // Handle errors
+        console.error("API Error:", response.statusText);
+        alert("Failed to submit the quotation request. Please try again.");
+      }
+    } catch (error) {
+      // Handle network errors
+      console.error("Network Error:", error);
+      alert("An error occurred while submitting the request. Please check your connection and try again.");
+    }
   };
 
   return (
@@ -205,7 +289,7 @@ function SanitizationAndDisinfection() {
           <EstimateList onSelectionChange={handleSelectionChange} />
 
           {/* Display the selected data in the parent component */}
-          <div className="mt-8 p-6 bg-gray-50 rounded-lg shadow-sm">
+          {/* <div className="mt-8 p-6 bg-gray-50 rounded-lg shadow-sm">
             <h2 className="text-2xl font-bold text-[#002F6D] mb-4">Selected Categories and Items</h2>
             {selectedData.length > 0 ? (
               selectedData.map((categoryData, index) => (
@@ -223,7 +307,7 @@ function SanitizationAndDisinfection() {
             ) : (
               <p className="text-gray-700">No categories selected.</p>
             )}
-          </div>
+          </div> */}
         </div>
 
         {/* Booking Details */}
@@ -269,40 +353,7 @@ function SanitizationAndDisinfection() {
               placeholder="Type your note here..."
             ></textarea>
           </div>          
-        </div>
-
-        <div className="flex flex-wrap  p-8 gap-10 md:gap-100 mb-10">
-          {/* Equipment Section */}
-          <div className="w-full md:w-auto">
-            <h2 className="text-lg text-black font-bold mb-4">Equipment</h2>
-            <div className="space-y-2 text-black ">
-              <label className="flex items-center space-x-2">
-                <input type="checkbox" className="w-4 h-4" />
-                <span>Provide by customer</span>
-              </label>
-              <label className="flex items-center space-x-2">
-                <input type="checkbox" className="w-4 h-4" />
-                <span>Provide by company</span>
-              </label>
-            </div>
-          </div>
-
-          {/* Chemical Section */}
-          <div className="w-full md:w-auto">
-            <h2 className="text-lg text-black font-bold mb-4">Chemical</h2>
-            <div className="space-y-2 text-black">
-              <label className="flex items-center space-x-2">
-                <input type="checkbox" className="w-4 h-4" />
-                <span>Provide by customer</span>
-              </label>
-              <label className="flex items-center space-x-2">
-                <input type="checkbox" className="w-4 h-4" />
-                <span>Provide by company</span>
-              </label>
-            </div>
-          </div>
-        </div>
-
+        </div>        
 
         <div className="flex flex-wrap p-8 gap-10 md:gap-100 mb-10">
           {/* Equipment Section */}
@@ -360,12 +411,12 @@ function SanitizationAndDisinfection() {
           <PersonalInformationForm onChangeCallback={handleFormChange} />
           {/* Display form data in another section */}
           <div style={{ marginTop: "20px" }}>
-            <h2>Live Form Data:</h2>
+            {/* <h2>Live Form Data:</h2>
             <pre>{JSON.stringify(formData, null, 2)}</pre>
             <pre>{JSON.stringify(equipment, null, 2)}</pre>
             <pre>{JSON.stringify(chemical, null, 2)}</pre>
             <pre>{JSON.stringify(propertyType, null, 2)}</pre>
-            <pre>{JSON.stringify(selectedData, null, 2)}</pre>
+            <pre>{JSON.stringify(selectedData, null, 2)}</pre> */}
           </div>
         </div>
 
