@@ -380,17 +380,7 @@ const handleCheckboxChange = (section: Section, option: Option) => {
           </div>
         </div>
 
-        {/* <div>
-          <PersonalInformationForm onChangeCallback={handleFormChange} />
-          <div style={{ marginTop: "20px" }}>
-            <h2>Live Form Data:</h2>
-            <pre>{JSON.stringify(formData, null, 2)}</pre>
-            <pre>{JSON.stringify(equipment, null, 2)}</pre>
-            <pre>{JSON.stringify(chemical, null, 2)}</pre>
-            <pre>{JSON.stringify(propertyType, null, 2)}</pre>
-            <pre>{JSON.stringify(selectedItems, null, 2)}</pre>
-          </div>
-        </div> */}
+
 
         {/* Terms Checkbox */}
         <div className="mb-6 mt-10">
