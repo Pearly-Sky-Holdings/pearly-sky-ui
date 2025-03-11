@@ -21,7 +21,23 @@ export default function ServiceCard({ service }: Readonly<{ service: Service }>)
         "&:hover": { transform: "scale(1.05)" },
       }}
     >
-      <CardMedia component="img" height="250" image={service.image} alt={service.title} />
+      <Box sx={{ 
+        height: "250px", 
+        overflow: "hidden",
+        position: "relative"
+      }}>
+        <CardMedia 
+          component="img" 
+          image={service.image} 
+          alt={service.title}
+          sx={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center"
+          }} 
+        />
+      </Box>
       <CardContent sx={{ flexGrow: 1 }}>
         <Typography variant="h6" fontWeight="bold">
           {service.title}
@@ -34,7 +50,7 @@ export default function ServiceCard({ service }: Readonly<{ service: Service }>)
         <Button
           variant="contained"
           component={Link}
-            to={service.link}
+          to={service.link}
           sx={{
             backgroundColor: "#002F6D",
             color: "white",

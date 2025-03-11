@@ -21,7 +21,14 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({
       USD: '$',
       GBP: '£',
       AED: 'AED',
-      NZD: 'NZ$'
+      NZD: 'NZ$',
+      CHF: 'Fr.',     // Swiss Franc
+      BHD: 'BD',      // Bahraini Dinar
+      AUD: 'A$',      // Australian Dollar
+      CAD: 'C$',      // Canadian Dollar
+      SEK: 'kr',      // Swedish Krona
+      QAR: 'QR',      // Qatari Riyal
+      SAR: 'SR'       // Saudi Riyal
     };
     return symbols[currency] || '€';
   };
@@ -37,6 +44,7 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({
       console.error("Error fetching exchange rates:", error);
     }
   };
+
   const fetchExchangeRatesBaseEur = async () => {
     try {
       const response = await fetch(
@@ -48,8 +56,6 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({
       console.error("Error fetching exchange rates:", error);
     }
   };
-
-
 
   useEffect(() => {
     fetchExchangeRates();
@@ -77,8 +83,15 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({
         <option value="EUR">EUR</option>
         <option value="USD">USD</option>
         <option value="GBP">GBP</option>
-        <option value="AED">AED</option>
+        <option value="CHF">CHF</option>
+        <option value="BHD">BHD</option>
+        <option value="AUD">AUD</option>
+        <option value="CAD">CAD</option>
+        <option value="SEK">SEK</option>
         <option value="NZD">NZD</option>
+        <option value="AED">AED</option>
+        <option value="QAR">QAR</option>
+        <option value="SAR">SAR</option>
       </select>
     </div>
   );

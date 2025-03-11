@@ -44,6 +44,7 @@ import CustomerDashboard from "./pages/customerDashboard/customerDashboard.tsx";
 import MainLayout from "./layouts/MainLayout.tsx";
 import Settings from "./pages/customerDashboard/setting.tsx";
 import Help from "./pages/customerDashboard/help.tsx";
+import { LanguageProvider } from './context/LanguageContext';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -89,6 +90,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <LanguageProvider>
       <Router>
       <TopBar />
         <Routes>
@@ -335,7 +337,7 @@ function App() {
           <Route path="/upcomming" element={<UpdateComingSoon />} />
         </Routes>
       </Router>
-      
+      </LanguageProvider>
     </ThemeProvider>
   );
 }
