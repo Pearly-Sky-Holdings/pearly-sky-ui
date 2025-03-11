@@ -35,6 +35,15 @@ export const galleryImage2: string = "/images/gallery/galleryImage2.png";
 export const galleryImage3: string = "/images/gallery/galleryImage3.png";
 export const galleryImage4: string = "/images/gallery/galleryImage4.png";
 export const galleryImage5: string = "/images/gallery/galleryImage5.png";
+export const galleryImage6: string = "/images/gallery/galleryImage6.jpg";
+export const galleryImage7: string = "/images/gallery/galleryImage7.jpg";
+export const galleryImage8: string = "/images/gallery/galleryImage8.jpg";
+export const galleryImage9: string = "/images/gallery/galleryImage9.jpg";
+export const galleryImage10: string = "/images/gallery/galleryImage10.jpg";
+export const galleryImage11: string = "/images/gallery/galleryImage11.jpg";
+export const galleryImage12: string = "/images/gallery/galleryImage12.jpg";
+export const galleryImage13: string = "/images/gallery/galleryImage13.jpg";
+export const galleryImage14: string = "/images/gallery/galleryImage14.jpg";
 
 
 //sector
@@ -56,13 +65,11 @@ export const chooseClening2: string = "/images/chooseClening/chooseClening2.png"
 export const chooseClening3: string = "/images/chooseClening/chooseClening3.png";
 export const chooseClening4: string = "/images/chooseClening/chooseClening4.png";
 
-//choos our cleaning
-export const teamExperts1: string = "/images/teamExperts/oshan(OM1).png";
-export const teamExperts3: string = "/images/teamExperts/nipuna.png";
-export const teamExperts2: string = "/images/teamExperts/anusha.png";
-export const teamExperts4: string = "/images/teamExperts/chooseClening4.png";
-export const teamExperts5: string = "/images/teamExperts/profile.jpg";
-export const teamExperts6: string = "/images/teamExperts/profile2.png";
+//team expert
+export const oshan: string = "/images/teamExperts/oshan.png";
+export const nipuna: string = "/images/teamExperts/nipuna.png";
+export const anusha: string = "/images/teamExperts/anusha.png";
+export const Shakila: string = "/images/teamExperts/Shakila.png";
 
 
 export const contactImage1: string = "/images/uiContactUs/ContactUs.png";

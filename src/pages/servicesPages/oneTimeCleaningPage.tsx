@@ -173,13 +173,15 @@ function OneTimeCleaningPage() {
       alert("Please fill all required fields before proceeding to checkout.");
       return;
     }
+
+    
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
       service_id: "2",
       date,
       time: selectedTime,
       property_size: propertySize,
-      duration: Number(duration),
+      duration: duration,
       number_of_cleaners: Number(numCleaners),
       frequency,
       package_details: selectedServices.some(
@@ -198,7 +200,7 @@ function OneTimeCleaningPage() {
       cleaning_solvents: selectedSolvent,
       equipmentOption: selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
-      price: priceBreakdown.totalPrice,
+      price: currencySymbol +priceBreakdown.totalPrice.toString(),
       currency: selectedCurrency,
       note: document.querySelector("textarea")?.value || "",
     };

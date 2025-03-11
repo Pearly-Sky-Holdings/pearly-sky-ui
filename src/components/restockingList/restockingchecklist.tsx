@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchItems } from "../../store/slice/CleaningServices/itemsSlice";
-import type { RootState, AppDispatch } from "../../store";
+import { getRestockList } from "../../services/CleaningServices/index";
+import type { RootState } from "../../store";
+import store from "../../store";
 
 // Item interface
 interface Item {
@@ -18,14 +19,16 @@ interface GroupedItems {
 }
 
 const RestockingChecklist = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  
-  const { data = [], isLoading = false, errorMessage = "" } = useSelector(
+  const dispatch = useDispatch<typeof store.dispatch>();
+
+  // Fetch items, loading, and error states from Redux store
+  const { data, isLoading, errorMessage } = useSelector(
     (state: RootState) => state.itemsSlice.items
   );
   
   useEffect(() => {
-    dispatch(fetchItems());
+    dispatch(getRestockList());
+
   }, [dispatch]);
   
   if (isLoading) {

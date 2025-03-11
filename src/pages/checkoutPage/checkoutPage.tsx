@@ -116,6 +116,9 @@ const CheckoutPage = () => {
         saveServiceData.isSuccess &&
         !saveServiceData.isLoading
       ) {
+        if(saveServiceData.data.status === "pending_payment"){
+          window.location.href = saveServiceData.data.payment_url;
+        }   
         if (saveServiceData.data.status === "success") {
           setShowSuccess(true);
           setTimeout(() => {
@@ -141,8 +144,7 @@ const CheckoutPage = () => {
             });}  
           }, 2000);
           setSaveLoader(false);
-        } else {
-          console.log("Error", saveServiceData.data.message);
+        } else if(saveServiceData.data.status === "error"){ 
           setErrorMessage(saveServiceData.data.message);
           setShowError(true);
           setSaveLoader(false);

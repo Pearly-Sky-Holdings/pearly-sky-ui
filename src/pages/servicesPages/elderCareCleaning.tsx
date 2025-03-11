@@ -8,17 +8,13 @@ import "react-calendar/dist/Calendar.css";
 import TimeSlots from "../../components/timeSlot/timeSlot";
 import "./CustomCalendar.css";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
-import {
-  getServices,
-
-} from "../../services/CleaningServices/index";
+import { getServices } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
 
 import {
-
   elderCareVideo,
   elderCareVideo2,
-  elderCareImage1
+  elderCareImage1,
 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart2 from "../../components/bookingSectionChildAndElderCart/bookingSectionCart2";
@@ -50,22 +46,22 @@ function ElderCareCleaningPage() {
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const [currencySymbol, setCurrencySymbol] = useState("$");
   const [conversionRate, setConversionRate] = useState(1);
-  
+
   const [changeValue, setChangeValue] = useState<boolean>(false);
-    const [count , setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
   const [priceBreakdown, setPriceBreakdown] = useState({
     hourlyRate: parseInt(services.data.price),
-    totalPrice: 29.00,
-    basePrice: 29.00,
+    totalPrice: 29.0,
+    basePrice: 29.0,
   });
 
   const handleCurrencyUpdate = (
     currency: string,
     symbol: string,
-    rate: number,
+    rate: number
   ) => {
-    if(count >= 2){
+    if (count >= 2) {
       setChangeValue(true);
     }
     setSelectedCurrency(currency);
@@ -73,19 +69,10 @@ function ElderCareCleaningPage() {
     setConversionRate(rate);
     setCount(count + 1);
   };
-  useEffect(() => {
-    if (changeValue) {
-      setChangeValue(false);
-      setPriceBreakdown(calculateTotalPrice());
-    }
-  }, [conversionRate, duration]);
 
-  useEffect(() => {
-    dispatch(getServices("9"));
-  }, []);
   const calculateTotalPrice = () => {
     const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
-    const basePrice = hourlyRate * parseFloat(duration); // Base price in USD
+    const basePrice = hourlyRate * parseFloat(duration) * (parseInt(numProfession) || 1); // Base price in USD
 
     // Calculate total price in the user's selected currency
     const totalPriceInSelectedCurrency = basePrice * conversionRate;
@@ -97,39 +84,66 @@ function ElderCareCleaningPage() {
     };
   };
 
+  useEffect(() => {
+    if (changeValue) {
+      setChangeValue(false);
+      setPriceBreakdown(calculateTotalPrice());
+    }
+  }, [conversionRate, duration, numProfession]); // Add numProfession as a dependency
+
+  useEffect(() => {
+    dispatch(getServices("9"));
+  }, []);
+
   const handleBookNow = () => {
-      const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
-      const serviceDetails = {
-        service_id: "8",
-        date,
-        time: selectedTime,
-        duration: parseInt(duration),
-        request_care_professional: numProfession,
-        frequency,
-        language,
-        type,
-        contactType,
-        numChild,
-        special_request: specialRequest,
-        price: priceBreakdown.totalPrice,
-        service_providing_place: propertyType,
-        note: document.querySelector("textarea")?.value || "",
-        selectedCurrency,
-      };
-      const data = {
-        serviceName: "Elder Care",
-        details: serviceDetails,
-        orderSummary: {
-          basePrice: priceBreakdown.basePrice,
-          totalPrice: priceBreakdown.totalPrice,
-          currencySymbol,
-          selectedCurrency,
-          conversionRate,
-        },
-      };
-      console.log("Service data:", data);
-      navigate("/checkout", { state: { data } });
+    if (
+      !selectedDate ||
+      !selectedTime ||
+      !duration ||
+      !frequency ||
+      !language ||
+      !type ||
+      !contactType ||
+      !propertyType ||
+      !numChild ||
+      !specialRequest
+    ) {
+      alert("Please fill all required fields before proceeding to checkout.");
+      return;
+    }
+    
+    const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
+    const serviceDetails = {
+      service_id: "8",
+      date,
+      time: selectedTime,
+      duration: duration,
+      request_care_professional: numProfession,
+      frequency,
+      language,
+      type,
+      contactType,
+      numChild,
+      special_request: specialRequest,
+      price: currencySymbol + priceBreakdown.totalPrice.toString(),
+      service_providing_place: propertyType,
+      note: document.querySelector("textarea")?.value || "",
+      selectedCurrency,
     };
+    const data = {
+      serviceName: "Elder Care",
+      details: serviceDetails,
+      orderSummary: {
+        basePrice: priceBreakdown.basePrice,
+        totalPrice: priceBreakdown.totalPrice,
+        currencySymbol,
+        selectedCurrency,
+        conversionRate,
+      },
+    };
+    console.log("Service data:", data);
+    navigate("/checkout", { state: { data } });
+  };
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
@@ -148,7 +162,7 @@ function ElderCareCleaningPage() {
               {services.data.name}
             </h1>
             <div className="mt-4 mb-4 ml-4">
-            <CurrencyConverter
+              <CurrencyConverter
                 basePrice={parseFloat(services.data.price)}
                 onCurrencyChange={handleCurrencyUpdate}
                 initialCurrency="EUR"
@@ -159,7 +173,7 @@ function ElderCareCleaningPage() {
             Child Care Services provide a safe, nurturing, and enriching
             environment for children, ensuring their well-being and development.
             Whether at home or on the go, caregivers offer personalized support
-            to meet each child’s needs with care and attention. 
+            to meet each child’s needs with care and attention. 
           </p>
           <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
             <li>
@@ -191,7 +205,7 @@ function ElderCareCleaningPage() {
         <Carousel2
           videoItems={[
             {
-              video: elderCareVideo,     
+              video: elderCareVideo,
             },
             {
               video: elderCareVideo2,
@@ -244,7 +258,7 @@ function ElderCareCleaningPage() {
 
         {/* Booking Details */}
         <div>
-        <BookingSectionCart2
+          <BookingSectionCart2
             duration={duration}
             setDuration={(val) => {
               setChangeValue(true);
@@ -259,17 +273,20 @@ function ElderCareCleaningPage() {
             numChild={numChild}
             setNumChild={setNumChild}
             numProfession={numProfession}
-            setNumProfession={setNumProfession}
+            setNumProfession={(val) => {
+              setChangeValue(true);
+              setNumProfession(val);
+            }}
             profession={profession}
             setProfession={setProfession}
             contactType={contactType}
             setContactType={setContactType}
             language={language}
             setLanguage={setLanguage}
-            specialRequest={specialRequest} 
-            setSpecialRequest={setSpecialRequest} 
-            propertyType={propertyType} 
-            setPropertyType={setPropertyType} 
+            specialRequest={specialRequest}
+            setSpecialRequest={setSpecialRequest}
+            propertyType={propertyType}
+            setPropertyType={setPropertyType}
             pageType={"elder"}
           />
         </div>
@@ -336,7 +353,7 @@ function ElderCareCleaningPage() {
           />
         )}
 
-<div className="pt-4 mb-6">
+        <div className="pt-4 mb-6">
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
@@ -366,7 +383,7 @@ function ElderCareCleaningPage() {
           className="w-full mt-8 bg-blue-900 text-white py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={!acceptTerms1 || !acceptTerms2}
           onClick={handleBookNow}
-          style={{backgroundColor:"#1c398e"}}
+          style={{ backgroundColor: "#1c398e" }}
         >
           Book Now
         </button>

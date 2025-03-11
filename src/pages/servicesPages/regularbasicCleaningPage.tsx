@@ -67,7 +67,7 @@ function RegularBasicCleaningPage() {
 
   const [maxTime, setMaxTime] = useState<number>(1);
   const [changeValue, setChangeValue] = useState<boolean>(false);
-  const [count , setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
   const [priceBreakdown, setPriceBreakdown] = useState({
     hourlyRate: parseInt(services.data.price),
@@ -84,7 +84,7 @@ function RegularBasicCleaningPage() {
     rate: number,
     rateBaseEur: number
   ) => {
-    if(count >= 2){
+    if (count >= 2) {
       setChangeValue(true);
     }
     setSelectedCurrency(currency);
@@ -108,7 +108,7 @@ function RegularBasicCleaningPage() {
 
   const calculateTotalPrice = () => {
     const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
-    const basePrice = hourlyRate * maxTime ; // Base price in USD
+    const basePrice = hourlyRate * maxTime; // Base price in USD
 
     let serviceCosts = 0;
     let equipmentCosts = 0;
@@ -125,7 +125,7 @@ function RegularBasicCleaningPage() {
 
     // Calculate total price in the user's selected currency
     const totalPriceInSelectedCurrency =
-      (basePrice) * conversionRate +equipmentCosts + serviceCosts;
+      basePrice * conversionRate + equipmentCosts + serviceCosts;
 
     return {
       hourlyRate,
@@ -177,17 +177,16 @@ function RegularBasicCleaningPage() {
       alert("Please fill all required fields before proceeding to checkout.");
       return;
     }
+    
+    
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
-
-    const totalPriceInSelectedCurrency = priceBreakdown.totalPrice;
-    const totalPriceInUSD = totalPriceInSelectedCurrency / conversionRate;
     const serviceDetails = {
       service_id: "1",
-      price: totalPriceInUSD.toString(),
+      price: currencySymbol + priceBreakdown.totalPrice.toString(),
       date,
       time: selectedTime,
       property_size: propertySize,
-      duration: parseInt(duration),
+      duration: duration,
       number_of_cleaners: parseInt(numCleaners),
       note: document.querySelector("textarea")?.value || "",
       frequency,
@@ -641,7 +640,7 @@ function RegularBasicCleaningPage() {
         <button
           className="w-full mt-8 bg-blue-900 text-white py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={!acceptTerms1 || !acceptTerms2}
-          style={{backgroundColor:"#1c398e"}}
+          style={{ backgroundColor: "#1c398e" }}
           onClick={handleBookNow}
         >
           Book Now

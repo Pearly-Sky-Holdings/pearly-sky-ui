@@ -1,6 +1,4 @@
-// First, let's fix the itemsSlice.ts file
-
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 import { getRestockList } from "../../../services/CleaningServices/index";
 
 interface Item {
@@ -12,53 +10,40 @@ interface Item {
 }
 
 interface ItemsState {
-    items: {
-        data: Item[];
-        isLoading: boolean;
-        isSuccess: boolean;
-        errorMessage: string;
-    }  
+  items: {
+    data: Item[];
+    isLoading: boolean;
+    isSuccess: boolean;
+    errorMessage: string;
+  };
 }
 
 const initialState: ItemsState = {
-    items: {
-        data: [],
-        isLoading: false,
-        isSuccess: false,
-        errorMessage: "",
-    }
+  items: {
+    data: [],
+    isLoading: false,
+    isSuccess: false,
+    errorMessage: "",
+  },
 };
 
-// Define the fetchItems action creator properly
-export const fetchItems = createAsyncThunk(
-  'items/fetchItems',
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await getRestockList();
-      return response;
-    } catch (error) {
-      return rejectWithValue(error instanceof Error ? error.message : 'An error occurred');
-    }
-  }
-);
-
 export const itemsSlice = createSlice({
-  name: 'items',
+  name: "items",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchItems.pending, (state) => {
+      .addCase(getRestockList.pending, (state) => {
         state.items.isLoading = true;
         state.items.isSuccess = false;
         state.items.errorMessage = "";
       })
-      .addCase(fetchItems.fulfilled, (state, { payload }) => {
+      .addCase(getRestockList.fulfilled, (state, { payload }) => {
         state.items.isLoading = false;
         state.items.isSuccess = true;
         state.items.data = payload;
       })
-      .addCase(fetchItems.rejected, (state, { payload }) => {
+      .addCase(getRestockList.rejected, (state, { payload }) => {
         state.items.isLoading = false;
         state.items.isSuccess = false;
         state.items.errorMessage = payload as string;

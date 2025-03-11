@@ -48,20 +48,20 @@ function ChildCareCleaningPage() {
   const [conversionRate, setConversionRate] = useState(1);
 
   const [changeValue, setChangeValue] = useState<boolean>(false);
-  const [count , setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
   const [priceBreakdown, setPriceBreakdown] = useState({
     hourlyRate: parseInt(services.data.price),
-    totalPrice: 29.00,
-    basePrice: 29.00,
+    totalPrice: 29.0,
+    basePrice: 29.0,
   });
 
   const handleCurrencyUpdate = (
     currency: string,
     symbol: string,
-    rate: number,
+    rate: number
   ) => {
-    if(count >= 2){
+    if (count >= 2) {
       setChangeValue(true);
     }
     setSelectedCurrency(currency);
@@ -72,7 +72,7 @@ function ChildCareCleaningPage() {
 
   const calculateTotalPrice = () => {
     const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
-    const basePrice = hourlyRate * parseFloat(duration); // Base price in USD
+    const basePrice = hourlyRate * parseFloat(duration) * (parseInt(numProfession) || 1);  // Base price in USD
 
     // Calculate total price in the user's selected currency
     const totalPriceInSelectedCurrency = basePrice * conversionRate;
@@ -89,19 +89,35 @@ function ChildCareCleaningPage() {
       setChangeValue(false);
       setPriceBreakdown(calculateTotalPrice());
     }
-  }, [conversionRate, duration]);
+  }, [conversionRate, duration, numProfession]); // Add numProfession as a dependency
 
   useEffect(() => {
     dispatch(getServices("8"));
   }, []);
 
   const handleBookNow = () => {
+    if (
+      !selectedDate ||
+      !selectedTime ||
+      !duration ||
+      !frequency ||
+      !language ||
+      !type ||
+      !contactType ||
+      !propertyType ||
+      !numChild ||
+      !specialRequest
+    ) {
+      alert("Please fill all required fields before proceeding to checkout.");
+      return;
+    }
+    
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
       service_id: "8",
       date,
       time: selectedTime,
-      duration: parseInt(duration),
+      duration: duration,
       request_care_professional: numProfession,
       frequency,
       language,
@@ -110,7 +126,7 @@ function ChildCareCleaningPage() {
       numChild,
       age: `[${childAge.join(",")}]`,
       special_request: specialRequest,
-      price: priceBreakdown.totalPrice,
+      price: currencySymbol + priceBreakdown.totalPrice.toString(),
       service_providing_place: propertyType,
       note: document.querySelector("textarea")?.value || "",
     };
@@ -157,7 +173,7 @@ function ChildCareCleaningPage() {
             Child Care Services provide a safe, nurturing, and enriching
             environment for children, ensuring their well-being and development.
             Whether at home or on the go, caregivers offer personalized support
-            to meet each child’s needs with care and attention. 
+            to meet each child’s needs with care and attention.
           </p>
           <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
             <li>
@@ -257,7 +273,10 @@ function ChildCareCleaningPage() {
             numChild={numChild}
             setNumChild={setNumChild}
             numProfession={numProfession}
-            setNumProfession={setNumProfession}
+            setNumProfession={(val) => {
+              setChangeValue(true);
+              setNumProfession(val);
+            }}
             profession={profession}
             setProfession={setProfession}
             contactType={contactType}

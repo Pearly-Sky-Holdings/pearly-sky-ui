@@ -62,7 +62,7 @@ const LoginPage = () => {
 
     if (valid) {
       console.log("Login Successful", formData);
-      navigate("/dashboard"); 
+      navigate("/customer-dashboard"); 
     }
   };
 
