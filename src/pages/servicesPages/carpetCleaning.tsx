@@ -10,15 +10,15 @@ import TimeSlots from "../../components/timeSlot/timeSlot";
 import "./CustomCalendar.css";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
 import { getPackege, getServices } from "../../services/CleaningServices/index";
-import Images from "../../components/sanitizationPage/images";
+import Images from "../../components/CarpetAndUpholsteryCleaning/carpetImage";
 import dayjs from "dayjs";
 import SanitizationBookingCart from "../../components/sanitizationPage/bookingCart";
 import PersonalInformationForm from "../../components/personalInformationForm/personalInformationForm";
-import { SanitizationService } from "../../config/images";
-import EstimateList from "../../components/sanitizationPage/estimateList";
+import { CarpetCleaningService } from "../../config/images";
+import EstimateList from "../../components/CarpetAndUpholsteryCleaning/carpetPackageList";
 
 
-function SanitizationAndDisinfection() {
+function CarpetAndUpholsteryCleaning() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   useSelector((state: any) => state.servicesSlice.service);
@@ -31,16 +31,13 @@ function SanitizationAndDisinfection() {
   const [timeZone, setTimeZone] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
+  const [selectedItems, setSelectedItems] = useState<string[]>([]); 
 
    
-  const [selectedData, setSelectedData] = useState<{ category: string; items: string[] }[]>([]);
-
-  // Memoize the callback function to prevent unnecessary re-renders
-  const handleSelectionChange = useCallback((data: { category: string; items: string[] }[]) => {
-    setSelectedData(data);
-    console.log("Selected Data:", data);
-  }, []);
-
+const handleSelectionChange = (selectedItems: string[]) => {
+    console.log('Selected Items:', selectedItems);
+    setSelectedItems(selectedItems);
+  };
  
   // Memoize the form change handler
   const handleFormChange = useCallback((data: any) => {
@@ -50,11 +47,11 @@ function SanitizationAndDisinfection() {
   // Fetch package and services data
 
   useEffect(() => {
-    dispatch(getPackege("10"));
+    dispatch(getPackege("12"));
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getServices("10"));
+    dispatch(getServices("12"));
 
   }, [dispatch]);
   
@@ -129,28 +126,27 @@ const handleCheckboxChange = (section: Section, option: Option) => {
     const customer = {
       first_name: formData.firstName,
       last_name: formData.lastName,
-      company: formData.company || "", // Optional field
+      company: formData.company || "", 
       country: formData.country,
       street_address: formData.address,
-      apartment_type: formData.apartment || "", // Optional field
+      apartment_type: formData.apartment || "", 
       city: formData.city,
       province: formData.state,
       postal_code: formData.zip,
       contact: formData.phone,
       email: formData.email,
-      password: " 1234", // Default password or generate one
+      password: " 1234", 
     };
   
     // service details
     const serviceDetails = {
       customer, // Include customer details
-      service_id: "10", 
+      service_id: "12", 
       price: "00.00", 
       date,
       time: selectedTime,
       property_size: "0 sqft", 
-      duration: "0", 
-       
+      duration: "0",      
       note: document.querySelector("textarea")?.value || "",
       request_gender: contactType, 
       request_language: language,
@@ -160,25 +156,25 @@ const handleCheckboxChange = (section: Section, option: Option) => {
       timeZone,
       Equipment: equipment.customer ? "Provided by customer" : "Provided by company",
       payment_method: "cash", 
-      reStock_details: selectedData.map((category) => ({
-        re_stocking_checklist_id: category.items.length, 
+      reStock_details: selectedItems.map((item) => ({
+        re_stocking_checklist_id: item.length,
       })),
     };
   
     console.log("Data to be sent:", serviceDetails);
 
     const data = {
-      serviceName: " Sanitization & Disinfection",
+      serviceName: " Carpet & Upholstery Cleaning",
       details: serviceDetails,
       personalInformation: formData,
       equipment,
-      chemical,
-      selectedCategories: selectedData,
+      chemical,      
+      selectedItems,
     };
     console.log("Data:", data);
   
     try {
-      // Make the API call
+      //  API call
       const response = await fetch("https://back.pearlyskyplc.com/api/saveServiceDetails", {
         method: "POST",
         headers: {
@@ -212,7 +208,7 @@ const handleCheckboxChange = (section: Section, option: Option) => {
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col sm:flex-row gap-4 sm:gap-8 items-stretch">
         <div className="w-full sm:w-2/5 flex">
           <img
-            src={SanitizationService}
+            src={CarpetCleaningService}
             alt="Cleaning Service"
             className="rounded-2xl w-full h-full object-cover"
           />
@@ -220,23 +216,23 @@ const handleCheckboxChange = (section: Section, option: Option) => {
         <div className="w-full sm:w-2/3 flex flex-col justify-between">
           <div>
             <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
-              Sanitization & Disinfection
+            Carpet & Upholstery Cleaning
             </h1>
           </div>
           <div className="flex-grow">
             <p className="text-gray-600 mb-4 text-sm sm:text-base">
-              Disinfecting is a cleaning method that uses disinfectants known as chemicals to kill germs on objects and
-              surfaces. Some basic disinfectants used for this method are bleach and alcohol solutions. Generally, we need
-              to keep the disinfectant on the surfaces and objects for a particular time to kill the germs. It does not
-              clean dirty surfaces or remove germs definitely.
+            Carpet and upholstery cleaning is a cleaning process designed to remove dirt and stains on rugs, 
+            carpeting, and the interior of motor vehicles and/or on household furniture or objects upholstered 
+            or covered with fabrics such as wool, cotton, nylon or other synthetic fabrics. Carpet and 
+            Upholstery Cleaning does not include general-purpose cleaning, Spot Removal, vinyl or leather 
+            cleaning, dry cleaning, or cleanings designed exclusively for use at industrial facilities engaged 
+            in furniture or carpet manufacturing. 
             </p>
             <p className="text-gray-600 mb-4 text-sm sm:text-base">
-              Sanitizing can be completed by cleaning, disinfecting, or both. It takes part in decreasing the number of
-              germs to a safe level. What is defined by a safe level depends on public health standards or basic needs at
-              a workplace, school, etc. For example, there are certain procedures for sanitizing in restaurants and other
-              facilities that are used to prepare food. Methods we use to sanitize can be varied, depending on your
-              requirements. They can be Mopping a floor using a mop, a chemical, and water, using a dishwasher to
-              sanitize the dishes or using an antibacterial wipe on a TV remote.
+            Carpet & Upholstery Cleaning is a professional procedure designed specifically for cleaning 
+            automotive floors, floor mats, carpets, and upholstery with exceptional results. In the process
+             of carpet and Upholstery Cleaning, it cuts through embedded grime faster than other harsh and 
+             overly aggressive cleanings.
             </p>
           </div>
         </div>
@@ -286,35 +282,13 @@ const handleCheckboxChange = (section: Section, option: Option) => {
         </div>
 
         <div>
-          <EstimateList onSelectionChange={handleSelectionChange} />
-
-          {/* Display the selected data in the parent component */}
-          {/* <div className="mt-8 p-6 bg-gray-50 rounded-lg shadow-sm">
-            <h2 className="text-2xl font-bold text-[#002F6D] mb-4">Selected Categories and Items</h2>
-            {selectedData.length > 0 ? (
-              selectedData.map((categoryData, index) => (
-                <div key={index} className="mb-6">
-                  <h3 className="text-xl font-bold text-[#002F6D] mb-2">{categoryData.category}</h3>
-                  <ul className="list-disc list-inside">
-                    {categoryData.items.map((item, itemIndex) => (
-                      <li key={itemIndex} className="text-gray-700">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))
-            ) : (
-              <p className="text-gray-700">No categories selected.</p>
-            )}
-          </div> */}
+          <EstimateList onSelectionChange={handleSelectionChange} />         
         </div>
 
         {/* Booking Details */}
         <div className="mt-10">
 
-          <SanitizationBookingCart           
-
+          <SanitizationBookingCart          
             propertyType={propertyType}
             setPropertyType={setPropertyType}
             frequency={frequency}
@@ -325,7 +299,6 @@ const handleCheckboxChange = (section: Section, option: Option) => {
             setLanguage={setLanguage}
             timeZone={timeZone}
             setTimeZone={setTimeZone}
-
           />
         </div>
 
@@ -411,12 +384,12 @@ const handleCheckboxChange = (section: Section, option: Option) => {
           <PersonalInformationForm onChangeCallback={handleFormChange} />
           {/* Display form data in another section */}
           <div style={{ marginTop: "20px" }}>
-            {/* <h2>Live Form Data:</h2>
+            <h2>Live Form Data:</h2>
             <pre>{JSON.stringify(formData, null, 2)}</pre>
             <pre>{JSON.stringify(equipment, null, 2)}</pre>
             <pre>{JSON.stringify(chemical, null, 2)}</pre>
             <pre>{JSON.stringify(propertyType, null, 2)}</pre>
-            <pre>{JSON.stringify(selectedData, null, 2)}</pre> */}
+            <pre>{JSON.stringify(selectedItems, null, 2)}</pre>
           </div>
         </div>
 
@@ -453,4 +426,4 @@ const handleCheckboxChange = (section: Section, option: Option) => {
   );
 }
 
-export default SanitizationAndDisinfection;
+export default CarpetAndUpholsteryCleaning;

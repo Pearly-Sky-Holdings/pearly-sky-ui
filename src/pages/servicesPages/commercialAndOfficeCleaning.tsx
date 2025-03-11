@@ -10,12 +10,11 @@ import TimeSlots from "../../components/timeSlot/timeSlot";
 import "./CustomCalendar.css";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
 import { getPackege, getServices } from "../../services/CleaningServices/index";
-import Images from "../../components/sanitizationPage/images";
+import Images from "../../components/commercialAndOfficeCleaning/image";
 import dayjs from "dayjs";
-import SanitizationBookingCart from "../../components/sanitizationPage/bookingCart";
+import CommercialBookingCart from "../../components/commercialAndOfficeCleaning/commercialBookingCart";
 import PersonalInformationForm from "../../components/personalInformationForm/personalInformationForm";
-import { SanitizationService } from "../../config/images";
-import EstimateList from "../../components/sanitizationPage/estimateList";
+import { CommercialService } from "../../config/images";
 
 
 function SanitizationAndDisinfection() {
@@ -31,17 +30,8 @@ function SanitizationAndDisinfection() {
   const [timeZone, setTimeZone] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
+  const [numCleaners, setNumCleaners ] = useState(""); 
 
-   
-  const [selectedData, setSelectedData] = useState<{ category: string; items: string[] }[]>([]);
-
-  // Memoize the callback function to prevent unnecessary re-renders
-  const handleSelectionChange = useCallback((data: { category: string; items: string[] }[]) => {
-    setSelectedData(data);
-    console.log("Selected Data:", data);
-  }, []);
-
- 
   // Memoize the form change handler
   const handleFormChange = useCallback((data: any) => {
     setFormData(data);
@@ -50,19 +40,20 @@ function SanitizationAndDisinfection() {
   // Fetch package and services data
 
   useEffect(() => {
-    dispatch(getPackege("10"));
+    dispatch(getPackege("11"));
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getServices("10"));
+    dispatch(getServices("11"));
 
   }, [dispatch]);
-  
-const [equipment, setEquipment] = useState({ customer: false, company: false });
+
+  const [equipment, setEquipment] = useState({ customer: false, company: false });
 const [chemical, setChemical] = useState({ customer: false, company: false });
 
 type Section = "equipment" | "chemical";
 type Option = "customer" | "company";
+
 
 const handleCheckboxChange = (section: Section, option: Option) => {
   if (section === "equipment") {
@@ -78,133 +69,129 @@ const handleCheckboxChange = (section: Section, option: Option) => {
   }
 };
 
-  interface FormData {
-    firstName: string;
-    lastName: string;
-    company?: string; // Optional field
-    country: string;
-    address: string;
-    apartment?: string; // Optional field
-    city: string;
-    state: string;
-    zip: string;
-    phone: string;
-    email: string;
+interface FormData {
+  firstName: string;
+  lastName: string;
+  company?: string; // Optional field
+  country: string;
+  address: string;
+  apartment?: string; // Optional field
+  city: string;
+  state: string;
+  zip: string;
+  phone: string;
+  email: string;
+}
+
+const [formData, setFormData] = useState<FormData>({
+  firstName: "",
+  lastName: "",
+  company: "",
+  country: "",
+  address: "",
+  apartment: "",
+  city: "",
+  state: "",
+  zip: "",
+  phone: "",
+  email: "",
+});
+
+const handleBookNow = async () => { 
+  if (
+    !frequency ||
+    !propertyType ||
+    !contactType ||
+    !language ||
+    !numCleaners ||
+    !timeZone ||
+    !selectedDate ||
+    !selectedTime ||
+    !acceptTerms2
+  ) {
+    alert("Please fill all required fields before proceeding to checkout.");
+    return;
   }
 
-  const [formData, setFormData] = useState<FormData>({
-    firstName: "",
-    lastName: "",
-    company: "",
-    country: "",
-    address: "",
-    apartment: "",
-    city: "",
-    state: "",
-    zip: "",
-    phone: "",
-    email: "",
-  });
+  const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
 
-  const handleBookNow = async () => {
-    // Validate required fields
-    if (
-      !frequency ||
-      !propertyType ||
-      !contactType ||
-      !language ||
-      !timeZone ||
-      !selectedDate ||
-      !selectedTime ||
-      !acceptTerms2
-    ) {
-      alert("Please fill all required fields before proceeding to checkout.");
-      return;
-    }
-  
-    // selected date
-    const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
-  
-    // customer object
-    const customer = {
-      first_name: formData.firstName,
-      last_name: formData.lastName,
-      company: formData.company || "", // Optional field
-      country: formData.country,
-      street_address: formData.address,
-      apartment_type: formData.apartment || "", // Optional field
-      city: formData.city,
-      province: formData.state,
-      postal_code: formData.zip,
-      contact: formData.phone,
-      email: formData.email,
-      password: " 1234", // Default password or generate one
-    };
-  
-    // service details
-    const serviceDetails = {
-      customer, // Include customer details
-      service_id: "10", 
-      price: "00.00", 
-      date,
-      time: selectedTime,
-      property_size: "0 sqft", 
-      duration: "0", 
-       
-      note: document.querySelector("textarea")?.value || "",
-      request_gender: contactType, 
-      request_language: language,
-      business_property: propertyType,
-      cleaning_solvents: "eco-friendly", 
-      frequency, 
-      timeZone,
-      Equipment: equipment.customer ? "Provided by customer" : "Provided by company",
-      payment_method: "cash", 
-      reStock_details: selectedData.map((category) => ({
-        re_stocking_checklist_id: category.items.length, 
-      })),
-    };
-  
-    console.log("Data to be sent:", serviceDetails);
-
-    const data = {
-      serviceName: " Sanitization & Disinfection",
-      details: serviceDetails,
-      personalInformation: formData,
-      equipment,
-      chemical,
-      selectedCategories: selectedData,
-    };
-    console.log("Data:", data);
-  
-    try {
-      // Make the API call
-      const response = await fetch("https://back.pearlyskyplc.com/api/saveServiceDetails", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(serviceDetails),
-      });
-  
-      // Check if the request was successful
-      if (response.ok) {
-        const result = await response.json();
-        console.log("API Response:", result);
-  
-        // Navigate to the quotation page
-        navigate("/quotation", { state: { data } });
-      } else {
-        // Handle errors
-        console.error("API Error:", response.statusText);
-        alert("Failed to submit the quotation request. Please try again.");
-      }
-    } catch (error) {
-      // Handle network errors
-      console.error("Network Error:", error);
-      alert("An error occurred while submitting the request. Please check your connection and try again.");
-    }
+  //  customer details
+  const customer = {
+    first_name: formData.firstName,
+    last_name: formData.lastName,
+    company: formData.company || "", 
+    country: formData.country,
+    street_address: formData.address,
+    apartment_type: formData.apartment || "", 
+    city: formData.city,
+    province: formData.state,
+    postal_code: formData.zip,
+    contact: formData.phone,
+    email: formData.email,
+    password: "1234 ", 
   };
+
+  //  service details
+  const serviceDetails = {
+    customer,
+    service_id: "11",
+    price: "00.00",
+    date,
+    time: selectedTime,
+    property_size: "0 sqft",
+    duration: "0",
+    number_of_cleaners: numCleaners,
+    note: document.querySelector("textarea")?.value || "",
+    request_gender: contactType,
+    request_language: language,
+    business_property: propertyType,
+    cleaning_solvents: "eco-friendly",
+    frequency,
+    timeZone,
+    Equipment: equipment.customer ? "Provided by customer" : "Provided by company",
+    payment_method: "cash",
+    reStock_details: []
+  };
+
+  console.log("Data to be sent:", serviceDetails);
+
+  const data = {
+    serviceName: "Commercial and Office Cleaning",
+    details: serviceDetails,
+    personalInformation: formData,
+    equipment,
+    chemical,
+  };
+
+  console.log("Data:", data);
+
+  try {
+    
+    const response = await fetch("https://back.pearlyskyplc.com/api/saveServiceDetails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(serviceDetails),
+    });
+
+    
+    if (response.ok) {
+
+      const result = await response.json();
+      console.log("API Response:", result);      
+      navigate("/quotation", { state: { data } });
+
+    } else {      
+      console.error("API Error:", response.statusText);
+      alert("Failed to submit the quotation request. Please try again.");
+    }
+  } catch (error) {
+    
+    console.error("Network Error:", error);
+    alert("An error occurred while submitting the request. Please check your connection and try again.");
+  }
+};
 
   return (
     <div className="max-w-7xl mx-auto p-4 mt-6 sm:p-2">
@@ -212,7 +199,7 @@ const handleCheckboxChange = (section: Section, option: Option) => {
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col sm:flex-row gap-4 sm:gap-8 items-stretch">
         <div className="w-full sm:w-2/5 flex">
           <img
-            src={SanitizationService}
+            src={CommercialService}
             alt="Cleaning Service"
             className="rounded-2xl w-full h-full object-cover"
           />
@@ -220,23 +207,26 @@ const handleCheckboxChange = (section: Section, option: Option) => {
         <div className="w-full sm:w-2/3 flex flex-col justify-between">
           <div>
             <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
-              Sanitization & Disinfection
+            Commercial and Office Cleaning
             </h1>
           </div>
           <div className="flex-grow">
             <p className="text-gray-600 mb-4 text-sm sm:text-base">
-              Disinfecting is a cleaning method that uses disinfectants known as chemicals to kill germs on objects and
-              surfaces. Some basic disinfectants used for this method are bleach and alcohol solutions. Generally, we need
-              to keep the disinfectant on the surfaces and objects for a particular time to kill the germs. It does not
-              clean dirty surfaces or remove germs definitely.
+            Office and Commercial Cleaning services ensure a pristine, hygienic, and well-maintained 
+            workspace, fostering a productive and professional environment. With a focus on thorough 
+            cleaning and sanitization, these services cover essential maintenance tasks with attention to 
+            detail.
             </p>
+            <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
+            <li>Vacuuming carpets and hard floors, removing dust and debris. </li>
+            <li>Disinfecting high-touch surfaces, including door handles and office equipment </li>
+            <li>Cleaning glass partitions, windows, and blinds for a polished appearance</li>
+            <li>Sanitizing restrooms and replenishing essential supplies</li>
+            <li>Emptying trash bins and maintaining an organized, clutter-free space</li>
+          </ul>
             <p className="text-gray-600 mb-4 text-sm sm:text-base">
-              Sanitizing can be completed by cleaning, disinfecting, or both. It takes part in decreasing the number of
-              germs to a safe level. What is defined by a safe level depends on public health standards or basic needs at
-              a workplace, school, etc. For example, there are certain procedures for sanitizing in restaurants and other
-              facilities that are used to prepare food. Methods we use to sanitize can be varied, depending on your
-              requirements. They can be Mopping a floor using a mop, a chemical, and water, using a dishwasher to
-              sanitize the dishes or using an antibacterial wipe on a TV remote.
+            Designed to uphold cleanliness and hygiene standards, these services contribute to a healthier, 
+            more welcoming workplace while extending the longevity of office furnishings and equipment.
             </p>
           </div>
         </div>
@@ -284,39 +274,15 @@ const handleCheckboxChange = (section: Section, option: Option) => {
             </div>
           </div>
         </div>
-
-        <div>
-          <EstimateList onSelectionChange={handleSelectionChange} />
-
-          {/* Display the selected data in the parent component */}
-          {/* <div className="mt-8 p-6 bg-gray-50 rounded-lg shadow-sm">
-            <h2 className="text-2xl font-bold text-[#002F6D] mb-4">Selected Categories and Items</h2>
-            {selectedData.length > 0 ? (
-              selectedData.map((categoryData, index) => (
-                <div key={index} className="mb-6">
-                  <h3 className="text-xl font-bold text-[#002F6D] mb-2">{categoryData.category}</h3>
-                  <ul className="list-disc list-inside">
-                    {categoryData.items.map((item, itemIndex) => (
-                      <li key={itemIndex} className="text-gray-700">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))
-            ) : (
-              <p className="text-gray-700">No categories selected.</p>
-            )}
-          </div> */}
-        </div>
-
+        
         {/* Booking Details */}
         <div className="mt-10">
 
-          <SanitizationBookingCart           
-
+          <CommercialBookingCart          
             propertyType={propertyType}
             setPropertyType={setPropertyType}
+            numCleaners={numCleaners}
+            setNumCleaners={setNumCleaners}
             frequency={frequency}
             setFrequency={setFrequency}
             contactType={contactType}
@@ -416,7 +382,7 @@ const handleCheckboxChange = (section: Section, option: Option) => {
             <pre>{JSON.stringify(equipment, null, 2)}</pre>
             <pre>{JSON.stringify(chemical, null, 2)}</pre>
             <pre>{JSON.stringify(propertyType, null, 2)}</pre>
-            <pre>{JSON.stringify(selectedData, null, 2)}</pre> */}
+            <pre>{JSON.stringify(numCleaners, null, 2)}</pre> */}
           </div>
         </div>
 

@@ -1,9 +1,11 @@
-
+import { FaMinus, FaPlus } from "react-icons/fa";
 import Dropdown from "../dropDown/dropDown";
 
 interface SanitizationBookingCartProps { 
   propertyType: string;
   setPropertyType: (type: string) => void;
+  numCleaners: string;
+  setNumCleaners: (cleaners: string) => void;
   frequency: string;
   setFrequency: (frequency: string) => void;
   contactType: string;
@@ -17,6 +19,8 @@ interface SanitizationBookingCartProps {
 const SanitizationBookingCart: React.FC<SanitizationBookingCartProps> = ({
   propertyType,
   setPropertyType,
+  numCleaners,
+  setNumCleaners,
   frequency,
   setFrequency,
   contactType,
@@ -116,6 +120,41 @@ return (
         options={propertyTypeOptions}
         onChange={setPropertyType}
       />
+
+      <div >
+              <label className="block mb-2 text-blue-900">
+                Number of Cleaners 
+              </label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="number"
+                  value={numCleaners}
+                  onChange={(e) => {
+                    const value = Math.max(1, Math.min(20, Number(e.target.value)));
+                    setNumCleaners(value.toString());
+                  }}
+                  className="w-full p-2 border border-blue-900 rounded-sm text-center text-black"
+                  min={1}
+                  max={20}
+                />
+                <div
+                  className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+                  onClick={() => {
+                    setNumCleaners(Math.max(1, Number(numCleaners) - 1).toString());
+                  }}
+                >
+                  <FaMinus />
+                </div>
+                <div
+                  className="p-2 bg-blue-900 text-white rounded-lg hover:bg-blue-950 transition-colors"
+                  onClick={() => {
+                    setNumCleaners(Math.min(20, Number(numCleaners) + 1).toString());
+                  }}
+                >
+                  <FaPlus />
+                </div>
+              </div>              
+            </div>
      
      <div>
      <Dropdown
@@ -133,13 +172,14 @@ return (
             options={timeZoneOptions}
             onChange={setTimeZone}
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      
       <Dropdown
         label="Gender Required"
         value={contactType}
         options={contactTypeOptions}
         onChange={setContactType}
       />
+      <div >
       <Dropdown
         label="Select Language"
         value={language}

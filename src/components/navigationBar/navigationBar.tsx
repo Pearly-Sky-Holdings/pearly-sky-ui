@@ -52,8 +52,8 @@ export default function NavigationBar() {
     { label: "Elder Care Cleaning", path: "/elder_care_cleaning" },
 
     { label: "Sanitization & Disinfection Booking", path: "/sanitization_cleaning" },
-    { label: "Office and Commercial Cleaning", path: "/upcomming" },
-    { label: "Carpet & Upholstery Cleaning Booking", path: "/upcomming" },
+    { label: "Office and Commercial Cleaning", path: "/commercial_cleaning" },
+    { label: "Carpet & Upholstery Cleaning Booking", path: "/carpet_cleaning" },
     { label: "Move In/Out Transport Service Booking", path: "/upcomming" },
     { label: "Steam Cleaning Booking", path: "/upcomming" },
     { label: "Pressure Washing Booking", path: "/upcomming",},

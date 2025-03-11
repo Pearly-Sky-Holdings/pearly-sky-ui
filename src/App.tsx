@@ -38,6 +38,8 @@ import SanitizationAndDisinfection from "./pages/servicesPages/SanitizationAndDi
 import CustomerPage from "./pages/customerPage/customerPage.tsx";
 import AboutUsPage from "./pages/aboutUsPage/aboutUsPage.tsx";
 import Quotation from "./components/quotation/quotation.tsx";
+import CommercialAndOfficeCleaning from "./pages/servicesPages/commercialAndOfficeCleaning.tsx";
+import CarpetCleaning from "./pages/servicesPages/carpetCleaning.tsx";
 import CustomerDashboard from "./pages/customerDashboard/customerDashboard.tsx";
 import MainLayout from "./layouts/MainLayout.tsx";
 import Settings from "./pages/customerDashboard/setting.tsx";
@@ -230,6 +232,25 @@ function App() {
               </>
             }
           />
+          <Route
+            path="/commercial_cleaning"
+            element={
+              <>
+                <CommercialAndOfficeCleaning />
+                <Footer />
+              </>
+            }
+          />
+           <Route
+            path="/carpet_cleaning"
+            element={
+              <>
+                <CarpetCleaning />
+                <Footer />
+              </>
+            }
+          />
+
 
           {/* Read more pages */}
           <Route
@@ -314,6 +335,7 @@ function App() {
           <Route path="/upcomming" element={<UpdateComingSoon />} />
         </Routes>
       </Router>
+      
     </ThemeProvider>
   );
 }
