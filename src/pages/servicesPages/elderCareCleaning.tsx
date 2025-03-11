@@ -69,16 +69,7 @@ function ElderCareCleaningPage() {
     setConversionRate(rate);
     setCount(count + 1);
   };
-  useEffect(() => {
-    if (changeValue) {
-      setChangeValue(false);
-      setPriceBreakdown(calculateTotalPrice());
-    }
-  }, [conversionRate, duration]);
 
-  useEffect(() => {
-    dispatch(getServices("9"));
-  }, []);
   const calculateTotalPrice = () => {
     const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
     const basePrice = hourlyRate * parseFloat(duration) * (parseInt(numProfession) || 1); // Base price in USD
@@ -92,6 +83,17 @@ function ElderCareCleaningPage() {
       basePrice: basePrice * conversionRate, // Base price in the selected currency
     };
   };
+
+  useEffect(() => {
+    if (changeValue) {
+      setChangeValue(false);
+      setPriceBreakdown(calculateTotalPrice());
+    }
+  }, [conversionRate, duration, numProfession]); // Add numProfession as a dependency
+
+  useEffect(() => {
+    dispatch(getServices("9"));
+  }, []);
 
   const handleBookNow = () => {
     if (
@@ -109,23 +111,13 @@ function ElderCareCleaningPage() {
       alert("Please fill all required fields before proceeding to checkout.");
       return;
     }
-    const formatDuration = (duration: any) => {
-      const [hours, minutes] = String(duration).split(".");
-
-      const formattedMinutes = minutes ? `${minutes}0`.slice(0, 2) : "00";
-
-      const endHours = parseInt(hours, 10) + 1;
-      const endMinutes = formattedMinutes;
-
-      return `${hours}.${formattedMinutes} - ${endHours}.${endMinutes}`;
-    };
-    const formattedDuration = formatDuration(duration);
+    
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
       service_id: "8",
       date,
       time: selectedTime,
-      duration: formattedDuration,
+      duration: duration,
       request_care_professional: numProfession,
       frequency,
       language,
@@ -181,7 +173,7 @@ function ElderCareCleaningPage() {
             Child Care Services provide a safe, nurturing, and enriching
             environment for children, ensuring their well-being and development.
             Whether at home or on the go, caregivers offer personalized support
-            to meet each child’s needs with care and attention. 
+            to meet each child’s needs with care and attention. 
           </p>
           <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
             <li>
@@ -281,7 +273,10 @@ function ElderCareCleaningPage() {
             numChild={numChild}
             setNumChild={setNumChild}
             numProfession={numProfession}
-            setNumProfession={setNumProfession}
+            setNumProfession={(val) => {
+              setChangeValue(true);
+              setNumProfession(val);
+            }}
             profession={profession}
             setProfession={setProfession}
             contactType={contactType}

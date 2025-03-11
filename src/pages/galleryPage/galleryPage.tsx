@@ -1,131 +1,245 @@
-import { Box, Typography, Grid, Card, CardMedia, Container, useMediaQuery, useTheme } from '@mui/material';
+import { useMediaQuery, useTheme } from "@mui/material";
 import {
   galleryImage1,
   galleryImage2,
   galleryImage3,
   galleryImage4,
   galleryImage5,
-} from '../../config/images';
+  galleryImage6,
+  galleryImage7,
+  galleryImage8,
+  galleryImage9,
+  galleryImage10,
+  galleryImage11,
+  galleryImage12,
+  galleryImage13,
+  galleryImage14,
+} from "../../config/images";
+import { useState, useEffect } from "react";
 
 const progressData = [
-  { label: 'Assessment and Planning', value: 100 },
-  { label: 'Execution', value: 95 },
-  { label: 'Project Completion', value: 95 },
+  { label: "Assessment and Planning", value: 100 },
+  { label: "Execution", value: 95 },
+  { label: "Project Completion", value: 95 },
 ];
 
-const images = [galleryImage1, galleryImage2, galleryImage3, galleryImage4, galleryImage5];
+const images = [
+  galleryImage1,
+  galleryImage2,
+  galleryImage3,
+  galleryImage4,
+  galleryImage5,
+  galleryImage6,
+  galleryImage7,
+  galleryImage8,
+  galleryImage9,
+  galleryImage10,
+  galleryImage11,
+  galleryImage12,
+  galleryImage13,
+  galleryImage14,
+];
 
 const Gallery = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm')); 
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  // Auto-slide functionality
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) =>
+        prevIndex + 5 >= images.length ? 0 : prevIndex + 5
+      );
+    }, 5000); // Change slide every 5 seconds
+
+    return () => clearInterval(interval); // Clear interval on unmount
+  }, [images.length]);
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex + 5 >= images.length ? 0 : prevIndex + 5
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex - 5 < 0 ? Math.floor(images.length / 5) * 5 : prevIndex - 5
+    );
+  };
+
+  const currentImages = images.slice(currentIndex, currentIndex + 5);
+  while (currentImages.length < 5) {
+    currentImages.push(currentImages[currentImages.length - 1]);
+  }
 
   return (
-    <Container style={{ marginTop: '5%' }}>
-      {!isMobile && (
-        <Box display="flex" justifyContent="center" textAlign="center">
-          <Box
-            display="flex"
-            justifyContent="space-around"
-            mb={8}
-            bgcolor="white"
-            textAlign="center"
-            pt={1}
-            pb={8}
-            borderRadius={50}
-            width="75%"
-            height={35}
-            boxShadow="0px 4px 10px rgba(37, 150, 190, 0.5)"
-          >
+    <div className="min-h-screen bg-gray-50 py-12">
+      <div className="max-w-7xl mx-auto px-4">
+        {/* Progress Section */}
+        <div className="flex justify-center mb-12">
+          <div className="bg-white rounded-full py-4 px-8 shadow-lg w-3/4 flex justify-around items-center">
             {progressData.map((item) => (
-              <Box key={item.label} textAlign="center">
-                <Typography variant="h6" color="#008CDA" fontWeight="bold">
+              <div key={item.label} className="text-center">
+                <p className="text-[#008CDA] font-bold text-xl">
                   {item.value}%
-                </Typography>
-                <Typography variant="body2" color="black">
-                  {item.label}
-                </Typography>
-              </Box>
+                </p>
+                <p className="text-sm text-gray-700">{item.label}</p>
+              </div>
             ))}
-          </Box>
-        </Box>
-      )}
+          </div>
+        </div>
 
-      {/* Gallery Section */}
-      <Typography variant="h5" color="#003370" fontWeight="bold" align="center" mb={2}>
-        Gallery
-      </Typography>
+        {/* Gallery Section */}
+        <h2 className="text-2xl font-bold text-[#003370] text-center mb-6">
+          Gallery
+        </h2>
 
-      <Grid container spacing={1} mb={4}>
-        {/* Large Image on the Left */}
-        <Grid item xs={12} md={5}>
-          <Card sx={{ height: '100%', width: '100%' }}>
-            <CardMedia
-              component="img"
-              image={images[0]}
-              alt="Gallery image 1"
-              sx={{ height: '100%', objectFit: 'cover' }}
-            />
-          </Card>
-        </Grid>
+        <div className="relative">
+          {/* Navigation Buttons */}
+          {images.length > 5 && (
+            <>
+              <div
+                onClick={prevSlide}
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white p-2 rounded-full shadow-lg z-10 hover:bg-gray-100 cursor-pointer"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </div>
+              <div
+                onClick={nextSlide}
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white p-2 rounded-full shadow-lg z-10 hover:bg-gray-100 cursor-pointer"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </div>
+            </>
+          )}
 
-        {/* Smaller Images on the Right */}
-        <Grid item xs={12} md={7}>
-          <Grid container spacing={1}>
-            {/* Vertical Stack for Images 2 and 3 */}
-            <Grid item xs={12} md={5}>
-              <Grid container spacing={1}>
-                <Grid item xs={12}>
-                  <Card>
-                    <CardMedia
-                      component="img"
-                      image={images[1]}
-                      alt="Gallery image 2"
-                      sx={{ height: '200px', objectFit: 'cover' }}
-                    />
-                  </Card>
-                </Grid>
-                <Grid item xs={12}>
-                  <Card>
-                    <CardMedia
-                      component="img"
-                      image={images[2]}
-                      alt="Gallery image 3"
-                      sx={{ height: '200px', objectFit: 'cover' }}
-                    />
-                  </Card>
-                </Grid>
-              </Grid>
-            </Grid>
+          {/* Gallery Grid */}
+          <div
+            className={`grid ${
+              isMobile ? "grid-cols-1" : "grid-cols-12"
+            } gap-4`}
+          >
+            {/* Large Image */}
+            <div
+              className={`${
+                isMobile ? "col-span-1" : "col-span-12 md:col-span-5"
+              }`}
+            >
+              <div className="aspect-[4/3.6] rounded-lg overflow-hidden">
+                <img
+                  src={currentImages[0]}
+                  alt="Gallery"
+                  className="w-full h-full object-cover transition-transform duration-500"
+                />
+              </div>
+            </div>
 
-            {/* Horizontal Stack for Images 4 and 5 */}
-            <Grid item xs={12} md={7}>
-              <Grid container spacing={1}>
-                <Grid item xs={6}>
-                  <Card>
-                    <CardMedia
-                      component="img"
-                      image={images[3]}
-                      alt="Gallery image 4"
-                      sx={{ height: '405px', objectFit: 'cover' }}
+            {/* Right Side Grid */}
+            <div
+              className={`${
+                isMobile ? "col-span-1" : "col-span-12 md:col-span-7"
+              }`}
+            >
+              <div
+                className={`grid ${
+                  isMobile ? "grid-cols-1" : "grid-cols-12"
+                } gap-4`}
+              >
+                {/* Vertical Stack */}
+                <div
+                  className={`${
+                    isMobile ? "col-span-1" : "col-span-5"
+                  } space-y-4`}
+                >
+                  <div className="aspect-[4/3] rounded-lg overflow-hidden">
+                    <img
+                      src={currentImages[1]}
+                      alt="Gallery"
+                      className="w-full h-full object-cover transition-transform duration-500"
                     />
-                  </Card>
-                </Grid>
-                <Grid item xs={6}>
-                  <Card>
-                    <CardMedia
-                      component="img"
-                      image={images[4]}
-                      alt="Gallery image 5"
-                      sx={{ height: '405px', objectFit: 'cover' }}
+                  </div>
+                  <div className="aspect-[4/3] rounded-lg overflow-hidden">
+                    <img
+                      src={currentImages[2]}
+                      alt="Gallery"
+                      className="w-full h-full object-cover transition-transform duration-500"
                     />
-                  </Card>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Container>
+                  </div>
+                </div>
+
+                {/* Horizontal Stack */}
+                <div
+                  className={`${
+                    isMobile ? "col-span-1" : "col-span-7 grid grid-cols-2"
+                  } gap-4`}
+                >
+                  <div className="aspect-[7/16] rounded-lg overflow-hidden">
+                    <img
+                      src={currentImages[3]}
+                      alt="Gallery"
+                      className="w-full h-full object-cover transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="aspect-[7/16] rounded-lg overflow-hidden">
+                    <img
+                      src={currentImages[4]}
+                      alt="Gallery"
+                      className="w-full h-full object-cover transition-transform duration-500"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Pagination Indicators */}
+          {images.length > 5 && (
+            <div className="flex justify-center mt-6 gap-2">
+              {Array.from({ length: Math.ceil(images.length / 5) }).map(
+                (_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentIndex(index * 5)}
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      Math.floor(currentIndex / 5) === index
+                        ? "bg-blue-600 w-4"
+                        : "bg-gray-300"
+                    }`}
+                  />
+                )
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 

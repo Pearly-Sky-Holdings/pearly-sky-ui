@@ -89,7 +89,7 @@ function ChildCareCleaningPage() {
       setChangeValue(false);
       setPriceBreakdown(calculateTotalPrice());
     }
-  }, [conversionRate, duration]);
+  }, [conversionRate, duration, numProfession]); // Add numProfession as a dependency
 
   useEffect(() => {
     dispatch(getServices("8"));
@@ -111,23 +111,13 @@ function ChildCareCleaningPage() {
       alert("Please fill all required fields before proceeding to checkout.");
       return;
     }
-    const formatDuration = (duration: any) => {
-      const [hours, minutes] = String(duration).split(".");
-
-      const formattedMinutes = minutes ? `${minutes}0`.slice(0, 2) : "00";
-
-      const endHours = parseInt(hours, 10) + 1;
-      const endMinutes = formattedMinutes;
-
-      return `${hours}.${formattedMinutes} - ${endHours}.${endMinutes}`;
-    };
-    const formattedDuration = formatDuration(duration);
+    
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
       service_id: "8",
       date,
       time: selectedTime,
-      duration: formattedDuration,
+      duration: duration,
       request_care_professional: numProfession,
       frequency,
       language,
@@ -283,7 +273,10 @@ function ChildCareCleaningPage() {
             numChild={numChild}
             setNumChild={setNumChild}
             numProfession={numProfession}
-            setNumProfession={setNumProfession}
+            setNumProfession={(val) => {
+              setChangeValue(true);
+              setNumProfession(val);
+            }}
             profession={profession}
             setProfession={setProfession}
             contactType={contactType}

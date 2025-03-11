@@ -54,7 +54,9 @@ const CustomerDashboard: React.FC = () => {
           onClose={() => setIsModalOpen(false)}
           title="Customer Details"
         >
-          <CustomerDetails customer={selectedCustomer} />
+          <CustomerDetails
+            customer={selectedCustomer}
+          />
         </Modal>
       )}
     </div>
