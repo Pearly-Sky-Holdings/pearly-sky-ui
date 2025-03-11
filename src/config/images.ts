@@ -43,7 +43,6 @@ export const galleryImage10: string = "/images/gallery/galleryImage10.jpg";
 export const galleryImage11: string = "/images/gallery/galleryImage11.jpg";
 export const galleryImage12: string = "/images/gallery/galleryImage12.jpg";
 export const galleryImage13: string = "/images/gallery/galleryImage13.jpg";
-export const galleryImage14: string = "/images/gallery/galleryImage14.jpg";
 
 
 //sector

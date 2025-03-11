@@ -13,7 +13,6 @@ import { getPackege, getServices } from "../../services/CleaningServices/index";
 import Images from "../../components/CarpetAndUpholsteryCleaning/carpetImage";
 import dayjs from "dayjs";
 import SanitizationBookingCart from "../../components/sanitizationPage/bookingCart";
-import PersonalInformationForm from "../../components/personalInformationForm/personalInformationForm";
 import { CarpetCleaningService } from "../../config/images";
 import EstimateList from "../../components/CarpetAndUpholsteryCleaning/carpetPackageList";
 
@@ -40,7 +39,7 @@ const handleSelectionChange = (selectedItems: string[]) => {
   };
  
   // Memoize the form change handler
-  const handleFormChange = useCallback((data: any) => {
+  useCallback((data: any) => {
     setFormData(data);
   }, []);
 

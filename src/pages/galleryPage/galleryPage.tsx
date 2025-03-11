@@ -1,4 +1,4 @@
-import { useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import {
   galleryImage1,
   galleryImage2,
@@ -13,7 +13,6 @@ import {
   galleryImage11,
   galleryImage12,
   galleryImage13,
-  galleryImage14,
 } from "../../config/images";
 import { useState, useEffect } from "react";
 
@@ -37,7 +36,6 @@ const images = [
   galleryImage11,
   galleryImage12,
   galleryImage13,
-  galleryImage14,
 ];
 
 const Gallery = () => {
@@ -76,19 +74,59 @@ const Gallery = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Progress Section */}
-        <div className="flex justify-center mb-12">
-          <div className="bg-white rounded-full py-4 px-8 shadow-lg w-3/4 flex justify-around items-center">
+        {/* Progress Section - Different layouts for mobile and desktop */}
+        {isMobile ? (
+          // Mobile Progress Section with separate boxes
+          <Box display="flex" flexDirection="column" alignItems="center" mb={8}>
             {progressData.map((item) => (
-              <div key={item.label} className="text-center">
-                <p className="text-[#008CDA] font-bold text-xl">
+              <Box
+                key={item.label}
+                textAlign="center"
+                mb={2}
+                p={2}
+                borderRadius={4}
+                width="85%"
+                bgcolor="white"
+                boxShadow="0px 4px 10px rgba(37, 150, 190, 0.5)"
+              >
+                <Typography variant="h6" color="#008CDA" fontWeight="bold">
                   {item.value}%
-                </p>
-                <p className="text-sm text-gray-700">{item.label}</p>
-              </div>
+                </Typography>
+                <Typography variant="body2" color="black">
+                  {item.label}
+                </Typography>
+              </Box>
             ))}
-          </div>
-        </div>
+          </Box>
+        ) : (
+          // Desktop Progress Section (original)
+          <Box display="flex" justifyContent="center" textAlign="center">
+            <Box
+              display="flex"
+              justifyContent="space-around"
+              mb={8}
+              bgcolor="white"
+              textAlign="center"
+              pt={1}
+              pb={8}
+              borderRadius={50}
+              width="75%"
+              height={35}
+              boxShadow="0px 4px 10px rgba(37, 150, 190, 0.5)"
+            >
+              {progressData.map((item) => (
+                <Box key={item.label} textAlign="center">
+                  <Typography variant="h6" color="#008CDA" fontWeight="bold">
+                    {item.value}%
+                  </Typography>
+                  <Typography variant="body2" color="black">
+                    {item.label}
+                  </Typography>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        )}
 
         {/* Gallery Section */}
         <h2 className="text-2xl font-bold text-[#003370] text-center mb-6">
@@ -194,26 +232,47 @@ const Gallery = () => {
                   </div>
                 </div>
 
-                {/* Horizontal Stack */}
+                {/* Horizontal Stack - Modified for mobile to use aspect-[4/3] instead of aspect-[7/16] */}
                 <div
                   className={`${
-                    isMobile ? "col-span-1" : "col-span-7 grid grid-cols-2"
-                  } gap-4`}
+                    isMobile ? "col-span-1 space-y-4" : "col-span-7 grid grid-cols-2 gap-4"
+                  }`}
                 >
-                  <div className="aspect-[7/16] rounded-lg overflow-hidden">
-                    <img
-                      src={currentImages[3]}
-                      alt="Gallery"
-                      className="w-full h-full object-cover transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="aspect-[7/16] rounded-lg overflow-hidden">
-                    <img
-                      src={currentImages[4]}
-                      alt="Gallery"
-                      className="w-full h-full object-cover transition-transform duration-500"
-                    />
-                  </div>
+                  {isMobile ? (
+                    <>
+                      <div className="aspect-[4/3] rounded-lg overflow-hidden">
+                        <img
+                          src={currentImages[3]}
+                          alt="Gallery"
+                          className="w-full h-full object-cover transition-transform duration-500"
+                        />
+                      </div>
+                      <div className="aspect-[4/3] rounded-lg overflow-hidden">
+                        <img
+                          src={currentImages[4]}
+                          alt="Gallery"
+                          className="w-full h-full object-cover transition-transform duration-500"
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="aspect-[7/16] rounded-lg overflow-hidden">
+                        <img
+                          src={currentImages[3]}
+                          alt="Gallery"
+                          className="w-full h-full object-cover transition-transform duration-500"
+                        />
+                      </div>
+                      <div className="aspect-[7/16] rounded-lg overflow-hidden">
+                        <img
+                          src={currentImages[4]}
+                          alt="Gallery"
+                          className="w-full h-full object-cover transition-transform duration-500"
+                        />
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
