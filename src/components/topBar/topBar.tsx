@@ -3,15 +3,23 @@ import { LinkedIn } from "@mui/icons-material";
 import { FaFacebookF, FaYoutube } from "react-icons/fa";
 import { AiFillInstagram, AiFillTikTok } from "react-icons/ai";
 import { FaXTwitter } from "react-icons/fa6";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLanguage, countryToLanguage } from "../../context/LanguageContext";
 
-const countries = [
-  { code: "us", name: "United States" },
-  { code: "gb", name: "United Kingdom" },
-  { code: "fr", name: "France" },
-  { code: "de", name: "Germany" },
-  { code: "jp", name: "Japan" },
+// Define the country interface for better type safety
+interface Country {
+  code: string;
+  nameKey: string; // Translation key for country name
+}
+
+const countries: Country[] = [
+  { code: "us", nameKey: "unitedStates" },
+  { code: "gb", nameKey: "unitedKingdom" },
+  { code: "fr", nameKey: "france" },
+  { code: "de", nameKey: "germany" },
+  { code: "jp", nameKey: "japan" },
+  { code: "lk", nameKey: "sriLanka" }, // Added Sri Lanka
 ];
 
 export default function TopBar() {
@@ -19,6 +27,21 @@ export default function TopBar() {
   const [selectedCountry, setSelectedCountry] = useState("us");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  
+  // Get language context
+  const { setLanguage, translate } = useLanguage();
+
+  // Update language when country changes
+  useEffect(() => {
+    const languageCode = countryToLanguage[selectedCountry];
+    if (languageCode) {
+      setLanguage(languageCode);
+    }
+  }, [selectedCountry, setLanguage]);
+
+  const handleCountryChange = (code: string) => {
+    setSelectedCountry(code);
+  };
 
   const socialIcons = [
     { icon: <FaFacebookF />, link: "https://www.facebook.com/profile.php?id=61561165376278" },
@@ -34,8 +57,8 @@ export default function TopBar() {
       <Toolbar 
         sx={{ 
           display: "flex", 
-          justifyContent: "space-between", // Space between left and right sections
-          alignItems: "center", // Vertically center items
+          justifyContent: "space-between",
+          alignItems: "center",
           minHeight: "0.1vh", 
           paddingY: "0.1vh",
           px: isMobile ? 1 : 2,
@@ -54,7 +77,7 @@ export default function TopBar() {
             />
             <Select
               value={selectedCountry}
-              onChange={(e) => setSelectedCountry(e.target.value)}
+              onChange={(e) => handleCountryChange(e.target.value)}
               sx={{
                 color: "black",
                 minWidth: 120,
@@ -71,7 +94,7 @@ export default function TopBar() {
             >
               {countries.map((country) => (
                 <MenuItem key={country.code} value={country.code}>
-                  {country.name}
+                  {translate(country.nameKey)}
                 </MenuItem>
               ))}
             </Select>
@@ -83,10 +106,10 @@ export default function TopBar() {
           sx={{ 
             display: "flex", 
             alignItems: "center",
-            gap: isMobile ? 1 : 2, // Gap between icons
-            position: "absolute", // Position absolutely to center
-            left: isMobile ? "35%" : "80%", // Center horizontally
-            transform: "translateX(-50%)", // Adjust for exact center
+            gap: isMobile ? 1 : 2,
+            position: "absolute",
+            left: isMobile ? "35%" : "80%",
+            transform: "translateX(-50%)",
           }}
         >
           {socialIcons.map(({ icon, link }) => (
@@ -118,8 +141,8 @@ export default function TopBar() {
           sx={{ 
             display: "flex", 
             alignItems: "center",
-            marginLeft: "auto", // Push the box to the right
-            marginRight: isMobile ? "8px" : "1%", // Add some margin for mobile
+            marginLeft: "auto",
+            marginRight: isMobile ? "8px" : "1%",
           }}
         >
           <Button
@@ -134,11 +157,11 @@ export default function TopBar() {
               "&:hover": {
                 backgroundColor: "#002F6D",
               },
-              px: isMobile ? 3 : 3, // Adjust horizontal padding for mobile
+              px: isMobile ? 3 : 3,
             }}
             onClick={() => navigate("/login")}
           >
-            Login
+            {translate('login')}
           </Button>
         </Box>
       </Toolbar>

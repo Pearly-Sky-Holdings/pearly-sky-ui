@@ -17,11 +17,14 @@ import {
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "../../context/LanguageContext";
 import "./HomePage.css";
 
 export default function HomePage() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  // Use the language context
+  const { translate } = useLanguage();
 
   const allImages = [
     homePageImage1,
@@ -113,7 +116,7 @@ export default function HomePage() {
           px: isMobile ? 2 : 0,
         }}
       >
-        Welcome to Pearly Sky Cleaning Services
+        {translate('welcomeTitle')}
       </Typography>
 
       {/* Sub-description */}
@@ -127,8 +130,7 @@ export default function HomePage() {
           px: isMobile ? 2 : 0,
         }}
       >
-        You are our most valued asset at PearlySky Company Pvt. Ltd. We are
-        committed to providing you with the best care and service.
+        {translate('welcomeDescription')}
       </Typography>
 
       {/* Contact Us Button */}
@@ -147,7 +149,7 @@ export default function HomePage() {
           "&:hover": { backgroundColor: "#125ea6" },
         }}
       >
-        Contact Us
+        {translate('contactUs')}
       </Button>
 
       {/* Space */}
@@ -197,7 +199,7 @@ export default function HomePage() {
                       <div className="image-background-animation">
                         <img
                           src={imgSrc}
-                          alt={`homePageImage${i}`}
+                          alt={translate('homePageImageAlt')}
                           style={{
                             width: "100%",
                             height: "100%",
@@ -224,6 +226,7 @@ export default function HomePage() {
                 },
                 zIndex: 2,
               }}
+              aria-label={translate('previousImage')}
             >
               <ChevronLeftIcon sx={{ color: "#002F6D" }} />
             </IconButton>
@@ -241,6 +244,7 @@ export default function HomePage() {
                 },
                 zIndex: 2,
               }}
+              aria-label={translate('nextImage')}
             >
               <ChevronRightIcon sx={{ color: "#002F6D" }} />
             </IconButton>
@@ -269,6 +273,7 @@ export default function HomePage() {
                     cursor: "pointer",
                     transition: "background-color 0.3s ease",
                   }}
+                  aria-label={translate('goToImage') + (i + 1)}
                 />
               ))}
             </Box>
@@ -296,6 +301,7 @@ export default function HomePage() {
                 },
                 zIndex: 2,
               }}
+              aria-label={translate('previousImage')}
             >
               <ChevronLeftIcon sx={{ color: "#002F6D" }} />
             </IconButton>
@@ -329,7 +335,7 @@ export default function HomePage() {
                   <div className="image-background-animation">
                     <img
                       src={imgSrc}
-                      alt={`homePageImage${i}`}
+                      alt={translate('homePageImageAlt')}
                       style={{
                         width: "100%",
                         height: "100%",
@@ -354,6 +360,7 @@ export default function HomePage() {
                 },
                 zIndex: 2,
               }}
+              aria-label={translate('nextImage')}
             >
               <ChevronRightIcon sx={{ color: "#002F6D" }} />
             </IconButton>
@@ -382,6 +389,7 @@ export default function HomePage() {
                     cursor: "pointer",
                     transition: "background-color 0.3s ease",
                   }}
+                  aria-label={translate('goToImage') + (i + 1)}
                 />
               ))}
             </Box>

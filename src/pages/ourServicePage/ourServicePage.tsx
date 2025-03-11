@@ -98,21 +98,21 @@ const services = [
     title: "Commercial & Office Cleaning",
     description: "Keep your workspace professional and welcoming with our tailored commercial and office cleaning services, designed for businesses of all sizes.",
     image: CommercialService,
-    link: "/upcomming"
+    link: "/commercial_cleaning"
   },
   {
     id: 11,
     title: "Sanitization & Disinfection",
     description: "Protect your loved ones with our sanitization and disinfection services, eliminating germs and bacteria for a healthier environment.",
     image: SanitizationService,
-    link: "/upcomming"
+    link: "/sanitization_cleaning"
   },
   {
     id: 12,
     title: "Carpet & Upholstery Cleaning",
     description: "Restore the beauty of your carpets and furniture with our professional cleaning, removing stains, odors, and dust mites for a fresh finish.",
     image: CarpetCleaningService,
-    link: "/upcomming"
+    link: "/carpet_cleaning"
   },
   {
     id: 13,
