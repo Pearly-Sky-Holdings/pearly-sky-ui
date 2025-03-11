@@ -12,15 +12,19 @@ import {
   InputAdornment,
   useMediaQuery,
   useTheme,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 import { AccountCircle, Lock } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { loginPageImage } from "../../config/images.ts";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [formData, setFormData] = useState({
     email: "",
@@ -29,6 +33,11 @@ const LoginPage = () => {
   });
   const [errors, setErrors] = useState({ email: "", password: "" });
 
+  // State for Forgot Password Pop-up
+  const [openForgotPassword, setOpenForgotPassword] = useState(false);
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
+
+  // Handle form field changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -37,6 +46,7 @@ const LoginPage = () => {
     }));
   };
 
+  // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     let valid = true;
@@ -62,28 +72,49 @@ const LoginPage = () => {
 
     if (valid) {
       console.log("Login Successful", formData);
-      navigate("/customer-dashboard"); 
+      navigate("/customer-dashboard");
     }
   };
 
+  // Handle Forgot Password Pop-up
+  const handleForgotPasswordClick = () => {
+    console.log("Forgot Password Clicked"); // Add this line
+    setOpenForgotPassword(true);
+  };
+
+  const handleForgotPasswordClose = () => {
+    setOpenForgotPassword(false);
+  };
+
+  const handleForgotPasswordEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForgotPasswordEmail(e.target.value);
+  };
+
+  const handleForgotPasswordSubmit = () => {
+    console.log("Forgot Password Email Submitted:", forgotPasswordEmail);
+    handleForgotPasswordClose();
+  };
+
   return (
-    <Box sx={{ 
-      minHeight: "80vh", 
-      display: "flex", 
-      alignItems: "center",
-      py: { xs: 2, sm: 3, md: 4 }
-    }}>
+    <Box
+      sx={{
+        minHeight: "80vh",
+        display: "flex",
+        alignItems: "center",
+        py: { xs: 2, sm: 3, md: 4 },
+      }}
+    >
       <Container maxWidth="xl">
         <Grid container justifyContent="center">
           <Grid item xs={12} sm={10} md={8} lg={6}>
-            <Paper 
-              elevation={6} 
-              sx={{ 
-                display: "flex", 
-                flexDirection: { xs: 'column', md: 'row' },
-                overflow: "hidden", 
-                borderRadius: 3, 
-                height: "auto" 
+            <Paper
+              elevation={6}
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+                overflow: "hidden",
+                borderRadius: 3,
+                height: "auto",
               }}
             >
               {/* Image Section */}
@@ -95,44 +126,43 @@ const LoginPage = () => {
                   backgroundImage: `url(${loginPageImage})`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
-                  
                 }}
               />
 
               {/* Form Section */}
-              <Box 
-                sx={{ 
-                  flex: 1, 
-                  p: { xs: 3, sm: 4 }, 
-                  backgroundColor: "#002F6D", 
+              <Box
+                sx={{
+                  flex: 1,
+                  p: { xs: 3, sm: 4 },
+                  backgroundColor: "#002F6D",
                   width: "100%",
-                  height: "auto"
+                  height: "auto",
                 }}
               >
                 {/* Logo */}
-                <Box 
-                    sx={{ 
-                      display: "flex", 
-                      justifyContent: "center", 
-                      alignItems: "center", 
-                      mb: 2 
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    mb: 2,
+                  }}
+                >
+                  <img
+                    src="/images/logo.png"
+                    alt="Logo"
+                    style={{
+                      width: isMobile ? 80 : 100,
+                      height: "auto",
                     }}
-                  >
-                    <img 
-                      src="/images/logo.png" 
-                      alt="Logo" 
-                      style={{ 
-                        width: isMobile ? 80 : 100,
-                        height: "auto",
-                      }} 
-                    />
-                  </Box>
-                  
-                <Typography 
-                  variant={isMobile ? "h6" : "h5"} 
-                  fontWeight="semibold" 
-                  align="center" 
-                  color="white" 
+                  />
+                </Box>
+
+                <Typography
+                  variant={isMobile ? "h6" : "h5"}
+                  fontWeight="semibold"
+                  align="center"
+                  color="white"
                   gutterBottom
                 >
                   Login
@@ -156,18 +186,18 @@ const LoginPage = () => {
                           <AccountCircle sx={{ color: "#888" }} />
                         </InputAdornment>
                       ),
-                      sx: { 
-                        borderRadius: "12px", 
-                        backgroundColor: "#f5f5f5", 
-                        height: { xs: "40px", md: "40px" } 
+                      sx: {
+                        borderRadius: "12px",
+                        backgroundColor: "#f5f5f5",
+                        height: { xs: "40px", md: "40px" },
                       },
                     }}
                     sx={{
                       mb: 1,
                       "& .MuiFormHelperText-root": {
                         color: "error.light",
-                        marginLeft: 0
-                      }
+                        marginLeft: 0,
+                      },
                     }}
                   />
 
@@ -189,30 +219,30 @@ const LoginPage = () => {
                           <Lock sx={{ color: "#888" }} />
                         </InputAdornment>
                       ),
-                      sx: { 
-                        borderRadius: "12px", 
-                        backgroundColor: "#f5f5f5", 
-                        height: { xs: "40px", md: "40px" } 
+                      sx: {
+                        borderRadius: "12px",
+                        backgroundColor: "#f5f5f5",
+                        height: { xs: "40px", md: "40px" },
                       },
                     }}
                     sx={{
                       mb: 1,
                       "& .MuiFormHelperText-root": {
                         color: "error.light",
-                        marginLeft: 0
-                      }
+                        marginLeft: 0,
+                      },
                     }}
                   />
 
                   {/* Remember Me and Forgot Password */}
-                  <Box 
-                    sx={{ 
-                      display: "flex", 
-                      flexDirection: { xs: 'column', sm: 'row' },
-                      justifyContent: "space-between", 
-                      alignItems: { xs: 'flex-start', sm: 'center' }, 
-                      mb: { xs: 3, sm: 4, md: 5 }, 
-                      gap: { xs: 1, sm: 2 } 
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: { xs: "column", sm: "row" },
+                      justifyContent: "space-between",
+                      alignItems: { xs: "flex-start", sm: "center" },
+                      mb: { xs: 3, sm: 4, md: 5 },
+                      gap: { xs: 1, sm: 2 },
                     }}
                   >
                     <FormControlLabel
@@ -222,17 +252,17 @@ const LoginPage = () => {
                           checked={formData.rememberMe}
                           onChange={handleChange}
                           color="primary"
-                          sx={{ color: 'white', '&.Mui-checked': { color: 'white' } }}
+                          sx={{ color: "white", "&.Mui-checked": { color: "white" } }}
                         />
                       }
                       label="Remember me"
-                      sx={{ 
-                        whiteSpace: "nowrap", 
+                      sx={{
+                        whiteSpace: "nowrap",
                         flexShrink: 0,
-                        color: 'white',
-                        '& .MuiFormControlLabel-label': {
-                          fontSize: { xs: '0.8rem', sm: '0.875rem' }
-                        }
+                        color: "white",
+                        "& .MuiFormControlLabel-label": {
+                          fontSize: { xs: "0.8rem", sm: "0.875rem" },
+                        },
                       }}
                     />
                     <Typography
@@ -244,8 +274,9 @@ const LoginPage = () => {
                         fontWeight: "semibold",
                         whiteSpace: "nowrap",
                         flexShrink: 0,
-                        fontSize: { xs: '0.8rem', sm: '0.875rem' }
+                        fontSize: { xs: "0.8rem", sm: "0.875rem" },
                       }}
+                      onClick={handleForgotPasswordClick}
                     >
                       Forgot Password?
                     </Typography>
@@ -271,22 +302,22 @@ const LoginPage = () => {
                   </Button>
 
                   {/* Signup Link */}
-                  <Typography 
-                    variant="body2" 
-                    textAlign="center" 
-                    sx={{ 
-                      mt: 2, 
+                  <Typography
+                    variant="body2"
+                    textAlign="center"
+                    sx={{
+                      mt: 2,
                       color: "white",
-                      fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                      fontSize: { xs: "0.75rem", sm: "0.875rem" },
                     }}
                   >
                     Don't have an account?{" "}
-                    <Typography 
-                      component="span" 
-                      color="white" 
-                      sx={{ 
+                    <Typography
+                      component="span"
+                      color="white"
+                      sx={{
                         cursor: "pointer",
-                        fontWeight: "semibold", 
+                        fontWeight: "semibold",
                         color: "#008CDA",
                       }}
                     >
@@ -299,6 +330,87 @@ const LoginPage = () => {
           </Grid>
         </Grid>
       </Container>
+
+      {/* Forgot Password Pop-up */}
+      <Dialog
+          open={openForgotPassword}
+          onClose={handleForgotPasswordClose}
+          sx={{
+            "& .MuiDialog-paper": {
+              borderRadius: "12px", 
+              padding: "24px", 
+              width: "400px", 
+              maxWidth: "90%", 
+            },
+          }}
+        >
+          <DialogTitle
+            sx={{
+              textAlign: "center",
+              fontSize: "1.5rem",
+              fontWeight: "bold",
+              color: "#002F6D",
+              padding: 0,
+              mb: 2,
+            }}
+          >
+            Forgot Password
+          </DialogTitle>
+          <DialogContent sx={{ padding: 0 }}>
+            <Typography
+              variant="body1"
+              sx={{
+                textAlign: "center",
+                color: "#666",
+                mb: 3,
+              }}
+            >
+              Enter your email address to reset your password.
+            </Typography>
+            <TextField
+              fullWidth
+              placeholder="Enter Your Email Address"
+              variant="outlined"
+              type="email"
+              value={forgotPasswordEmail}
+              onChange={handleForgotPasswordEmailChange}
+              sx={{
+                mb: 3,
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "8px",
+                  backgroundColor: "#f5f5f5",
+                },
+                "& .MuiOutlinedInput-input": {
+                  padding: "12px",
+                },
+              }}
+            />
+          </DialogContent>
+          <DialogActions
+            sx={{
+              justifyContent: "center",
+              padding: 0,
+            }}
+          >
+            <Button
+              onClick={handleForgotPasswordSubmit}
+              variant="contained"
+              sx={{
+                backgroundColor: "#002F6D",
+                color: "white",
+                fontWeight: "bold",
+                borderRadius: "8px",
+                padding: "10px 24px",
+                width: "100%",
+                "&:hover": {
+                  backgroundColor: "#0077B6",
+                },
+              }}
+            >
+              Continue
+            </Button>
+          </DialogActions>
+      </Dialog>
     </Box>
   );
 };
