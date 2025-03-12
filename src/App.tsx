@@ -44,6 +44,7 @@ import CustomerDashboard from "./pages/customerDashboard/customerDashboard.tsx";
 import MainLayout from "./layouts/MainLayout.tsx";
 import Settings from "./pages/customerDashboard/setting.tsx";
 import Help from "./pages/customerDashboard/help.tsx";
+import MoveInAndOutTransportCleaning from "./pages/servicesPages/MoveInAndOutTransportCleaning.tsx";
 import { LanguageProvider } from './context/LanguageContext';
 
 function App() {
@@ -252,7 +253,15 @@ function App() {
               </>
             }
           />
-
+          <Route
+            path="/move_in_out_and_transport_cleaning"
+            element={
+              <>
+                <MoveInAndOutTransportCleaning />
+                <Footer />
+              </>
+            }
+          />
 
           {/* Read more pages */}
           <Route

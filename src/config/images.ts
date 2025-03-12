@@ -205,3 +205,10 @@ export const carpetimg3: string = "/images/service/carpetCleaning/carpertCleanin
 export const carpetimg4: string = "/images/service/carpetCleaning/carpertCleaning4.png";
 export const carpetimg5: string = "/images/service/carpetCleaning/carpertCleaning5.png";
 export const carpetimg6: string = "/images/service/carpetCleaning/carpetCleaning6.png";
+
+//Move In And Out Transport Cleaning 
+export const MoveInAndOutTransport1: string = "/images/service/MoveInAndOutTransportCleaning/MoveInAndOutTransportCleaning1.png";
+export const MoveInAndOutTransport2: string = "/images/service/MoveInAndOutTransportCleaning/MoveInAndOutTransportCleaning2.png";
+export const MoveInAndOutTransport3: string = "/images/service/MoveInAndOutTransportCleaning/MoveInAndOutTransportCleaning3.png";
+export const MoveInAndOutTransport4: string = "/images/service/MoveInAndOutTransportCleaning/MoveInAndOutTransportCleaning4.png";
+
