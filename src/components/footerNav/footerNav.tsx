@@ -117,7 +117,7 @@ const serviceLinks = [
   { label: "Sanitization & Disinfection Booking", path: "/sanitization_cleaning" },
   { label: "Office and Commercial Cleaning", path: "/commercial_cleaning" },
   { label: "Carpet & Upholstery Cleaning Booking", path: "/carpet_cleaning" },
-  { label: "Move In/Out Transport Service Booking", path: "/upcomming" },
+  { label: "Move In/Out Transport Service Booking", path: "/move_in_out_and_transport_cleaning" },
   { label: "Steam Cleaning Booking", path: "/upcomming" },
   { label: "Pressure Washing Booking", path: "/upcomming" },
   { label: "Event Cleaning", path: "/upcomming" },
