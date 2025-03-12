@@ -5,8 +5,8 @@ import {
   TextField,
   Button,
   Paper,
+  Divider,
 } from "@mui/material";
-
 
 interface OrderSummaryProps {
   selectedServices: Array<{
@@ -22,6 +22,7 @@ interface OrderSummaryProps {
   conversionRate: number;
   serviceName: string;
   totalPrice: number;
+  advancePaymentPercentage?: number; // Added new prop
 }
 
 const OrderSummary: React.FC<OrderSummaryProps> = ({
@@ -32,9 +33,11 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
   conversionRate = 1,
   serviceName = "Base Service",
   totalPrice = 0.0,
+  advancePaymentPercentage = 30, // Default to 50% advance payment
 }) => {
   const [coupon, setCoupon] = React.useState("");
   const [discount, setDiscount] = React.useState(0);
+  const [customAdvanceAmount, setCustomAdvanceAmount] = React.useState<number | null>(null);
 
   const handleApplyCoupon = () => {
     if (coupon === "SAVE10") {
@@ -46,6 +49,22 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
   };
 
   const total = totalPrice - discount;
+  
+  // Calculate advance payment and remaining payment
+  const advancePayment = customAdvanceAmount !== null ? 
+    customAdvanceAmount : 
+    parseFloat((30).toFixed(2));
+  
+  const remainingPayment = parseFloat((total - advancePayment).toFixed(2));
+
+  const handleAdvanceAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseFloat(e.target.value);
+    if (!isNaN(value) && value >= 0 && value <= total) {
+      setCustomAdvanceAmount(value);
+    } else if (e.target.value === "") {
+      setCustomAdvanceAmount(null);
+    }
+  };
 
   return (
     <Paper sx={{ padding: "24px", borderRadius: "12px", backgroundColor: "#F7F8FC" }}>
@@ -140,9 +159,65 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
         </Box>
       )}
 
-      <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: "16px" }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: "16px", marginBottom: "16px" }}>
         <Typography fontWeight="bold">Final Total:</Typography>
         <Typography fontWeight="bold">{currencySymbol} {total.toFixed(2)}</Typography>
+      </Box>
+      
+      <Divider sx={{ marginBottom: "16px" }} />
+      
+      {/* Payment Schedule Section */}
+      <Typography variant="subtitle1" fontWeight="bold" sx={{ color: "#002F6D", marginBottom: "12px" }}>
+        Payment Schedule
+      </Typography>
+      
+      {/* Custom Advance Payment Input */}
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+        <Typography color="gray">Advance Payment Amount</Typography>
+        <TextField
+          variant="outlined"
+          size="small"
+          type="number"
+          placeholder={`Default: ${currencySymbol} ${(total * advancePaymentPercentage / 100).toFixed(2)}`}
+          value={customAdvanceAmount !== null ? customAdvanceAmount : ''}
+          onChange={handleAdvanceAmountChange}
+          sx={{ backgroundColor: "#fff", borderRadius: "12px", width: "150px" }}
+          InputProps={{
+            startAdornment: <Typography sx={{ marginRight: "4px" }}>{currencySymbol}</Typography>,
+          }}
+        />
+      </Box>
+      
+      {/* Advance Payment */}
+      <Box 
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          backgroundColor: "#E1F5FE",
+          padding: "12px",
+          borderRadius: "8px",
+          marginBottom: "8px",
+        }}
+      >
+        <Typography fontWeight="bold">Advance Payment:</Typography>
+        <Typography fontWeight="bold">{currencySymbol} {advancePayment.toFixed(2)}</Typography>
+      </Box>
+      
+      {/* Remaining Payment */}
+      <Box 
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          backgroundColor: "#FFF3E0",
+          padding: "12px",
+          borderRadius: "8px",
+          marginBottom: "8px",
+        }}
+      >
+        <Typography fontWeight="bold">Remaining Payment:</Typography>
+        <Typography fontWeight="bold">{currencySymbol} {remainingPayment.toFixed(2)}</Typography>
       </Box>
     </Paper>
   );

@@ -16,14 +16,15 @@ const paymentMethods = [
     name: "Stripe Payment",
     img: "./images/paymentMethods/visaMaster.png",
   },
-  { id: "eps", name: "EPS", img: "./images/paymentMethods/eps.png" },
-  {
-    id: "bancontact",
-    name: "Bancontact",
-    img: "./images/paymentMethods/bancontact.png",
-  },
-  { id: "ideal", name: "iDEAL", img: "./images/paymentMethods/ideal.png" },
+  // { id: "eps", name: "EPS", img: "./images/paymentMethods/eps.png" },
+  // {
+  //   id: "bancontact",
+  //   name: "Bancontact",
+  //   img: "./images/paymentMethods/bancontact.png",
+  // },
+  // { id: "ideal", name: "iDEAL", img: "./images/paymentMethods/ideal.png" },
   { id: "paypal", name: "PayPal", img: "./images/paymentMethods/paypal.png" },
+  { id: "card", name: "Card Payment", img: "./images/paymentMethods/visaMaster.png" },
 ];
 interface PaymentMethodComponentProps {
   onPaymentMethodChange: (method: string) => void;
