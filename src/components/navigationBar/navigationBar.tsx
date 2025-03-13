@@ -57,8 +57,8 @@ export default function NavigationBar() {
     { label: "Move In/Out Transport Service Booking", path: "/move_in_out_and_transport_cleaning" },
     { label: "Steam Cleaning Booking", path: "/steam_cleaning" },
     { label: "Pressure Washing Booking", path: "/pressure_washing",},
-    { label: "Event Cleaning", path: "/upcomming" },
-    { label: "Pool cleaning Booking", path: "/upcomming" },
+    { label: "Event Cleaning", path: "/special_event_cleaning" },
+    { label: "Pool cleaning Booking", path: "/pool_cleaning" },
     { label: "Laundry Services", path: "/upcomming" },
   ];
 

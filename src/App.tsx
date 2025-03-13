@@ -48,6 +48,8 @@ import MoveInAndOutTransportCleaning from "./pages/servicesPages/MoveInAndOutTra
 import { LanguageProvider } from './context/LanguageContext';
 import SteamCleaning from "./pages/servicesPages/SteamCleaning.tsx";
 import PressureWashing from "./pages/servicesPages/pressureWashing.tsx";
+import SpecialEventCleaning from "./pages/servicesPages/specialEventCleaning.tsx";
+import Poolcleaning from "./pages/servicesPages/poolCleaning.tsx";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -278,6 +280,24 @@ function App() {
             element={
               <>
                 <PressureWashing/>
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/special_event_cleaning"
+            element={
+              <>
+                <SpecialEventCleaning/>
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/pool_cleaning"
+            element={
+              <>
+                <Poolcleaning/>
                 <Footer />
               </>
             }

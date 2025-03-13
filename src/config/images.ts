@@ -222,5 +222,21 @@ export const SteamCleaning4: string = "/images/service/SteamCleaning/SteamCleani
 export const PressureWashing1: string = "/images/service/pressureWashing/PressureWashing1.png";
 export const PressureWashing2: string = "/images/service/pressureWashing/PressureWashing2.png";
 
+//SpecialEventCleaning
+export const SpecialEventCleaning1: string = "/images/service/specialEventCleaning/SpecialEventCleaning1.png";
+export const SpecialEventCleaning2: string = "/images/service/specialEventCleaning/SpecialEventCleaning2.png";
+export const SpecialEventCleaning3: string = "/images/service/specialEventCleaning/SpecialEventCleaning3.png";
+export const SpecialEventCleaning4: string = "/images/service/specialEventCleaning/SpecialEventCleaning4.png";
+export const SpecialEventCleaning5: string = "/images/service/specialEventCleaning/SpecialEventCleaning5.png";
+export const SpecialEventCleaning6: string = "/images/service/specialEventCleaning/SpecialEventCleaning6.png";
+
+//Pool Cleaning
+export const PoolCleaning1: string = "/images/service/poolCleaning/poolCleaning1.png";
+export const PoolCleaning2: string = "/images/service/poolCleaning/poolCleaning2.png";
+
+
+
+
+
 
 
