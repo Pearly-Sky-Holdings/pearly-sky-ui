@@ -16,7 +16,6 @@ import PersonalInformationForm from "../../components/personalInformationForm/pe
 import { MoveInOutTransportService } from "../../config/images";
 import MoveInAndOutTransportBookingCart from "../../components/MoveInAndOutTransportCleaning/moveInAndOutTransportBookingCart";
 
-
 function MoveInAndOutTransportCleaning() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
@@ -26,14 +25,13 @@ function MoveInAndOutTransportCleaning() {
   const [acceptTerms2, setAcceptTerms2] = useState(false);
   const [selectedTime, setSelectedTime] = useState("");
   const [locationFrom, setLocationFrom] = useState("");
-  const [locationTo,  setLocationTo] = useState("");
-  const [propertySize,  setPropertySize] = useState("");
- 
+  const [locationTo, setLocationTo] = useState("");
+  const [propertySize, setPropertySize] = useState("");
+
   const [language, setLanguage] = useState("");
   const [timeZone, setTimeZone] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
-  const [numCleaners, setNumCleaners ] = useState(""); 
 
   // Memoize the form change handler
   const handleFormChange = useCallback((data: any) => {
@@ -48,147 +46,147 @@ function MoveInAndOutTransportCleaning() {
 
   useEffect(() => {
     dispatch(getServices("11"));
-
   }, [dispatch]);
 
-const [materials, setMaterials] = useState({ customer: false, company: false });
+  const [materials, setMaterials] = useState({
+    customer: false,
+    company: false,
+  });
 
-type Section = "materials" ;
-type Option = "customer" | "company";
+  type Section = "materials";
+  type Option = "customer" | "company";
 
-
-const handleCheckboxChange = (section: Section, option: Option) => {
-  if (section === "materials") {
-    setMaterials({
-      customer: option === "customer",
-      company: option === "company",
-    });
-  } 
-};
-
-interface FormData {
-  firstName: string;
-  lastName: string;
-  company?: string; // Optional field
-  country: string;
-  address: string;
-  apartment?: string; // Optional field
-  city: string;
-  state: string;
-  zip: string;
-  phone: string;
-  email: string;
-}
-
-const [formData, setFormData] = useState<FormData>({
-  firstName: "",
-  lastName: "",
-  company: "",
-  country: "",
-  address: "",
-  apartment: "",
-  city: "",
-  state: "",
-  zip: "",
-  phone: "",
-  email: "",
-});
-
-const handleBookNow = async () => { 
-  if (
-    
-    !propertyType ||
-    !contactType ||
-    !language ||
-    !numCleaners ||
-    !timeZone ||
-    !selectedDate ||
-    !selectedTime ||
-    !acceptTerms2
-  ) {
-    alert("Please fill all required fields before proceeding to checkout.");
-    return;
-  }
-
-  const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
-
-  //  customer details
-  const customer = {
-    first_name: formData.firstName,
-    last_name: formData.lastName,
-    company: formData.company || "", 
-    country: formData.country,
-    street_address: formData.address,
-    apartment_type: formData.apartment || "", 
-    city: formData.city,
-    province: formData.state,
-    postal_code: formData.zip,
-    contact: formData.phone,
-    email: formData.email,
-    password: "1234 ", 
-  };
-
-  //  service details
-  const serviceDetails = {
-    customer,
-    service_id: "11",
-    price: "00.00",
-    date,
-    time: selectedTime,
-    property_size: "0 sqft",
-    duration: "0",
-    number_of_cleaners: numCleaners,
-    note: document.querySelector("textarea")?.value || "",
-    request_gender: contactType,
-    request_language: language,
-    business_property: propertyType,
-    cleaning_solvents: "eco-friendly",
-    
-    timeZone,
-    Equipment: materials.customer ? "Provided by customer" : "Provided by company",
-    payment_method: "cash",
-    reStock_details: []
-  };
-
-  console.log("Data to be sent:", serviceDetails);
-
-  const data = {
-    serviceName: "Move In and Out Transport Cleaning",
-    details: serviceDetails,
-    personalInformation: formData,
-    materials,
-    
-  };
-
-  console.log("Data:", data);
-
-  try {
-    
-    const response = await fetch("https://back.pearlyskyplc.com/api/saveServiceDetails", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(serviceDetails),
-    });
-
-    
-    if (response.ok) {
-
-      const result = await response.json();
-      console.log("API Response:", result);      
-      navigate("/quotation", { state: { data } });
-
-    } else {      
-      console.error("API Error:", response.statusText);
-      alert("Failed to submit the quotation request. Please try again.");
+  const handleCheckboxChange = (section: Section, option: Option) => {
+    if (section === "materials") {
+      setMaterials({
+        customer: option === "customer",
+        company: option === "company",
+      });
     }
-  } catch (error) {
-    
-    console.error("Network Error:", error);
-    alert("An error occurred while submitting the request. Please check your connection and try again.");
+  };
+
+  interface FormData {
+    firstName: string;
+    lastName: string;
+    company?: string; // Optional field
+    country: string;
+    address: string;
+    apartment?: string; // Optional field
+    city: string;
+    state: string;
+    zip: string;
+    phone: string;
+    email: string;
   }
-};
+
+  const [formData, setFormData] = useState<FormData>({
+    firstName: "",
+    lastName: "",
+    company: "",
+    country: "",
+    address: "",
+    apartment: "",
+    city: "",
+    state: "",
+    zip: "",
+    phone: "",
+    email: "",
+  });
+
+  const handleBookNow = async () => {
+    if (
+      !propertyType ||
+      !contactType ||
+      !language ||
+      !timeZone ||
+      !selectedDate ||
+      !selectedTime ||
+      !acceptTerms2
+    ) {
+      alert("Please fill all required fields before proceeding to checkout.");
+      return;
+    }
+
+    const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
+
+    //  customer details
+    const customer = {
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+      company: formData.company || "",
+      country: formData.country,
+      street_address: formData.address,
+      apartment_type: formData.apartment || "",
+      city: formData.city,
+      province: formData.state,
+      postal_code: formData.zip,
+      contact: formData.phone,
+      email: formData.email,
+      password: "1234 ",
+    };
+
+    //  service details
+    const serviceDetails = {
+      customer,
+      service_id: "11",
+      price: "00.00",
+      date,
+      time: selectedTime,
+      property_size: "0 sqft",
+      duration: "0",
+
+      note: document.querySelector("textarea")?.value || "",
+      request_gender: contactType,
+      request_language: language,
+      business_property: propertyType,
+      cleaning_solvents: "eco-friendly",
+
+      timeZone,
+      Equipment: materials.customer
+        ? "Provided by customer"
+        : "Provided by company",
+      payment_method: "cash",
+      reStock_details: [],
+    };
+
+    console.log("Data to be sent:", serviceDetails);
+
+    const data = {
+      serviceName: "Move In and Out Transport Cleaning",
+      details: serviceDetails,
+      personalInformation: formData,
+      materials,
+    };
+
+    console.log("Data:", data);
+
+    try {
+      const response = await fetch(
+        "https://back.pearlyskyplc.com/api/saveServiceDetails",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(serviceDetails),
+        }
+      );
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("API Response:", result);
+        navigate("/quotation", { state: { data } });
+      } else {
+        console.error("API Error:", response.statusText);
+        alert("Failed to submit the quotation request. Please try again.");
+      }
+    } catch (error) {
+      console.error("Network Error:", error);
+      alert(
+        "An error occurred while submitting the request. Please check your connection and try again."
+      );
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto p-4 mt-6 sm:p-2">
@@ -204,17 +202,17 @@ const handleBookNow = async () => {
         <div className="w-full sm:w-2/3 flex flex-col justify-between">
           <div>
             <h2 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
-            Move In and Out Transport Cleaning
+              Move In and Out Transport Cleaning
             </h2>
           </div>
           <div className="flex-grow">
             <p className="text-gray-600 mb-4 text-sm sm:text-base">
-            Experience a seamless transition with our Move-In/Out Transport 
-            Service, a specialized offering meticulously crafted for individuals relocating to or 
-            from properties. 
-            Our service caters to those in the midst of house moves, providing comprehensive 
-            transportation solutions to ensure a stress-free experience.
-            </p>         
+              Experience a seamless transition with our Move-In/Out Transport
+              Service, a specialized offering meticulously crafted for
+              individuals relocating to or from properties. Our service caters
+              to those in the midst of house moves, providing comprehensive
+              transportation solutions to ensure a stress-free experience.
+            </p>
           </div>
         </div>
       </div>
@@ -226,13 +224,17 @@ const handleBookNow = async () => {
 
       {/* Booking Section */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8">
-        <h2 className="text-2xl font-bold text-blue-900 mb-6">Select Your Job to Get Your Quotation</h2>
+        <h2 className="text-2xl font-bold text-blue-900 mb-6">
+          Select Your Job to Get Your Quotation
+        </h2>
 
         <div className="mb-6 shadow-lg p-4 sm:p-6 rounded-lg border border-blue-400">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
             {/* Calendar Section */}
             <div className="flex flex-col">
-              <label className="block mb-2 text-blue-900 font-semibold">Select Date</label>
+              <label className="block mb-2 text-blue-900 font-semibold">
+                Select Date
+              </label>
               <div className="calendar-container p-4 rounded-lg">
                 <Calendar
                   onChange={(date) => setSelectedDate(date as Date)}
@@ -261,13 +263,12 @@ const handleBookNow = async () => {
             </div>
           </div>
         </div>
-        
+
         {/* Booking Details */}
         <div className="mt-10">
-
-          <MoveInAndOutTransportBookingCart        
+          <MoveInAndOutTransportBookingCart
             propertyType={propertyType}
-            setPropertyType={setPropertyType}            
+            setPropertyType={setPropertyType}
             contactType={contactType}
             setContactType={setContactType}
             language={language}
@@ -286,14 +287,23 @@ const handleBookNow = async () => {
         {/* File Upload and Additional Note */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
-            <label className="block mb-2 text-black">Upload Images or Documents</label>
+            <label className="block mb-2 text-black">
+              Upload Images or Documents
+            </label>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center min-h-[150px] flex items-center justify-center">
               <div>
                 <input type="file" className="hidden" id="file-upload" />
-                <label htmlFor="file-upload" className="cursor-pointer text-blue-600 hover:text-blue-800">
+                <label
+                  htmlFor="file-upload"
+                  className="cursor-pointer text-blue-600 hover:text-blue-800"
+                >
                   <div className="flex flex-col items-center space-y-2">
-                    <span className="text-sm">Click to upload or drag and drop</span>
-                    <span className="text-xs text-gray-500">Maximum file size: 10MB</span>
+                    <span className="text-sm">
+                      Click to upload or drag and drop
+                    </span>
+                    <span className="text-xs text-gray-500">
+                      Maximum file size: 10MB
+                    </span>
                   </div>
                 </label>
               </div>
@@ -306,8 +316,8 @@ const handleBookNow = async () => {
               className="w-full min-h-[150px] border border-blue-900 rounded p-2 text-gray-700 resize-none"
               placeholder="Type your note here..."
             ></textarea>
-          </div>          
-        </div>        
+          </div>
+        </div>
 
         <div className="flex flex-wrap p-8 gap-10 md:gap-100 mb-10">
           {/* Equipment Section */}
@@ -333,7 +343,7 @@ const handleBookNow = async () => {
                 <span>Provide by company</span>
               </label>
             </div>
-          </div>         
+          </div>
         </div>
 
         <div>
@@ -359,7 +369,8 @@ const handleBookNow = async () => {
               onChange={(e) => setAcceptTerms2(e.target.checked)}
             />
             <span className="text-sm">
-              By Booking or Requesting a quotation, you agree with our terms and conditions and privacy policy.
+              By Booking or Requesting a quotation, you agree with our terms and
+              conditions and privacy policy.
             </span>
           </label>
         </div>

@@ -15,12 +15,11 @@ import { getPackege, getServices } from "../../services/CleaningServices/index";
 import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
 import dayjs from "dayjs";
 
-import {
-   MoveInAndOutService1,
-} from "../../config/images";
+import { MoveInAndOutService1 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
 import QuantityControl from "../../components/QuantityControl/quantityControl";
+import Dropdown from "../../components/dropDown/dropDown";
 
 type Equipment = {
   id: string;
@@ -66,7 +65,7 @@ function MoveInOutCleaningPage() {
   const [conversionRateBaseEur, setConversionRateBaseEur] = useState(1);
 
   const [changeValue, setChangeValue] = useState<boolean>(false);
-  const [count , setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
   const [priceBreakdown, setPriceBreakdown] = useState({
     hourlyRate: parseInt(services.data.price),
@@ -82,7 +81,7 @@ function MoveInOutCleaningPage() {
     rate: number,
     rateBaseEur: number
   ) => {
-    if(count >= 2){
+    if (count >= 2) {
       setChangeValue(true);
     }
     setSelectedCurrency(currency);
@@ -105,7 +104,7 @@ function MoveInOutCleaningPage() {
   }, []);
   const calculateTotalPrice = () => {
     const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
-    const basePrice = hourlyRate * maxTime ; // Base price in USD
+    const basePrice = hourlyRate * maxTime; // Base price in USD
 
     let serviceCosts = 0;
     let equipmentCosts = 0;
@@ -122,7 +121,7 @@ function MoveInOutCleaningPage() {
 
     // Calculate total price in the user's selected currency
     const totalPriceInSelectedCurrency =
-      (basePrice) * conversionRate +equipmentCosts + serviceCosts;
+      basePrice * conversionRate + equipmentCosts + serviceCosts;
 
     return {
       hourlyRate,
@@ -137,17 +136,22 @@ function MoveInOutCleaningPage() {
     if (selected) {
       // Check if the equipment is already in the array
       if (!selectedEquipments.some((e) => e.id === equipment.id)) {
-        setSelectedEquipments((prev) => [...prev, { id: equipment.id, price: equipment.price }]);
+        setSelectedEquipments((prev) => [
+          ...prev,
+          { id: equipment.id, price: equipment.price },
+        ]);
       }
     } else {
       // Remove the equipment if it exists
-      setSelectedEquipments((prev) => prev.filter((e) => e.id !== equipment.id));
+      setSelectedEquipments((prev) =>
+        prev.filter((e) => e.id !== equipment.id)
+      );
     }
   };
   const handleSolventChange = (solvent: string) => {
     setSelectedSolvent(solvent);
   };
-  
+
   const handleEquipmentOptionChange = (option: string) => {
     setSelectedEquipmentOption(option);
   };
@@ -169,7 +173,7 @@ function MoveInOutCleaningPage() {
       alert("Please fill all required fields before proceeding to checkout.");
       return;
     }
-    
+
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
       service_id: "5",
@@ -180,7 +184,7 @@ function MoveInOutCleaningPage() {
       number_of_cleaners: parseInt(numCleaners),
       frequency,
       package_details: selectedServices.some(
-        (service) => service.package_id === 21 || service.package_id === 22 
+        (service) => service.package_id === 21 || service.package_id === 22
       )
         ? selectedServices.map((obj) => {
             if (obj.package_id === 21)
@@ -195,7 +199,7 @@ function MoveInOutCleaningPage() {
       cleaning_solvents: selectedSolvent,
       equipmentOption: _selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
-      price: currencySymbol +priceBreakdown.totalPrice.toString(),
+      price: currencySymbol + priceBreakdown.totalPrice.toString(),
       currency: selectedCurrency,
       note: document.querySelector("textarea")?.value || "",
     };
@@ -215,7 +219,10 @@ function MoveInOutCleaningPage() {
     console.log("Service Details:", serviceDetails);
     navigate("/checkout", { state: { data } });
   };
- 
+  const frequencyOptions = [
+    { value: "move in/out", label: "Move In/Out" },
+    { value: "other", label: "Other " },
+  ];
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
@@ -280,143 +287,147 @@ function MoveInOutCleaningPage() {
 
       {/* Checklist Section */}
       <div className="bg-white rounded-lg p-4 sm:p-6 mb-8 shadow-lg">
-      <h2 className="text-xl font-semibold mb-4 text-blue-900">
-        Select Additional Service Including to Your Package Checklist
-      </h2>
-      {packages.isLoading ? (
-        <div className="text-center py-4">Loading packages...</div>
-      ) : packages.isSuccess ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {packages.data.map((service: any) => (
-            <label
-              key={service.package_id}
-              className="flex items-center space-x-2 text-blue-900 cursor-pointer"
-            >
-              <input
-                type="checkbox"
-                className="hidden"
-                checked={checkedList.includes(service.package_id.toString())}
-                onChange={(e) => {
-                  setChangeValue(true);
-                  if (e.target.checked) {
-                    setSelectedServices([
-                      ...selectedServices,
-                      {
-                        package_id: Number(service.package_id),
-                        price: parseInt(service.price),
-                        
-                        qty:
-                          service.name === "Oven Cleaning"
-                            ? Number(ovenQty) || 1
-                            : service.name === "Fridge Cleaning"
-                            ? Number(fridgeQty) || 1
-                            : 1,
-                      },
-                    ]);
-                    setCheckedList([
-                      ...checkedList,
-                      service.package_id.toString(),
-                    ]);
-                  } else {
-                    setSelectedServices(
-                      selectedServices.filter(
-                        (item) =>
-                          item.package_id.toString() !==
-                          service.package_id.toString()
-                      )
-                    );
-                    setCheckedList(
-                      checkedList.filter(
-                        (id) => id !== service.package_id.toString()
-                      )
-                    );
-                  }
-                }}
-                disabled={service.status !== "active"}
-              />
-              {/* Custom checkbox */}
-              <div
-                className={`w-5 h-5 border-2 border-gray-400 rounded flex items-center justify-center transition-colors ${
-                  checkedList.includes(service.package_id.toString())
-                    ? "bg-blue-500 border-blue-500"
-                    : "bg-white border-gray-400"
-                } ${service.status !== "active" ? "opacity-50" : ""}`}
+        <h2 className="text-xl font-semibold mb-4 text-blue-900">
+          Select Additional Service Including to Your Package Checklist
+        </h2>
+        {packages.isLoading ? (
+          <div className="text-center py-4">Loading packages...</div>
+        ) : packages.isSuccess ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {packages.data.map((service: any) => (
+              <label
+                key={service.package_id}
+                className="flex items-center space-x-2 text-blue-900 cursor-pointer"
               >
-                {/* Checkmark icon */}
-                {checkedList.includes(service.package_id.toString()) && (
-                  <svg
-                    className="w-3 h-3 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                )}
-              </div>
-              <div className="flex-1">
-                <span className="text-sm font-medium group-hover:text-black">
-                  {service.name}
-                </span>
-                {service.price !== "0$" && (
-                  <div className="mt-1 text-xs text-gray-500 flex items-center space-x-5">
-                    <span>
-                      {currencySymbol}
-                      {(parseInt(service.price) * conversionRate).toFixed(2)}
-                    </span>
-                    {(service.name === "Oven Cleaning" ||
-                      service.name === "Fridge Cleaning") && 
-                      checkedList.includes(service.package_id.toString()) && (
-                      <QuantityControl
-                        quantity={service.name === "Oven Cleaning" ? ovenQty : fridgeQty}
-                        onChange={(newQuantity) => {
-                          setChangeValue(true);
-                          if (service.name === "Oven Cleaning") {
-                            setOvenQty(newQuantity);
-                            // Update the quantity in selectedServices
-                            setSelectedServices((prev) =>
-                              prev.map((s) =>
-                                s.package_id === Number(service.package_id)
-                                  ? { ...s, qty: Number(newQuantity) || 1 }
-                                  : s
-                              )
-                            );
-                          } else {
-                            setFridgeQty(newQuantity);
-                            // Update the quantity in selectedServices
-                            setSelectedServices((prev) =>
-                              prev.map((s) =>
-                                s.package_id === Number(service.package_id)
-                                  ? { ...s, qty: Number(newQuantity) || 1 }
-                                  : s
-                              )
-                            );
-                          }
-                        }}
+                <input
+                  type="checkbox"
+                  className="hidden"
+                  checked={checkedList.includes(service.package_id.toString())}
+                  onChange={(e) => {
+                    setChangeValue(true);
+                    if (e.target.checked) {
+                      setSelectedServices([
+                        ...selectedServices,
+                        {
+                          package_id: Number(service.package_id),
+                          price: parseInt(service.price),
+
+                          qty:
+                            service.name === "Oven Cleaning"
+                              ? Number(ovenQty) || 1
+                              : service.name === "Fridge Cleaning"
+                              ? Number(fridgeQty) || 1
+                              : 1,
+                        },
+                      ]);
+                      setCheckedList([
+                        ...checkedList,
+                        service.package_id.toString(),
+                      ]);
+                    } else {
+                      setSelectedServices(
+                        selectedServices.filter(
+                          (item) =>
+                            item.package_id.toString() !==
+                            service.package_id.toString()
+                        )
+                      );
+                      setCheckedList(
+                        checkedList.filter(
+                          (id) => id !== service.package_id.toString()
+                        )
+                      );
+                    }
+                  }}
+                  disabled={service.status !== "active"}
+                />
+                {/* Custom checkbox */}
+                <div
+                  className={`w-5 h-5 border-2 border-gray-400 rounded flex items-center justify-center transition-colors ${
+                    checkedList.includes(service.package_id.toString())
+                      ? "bg-blue-500 border-blue-500"
+                      : "bg-white border-gray-400"
+                  } ${service.status !== "active" ? "opacity-50" : ""}`}
+                >
+                  {/* Checkmark icon */}
+                  {checkedList.includes(service.package_id.toString()) && (
+                    <svg
+                      className="w-3 h-3 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
                       />
-                    )}
-                  </div>
-                )}
-              </div>
-            </label>
-          ))}
-        </div>
-      ) : (
-        <div className="text-center py-4 text-red-500">
-          {packages.errorMessage}
-        </div>
-      )}
-    </div>
+                    </svg>
+                  )}
+                </div>
+                <div className="flex-1">
+                  <span className="text-sm font-medium group-hover:text-black">
+                    {service.name}
+                  </span>
+                  {service.price !== "0$" && (
+                    <div className="mt-1 text-xs text-gray-500 flex items-center space-x-5">
+                      <span>
+                        {currencySymbol}
+                        {(parseInt(service.price) * conversionRate).toFixed(2)}
+                      </span>
+                      {(service.name === "Oven Cleaning" ||
+                        service.name === "Fridge Cleaning") &&
+                        checkedList.includes(service.package_id.toString()) && (
+                          <QuantityControl
+                            quantity={
+                              service.name === "Oven Cleaning"
+                                ? ovenQty
+                                : fridgeQty
+                            }
+                            onChange={(newQuantity) => {
+                              setChangeValue(true);
+                              if (service.name === "Oven Cleaning") {
+                                setOvenQty(newQuantity);
+                                // Update the quantity in selectedServices
+                                setSelectedServices((prev) =>
+                                  prev.map((s) =>
+                                    s.package_id === Number(service.package_id)
+                                      ? { ...s, qty: Number(newQuantity) || 1 }
+                                      : s
+                                  )
+                                );
+                              } else {
+                                setFridgeQty(newQuantity);
+                                // Update the quantity in selectedServices
+                                setSelectedServices((prev) =>
+                                  prev.map((s) =>
+                                    s.package_id === Number(service.package_id)
+                                      ? { ...s, qty: Number(newQuantity) || 1 }
+                                      : s
+                                  )
+                                );
+                              }
+                            }}
+                          />
+                        )}
+                    </div>
+                  )}
+                </div>
+              </label>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-4 text-red-500">
+            {packages.errorMessage}
+          </div>
+        )}
+      </div>
 
       {/* Equipment Section */}
       <div>
-      <EquipmentSection
+        <EquipmentSection
           onSolventChange={handleSolventChange}
           onEquipmentOptionChange={handleEquipmentOptionChange}
           onEquipmentSelect={handleEquipmentSelect}
@@ -485,14 +496,22 @@ function MoveInOutCleaningPage() {
             }}
             propertyType={propertyType}
             setPropertyType={setPropertyType}
-            frequency={frequency}
-            setFrequency={setFrequency}
             contactType={contactType}
             setContactType={setContactType}
             language={language}
             setLanguage={setLanguage}
-            onBasePriceChange={(maxTime) => {setMaxTime(maxTime)}}
+            onBasePriceChange={(maxTime) => {
+              setMaxTime(maxTime);
+            }}
           />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Dropdown
+              label="Select Frequency"
+              value={frequency}
+              options={frequencyOptions}
+              onChange={setFrequency}
+            />
+          </div>
         </div>
 
         {/* File Upload and Additional Note */}
@@ -557,7 +576,7 @@ function MoveInOutCleaningPage() {
           />
         )}
 
-<div className="pt-4 mb-6">
+        <div className="pt-4 mb-6">
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
@@ -619,7 +638,7 @@ function MoveInOutCleaningPage() {
           className="w-full mt-8 bg-blue-900 text-white py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={!acceptTerms1 || !acceptTerms2}
           onClick={handleBookNow}
-          style={{backgroundColor:"#1c398e"}}
+          style={{ backgroundColor: "#1c398e" }}
         >
           Book Now
         </button>
