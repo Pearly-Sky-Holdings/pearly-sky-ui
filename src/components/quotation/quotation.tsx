@@ -283,82 +283,83 @@ const Quotation = () => {
         </Box>
       )}
 
-      <div className="bg-gradient-to-r from-[#002F6D] to-[#0D90C8] h-25 flex justify-center items-center">
-      {/* Email Section - Now Responsive */}
-      <Box sx={{ mt: 1, textAlign: "center" }}>
-        <Grid
-          container
-          spacing={isMobile ? 2 : 1}
-          justifyContent="center"
-          alignItems="center"
-          sx={{
-            flexDirection: "column", 
-          }}
-        >
-          {/* First Row for Emails */}
-          <Grid
-            container
-            item
-            spacing={isMobile ? 2 : 1}
-            justifyContent="center"
-            alignItems="center"
-            sx={{
-              gap:3,
-              flexDirection: isMobile ? "column" : "row", 
-            }}
-          >
-            {emails.map((email, index) => (
+        <div className="bg-gradient-to-r from-[#002F6D] to-[#0D90C8] h-auto flex justify-center items-center">
+          {/* Email Section - Now Responsive */}
+          <Box sx={{ mt: 1, textAlign: "center", width: "100%" }}>
+            <Grid
+              container
+              spacing={isMobile ? 2 : 1}
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                flexDirection: "column",
+              }}
+            >
+              {/* First Row for Emails */}
               <Grid
+                container
                 item
-                key={index}
-                xs={isMobile ? 12 : "auto"}
+                spacing={isMobile ? 2 : 1}
+                justifyContent="center"
+                alignItems="center"
                 sx={{
-                  width: isMobile ? "100%" : "auto",
-                  mb: isMobile ? 0 : 1,
-                  fontSize: isMobile ? "12px" : "",
+                  gap: isMobile ? 2 : 3,
+                  flexDirection: isMobile ? "column" : "row",
+                  width: "100%",
                 }}
               >
-                <Box
-                  sx={{
-                    
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    borderRadius: "8px",
-                    transition: "transform 0.3s ease-in-out",
-                    "&:hover": { transform: "scale(1.05)" },
-                    width: isMobile ? "100%" : "auto",
-                  }}
-                >
-                  <Box
-                    component="img"
-                    src={emailIcon}
-                    alt="Email Icon"
-                    sx={{ width: "20px", height: "30px", marginRight: "8px" }}
-                  />
-                  <a
-                    href={`mailto:${email.address}`}
-                    style={{
-                      textDecoration: "none",
-                      color: "white",
-                      fontWeight: "bold",
-                      wordBreak: "break-word",
+                {emails.map((email, index) => (
+                  <Grid
+                    item
+                    key={index}
+                    xs={isMobile ? 12 : "auto"}
+                    sx={{
+                      width: isMobile ? "100%" : "auto",
+                      mb: isMobile ? 2 : 1,
+                      fontSize: isMobile ? "12px" : "",
+                      padding: isMobile ? "0 16px" : "0", // Adjust padding for mobile
                     }}
                   >
-                    {email.address}
-                  </a>
-                </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        borderRadius: "8px",
+                        transition: "transform 0.3s ease-in-out",
+                        "&:hover": { transform: "scale(1.05)" },
+                        width: isMobile ? "100%" : "auto",
+                      }}
+                    >
+                      <Box
+                        component="img"
+                        src={emailIcon}
+                        alt="Email Icon"
+                        sx={{ width: "20px", height: "30px", marginRight: "8px" }}
+                      />
+                      <a
+                        href={`mailto:${email.address}`}
+                        style={{
+                          textDecoration: "none",
+                          color: "white",
+                          fontWeight: "bold",
+                          wordBreak: "break-word",
+                        }}
+                      >
+                        {email.address}
+                      </a>
+                    </Box>
+                  </Grid>
+                ))}
               </Grid>
-            ))}
-          </Grid>
-    
-          {/*  Thank You Statement */}
-          <Grid item xs={12} sx={{ mt: isMobile ? 2 : 1 }}>
-            <Typography sx={{ color: "white", fontWeight: "bold" }}>
-              Thank You For Your Request!
-            </Typography>
+
+              {/* Thank You Statement */}
+              <Grid item xs={12} sx={{ mt: isMobile ? 2 : 1, padding: isMobile ? "0 16px" : "0" }}>
+                <Typography sx={{ color: "white", fontWeight: "bold" }}>
+                  Thank You For Your Request!
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
           </Box>
         </div>
         <Typography sx={{ color: "gray", textAlign:"center",mt:3 }}>
