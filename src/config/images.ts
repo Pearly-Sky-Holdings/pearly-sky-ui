@@ -212,3 +212,15 @@ export const MoveInAndOutTransport2: string = "/images/service/MoveInAndOutTrans
 export const MoveInAndOutTransport3: string = "/images/service/MoveInAndOutTransportCleaning/MoveInAndOutTransportCleaning3.png";
 export const MoveInAndOutTransport4: string = "/images/service/MoveInAndOutTransportCleaning/MoveInAndOutTransportCleaning4.png";
 
+//Steam Cleaning
+export const SteamCleaning1: string = "/images/service/SteamCleaning/SteamCleaning1.png";
+export const SteamCleaning2: string = "/images/service/SteamCleaning/SteamCleaning2.png";
+export const SteamCleaning3: string = "/images/service/SteamCleaning/SteamCleaning3.png";
+export const SteamCleaning4: string = "/images/service/SteamCleaning/SteamCleaning4.png";
+
+//Pressure Washing
+export const PressureWashing1: string = "/images/service/pressureWashing/PressureWashing1.png";
+export const PressureWashing2: string = "/images/service/pressureWashing/PressureWashing2.png";
+
+
+

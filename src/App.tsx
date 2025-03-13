@@ -46,6 +46,8 @@ import Settings from "./pages/customerDashboard/setting.tsx";
 import Help from "./pages/customerDashboard/help.tsx";
 import MoveInAndOutTransportCleaning from "./pages/servicesPages/MoveInAndOutTransportCleaning.tsx";
 import { LanguageProvider } from './context/LanguageContext';
+import SteamCleaning from "./pages/servicesPages/SteamCleaning.tsx";
+import PressureWashing from "./pages/servicesPages/pressureWashing.tsx";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -258,6 +260,24 @@ function App() {
             element={
               <>
                 <MoveInAndOutTransportCleaning />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/steam_cleaning"
+            element={
+              <>
+                <SteamCleaning />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/pressure_washing"
+            element={
+              <>
+                <PressureWashing/>
                 <Footer />
               </>
             }
