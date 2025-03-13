@@ -34,6 +34,7 @@ import {
 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
+import Dropdown from "../../components/dropDown/dropDown";
 
 type Equipment = {
   id: string;
@@ -71,7 +72,7 @@ function PostConstructionCleaningPage() {
   const [conversionRateBaseEur, setConversionRateBaseEur] = useState(1);
 
   const [changeValue, setChangeValue] = useState<boolean>(false);
-    const [count , setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
   const [priceBreakdown, setPriceBreakdown] = useState({
     hourlyRate: parseInt(services.data.price),
@@ -87,7 +88,7 @@ function PostConstructionCleaningPage() {
     rate: number,
     rateBaseEur: number
   ) => {
-    if(count >= 2){
+    if (count >= 2) {
       setChangeValue(true);
     }
     setSelectedCurrency(currency);
@@ -113,12 +114,10 @@ function PostConstructionCleaningPage() {
   }, []);
   const calculateTotalPrice = () => {
     const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
-    const basePrice = hourlyRate * maxTime ; // Base price in USD
+    const basePrice = hourlyRate * maxTime; // Base price in USD
 
     let serviceCosts = 0;
     let equipmentCosts = 0;
-
-    
 
     // Calculate equipment costs in USD
     selectedEquipments.forEach((equipment) => {
@@ -127,7 +126,7 @@ function PostConstructionCleaningPage() {
 
     // Calculate total price in the user's selected currency
     const totalPriceInSelectedCurrency =
-      (basePrice) * conversionRate +equipmentCosts + serviceCosts;
+      basePrice * conversionRate + equipmentCosts + serviceCosts;
 
     return {
       hourlyRate,
@@ -180,7 +179,6 @@ function PostConstructionCleaningPage() {
       return;
     }
 
-    
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
       service_id: "6",
@@ -196,7 +194,7 @@ function PostConstructionCleaningPage() {
       cleaning_solvents: selectedSolvent,
       equipmentOption: _selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
-      price: currencySymbol +priceBreakdown.totalPrice.toString(),
+      price: currencySymbol + priceBreakdown.totalPrice.toString(),
       currency: selectedCurrency,
       note: document.querySelector("textarea")?.value || "",
     };
@@ -271,6 +269,12 @@ function PostConstructionCleaningPage() {
         "Trash bags",
       ],
     },
+  ];
+
+  const frequencyOptions = [
+    { value: "construction end", label: "Construction End" },
+    { value: "project handover", label: "Project Handover" },
+    { value: "other", label: "Other " },
   ];
   return (
     <div className="max-w-7xl mx-auto p-4 mt-6 sm:p-2">
@@ -459,8 +463,6 @@ function PostConstructionCleaningPage() {
             }}
             propertyType={propertyType}
             setPropertyType={setPropertyType}
-            frequency={frequency}
-            setFrequency={setFrequency}
             contactType={contactType}
             setContactType={setContactType}
             language={language}
@@ -469,6 +471,14 @@ function PostConstructionCleaningPage() {
               setMaxTime(maxTime);
             }}
           />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Dropdown
+              label="Select Frequency"
+              value={frequency}
+              options={frequencyOptions}
+              onChange={setFrequency}
+            />
+          </div>
         </div>
 
         {/* File Upload and Additional Note */}
@@ -533,7 +543,7 @@ function PostConstructionCleaningPage() {
           />
         )}
 
-<div className="pt-4 mb-6">
+        <div className="pt-4 mb-6">
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
@@ -579,7 +589,7 @@ function PostConstructionCleaningPage() {
           className="w-full mt-8 bg-blue-900 text-white py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={!acceptTerms1 || !acceptTerms2}
           onClick={handleBookNow}
-          style={{backgroundColor:"#1c398e"}}
+          style={{ backgroundColor: "#1c398e" }}
         >
           Book Now
         </button>

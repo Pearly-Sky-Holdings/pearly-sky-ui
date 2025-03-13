@@ -1,4 +1,3 @@
-
 import Dropdown from "../dropDown/dropDown";
 import { Info as InfoIcon } from "@mui/icons-material";
 
@@ -102,6 +101,7 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
     { value: "every2weeks", label: "Every 02 weeks" },
     { value: "every3weeks", label: "Every 03 weeks" },
     { value: "monthly", label: "Monthly" },
+    { value: "other", label: "Other" },
   ];
 
   const contactTypeOptions = [
@@ -188,19 +188,20 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
         onChange={handleDurationChange}
       />
 
-    <div>
-      <Dropdown
-        label="Request Care Professionals"
-        value={numProfession}
-        options={numCareProfession}
-        onChange={setNumProfession}
-      />
-      {parseFloat(duration) > 8 && (
-        <div className="text-sm text-blue-500   px-1">
-          <InfoIcon sx={{ color: "black", mx: 1 }} />
-          If you need more than 8 hours, please select additional care professionals.
-        </div>
-      )}
+      <div>
+        <Dropdown
+          label="Request Care Professionals"
+          value={numProfession}
+          options={numCareProfession}
+          onChange={setNumProfession}
+        />
+        {parseFloat(duration) > 8 && (
+          <div className="text-sm text-blue-500   px-1">
+            <InfoIcon sx={{ color: "black", mx: 1 }} />
+            If you need more than 8 hours, please select additional care
+            professionals.
+          </div>
+        )}
       </div>
 
       <Dropdown

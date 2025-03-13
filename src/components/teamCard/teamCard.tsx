@@ -21,7 +21,7 @@ const TeamCard: React.FC<TeamCardProps> = ({ name, title, image, emailIcon, emai
     >
       {/* Image  */}
       <motion.div
-        className="w-40 h-40 bg-white rounded-full flex items-center justify-center overflow-hidden mt-5"
+        className="lg:w-[200px] lg:h-[200px] md:w-[100px] md:h-[100px] w-[200px] h-[200px] bg-white rounded-full flex items-center justify-center overflow-hidden mt-5"
         whileHover={{ scale: 1.1 }}
         transition={{ duration: 0.3 }}
       >

@@ -20,6 +20,7 @@ import { airbnbAndShortService } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
 import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
+import Dropdown from "../../components/dropDown/dropDown";
 
 type Equipment = {
   id: string;
@@ -162,7 +163,7 @@ function AirbnbAndShortService() {
     setSelectedEquipmentOption(option);
   };
   const handleBookNow = () => {
-    if(
+    if (
       !selectedDate ||
       !selectedTime ||
       !propertySize ||
@@ -174,19 +175,15 @@ function AirbnbAndShortService() {
       !propertyType ||
       !selectedSolvent ||
       checkedList.length === 0
-    ){
+    ) {
       alert("Please fill all the fields");
       return;
     }
-    
-    
-    
-    
-    
+
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
       service_id: "7",
-      price: currencySymbol +priceBreakdown.totalPrice.toString(),
+      price: currencySymbol + priceBreakdown.totalPrice.toString(),
       date,
       time: selectedTime,
       property_size: propertySize,
@@ -233,6 +230,10 @@ function AirbnbAndShortService() {
     }
   };
 
+  const frequencyOptions = [
+    { value: "every check in check out", label: "Every check in check out" },
+    { value: "other", label: "Other " },
+  ];
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
       {/* Header Section */}
@@ -577,8 +578,6 @@ function AirbnbAndShortService() {
             }}
             propertyType={propertyType}
             setPropertyType={setPropertyType}
-            frequency={frequency}
-            setFrequency={setFrequency}
             contactType={contactType}
             setContactType={setContactType}
             language={language}
@@ -587,6 +586,14 @@ function AirbnbAndShortService() {
               setMaxTime(maxTime);
             }}
           />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Dropdown
+              label="Select Frequency"
+              value={frequency}
+              options={frequencyOptions}
+              onChange={setFrequency}
+            />
+          </div>
         </div>
 
         {/* File Upload and Additional Note */}
