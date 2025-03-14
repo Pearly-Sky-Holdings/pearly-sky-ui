@@ -72,9 +72,9 @@ const Gallery = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className=" bg-gray-50 py-12">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Progress Section - Different layouts for mobile and desktop */}
+        {/* Progress Section - Different layouts for mobile, tablet and desktop */}
         {isMobile ? (
           // Mobile Progress Section with separate boxes
           <Box display="flex" flexDirection="column" alignItems="center" mb={8}>
@@ -99,7 +99,7 @@ const Gallery = () => {
             ))}
           </Box>
         ) : (
-          // Desktop Progress Section (original)
+          // Desktop/Tablet Progress Section (modified to remove extra space)
           <Box display="flex" justifyContent="center" textAlign="center">
             <Box
               display="flex"
@@ -107,11 +107,9 @@ const Gallery = () => {
               mb={8}
               bgcolor="white"
               textAlign="center"
-              pt={1}
-              pb={8}
+              py={3}
               borderRadius={50}
               width="75%"
-              height={35}
               boxShadow="0px 4px 10px rgba(37, 150, 190, 0.5)"
             >
               {progressData.map((item) => (

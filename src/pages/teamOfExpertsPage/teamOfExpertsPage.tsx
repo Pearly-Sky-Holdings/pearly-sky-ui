@@ -43,10 +43,10 @@ const TeamOfExpertsPage: React.FC = () => {
         </p>
       </div>
 
-      {/* Team Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-10">
+      {/* Team Cards - Modified grid layout for tablet */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10 ">
         {teamMembers.map((member, index) => (
-          <TeamCard key={index} name={member.name} title={member.title} image={member.image} emailIcon={emailIcon}  email={member.email} />
+          <TeamCard key={index} name={member.name} title={member.title} image={member.image} emailIcon={emailIcon} email={member.email} />
         ))}
       </div>
     </div>
