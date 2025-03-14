@@ -108,7 +108,7 @@ export default function TopBar() {
             alignItems: "center",
             gap: isMobile ? 1 : 2,
             position: "absolute",
-            left: isMobile ? "35%" : "80%",
+            left: isMobile ? "35%" : "60%",
             transform: "translateX(-50%)",
           }}
         >

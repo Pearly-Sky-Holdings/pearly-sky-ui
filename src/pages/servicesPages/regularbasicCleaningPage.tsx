@@ -19,6 +19,7 @@ import { regularService1 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
 import QuantityControl from "../../components/QuantityControl/quantityControl";
+import Dropdown from "../../components/dropDown/dropDown";
 
 function RegularBasicCleaningPage() {
   type selectService = {
@@ -177,8 +178,7 @@ function RegularBasicCleaningPage() {
       alert("Please fill all required fields before proceeding to checkout.");
       return;
     }
-    
-    
+
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
       service_id: "1",
@@ -238,6 +238,12 @@ function RegularBasicCleaningPage() {
       );
     }
   }, [packages.isSuccess, packages.data]);
+
+  const frequencyOptions = [
+    { value: "weekly", label: "Weekly" },
+    { value: "monthly", label: "Monthly" },
+    { value: "every two weeks", label: "Every Two Weeks" },
+  ];
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
@@ -505,8 +511,6 @@ function RegularBasicCleaningPage() {
             }}
             propertyType={propertyType}
             setPropertyType={setPropertyType}
-            frequency={frequency}
-            setFrequency={setFrequency}
             contactType={contactType}
             setContactType={setContactType}
             language={language}
@@ -515,6 +519,14 @@ function RegularBasicCleaningPage() {
               setMaxTime(maxTime);
             }}
           />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Dropdown
+              label="Select Frequency"
+              value={frequency}
+              options={frequencyOptions}
+              onChange={setFrequency}
+            />
+          </div>
         </div>
 
         {/* File Upload and Additional Note */}

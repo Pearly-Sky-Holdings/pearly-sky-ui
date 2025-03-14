@@ -10,13 +10,15 @@ import TimeSlots from "../../components/timeSlot/timeSlot";
 import "./CustomCalendar.css";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
 import { getPackege, getServices } from "../../services/CleaningServices/index";
-import Images from "../../components/MoveInAndOutTransportCleaning/moveInAndOutImage";
+import Images from "../../components/SteamCleaning/SteamCleaningImage";
 import dayjs from "dayjs";
+import SanitizationBookingCart from "../../components/sanitizationPage/bookingCart";
 import PersonalInformationForm from "../../components/personalInformationForm/personalInformationForm";
-import { MoveInOutTransportService } from "../../config/images";
-import MoveInAndOutTransportBookingCart from "../../components/MoveInAndOutTransportCleaning/moveInAndOutTransportBookingCart";
+import { steamService } from "../../config/images";
+import SteamCleaningOptionType from "../../components/SteamCleaning/steamCleaningOptionType";
 
-function MoveInAndOutTransportCleaning() {
+
+function SteamCleaning() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   useSelector((state: any) => state.servicesSlice.service);
@@ -24,15 +26,19 @@ function MoveInAndOutTransportCleaning() {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [acceptTerms2, setAcceptTerms2] = useState(false);
   const [selectedTime, setSelectedTime] = useState("");
-  const [locationFrom, setLocationFrom] = useState("");
-  const [locationTo, setLocationTo] = useState("");
-  const [propertySize, setPropertySize] = useState("");
-
+  const [frequency, setFrequency] = useState("");
   const [language, setLanguage] = useState("");
   const [timeZone, setTimeZone] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
+  const [selectedItems, setSelectedItems] = useState<string[]>([]); 
 
+   
+const handleSelectionChange = (selectedItems: string[]) => {
+    console.log('Selected Items:', selectedItems);
+    setSelectedItems(selectedItems);
+  };
+ 
   // Memoize the form change handler
   const handleFormChange = useCallback((data: any) => {
     setFormData(data);
@@ -41,29 +47,33 @@ function MoveInAndOutTransportCleaning() {
   // Fetch package and services data
 
   useEffect(() => {
-    dispatch(getPackege("11"));
+    dispatch(getPackege("15"));
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getServices("11"));
+    dispatch(getServices("15"));
+
   }, [dispatch]);
+  
+const [equipment, setEquipment] = useState({ customer: false, company: false });
+const [chemical, setChemical] = useState({ customer: false, company: false });
 
-  const [materials, setMaterials] = useState({
-    customer: false,
-    company: false,
-  });
+type Section = "equipment" | "chemical";
+type Option = "customer" | "company";
 
-  type Section = "materials";
-  type Option = "customer" | "company";
-
-  const handleCheckboxChange = (section: Section, option: Option) => {
-    if (section === "materials") {
-      setMaterials({
-        customer: option === "customer",
-        company: option === "company",
-      });
-    }
-  };
+const handleCheckboxChange = (section: Section, option: Option) => {
+  if (section === "equipment") {
+    setEquipment({
+      customer: option === "customer",
+      company: option === "company",
+    });
+  } else if (section === "chemical") {
+    setChemical({
+      customer: option === "customer",
+      company: option === "company",
+    });
+  }
+};
 
   interface FormData {
     firstName: string;
@@ -94,7 +104,9 @@ function MoveInAndOutTransportCleaning() {
   });
 
   const handleBookNow = async () => {
+    // Validate required fields
     if (
+      !frequency ||
       !propertyType ||
       !contactType ||
       !language ||
@@ -106,85 +118,87 @@ function MoveInAndOutTransportCleaning() {
       alert("Please fill all required fields before proceeding to checkout.");
       return;
     }
-
+  
+    // selected date
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
-
-    //  customer details
+  
+    // customer object
     const customer = {
       first_name: formData.firstName,
       last_name: formData.lastName,
-      company: formData.company || "",
+      company: formData.company || "", 
       country: formData.country,
       street_address: formData.address,
-      apartment_type: formData.apartment || "",
+      apartment_type: formData.apartment || "", 
       city: formData.city,
       province: formData.state,
       postal_code: formData.zip,
       contact: formData.phone,
       email: formData.email,
-      password: "1234 ",
+      password: " 1234", 
     };
-
-    //  service details
+  
+    // service details
     const serviceDetails = {
-      customer,
-      service_id: "11",
-      price: "00.00",
+      customer, // Include customer details
+      service_id: "15", 
+      price: "00.00", 
       date,
       time: selectedTime,
-      property_size: "0 sqft",
-      duration: "0",
-
+      property_size: "0 sqft", 
+      duration: "0",      
       note: document.querySelector("textarea")?.value || "",
-      request_gender: contactType,
+      request_gender: contactType, 
       request_language: language,
       business_property: propertyType,
-      cleaning_solvents: "eco-friendly",
-
+      cleaning_solvents: "eco-friendly", 
+      frequency, 
       timeZone,
-      Equipment: materials.customer
-        ? "Provided by customer"
-        : "Provided by company",
-      payment_method: "cash",
-      reStock_details: [],
+      Equipment: equipment.customer ? "Provided by customer" : "Provided by company",
+      payment_method: "cash", 
+      reStock_details: selectedItems.map((item) => ({
+        re_stocking_checklist_id: item.length,
+      })),
     };
-
+  
     console.log("Data to be sent:", serviceDetails);
 
     const data = {
-      serviceName: "Move In and Out Transport Cleaning",
+      serviceName: " Steam Cleaning",
       details: serviceDetails,
       personalInformation: formData,
-      materials,
+      equipment,
+      chemical,      
+      selectedItems,
     };
-
     console.log("Data:", data);
-
+  
     try {
-      const response = await fetch(
-        "https://back.pearlyskyplc.com/api/saveServiceDetails",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(serviceDetails),
-        }
-      );
-
+      //  API call
+      const response = await fetch("https://back.pearlyskyplc.com/api/saveServiceDetails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(serviceDetails),
+      });
+  
+      // Check if the request was successful
       if (response.ok) {
         const result = await response.json();
         console.log("API Response:", result);
+  
+        // Navigate to the quotation page
         navigate("/quotation", { state: { data } });
       } else {
+        // Handle errors
         console.error("API Error:", response.statusText);
         alert("Failed to submit the quotation request. Please try again.");
       }
     } catch (error) {
+      // Handle network errors
       console.error("Network Error:", error);
-      alert(
-        "An error occurred while submitting the request. Please check your connection and try again."
-      );
+      alert("An error occurred while submitting the request. Please check your connection and try again.");
     }
   };
 
@@ -194,24 +208,29 @@ function MoveInAndOutTransportCleaning() {
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col sm:flex-row gap-4 sm:gap-8 items-stretch">
         <div className="w-full sm:w-2/5 flex">
           <img
-            src={MoveInOutTransportService}
+            src={steamService}
             alt="Cleaning Service"
             className="rounded-2xl w-full h-full object-cover"
           />
         </div>
         <div className="w-full sm:w-2/3 flex flex-col justify-between">
           <div>
-            <h2 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
-              Move In and Out Transport Cleaning
-            </h2>
+            <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
+            Steam Cleaning
+            </h1>
           </div>
           <div className="flex-grow">
             <p className="text-gray-600 mb-4 text-sm sm:text-base">
-              Experience a seamless transition with our Move-In/Out Transport
-              Service, a specialized offering meticulously crafted for
-              individuals relocating to or from properties. Our service caters
-              to those in the midst of house moves, providing comprehensive
-              transportation solutions to ensure a stress-free experience.
+            Steam cleaning is a cleaning process that takes place using low-pressure steam to eliminate soluble 
+            substances from surfaces. This technique is generally used as a method of surface preparation before 
+            the application of paints or coatings. Steam cleaning is especially effective in removing pollutants 
+            such as dirt, oil, grease and other soluble substances. 
+            </p>
+            <p className="text-gray-600 mb-4 text-sm sm:text-base">
+            Steam cleaning may include the use of steam, pressurized hot water or both. When steam or hot water is 
+            used to clean a surface, they are mixed with a detergent or some form of alkaline cleaner. Steam 
+            cleaning eliminates oils,  greases and other contaminants by thinning them with heat and diluting 
+            them in water.
             </p>
           </div>
         </div>
@@ -224,17 +243,13 @@ function MoveInAndOutTransportCleaning() {
 
       {/* Booking Section */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8">
-        <h2 className="text-2xl font-bold text-blue-900 mb-6">
-          Select Your Job to Get Your Quotation
-        </h2>
+        <h2 className="text-2xl font-bold text-blue-900 mb-6">Select Your Job to Get Your Quotation</h2>
 
         <div className="mb-6 shadow-lg p-4 sm:p-6 rounded-lg border border-blue-400">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
             {/* Calendar Section */}
             <div className="flex flex-col">
-              <label className="block mb-2 text-blue-900 font-semibold">
-                Select Date
-              </label>
+              <label className="block mb-2 text-blue-900 font-semibold">Select Date</label>
               <div className="calendar-container p-4 rounded-lg">
                 <Calendar
                   onChange={(date) => setSelectedDate(date as Date)}
@@ -264,46 +279,38 @@ function MoveInAndOutTransportCleaning() {
           </div>
         </div>
 
+        <div>
+          <SteamCleaningOptionType onSelectionChange={handleSelectionChange} />         
+        </div>
+
         {/* Booking Details */}
         <div className="mt-10">
-          <MoveInAndOutTransportBookingCart
+
+          <SanitizationBookingCart          
             propertyType={propertyType}
             setPropertyType={setPropertyType}
+            frequency={frequency}
+            setFrequency={setFrequency}
             contactType={contactType}
             setContactType={setContactType}
             language={language}
             setLanguage={setLanguage}
             timeZone={timeZone}
             setTimeZone={setTimeZone}
-            locationFrom={locationFrom}
-            setLocationFrom={setLocationFrom}
-            locationTo={locationTo}
-            setLocationTo={setLocationTo}
-            propertySize={propertySize}
-            setPropertySize={setPropertySize}
           />
         </div>
 
         {/* File Upload and Additional Note */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
-            <label className="block mb-2 text-black">
-              Upload Images or Documents
-            </label>
+            <label className="block mb-2 text-black">Upload Images or Documents</label>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center min-h-[150px] flex items-center justify-center">
               <div>
                 <input type="file" className="hidden" id="file-upload" />
-                <label
-                  htmlFor="file-upload"
-                  className="cursor-pointer text-blue-600 hover:text-blue-800"
-                >
+                <label htmlFor="file-upload" className="cursor-pointer text-blue-600 hover:text-blue-800">
                   <div className="flex flex-col items-center space-y-2">
-                    <span className="text-sm">
-                      Click to upload or drag and drop
-                    </span>
-                    <span className="text-xs text-gray-500">
-                      Maximum file size: 10MB
-                    </span>
+                    <span className="text-sm">Click to upload or drag and drop</span>
+                    <span className="text-xs text-gray-500">Maximum file size: 10MB</span>
                   </div>
                 </label>
               </div>
@@ -316,20 +323,20 @@ function MoveInAndOutTransportCleaning() {
               className="w-full min-h-[150px] border border-blue-900 rounded p-2 text-gray-700 resize-none"
               placeholder="Type your note here..."
             ></textarea>
-          </div>
-        </div>
+          </div>          
+        </div>        
 
         <div className="flex flex-wrap p-8 gap-10 md:gap-100 mb-10">
-          {/* Equipment Section */}
+          {/* Chemical Section */}
           <div className="w-full md:w-auto">
-            <h2 className="text-lg text-black font-bold mb-4">Materials</h2>
+            <h2 className="text-lg text-black font-bold mb-4">Chemical</h2>
             <div className="space-y-2 text-black">
               <label className="flex items-center space-x-2">
                 <input
                   type="checkbox"
                   className="w-4 h-4"
-                  checked={materials.customer}
-                  onChange={() => handleCheckboxChange("materials", "customer")}
+                  checked={chemical.customer}
+                  onChange={() => handleCheckboxChange("chemical", "customer")}
                 />
                 <span>Provide by customer</span>
               </label>
@@ -337,8 +344,8 @@ function MoveInAndOutTransportCleaning() {
                 <input
                   type="checkbox"
                   className="w-4 h-4"
-                  checked={materials.company}
-                  onChange={() => handleCheckboxChange("materials", "company")}
+                  checked={chemical.company}
+                  onChange={() => handleCheckboxChange("chemical", "company")}
                 />
                 <span>Provide by company</span>
               </label>
@@ -350,12 +357,12 @@ function MoveInAndOutTransportCleaning() {
           <PersonalInformationForm onChangeCallback={handleFormChange} />
           {/* Display form data in another section */}
           <div style={{ marginTop: "20px" }}>
-            {/* <h2>Live Form Data:</h2>
+            <h2>Live Form Data:</h2>
             <pre>{JSON.stringify(formData, null, 2)}</pre>
             <pre>{JSON.stringify(equipment, null, 2)}</pre>
             <pre>{JSON.stringify(chemical, null, 2)}</pre>
             <pre>{JSON.stringify(propertyType, null, 2)}</pre>
-            <pre>{JSON.stringify(numCleaners, null, 2)}</pre> */}
+            <pre>{JSON.stringify(selectedItems, null, 2)}</pre>
           </div>
         </div>
 
@@ -369,8 +376,7 @@ function MoveInAndOutTransportCleaning() {
               onChange={(e) => setAcceptTerms2(e.target.checked)}
             />
             <span className="text-sm">
-              By Booking or Requesting a quotation, you agree with our terms and
-              conditions and privacy policy.
+              By Booking or Requesting a quotation, you agree with our terms and conditions and privacy policy.
             </span>
           </label>
         </div>
@@ -393,4 +399,4 @@ function MoveInAndOutTransportCleaning() {
   );
 }
 
-export default MoveInAndOutTransportCleaning;
+export default SteamCleaning;

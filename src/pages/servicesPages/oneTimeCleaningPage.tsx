@@ -18,6 +18,7 @@ import { OneTimeService1 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
 import QuantityControl from "../../components/QuantityControl/quantityControl";
+import Dropdown from "../../components/dropDown/dropDown";
 
 function OneTimeCleaningPage() {
   type selectService = {
@@ -62,14 +63,14 @@ function OneTimeCleaningPage() {
   const [maxTime, setMaxTime] = useState<number>(1);
   const [conversionRateBaseEur, setConversionRateBaseEur] = useState(1);
   const [changeValue, setChangeValue] = useState<boolean>(false);
-  const [count , setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
   const [priceBreakdown, setPriceBreakdown] = useState({
     hourlyRate: parseInt(services.data.price),
     serviceCosts: 0,
     equipmentCosts: 0,
-    totalPrice: 27.00,
-    basePrice: 27.00,
+    totalPrice: 27.0,
+    basePrice: 27.0,
   });
 
   const handleCurrencyUpdate = (
@@ -78,7 +79,7 @@ function OneTimeCleaningPage() {
     rate: number,
     rateBaseEur: number
   ) => {
-    if(count >= 2){
+    if (count >= 2) {
       setChangeValue(true);
     }
     setSelectedCurrency(currency);
@@ -99,10 +100,10 @@ function OneTimeCleaningPage() {
     dispatch(getPackege("2"));
     dispatch(getServices("2"));
   }, []);
-  
+
   const calculateTotalPrice = () => {
     const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
-    const basePrice = hourlyRate * maxTime ; // Base price in USD
+    const basePrice = hourlyRate * maxTime; // Base price in USD
 
     let serviceCosts = 0;
     let equipmentCosts = 0;
@@ -119,7 +120,7 @@ function OneTimeCleaningPage() {
 
     // Calculate total price in the user's selected currency
     const totalPriceInSelectedCurrency =
-      (basePrice) * conversionRate +equipmentCosts + serviceCosts;
+      basePrice * conversionRate + equipmentCosts + serviceCosts;
 
     return {
       hourlyRate,
@@ -174,7 +175,6 @@ function OneTimeCleaningPage() {
       return;
     }
 
-    
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
       service_id: "2",
@@ -200,7 +200,7 @@ function OneTimeCleaningPage() {
       cleaning_solvents: selectedSolvent,
       equipmentOption: selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
-      price: currencySymbol +priceBreakdown.totalPrice.toString(),
+      price: currencySymbol + priceBreakdown.totalPrice.toString(),
       currency: selectedCurrency,
       note: document.querySelector("textarea")?.value || "",
     };
@@ -221,6 +221,11 @@ function OneTimeCleaningPage() {
     console.log("data:", data);
     navigate("/checkout", { state: { data } });
   };
+
+  const frequencyOptions = [
+    { value: "one time", label: "One Time" },
+    { value: "other", label: "Other" },
+  ];
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
@@ -488,8 +493,6 @@ function OneTimeCleaningPage() {
             }}
             propertyType={propertyType}
             setPropertyType={setPropertyType}
-            frequency={frequency}
-            setFrequency={setFrequency}
             contactType={contactType}
             setContactType={setContactType}
             language={language}
@@ -498,6 +501,14 @@ function OneTimeCleaningPage() {
               setMaxTime(maxTime);
             }}
           />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Dropdown
+              label="Select Frequency"
+              value={frequency}
+              options={frequencyOptions}
+              onChange={setFrequency}
+            />
+          </div>
         </div>
 
         {/* File Upload and Additional Note */}
