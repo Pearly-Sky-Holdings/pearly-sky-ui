@@ -107,6 +107,17 @@ const [formData, setFormData] = useState<FormData>({
 });
 
 const handleBookNow = async () => { 
+   // Validate Chemical
+   if (!chemical.customer && !chemical.company) {
+    alert("Chemical is required. Please select an option for Chemical.");
+    return; 
+  }
+
+  // Validate Equipment
+  if (!equipment.customer && !equipment.company) {
+    alert("Equipment is required. Please select an option for Equipment.");
+    return; 
+  }
   if (
     !frequency ||
     !eventType ||
@@ -147,19 +158,21 @@ const handleBookNow = async () => {
     price: "00.00",
     date,
     time: selectedTime,
-    property_size: "0 sqft",
-    duration: "0",
+    // property_size: "0 sqft",
+    // duration: "0",
     number_of_cleaners: numCleaners,
     note: document.querySelector("textarea")?.value || "",
     request_gender: contactType,
     request_language: language,
-    business_property: " ",
+    business_property: eventType,
     cleaning_solvents: "eco-friendly",
     frequency,
-    timeZone,
+    time_zoon: timeZone,
     Equipment: equipment.customer ? "Provided by customer" : "Provided by company",
+    chemical:chemical.customer ? "Provided by customer" : "Provided by company",
     payment_method: "cash",
-    reStock_details: []
+    reStock_details: [],
+    event_type:selectedItems.join(",")
   };
 
   console.log("Data to be sent:", serviceDetails);
@@ -390,7 +403,7 @@ const handleBookNow = async () => {
         <div>
           <PersonalInformationForm onChangeCallback={handleFormChange} />
           {/* Display form data in another section */}
-          <div style={{ marginTop: "20px" }}>
+          {/* <div style={{ marginTop: "20px" }}>
             <h2>Live Form Data:</h2>
             <pre>{JSON.stringify(formData, null, 2)}</pre>
             <pre>{JSON.stringify(equipment, null, 2)}</pre>
@@ -398,7 +411,7 @@ const handleBookNow = async () => {
             <pre>{JSON.stringify(eventType, null, 2)}</pre>
             <pre>{JSON.stringify(numCleaners, null, 2)}</pre>
             <pre>{JSON.stringify(selectedItems, null, 2)}</pre>
-          </div>
+          </div> */}
         </div>
 
         {/* Terms Checkbox */}

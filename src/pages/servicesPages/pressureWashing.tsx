@@ -49,11 +49,11 @@ function PressureWashing() {
   // Fetch package and services data
 
   useEffect(() => {
-    dispatch(getPackege("16"));
+    dispatch(getPackege("15"));
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getServices("16"));
+    dispatch(getServices("15"));
 
   }, [dispatch]);
 
@@ -107,6 +107,19 @@ const [formData, setFormData] = useState<FormData>({
 });
 
 const handleBookNow = async () => { 
+
+  // Validate Chemical
+  if (!chemical.customer && !chemical.company) {
+    alert("Chemical is required. Please select an option for Chemical.");
+    return; 
+  }
+
+  // Validate Equipment
+  if (!equipment.customer && !equipment.company) {
+    alert("Equipment is required. Please select an option for Equipment.");
+    return; 
+  }
+
   if (
     !frequency ||
     !propertyType ||
@@ -143,23 +156,25 @@ const handleBookNow = async () => {
   //  service details
   const serviceDetails = {
     customer,
-    service_id: "16",
+    service_id: "15",
     price: "00.00",
     date,
     time: selectedTime,
-    property_size: "0 sqft",
-    duration: "0",
+    // property_size: "0 sqft",
+    // duration: "0",
     number_of_cleaners: numCleaners,
     note: document.querySelector("textarea")?.value || "",
     request_gender: contactType,
     request_language: language,
     business_property: propertyType,
-    cleaning_solvents: "eco-friendly",
+    cleaning_solvents: " ",
     frequency,
-    timeZone,
+    time_zoon: timeZone,
     Equipment: equipment.customer ? "Provided by customer" : "Provided by company",
+    chemical:chemical.customer ? "Provided by customer" : "Provided by company",
     payment_method: "cash",
-    reStock_details: []
+    reStock_details: [],
+    things_to_clean:selectedItems.join(",")
   };
 
   console.log("Data to be sent:", serviceDetails);

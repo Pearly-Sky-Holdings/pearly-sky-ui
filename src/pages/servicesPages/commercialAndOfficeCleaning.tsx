@@ -17,7 +17,7 @@ import PersonalInformationForm from "../../components/personalInformationForm/pe
 import { CommercialService } from "../../config/images";
 
 
-function SanitizationAndDisinfection() {
+function CommercialAndOfficeCleaning() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   useSelector((state: any) => state.servicesSlice.service);
@@ -98,6 +98,18 @@ const [formData, setFormData] = useState<FormData>({
 });
 
 const handleBookNow = async () => { 
+  // Validate Chemical
+  if (!chemical.customer && !chemical.company) {
+    alert("Chemical is required. Please select an option for Chemical.");
+    return; 
+  }
+
+  // Validate Equipment
+  if (!equipment.customer && !equipment.company) {
+    alert("Equipment is required. Please select an option for Equipment.");
+    return; 
+  }
+
   if (
     !frequency ||
     !propertyType ||
@@ -138,17 +150,18 @@ const handleBookNow = async () => {
     price: "00.00",
     date,
     time: selectedTime,
-    property_size: "0 sqft",
-    duration: "0",
+    // property_size: "0 sqft",
+    // duration: "0",
     number_of_cleaners: numCleaners,
     note: document.querySelector("textarea")?.value || "",
     request_gender: contactType,
     request_language: language,
     business_property: propertyType,
-    cleaning_solvents: "eco-friendly",
+    // cleaning_solvents: " ",
     frequency,
-    timeZone,
+    time_zoon: timeZone,
     Equipment: equipment.customer ? "Provided by customer" : "Provided by company",
+    chemical:chemical.customer ? "Provided by customer" : "Provided by company",
     payment_method: "cash",
     reStock_details: []
   };
@@ -419,4 +432,4 @@ const handleBookNow = async () => {
   );
 }
 
-export default SanitizationAndDisinfection;
+export default CommercialAndOfficeCleaning;

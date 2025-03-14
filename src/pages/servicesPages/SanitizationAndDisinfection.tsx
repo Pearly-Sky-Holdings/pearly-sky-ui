@@ -81,10 +81,10 @@ const handleCheckboxChange = (section: Section, option: Option) => {
   interface FormData {
     firstName: string;
     lastName: string;
-    company?: string; // Optional field
+    company?: string; 
     country: string;
     address: string;
-    apartment?: string; // Optional field
+    apartment?: string; 
     city: string;
     state: string;
     zip: string;
@@ -107,6 +107,18 @@ const handleCheckboxChange = (section: Section, option: Option) => {
   });
 
   const handleBookNow = async () => {
+
+     // Validate Chemical
+  if (!chemical.customer && !chemical.company) {
+    alert("Chemical is required. Please select an option for Chemical.");
+    return; 
+  }
+
+  // Validate Equipment
+  if (!equipment.customer && !equipment.company) {
+    alert("Equipment is required. Please select an option for Equipment.");
+    return; 
+  }
     // Validate required fields
     if (
       !frequency ||
@@ -148,21 +160,20 @@ const handleCheckboxChange = (section: Section, option: Option) => {
       price: "00.00", 
       date,
       time: selectedTime,
-      property_size: "0 sqft", 
-      duration: "0", 
-       
+      // property_size: "0 sqft", 
+      // duration: "0",        
       note: document.querySelector("textarea")?.value || "",
       request_gender: contactType, 
       request_language: language,
       business_property: propertyType,
-      cleaning_solvents: "eco-friendly", 
-      frequency, 
-      timeZone,
+      cleaning_solvents: " ", 
+      frequency,
+      time_zoon: timeZone,
       Equipment: equipment.customer ? "Provided by customer" : "Provided by company",
+      chemical:chemical.customer ? "Provided by customer" : "Provided by company",
       payment_method: "cash", 
-      reStock_details: selectedData.map((category) => ({
-        re_stocking_checklist_id: category.items.length, 
-      })),
+      reStock_details: [],
+      free_estimate:selectedData
     };
   
     console.log("Data to be sent:", serviceDetails);
@@ -287,27 +298,6 @@ const handleCheckboxChange = (section: Section, option: Option) => {
 
         <div>
           <EstimateList onSelectionChange={handleSelectionChange} />
-
-          {/* Display the selected data in the parent component */}
-          {/* <div className="mt-8 p-6 bg-gray-50 rounded-lg shadow-sm">
-            <h2 className="text-2xl font-bold text-[#002F6D] mb-4">Selected Categories and Items</h2>
-            {selectedData.length > 0 ? (
-              selectedData.map((categoryData, index) => (
-                <div key={index} className="mb-6">
-                  <h3 className="text-xl font-bold text-[#002F6D] mb-2">{categoryData.category}</h3>
-                  <ul className="list-disc list-inside">
-                    {categoryData.items.map((item, itemIndex) => (
-                      <li key={itemIndex} className="text-gray-700">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))
-            ) : (
-              <p className="text-gray-700">No categories selected.</p>
-            )}
-          </div> */}
         </div>
 
         {/* Booking Details */}
