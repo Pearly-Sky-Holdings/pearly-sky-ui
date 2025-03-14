@@ -107,7 +107,7 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
   const contactTypeOptions = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
-    { value: "both", label: "Both" },
+    { value: "any", label: "Any" },
   ];
 
   const languageOptions = [

@@ -240,9 +240,11 @@ function RegularBasicCleaningPage() {
   }, [packages.isSuccess, packages.data]);
 
   const frequencyOptions = [
+    { value: "daily", label: "Daily" },
     { value: "weekly", label: "Weekly" },
-    { value: "monthly", label: "Monthly" },
-    { value: "every two weeks", label: "Every Two Weeks" },
+    { value: "every 2 weeks", label: "Every 2 Weeks" },
+    { value: "every 3 weeks", label: "Every 3 Weeks" },
+    { value: "every month", label: "Every Month" },
   ];
 
   return (

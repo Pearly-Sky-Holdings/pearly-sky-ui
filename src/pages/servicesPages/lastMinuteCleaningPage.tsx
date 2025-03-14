@@ -221,8 +221,6 @@ function LastMinuteCleaningPage() {
   };
 
   const frequencyOptions = [
-    { value: "daily", label: "Daily" },
-    { value: "weekly", label: "Weekly" },
     { value: "last minute", label: "Last Minute (Book before 12 hours) " },
   ];
 
