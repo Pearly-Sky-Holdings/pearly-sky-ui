@@ -49,24 +49,25 @@ const SanitizationBookingCart: React.FC<SanitizationBookingCartProps> = ({
     { value: "gym", label: "Gym " },
     { value: "restaurant", label: "Restaurant" },
     { value: "hotel", label: "Hotel" },
-    {
-      value: "school private or government",
-      label: "School Private or Government",
-    },
+    { value: "school private or government", label: "School Private or Government", },
     { value: "transport sector", label: "Transport sector" },
     { value: "airport", label: "Airport" },
     { value: "retail building or shop", label: "Retail building or shop" },
     { value: "other", label: "Other sector" },
   ];
   const frequencyOptions = [
-    { value: "once", label: "One-time" },
+    { value: "One-time", label: "One-time" },
     { value: "weekly", label: "Weekly" },
-    { value: "monthly", label: "Monthly" },
+    { value: "every two weeks", label: "every two weeks" },
+    { value: "every three weeks", label: "every three weeks" },
+    { value: "monthly", label: "monthly" },
+    { value: "other", label: "other" },
   ];
 
   const contactTypeOptions = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
+    { value: "other", label: "Other" },
   ];
 
   const languageOptions = [
@@ -76,10 +77,11 @@ const SanitizationBookingCart: React.FC<SanitizationBookingCartProps> = ({
     { value: "Dutch", label: "Dutch" },
     { value: "German", label: "German" },
     { value: "Arabic", label: "Arabic" },
+    { value: "other", label: "other" },
   ];
 
   const timeZoneOptions = [
-    { value: "Pacific/Midway", label: "(UTC-11:00) Pacific/Midway" },
+      { value: "Pacific/Midway", label: "(UTC-11:00) Pacific/Midway" },
       { value: "Pacific/Honolulu", label: "(UTC-10:00) Pacific/Honolulu" },
       { value: "America/Anchorage", label: "(UTC-09:00) America/Anchorage" },
       { value: "America/Los_Angeles", label: "(UTC-08:00) America/Los_Angeles" },
@@ -108,8 +110,7 @@ const SanitizationBookingCart: React.FC<SanitizationBookingCartProps> = ({
       { value: "Asia/Shanghai", label: "(UTC+08:00) Asia/Shanghai" },
       { value: "Asia/Tokyo", label: "(UTC+09:00) Asia/Tokyo" },
       { value: "Australia/Sydney", label: "(UTC+10:00) Australia/Sydney" },
-      { value: "Pacific/Auckland", label: "(UTC+12:00) Pacific/Auckland" },  
-
+      { value: "Pacific/Auckland", label: "(UTC+12:00) Pacific/Auckland" }, 
   ];  
 
 return (
@@ -122,39 +123,39 @@ return (
       />
 
       <div >
-              <label className="block mb-2 text-blue-900">
-                Number of Cleaners 
-              </label>
-              <div className="flex items-center gap-2">
-                <input
-                  type="number"
-                  value={numCleaners}
-                  onChange={(e) => {
-                    const value = Math.max(1, Math.min(20, Number(e.target.value)));
-                    setNumCleaners(value.toString());
-                  }}
-                  className="w-full p-2 border border-blue-900 rounded-sm text-center text-black"
-                  min={1}
-                  max={20}
-                />
-                <div
-                  className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-                  onClick={() => {
-                    setNumCleaners(Math.max(1, Number(numCleaners) - 1).toString());
-                  }}
-                >
-                  <FaMinus />
-                </div>
-                <div
-                  className="p-2 bg-blue-900 text-white rounded-lg hover:bg-blue-950 transition-colors"
-                  onClick={() => {
-                    setNumCleaners(Math.min(20, Number(numCleaners) + 1).toString());
-                  }}
-                >
-                  <FaPlus />
-                </div>
-              </div>              
-            </div>
+        <label className="block mb-2 text-blue-900">
+          Number of Cleaners 
+        </label>
+        <div className="flex items-center gap-2">
+          <input
+            type="number"
+            value={numCleaners}
+            onChange={(e) => {
+              const value = Math.max(1, Math.min(20, Number(e.target.value)));
+              setNumCleaners(value.toString());
+            }}
+            className="w-full p-2 border border-blue-900 rounded-sm text-center text-black"
+            min={1}
+            max={20}
+          />
+          <div
+            className="p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+            onClick={() => {
+              setNumCleaners(Math.max(1, Number(numCleaners) - 1).toString());
+            }}
+          >
+            <FaMinus />
+          </div>
+          <div
+            className="p-2 bg-blue-900 text-white rounded-lg hover:bg-blue-950 transition-colors"
+            onClick={() => {
+              setNumCleaners(Math.min(20, Number(numCleaners) + 1).toString());
+            }}
+          >
+            <FaPlus />
+          </div>
+        </div>              
+      </div>
      
      <div>
      <Dropdown
@@ -162,8 +163,7 @@ return (
         value={frequency}
         options={frequencyOptions}
         onChange={setFrequency}
-      /> 
-     
+      />      
       </div>
 
       <Dropdown
@@ -181,7 +181,7 @@ return (
       />
       <div >
       <Dropdown
-        label="Select Language"
+        label="Preferred Language"
         value={language}
         options={languageOptions}
         onChange={setLanguage}
@@ -190,7 +190,5 @@ return (
   </div>
 );
 };
-
-
 
 export default SanitizationBookingCart;

@@ -59,14 +59,18 @@ const SpecialEventBookingCart: React.FC<SanitizationBookingCartProps> = ({
     { value: "other", label: "Other sector" },
   ];
   const frequencyOptions = [
-    { value: "once", label: "One-time" },
+    { value: "One-time", label: "One-time" },
     { value: "weekly", label: "Weekly" },
-    { value: "monthly", label: "Monthly" },
+    { value: "every two weeks", label: "every two weeks" },
+    { value: "every three weeks", label: "every three weeks" },
+    { value: "monthly", label: "monthly" },
+    { value: "other", label: "other" },
   ];
 
   const contactTypeOptions = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
+    { value: "other", label: "Other" },
   ];
 
   const languageOptions = [
@@ -76,6 +80,7 @@ const SpecialEventBookingCart: React.FC<SanitizationBookingCartProps> = ({
     { value: "Dutch", label: "Dutch" },
     { value: "German", label: "German" },
     { value: "Arabic", label: "Arabic" },
+    { value: "Other Language", label: "Other Language" },
   ];
 
   const timeZoneOptions = [

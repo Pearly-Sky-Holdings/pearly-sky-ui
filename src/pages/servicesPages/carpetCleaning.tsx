@@ -15,6 +15,8 @@ import dayjs from "dayjs";
 import SanitizationBookingCart from "../../components/sanitizationPage/bookingCart";
 import { CarpetCleaningService } from "../../config/images";
 import EstimateList from "../../components/CarpetAndUpholsteryCleaning/carpetPackageList";
+import PersonalInformationForm from "../../components/personalInformationForm/personalInformationForm";
+
 
 
 function CarpetAndUpholsteryCleaning() {
@@ -37,6 +39,11 @@ const handleSelectionChange = (selectedItems: string[]) => {
     console.log('Selected Items:', selectedItems);
     setSelectedItems(selectedItems);
   };
+
+  //Memoize the form change handler
+    const handleFormChange = useCallback((data: any) => {
+      setFormData(data);
+    }, []);
  
   // Memoize the form change handler
   useCallback((data: any) => {
@@ -74,13 +81,15 @@ const handleCheckboxChange = (section: Section, option: Option) => {
   }
 };
 
+
+
   interface FormData {
     firstName: string;
     lastName: string;
-    company?: string; // Optional field
+    company?: string; 
     country: string;
     address: string;
-    apartment?: string; // Optional field
+    apartment?: string; 
     city: string;
     state: string;
     zip: string;
@@ -103,6 +112,18 @@ const handleCheckboxChange = (section: Section, option: Option) => {
   });
 
   const handleBookNow = async () => {
+    // Validate Chemical
+  if (!chemical.customer && !chemical.company) {
+    alert("Chemical is required. Please select an option for Chemical.");
+    return; 
+  }
+
+  // Validate Equipment
+  if (!equipment.customer && !equipment.company) {
+    alert("Equipment is required. Please select an option for Equipment.");
+    return; 
+  }
+
     // Validate required fields
     if (
       !frequency ||
@@ -144,20 +165,20 @@ const handleCheckboxChange = (section: Section, option: Option) => {
       price: "00.00", 
       date,
       time: selectedTime,
-      property_size: "0 sqft", 
-      duration: "0",      
+      // property_size: "0 sqft", 
+      // duration: "0",      
       note: document.querySelector("textarea")?.value || "",
       request_gender: contactType, 
       request_language: language,
       business_property: propertyType,
       cleaning_solvents: "eco-friendly", 
       frequency, 
-      timeZone,
+      time_zoon: timeZone,
       Equipment: equipment.customer ? "Provided by customer" : "Provided by company",
+      chemical:chemical.customer ? "Provided by customer" : "Provided by company",
       payment_method: "cash", 
-      reStock_details: selectedItems.map((item) => ({
-        re_stocking_checklist_id: item.length,
-      })),
+      reStock_details: [],
+      things_to_clean:selectedItems.join(",")
     };
   
     console.log("Data to be sent:", serviceDetails);
@@ -379,18 +400,17 @@ const handleCheckboxChange = (section: Section, option: Option) => {
           </div>
         </div>
 
-        {/* <div>
-          <PersonalInformationForm onChangeCallback={handleFormChange} />
-          
-          <div style={{ marginTop: "20px" }}>
+        <div>
+          <PersonalInformationForm onChangeCallback={handleFormChange} />          
+          {/* <div style={{ marginTop: "20px" }}>
             <h2>Live Form Data:</h2>
             <pre>{JSON.stringify(formData, null, 2)}</pre>
             <pre>{JSON.stringify(equipment, null, 2)}</pre>
             <pre>{JSON.stringify(chemical, null, 2)}</pre>
             <pre>{JSON.stringify(propertyType, null, 2)}</pre>
             <pre>{JSON.stringify(selectedItems, null, 2)}</pre>
-          </div> 
-        </div> */}
+          </div>  */}
+        </div>
 
         {/* Terms Checkbox */}
         <div className="mb-6 mt-10">

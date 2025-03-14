@@ -37,7 +37,7 @@ const EstimateList: React.FC<EstimateListProps> = ({ onSelectionChange }) => {
 
       <Grid container >
         {Object.keys(selectedItems).map((item, index) => (
-          <Grid item xs={12} md={4} key={index} sx={{ padding: 1 }}>
+          <Grid item xs={12} md={4} key={index} sx={{ padding: 0 }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Checkbox checked={selectedItems[item]} onChange={() => handleCheckboxChange(item)} />
               <Typography variant="body1" sx={{ fontWeight: 'semibold', color: 'black' }}>

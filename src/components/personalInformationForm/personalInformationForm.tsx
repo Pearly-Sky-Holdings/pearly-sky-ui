@@ -27,7 +27,11 @@ const StyledTextField = styled(TextField)({
 });
 
 const prefixes = ["Mr.", "Ms.", "Mrs.", "Dr."];
-const countries = ["Australia", "United States", "Canada", "India", "Japan"];
+const countries = [
+ " Australia ","Austria ","Belgium","Canada ","Denmark","Finland","France","Germany ","Ireland","Italy","Luxembourg", 
+"Netherlands","New Zealand","Poland","Portugal ","Qatar","Saudi Arabia","Scotland ","Spain ","Sri Lanka","Switzerland ",
+"United Arab Emirates ","United Kingdom","United States" 
+ ];
 
 type FormValues = {
   prefix: string;

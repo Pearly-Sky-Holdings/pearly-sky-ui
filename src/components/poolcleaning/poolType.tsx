@@ -36,7 +36,7 @@ const EstimateList: React.FC<EstimateListProps> = ({ onSelectionChange }) => {
   return (
     <Box sx={{ padding: 1, maxWidth: 1200, margin: '1' }}>
       <Typography variant="body1" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'start', mb: 1, color: 'black' }}>
-        Event Type
+        Pool Type
       </Typography>
 
       <Grid container >

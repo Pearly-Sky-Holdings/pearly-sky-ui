@@ -58,6 +58,7 @@ const Quotation = () => {
     equipment,
     chemical,
     selectedCategories,
+    materials
     
    
   } = data;
@@ -161,7 +162,7 @@ const Quotation = () => {
                     {details.date}
                 </TableCell>
                 <TableCell sx={{ border: "1px solid #ddd", padding: "12px" }}>
-                {details.time} ({details.timeZone})
+                {details.time} ({details.time_zoon})
                 </TableCell>
               </TableRow>              
             </TableBody>
@@ -192,9 +193,33 @@ const Quotation = () => {
                 {details.business_property && (
                   <TableRow>
                     <TableCell sx={{border: "1px solid #ddd"}}>
-                      <strong>Business or Property</strong>
+                      <strong>Business or Property / Venue</strong>
                     </TableCell>
                     <TableCell>{details.business_property}</TableCell>
+                  </TableRow>
+                )}   
+                 {details.property_size && (
+                  <TableRow>
+                    <TableCell sx={{border: "1px solid #ddd"}}>
+                      <strong>Property Size</strong>
+                    </TableCell>
+                    <TableCell>{details.property_size}</TableCell>
+                  </TableRow>
+                )}     
+                {details.location_from && (
+                  <TableRow>
+                    <TableCell sx={{border: "1px solid #ddd"}}>
+                      <strong>Location From</strong>
+                    </TableCell>
+                    <TableCell>{details.location_from}</TableCell>
+                  </TableRow>
+                )} 
+                 {details.location_to && (
+                  <TableRow>
+                    <TableCell sx={{border: "1px solid #ddd"}}>
+                      <strong>Location To </strong>
+                    </TableCell>
+                    <TableCell>{details.location_to}</TableCell>
                   </TableRow>
                 )}             
               {details.frequency && (
@@ -234,12 +259,22 @@ const Quotation = () => {
                     </TableCell>
                   </TableRow>
                 )}
-                {details.timeZone && (
+                {materials && (
+                  <TableRow>
+                    <TableCell sx={{border: "1px solid #ddd"}}>
+                      <strong>Materials Provided By</strong>
+                    </TableCell>
+                    <TableCell>
+                      {materials.customer ? "Customer" : chemical.company ? "Company" : "Not Specified"}
+                    </TableCell>
+                  </TableRow>
+                )}
+                {details.time_zoon && (
                   <TableRow>
                     <TableCell sx={{border: "1px solid #ddd"}}>
                       <strong>Time Zone</strong>
                     </TableCell>
-                    <TableCell>{details.timeZone}</TableCell>
+                    <TableCell>{details.time_zoon}</TableCell>
                   </TableRow>
                 )}
                 {details.note && (
@@ -268,7 +303,7 @@ const Quotation = () => {
                 {selectedItems && selectedItems.length > 0 && (
                   <TableRow>
                     <TableCell sx={{ border: "1px solid #ddd" }}>
-                      <strong>Selected Items</strong>
+                      <strong>Selected Items / Options / Type</strong>
                     </TableCell>
                     <TableCell sx={{ border: "1px solid #ddd" }}>
                       {selectedItems.map((item, index) => (
@@ -277,6 +312,7 @@ const Quotation = () => {
                     </TableCell>
                   </TableRow>
                 )}
+                
               </TableBody>
             </Table>
           </TableContainer>

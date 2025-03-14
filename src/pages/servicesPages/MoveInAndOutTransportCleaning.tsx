@@ -27,7 +27,6 @@ function MoveInAndOutTransportCleaning() {
   const [locationFrom, setLocationFrom] = useState("");
   const [locationTo, setLocationTo] = useState("");
   const [propertySize, setPropertySize] = useState("");
-
   const [language, setLanguage] = useState("");
   const [timeZone, setTimeZone] = useState("");
   const [propertyType, setPropertyType] = useState("");
@@ -68,10 +67,10 @@ function MoveInAndOutTransportCleaning() {
   interface FormData {
     firstName: string;
     lastName: string;
-    company?: string; // Optional field
+    company?: string; 
     country: string;
     address: string;
-    apartment?: string; // Optional field
+    apartment?: string; 
     city: string;
     state: string;
     zip: string;
@@ -94,6 +93,14 @@ function MoveInAndOutTransportCleaning() {
   });
 
   const handleBookNow = async () => {
+    // Validate Chemical
+  if (!materials.customer && !materials.company) {
+    alert("Chemical is required. Please select an option for Chemical.");
+    return; 
+  }
+
+ 
+
     if (
       !propertyType ||
       !contactType ||
@@ -101,7 +108,10 @@ function MoveInAndOutTransportCleaning() {
       !timeZone ||
       !selectedDate ||
       !selectedTime ||
-      !acceptTerms2
+      !acceptTerms2||
+      !locationFrom||
+      !locationTo||
+      !propertySize
     ) {
       alert("Please fill all required fields before proceeding to checkout.");
       return;
@@ -128,23 +138,21 @@ function MoveInAndOutTransportCleaning() {
     //  service details
     const serviceDetails = {
       customer,
-      service_id: "11",
+      service_id: "13",
       price: "00.00",
       date,
       time: selectedTime,
-      property_size: "0 sqft",
+      property_size:propertySize,
       duration: "0",
-
       note: document.querySelector("textarea")?.value || "",
       request_gender: contactType,
       request_language: language,
       business_property: propertyType,
-      cleaning_solvents: "eco-friendly",
-
-      timeZone,
-      Equipment: materials.customer
-        ? "Provided by customer"
-        : "Provided by company",
+      cleaning_solvents: " ",
+      time_zoon: timeZone,
+      location_from:locationFrom,
+      location_to:locationTo,
+      materials: materials.customer ? "Provided by customer" : "Provided by company",
       payment_method: "cash",
       reStock_details: [],
     };

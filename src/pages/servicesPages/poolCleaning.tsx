@@ -15,6 +15,7 @@ import dayjs from "dayjs";
 import CommercialBookingCart from "../../components/commercialAndOfficeCleaning/commercialBookingCart";
 import PersonalInformationForm from "../../components/personalInformationForm/personalInformationForm";
 import { poolService } from "../../config/images";
+import PoolType from "../../components/poolcleaning/poolType";
 
 
 function Poolcleaning() {
@@ -31,7 +32,12 @@ function Poolcleaning() {
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
   const [numCleaners, setNumCleaners ] = useState(""); 
+  const [selectedItems, setSelectedItems] = useState<string[]>([]); 
 
+  const handleSelectionChange = (selectedItems: string[]) => {
+    console.log('Selected Items:', selectedItems);
+    setSelectedItems(selectedItems);
+  };
   // Memoize the form change handler
   const handleFormChange = useCallback((data: any) => {
     setFormData(data);
@@ -40,11 +46,11 @@ function Poolcleaning() {
   // Fetch package and services data
 
   useEffect(() => {
-    dispatch(getPackege("11"));
+    dispatch(getPackege("17"));
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getServices("11"));
+    dispatch(getServices("17"));
 
   }, [dispatch]);
 
@@ -72,10 +78,10 @@ const handleCheckboxChange = (section: Section, option: Option) => {
 interface FormData {
   firstName: string;
   lastName: string;
-  company?: string; // Optional field
+  company?: string; 
   country: string;
   address: string;
-  apartment?: string; // Optional field
+  apartment?: string; 
   city: string;
   state: string;
   zip: string;
@@ -98,6 +104,18 @@ const [formData, setFormData] = useState<FormData>({
 });
 
 const handleBookNow = async () => { 
+
+   // Validate Chemical
+   if (!chemical.customer && !chemical.company) {
+    alert("Chemical is required. Please select an option for Chemical.");
+    return; 
+  }
+
+  // Validate Equipment
+  if (!equipment.customer && !equipment.company) {
+    alert("Equipment is required. Please select an option for Equipment.");
+    return; 
+  }
   if (
     !frequency ||
     !propertyType ||
@@ -134,23 +152,26 @@ const handleBookNow = async () => {
   //  service details
   const serviceDetails = {
     customer,
-    service_id: "11",
+    service_id: "17",
     price: "00.00",
     date,
     time: selectedTime,
-    property_size: "0 sqft",
-    duration: "0",
+    // property_size: "0 sqft",
+    // duration: "0",
     number_of_cleaners: numCleaners,
     note: document.querySelector("textarea")?.value || "",
     request_gender: contactType,
     request_language: language,
     business_property: propertyType,
-    cleaning_solvents: "eco-friendly",
+    cleaning_solvents: " ",
     frequency,
-    timeZone,
+    time_zoon: timeZone,
     Equipment: equipment.customer ? "Provided by customer" : "Provided by company",
-    payment_method: "cash",
-    reStock_details: []
+    chemical:chemical.customer ? "Provided by customer" : "Provided by company",
+    payment_method: "cash",    
+    reStock_details: [],
+    pool_type:selectedItems.join(",")
+
   };
 
   console.log("Data to be sent:", serviceDetails);
@@ -161,6 +182,7 @@ const handleBookNow = async () => {
     personalInformation: formData,
     equipment,
     chemical,
+    selectedItems
   };
 
   console.log("Data:", data);
@@ -274,6 +296,10 @@ const handleBookNow = async () => {
             </div>
           </div>
         </div>
+
+        <div>
+        <PoolType onSelectionChange={handleSelectionChange} />
+        </div>
         
         {/* Booking Details */}
         <div className="mt-10">
@@ -376,14 +402,15 @@ const handleBookNow = async () => {
         <div>
           <PersonalInformationForm onChangeCallback={handleFormChange} />
           {/* Display form data in another section */}
-          <div style={{ marginTop: "20px" }}>
+          {/* <div style={{ marginTop: "20px" }}>
             <h2>Live Form Data:</h2>
             <pre>{JSON.stringify(formData, null, 2)}</pre>
             <pre>{JSON.stringify(equipment, null, 2)}</pre>
             <pre>{JSON.stringify(chemical, null, 2)}</pre>
             <pre>{JSON.stringify(propertyType, null, 2)}</pre>
             <pre>{JSON.stringify(numCleaners, null, 2)}</pre>
-          </div>
+            <pre>{JSON.stringify(selectedItems, null, 2)}</pre>
+          </div> */}
         </div>
 
         {/* Terms Checkbox */}

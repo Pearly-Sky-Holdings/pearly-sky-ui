@@ -32,6 +32,7 @@ function SteamCleaning() {
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
   const [selectedItems, setSelectedItems] = useState<string[]>([]); 
+  
 
    
 const handleSelectionChange = (selectedItems: string[]) => {
@@ -47,11 +48,11 @@ const handleSelectionChange = (selectedItems: string[]) => {
   // Fetch package and services data
 
   useEffect(() => {
-    dispatch(getPackege("15"));
+    dispatch(getPackege("14"));
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getServices("15"));
+    dispatch(getServices("14"));
 
   }, [dispatch]);
   
@@ -78,10 +79,10 @@ const handleCheckboxChange = (section: Section, option: Option) => {
   interface FormData {
     firstName: string;
     lastName: string;
-    company?: string; // Optional field
+    company?: string; 
     country: string;
     address: string;
-    apartment?: string; // Optional field
+    apartment?: string; 
     city: string;
     state: string;
     zip: string;
@@ -104,6 +105,12 @@ const handleCheckboxChange = (section: Section, option: Option) => {
   });
 
   const handleBookNow = async () => {
+
+   // Validate Chemical
+  if (!chemical.customer && !chemical.company) {
+    alert("Chemical is required. Please select an option for Chemical.");
+    return; // Stop further execution
+  }
     // Validate required fields
     if (
       !frequency ||
@@ -114,6 +121,8 @@ const handleCheckboxChange = (section: Section, option: Option) => {
       !selectedDate ||
       !selectedTime ||
       !acceptTerms2
+      
+     
     ) {
       alert("Please fill all required fields before proceeding to checkout.");
       return;
@@ -141,24 +150,24 @@ const handleCheckboxChange = (section: Section, option: Option) => {
     // service details
     const serviceDetails = {
       customer, // Include customer details
-      service_id: "15", 
+      service_id: "14", 
       price: "00.00", 
       date,
       time: selectedTime,
-      property_size: "0 sqft", 
-      duration: "0",      
+      // property_size: "0 sqft", 
+      // duration: "0",      
       note: document.querySelector("textarea")?.value || "",
       request_gender: contactType, 
       request_language: language,
       business_property: propertyType,
-      cleaning_solvents: "eco-friendly", 
+      cleaning_solvents: " ", 
       frequency, 
-      timeZone,
+      time_zoon: timeZone,
       Equipment: equipment.customer ? "Provided by customer" : "Provided by company",
+      chemical:chemical.customer ? "Provided by customer" : "Provided by company",
       payment_method: "cash", 
-      reStock_details: selectedItems.map((item) => ({
-        re_stocking_checklist_id: item.length,
-      })),
+      reStock_details: [],
+      things_to_clean:selectedItems.join(",")
     };
   
     console.log("Data to be sent:", serviceDetails);
@@ -166,8 +175,7 @@ const handleCheckboxChange = (section: Section, option: Option) => {
     const data = {
       serviceName: " Steam Cleaning",
       details: serviceDetails,
-      personalInformation: formData,
-      equipment,
+      personalInformation: formData,      
       chemical,      
       selectedItems,
     };
@@ -356,14 +364,14 @@ const handleCheckboxChange = (section: Section, option: Option) => {
         <div>
           <PersonalInformationForm onChangeCallback={handleFormChange} />
           {/* Display form data in another section */}
-          <div style={{ marginTop: "20px" }}>
+          {/* <div style={{ marginTop: "20px" }}>
             <h2>Live Form Data:</h2>
             <pre>{JSON.stringify(formData, null, 2)}</pre>
             <pre>{JSON.stringify(equipment, null, 2)}</pre>
             <pre>{JSON.stringify(chemical, null, 2)}</pre>
             <pre>{JSON.stringify(propertyType, null, 2)}</pre>
             <pre>{JSON.stringify(selectedItems, null, 2)}</pre>
-          </div>
+          </div> */}
         </div>
 
         {/* Terms Checkbox */}
