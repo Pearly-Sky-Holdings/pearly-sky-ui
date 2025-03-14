@@ -11,6 +11,7 @@ import {
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import {
   flagAustralia,
   flagAustria,
@@ -68,6 +69,90 @@ const countries = [
   { name: "Belgium", flag: flagBelgium, code: "BE" },
 ];
 
+const citiesByCountry: { [key: string]: string[] } = {
+  FR: [
+    "Antibes",
+    "Bordeaux",
+    "Cannes",
+    "Carlo",
+    "Deauville",
+    "Dieppe",
+    "French",
+    "La Rochelle",
+    "Le Havre",
+    "Lyon",
+    "Marseille",
+    "Monaco",
+    "Monte",
+    "Montpellier",
+    "Nantes",
+    "Narbonne",
+    "Nice",
+    "Normandy",
+    "Paris",
+    "Riviera",
+    "Rouen",
+    "Saint-Tropez",
+    "Strasbourg",
+    "Toulon",
+    "Toulouse",
+  ],
+  GB: [
+    "Birmingham",
+    "Bradford",
+    "Brighton",
+    "Bristol",
+    "Cambridge",
+    "Chelmsford",
+    "Chester",
+    "Coventry",
+    "Derby",
+    "Edinburgh",
+    "Gloucester",
+    "Kingston upon Hull",
+    "Leeds",
+    "Leicester",
+    "Liverpool",
+    "London",
+    "Luton",
+    "Manchester",
+    "Milton Keynes",
+    "Newcastle upon Tyne",
+    "Norwich",
+    "Nottingham",
+    "Oxford",
+    "Peterborough",
+    "Portsmouth",
+    "Plymouth",
+    "Salisbury",
+    "Sheffield",
+    "Southampton",
+    "Stoke-on-Trent",
+    "Sunderland",
+    "York",
+  ],
+  LK: ["Colombo", "Kandy", "Negombo", "Nuwara Eliya"],
+  DE: ["Berlin", "Cologne", "Hamburg", "Frankfurt", "Munich"],
+  AU: ["Adelaide", "Brisbane", "Melbourne", "Perth", "Sydney"],
+  AE: ["Dubai", "Abu Dhabi", "Jebel Ali", "Ras Al-Khaimah", "Sharjah"],
+  CA: ["Montreal", "Ottawa", "Toronto"],
+  FI: ["Helsinki", "Oulu", "Tampere", "Turku"],
+  SA: ["Riyadh", "Jeddah"],
+  IT: ["Florence", "Milan", "Naples", "Rome", "Venice"],
+  US: ["Houston", "Los Angeles", "New York", "Philadelphia"],
+  IE: ["Belfast", "Cork", "Dublin", "Galway", "Limerick"],
+  AT: ["Vienna", "Villach Innsbruck", "Graz Bregenz"],
+  NL: ["Amsterdam", "The Hague", "Utrecht", "Rotterdam", "Groningen"],
+  CH: ["Bern", "Lausanne", "Geneva", "Basel", "Zurich"],
+  QA: ["Al Rayyan", "Al Wakrah", "Doha", "Dukhan"],
+  DK: ["Helsinki", "Oulu", "Tampere", "Turku"],
+  NZ: ["Auckland", "Christchurch", "Hamilton", "Wellington"],
+  PL: ["Warsaw"],
+  PT: ["Lisbon"],
+  ES: ["Barcelona", "Granada", "Madrid", "Palma"],
+  BE: ["Brussels"],
+};
+
 const accessOptions = [
   { value: "I'll be at home", label: "I'll be at home" },
   { value: "the key is with doorman", label: "The key is with doorman" },
@@ -86,46 +171,75 @@ const accessOptions2 = [
   { value: "other", label: "Other" },
 ];
 
-const validatePassword = (password: string) => {
-  const hasUpperCase = /[A-Z]/.test(password);
-  const hasLowerCase = /[a-z]/.test(password);
-  const hasNumber = /\d/.test(password);
-  const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
-  return hasUpperCase && hasLowerCase && hasNumber && hasSymbol;
-};
-
 const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
   setFormData,
   formData,
 }) => {
-  const [passwordError, setPasswordError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handlePasswordChange = (e: { target: { value: any } }) => {
-    const password = e.target.value;
-    setFormData({ ...formData, password });
-    if (!validatePassword(password)) {
-      setPasswordError(
-        "Password must contain uppercase, lowercase, number, and symbol"
-      );
-    } else {
-      setPasswordError("");
-    }
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
-  const handleConfirmPasswordChange = (e: { target: { value: any } }) => {
-    const confirmPassword = e.target.value;
-    setFormData({ ...formData, confirmPassword });
-    if (confirmPassword !== formData.password) {
-      setConfirmPasswordError("Passwords do not match");
-    } else {
-      setConfirmPasswordError("");
+  const validatePassword = (password: string) => {
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+    const hasMinLength = password.length >= 8;
+
+    return (
+      hasUpperCase && hasLowerCase && hasNumber && hasSymbol && hasMinLength
+    );
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    const newFormData = { ...formData, [field]: value };
+    setFormData(newFormData);
+
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors({ ...errors, [field]: "" });
+    }
+
+    // Validate specific fields
+    if (field === "email" && value && !validateEmail(value)) {
+      setErrors({ ...errors, email: "Please enter a valid email address" });
+    }
+    if (field === "postal_code" && !/^\d*$/.test(value)) {
+      setErrors({ ...errors, postal_code: "Please enter a valid postal code" });
+      return;
+    }
+    if (field === "password") {
+      if (!validatePassword(value)) {
+        setErrors({
+          ...errors,
+          password:
+            "Password must contain at least 8 characters, uppercase, lowercase, number, and symbol",
+        });
+      }
+    }
+    if (field === "confirmPassword") {
+      if (value !== formData.password) {
+        setErrors({ ...errors, confirmPassword: "Passwords do not match" });
+      }
     }
   };
+  const getInputStyles = (field: string) => ({
+    borderRadius: "12px",
+    border: `1px solid ${errors[field] ? "#ff1744" : "#0D90C8"}`,
+  });
 
   return (
     <Paper sx={{ p: 1, borderRadius: 2 }}>
-      <Typography variant="h5" fontWeight="bold" sx={{ mb: 2, color: "#003370" }}>
+      <Typography
+        variant="h5"
+        fontWeight="bold"
+        sx={{ mb: 2, color: "#003370" }}
+      >
         Billing Details
       </Typography>
 
@@ -175,12 +289,29 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
               placeholder="Email"
               variant="outlined"
               size="small"
+              value={formData.email || ""}
+              error={!!errors.email}
+              helperText={errors.email}
               InputProps={{
-                sx: { borderRadius: "12px", border: "1px solid #0D90C8" },
+                sx: {
+                  borderRadius: "12px",
+                  border: `1px solid ${errors.email ? "#ff1744" : "#0D90C8"}`,
+                },
               }}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
+              onChange={(e) => {
+                const email = e.target.value;
+                handleInputChange("email", email);
+
+                // Validate email in real-time
+                if (email && !validateEmail(email)) {
+                  setErrors({
+                    ...errors,
+                    email: "Please enter a valid email address",
+                  });
+                } else {
+                  setErrors({ ...errors, email: "" });
+                }
+              }}
             />
           </FormControl>
         </Grid>
@@ -197,6 +328,8 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
                 borderRadius: "12px",
                 border: "1px solid #0D90C8",
                 padding: "8px",
+                backgroundColor: "#fff",
+                color: "#000",
               }}
             />
           </FormControl>
@@ -214,15 +347,21 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
               displayEmpty
               value={formData.country || ""}
               onChange={(e) =>
-                setFormData({ ...formData, country: e.target.value })
+                setFormData({
+                  ...formData,
+                  country: e.target.value,
+                  city: "", // Reset city when country changes
+                })
               }
               inputProps={{ "aria-label": "Select Country" }}
               MenuProps={{
                 PaperProps: {
                   style: {
-                    maxHeight: 200, // Adjust dropdown height
+                    maxHeight: 200,
                   },
                 },
+                disableAutoFocus: true,
+                disableEnforceFocus: true,
               }}
             >
               <MenuItem value="" disabled>
@@ -230,11 +369,6 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
               </MenuItem>
               {countries.map((country) => (
                 <MenuItem key={country.code} value={country.code}>
-                  <img
-                    src={country.flag}
-                    alt={country.name}
-                    style={{ width: 20, marginRight: 10 }}
-                  />
                   {country.name}
                 </MenuItem>
               ))}
@@ -242,6 +376,41 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
           </FormControl>
         </Grid>
 
+        {/* City & State */}
+        <Grid item xs={12}>
+          <FormControl fullWidth size="small">
+            <Select
+              sx={{ borderRadius: "12px", border: "1px solid #0D90C8" }}
+              displayEmpty
+              value={formData.city || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, city: e.target.value })
+              }
+              inputProps={{ "aria-label": "Select City" }}
+              disabled={!formData.country}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 200,
+                    minWidth: 200,
+                  },
+                },
+                disableAutoFocus: true,
+                disableEnforceFocus: true,
+              }}
+            >
+              <MenuItem value="" disabled>
+                Select City
+              </MenuItem>
+              {formData.country &&
+                citiesByCountry[formData.country]?.map((city) => (
+                  <MenuItem key={city} value={city}>
+                    {city}
+                  </MenuItem>
+                ))}
+            </Select>
+          </FormControl>
+        </Grid>
         {/* Company Name */}
         <Grid item xs={12}>
           <FormControl fullWidth size="small">
@@ -294,23 +463,6 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
           </FormControl>
         </Grid>
 
-        {/* City & State */}
-        <Grid item xs={12}>
-          <FormControl fullWidth size="small">
-            <TextField
-              fullWidth
-              placeholder="City"
-              variant="outlined"
-              size="small"
-              InputProps={{
-                sx: { borderRadius: "12px", border: "1px solid #0D90C8" },
-              }}
-              onChange={(e) =>
-                setFormData({ ...formData, city: e.target.value })
-              }
-            />
-          </FormControl>
-        </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth size="small">
             <TextField
@@ -332,6 +484,7 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
         <Grid item xs={12}>
           <FormControl fullWidth size="small">
             <TextField
+              type="number"
               fullWidth
               placeholder="Postal Code"
               variant="outlined"
@@ -340,9 +493,17 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
                 sx: { borderRadius: "12px", border: "1px solid #0D90C8" },
               }}
               onChange={(e) =>
-                setFormData({ ...formData, postal_code: e.target.value })
+                setFormData({
+                  ...formData,
+                  postal_code: e.target.value.toString(),
+                })
               }
             />
+            {errors.postal_code && (
+              <Typography variant="body2" color="error">
+                {errors.postal_code}
+              </Typography>
+            )}
           </FormControl>
         </Grid>
 
@@ -364,9 +525,13 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
               MenuProps={{
                 PaperProps: {
                   style: {
-                    maxHeight: 200, // Adjust dropdown height
+                    maxHeight: 200,
+                    minWidth: 250,
+                    maxWidth: "100%",
                   },
                 },
+                disableAutoFocus: true,
+                disableEnforceFocus: true,
               }}
             >
               <MenuItem value="" disabled>
@@ -399,9 +564,13 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
               MenuProps={{
                 PaperProps: {
                   style: {
-                    maxHeight: 200, // Adjust dropdown height
+                    maxHeight: 200,
+                    minWidth: 250,
+                    maxWidth: "100%",
                   },
                 },
+                disableAutoFocus: true,
+                disableEnforceFocus: true,
               }}
             >
               <MenuItem value="" disabled>
@@ -425,17 +594,25 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
             <TextField
               fullWidth
               placeholder="Enter password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               variant="outlined"
               size="small"
+              required
+              error={!!errors.password}
+              helperText={errors.password}
               InputProps={{
-                sx: { borderRadius: "12px", border: "1px solid #0D90C8" },
+                sx: getInputStyles("password"),
+                endAdornment: (
+                  <div
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{ cursor: "pointer", padding: "8px" }}
+                  >
+                    {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+                  </div>
+                ),
               }}
-              onChange={handlePasswordChange}
+              onChange={(e) => handleInputChange("password", e.target.value)}
             />
-            {passwordError && (
-              <Typography color="error">{passwordError}</Typography>
-            )}
           </FormControl>
         </Grid>
 
@@ -445,17 +622,31 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
             <TextField
               fullWidth
               placeholder="Confirm password"
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               variant="outlined"
               size="small"
+              required
+              error={!!errors.confirmPassword}
+              helperText={errors.confirmPassword}
               InputProps={{
-                sx: { borderRadius: "12px", border: "1px solid #0D90C8" },
+                sx: getInputStyles("confirmPassword"),
+                endAdornment: (
+                  <div
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    style={{ cursor: "pointer", padding: "8px" }}
+                  >
+                    {showConfirmPassword ? (
+                      <Eye size={20} />
+                    ) : (
+                      <EyeOff size={20} />
+                    )}
+                  </div>
+                ),
               }}
-              onChange={handleConfirmPasswordChange}
+              onChange={(e) =>
+                handleInputChange("confirmPassword", e.target.value)
+              }
             />
-            {confirmPasswordError && (
-              <Typography color="error">{confirmPasswordError}</Typography>
-            )}
           </FormControl>
         </Grid>
       </Grid>

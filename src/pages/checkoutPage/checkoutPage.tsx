@@ -5,6 +5,7 @@ import {
   Typography,
   Snackbar,
   Alert,
+  CircularProgress,
 } from "@mui/material";
 import store from "../../store";
 import { useEffect, useState } from "react";
@@ -25,7 +26,7 @@ const CheckoutPage = () => {
   const saveServiceData = useSelector(
     (state: any) => state.serviceDetailsSlice.service
   );
-  
+
   const [saveLoader, setSaveLoader] = useState(false);
 
   const location = useLocation();
@@ -112,47 +113,52 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     if (saveLoader) {
-      if (
-        saveServiceData.isSuccess &&
-        !saveServiceData.isLoading
-      ) {
-        if(saveServiceData.data.status === "pending_payment"){
+      if (saveServiceData.isSuccess && !saveServiceData.isLoading) {
+        if (saveServiceData.data.status === "pending_payment") {
           window.location.href = saveServiceData.data.payment_url;
-        }   
+        }
         if (saveServiceData.data.status === "success") {
           setShowSuccess(true);
           setTimeout(() => {
-            if(data.serviceName == "Regular Basic"){navigate("/regular-basic-cleaning", {
-              state: { showSuccessPopup: true },
-            });}else if(data.serviceName == "Deep Cleaning"){navigate("/deep-cleaning", {
-              state: { showSuccessPopup: true },
-            });}
-            else if(data.serviceName == "One Time Cleaning"){navigate("/one-time-cleaning", {
-              state: { showSuccessPopup: true },
-            });}
-            else if(data.serviceName == "Last Minute"){navigate("/last-minute-cleaning", {
-              state: { showSuccessPopup: true },
-            });}
-            else if(data.serviceName == "Move In/Out Cleaning"){navigate("/move-in-out-cleaning", {
-              state: { showSuccessPopup: true },
-            });}
-            else if(data.serviceName == "Post Construction"){navigate("/post-construction-cleaning", {
-              state: { showSuccessPopup: true },
-            });}
-            else if(data.serviceName == "Airbnb And Short Term Rental Cleaning"){navigate("/airbnb_and_short_service", {
-              state: { showSuccessPopup: true },
-            });}  
+            if (data.serviceName == "Regular Basic") {
+              navigate("/regular-basic-cleaning", {
+                state: { showSuccessPopup: true },
+              });
+            } else if (data.serviceName == "Deep Cleaning") {
+              navigate("/deep-cleaning", {
+                state: { showSuccessPopup: true },
+              });
+            } else if (data.serviceName == "One Time Cleaning") {
+              navigate("/one-time-cleaning", {
+                state: { showSuccessPopup: true },
+              });
+            } else if (data.serviceName == "Last Minute") {
+              navigate("/last-minute-cleaning", {
+                state: { showSuccessPopup: true },
+              });
+            } else if (data.serviceName == "Move In/Out Cleaning") {
+              navigate("/move-in-out-cleaning", {
+                state: { showSuccessPopup: true },
+              });
+            } else if (data.serviceName == "Post Construction") {
+              navigate("/post-construction-cleaning", {
+                state: { showSuccessPopup: true },
+              });
+            } else if (
+              data.serviceName == "Airbnb And Short Term Rental Cleaning"
+            ) {
+              navigate("/airbnb_and_short_service", {
+                state: { showSuccessPopup: true },
+              });
+            }
           }, 2000);
           setSaveLoader(false);
-        } else if(saveServiceData.data.status === "error"){ 
+        } else if (saveServiceData.data.status === "error") {
           setErrorMessage(saveServiceData.data.message);
           setShowError(true);
           setSaveLoader(false);
         }
-      } else if (
-        !saveServiceData.isSuccess &&
-        !saveServiceData.isLoading
-      ) {
+      } else if (!saveServiceData.isSuccess && !saveServiceData.isLoading) {
         setSaveLoader(false);
       }
     }
@@ -204,6 +210,7 @@ const CheckoutPage = () => {
             variant="contained"
             color="primary"
             fullWidth
+            disabled={saveLoader}
             style={{
               marginTop: "20px",
               backgroundColor: "#003087",
@@ -215,7 +222,16 @@ const CheckoutPage = () => {
             }}
             onClick={_handlePlaceOrder}
           >
-            Place Order
+            {saveLoader ? (
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "8px" }}
+              >
+                <CircularProgress size={20} color="inherit" />
+                <span>Processing...</span>
+              </div>
+            ) : (
+              "Place Order"
+            )}
           </Button>
         </Grid>
       </Grid>
