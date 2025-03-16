@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Typography, Card, CardContent } from "@mui/material";
+import { aboutUs1, aboutUs2 } from "../../config/images";
 
 const AboutUsPage: React.FC = () => {
   return (
@@ -37,18 +38,28 @@ const AboutUsPage: React.FC = () => {
         <Card sx={{ border: "2px solid #002F6D", borderRadius: 2 }}>
           <CardContent>
             <Typography variant="h6" mb={2}>
-              Booking Induction Video
+              Health and Safety Video
             </Typography>
             <Box
               sx={{
-                height: "200px",
+                height: "340px",
                 backgroundColor: "#ccc",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                overflow: "hidden",
+                borderRadius: 2,
               }}
             >
-              Video Placeholder
+              <video
+                controls
+                width="100%"
+                height="100%"
+                style={{ objectFit: "cover" }}
+              >
+                <source src={aboutUs1} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             </Box>
           </CardContent>
         </Card>
@@ -57,18 +68,28 @@ const AboutUsPage: React.FC = () => {
         <Card sx={{ border: "2px solid #002F6D", borderRadius: 2 }}>
           <CardContent>
             <Typography variant="h6" mb={2}>
-              Health and Safety Video
+              Booking Induction Video
             </Typography>
             <Box
               sx={{
-                height: "200px",
+                height: "340px",
                 backgroundColor: "#ccc",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                overflow: "hidden",
+                borderRadius: 2,
               }}
             >
-              Video Placeholder
+              <video
+                controls
+                width="100%"
+                height="100%"
+                style={{ objectFit: "cover" }}
+              >
+                <source src={aboutUs2} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             </Box>
           </CardContent>
         </Card>

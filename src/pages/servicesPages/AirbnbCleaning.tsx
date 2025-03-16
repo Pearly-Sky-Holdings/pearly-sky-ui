@@ -15,7 +15,6 @@ import {
   getServices,
 } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
-
 import { airbnbAndShortService } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
@@ -27,6 +26,7 @@ type Equipment = {
   price: number;
   name?: string;
 };
+
 function AirbnbAndShortService() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
@@ -49,17 +49,13 @@ function AirbnbAndShortService() {
   const [selectedEquipments, setSelectedEquipments] = useState<
     Array<{ id: string; price: number }>
   >([]);
-  // Currency state - Changed default from EUR to USD
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const [currencySymbol, setCurrencySymbol] = useState("$");
   const [conversionRate, setConversionRate] = useState(1);
   const [conversionRateBaseEur, setConversionRateBaseEur] = useState(1);
-
   const [changeValue, setChangeValue] = useState<boolean>(false);
   const [count, setCount] = useState(0);
-
   const [maxTime, setMaxTime] = useState<number>(1);
-
   const [checkedList, setCheckedList] = useState<string[]>([]);
   const [groupedItems, setGroupedItems] = useState<any>({});
   const [priceBreakdown, setPriceBreakdown] = useState({
@@ -85,7 +81,7 @@ function AirbnbAndShortService() {
       dispatch(getRestockList());
     }
   });
-  // Handler for currency changes from CurrencyConverter component
+
   const handleCurrencyUpdate = (
     currency: string,
     symbol: string,
@@ -103,29 +99,26 @@ function AirbnbAndShortService() {
   };
 
   const calculateTotalPrice = () => {
-    const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
-    const basePrice = hourlyRate * maxTime; // Base price in USD
-
+    const hourlyRate = parseInt(services.data.price, 10);
+    const basePrice = hourlyRate * maxTime;
     let serviceCosts = 0;
     let equipmentCosts = 0;
 
-    // Calculate equipment costs in USD
     selectedEquipments.forEach((equipment) => {
       equipmentCosts += equipment.price * conversionRate;
     });
 
-    // Calculate total price in the user's selected currency
     const totalPriceInSelectedCurrency =
       basePrice * conversionRate + equipmentCosts + serviceCosts;
 
     return {
       hourlyRate,
-
       equipmentCosts,
-      totalPrice: totalPriceInSelectedCurrency, // Total price in the selected currency
-      basePrice: basePrice * conversionRate, // Base price in the selected currency
+      totalPrice: totalPriceInSelectedCurrency,
+      basePrice: basePrice * conversionRate,
     };
   };
+
   useEffect(() => {
     if (items.data.length > 0) {
       const grouped = items.data.reduce((acc: any, item: any) => {
@@ -162,6 +155,7 @@ function AirbnbAndShortService() {
   const handleEquipmentOptionChange = (option: string) => {
     setSelectedEquipmentOption(option);
   };
+
   const handleBookNow = () => {
     if (
       !selectedDate ||
@@ -216,7 +210,6 @@ function AirbnbAndShortService() {
     navigate("/checkout", { state: { data } });
   };
 
-  // Handle checkbox change
   const handleCheckboxChange = (
     itemId: number,
     e: React.ChangeEvent<HTMLInputElement>
@@ -234,19 +227,23 @@ function AirbnbAndShortService() {
     { value: "every check in check out", label: "Every check in check out" },
     { value: "other", label: "Other " },
   ];
+
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
       {/* Header Section */}
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col sm:flex-row gap-4 sm:gap-8">
-        <div className="w-full sm:w-1/3">
+      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col gap-4 lg:flex-row lg:gap-8">
+        {/* Image Container */}
+        <div className="w-full lg:w-4/3 ">
           <img
             src={airbnbAndShortService}
             alt="Cleaning Service"
-            className="rounded-lg w-full h-auto"
+            className="rounded-lg w-full h-auto object-cover"
           />
         </div>
-        <div className="w-full sm:w-2/3">
-          <div className="">
+
+        {/* Content Container */}
+        <div className="w-fulllg:w-2/3">
+          <div>
             <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
               {services.data.name}
             </h1>

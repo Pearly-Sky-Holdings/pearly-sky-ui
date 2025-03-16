@@ -66,7 +66,7 @@ export const chooseClening4: string = "/images/chooseClening/chooseClening4.png"
 
 //team expert
 export const oshan: string = "/images/teamExperts/oshan.png";
-export const nipuna: string = "/images/teamExperts/nipuna.png";
+export const nipuna: string = "/images/teamExperts/nipuna.jpg";
 export const anusha: string = "/images/teamExperts/anusha.png";
 export const Shakila: string = "/images/teamExperts/Shakila.png";
 
@@ -232,6 +232,10 @@ export const SpecialEventCleaning6: string = "/images/service/specialEventCleani
 //Pool Cleaning
 export const PoolCleaning1: string = "/images/service/poolCleaning/poolCleaning1.png";
 export const PoolCleaning2: string = "/images/service/poolCleaning/poolCleaning2.png";
+
+// AboutUs
+export const aboutUs1: string = "/video/aboutUs/aboutUs_video1.mp4";
+export const aboutUs2: string = "/video/aboutUs/aboutUs_video2.mp4";
 
 
 

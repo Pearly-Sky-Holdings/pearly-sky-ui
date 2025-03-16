@@ -213,15 +213,15 @@ const handleCheckboxChange = (section: Section, option: Option) => {
   return (
     <div className="max-w-7xl mx-auto p-4 mt-6 sm:p-2">
       {/* Header Section */}
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col sm:flex-row gap-4 sm:gap-8 items-stretch">
-        <div className="w-full sm:w-2/5 flex">
+      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col gap-4 lg:flex-row lg:gap-8">
+        <div className="w-full lg:w-3/3">
           <img
             src={steamService}
             alt="Cleaning Service"
             className="rounded-2xl w-full h-full object-cover"
           />
         </div>
-        <div className="w-full sm:w-2/3 flex flex-col justify-between">
+        <div className="w-fulllg:w-2/3 gap-1">
           <div>
             <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
             Steam Cleaning
