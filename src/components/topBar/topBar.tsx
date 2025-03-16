@@ -19,17 +19,24 @@ const countries: Country[] = [
   { code: "fr", nameKey: "france" },
   { code: "de", nameKey: "germany" },
   { code: "jp", nameKey: "japan" },
-  { code: "lk", nameKey: "sriLanka" }, // Added Sri Lanka
+  { code: "lk", nameKey: "sriLanka" },
 ];
 
 export default function TopBar() {
   const navigate = useNavigate();
   const [selectedCountry, setSelectedCountry] = useState("us");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  
+
   // Get language context
   const { setLanguage, translate } = useLanguage();
+
+  // Check if the user is logged in (token exists in localStorage)
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token);
+  }, []);
 
   // Update language when country changes
   useEffect(() => {
@@ -41,6 +48,14 @@ export default function TopBar() {
 
   const handleCountryChange = (code: string) => {
     setSelectedCountry(code);
+  };
+
+  // Handle logout
+  
+
+  // Handle dashboard navigation
+  const handleDashboard = () => {
+    navigate('/customer-dashboard/:customerId');
   };
 
   const socialIcons = [
@@ -136,7 +151,7 @@ export default function TopBar() {
           ))}
         </Box>
 
-        {/* Right Side - Login Button */}
+        {/* Right Side - Conditional Button */}
         <Box 
           sx={{ 
             display: "flex", 
@@ -145,24 +160,45 @@ export default function TopBar() {
             marginRight: isMobile ? "8px" : "1%",
           }}
         >
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#002F6D",
-              color: "white",
-              borderRadius: "10px",
-              textTransform: "none",
-              fontWeight: "bold",
-              padding: "6px 16px",
-              "&:hover": {
+          {isLoggedIn ? (
+            <Button
+              variant="contained"
+              sx={{
                 backgroundColor: "#002F6D",
-              },
-              px: isMobile ? 3 : 3,
-            }}
-            onClick={() => navigate("/login")}
-          >
-            {translate('login')}
-          </Button>
+                color: "white",
+                borderRadius: "10px",
+                textTransform: "none",
+                fontWeight: "bold",
+                padding: "6px 16px",
+                "&:hover": {
+                  backgroundColor: "#002F6D",
+                },
+                px: isMobile ? 3 : 3,
+              }}
+              onClick={handleDashboard}
+            >
+              {translate('dashboard')}
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#002F6D",
+                color: "white",
+                borderRadius: "10px",
+                textTransform: "none",
+                fontWeight: "bold",
+                padding: "6px 16px",
+                "&:hover": {
+                  backgroundColor: "#002F6D",
+                },
+                px: isMobile ? 3 : 3,
+              }}
+              onClick={() => navigate("/login")}
+            >
+              {translate('login')}
+            </Button>
+          )}
         </Box>
       </Toolbar>
     </AppBar>

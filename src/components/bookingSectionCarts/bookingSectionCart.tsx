@@ -79,6 +79,7 @@ const BookingSectionCart: React.FC<BookingSectionCartProps> = ({
     { value: "Dutch", label: "Dutch" },
     { value: "German", label: "German" },
     { value: "Arabic", label: "Arabic" },
+    { value: "any", label: "Any" },
   ];
 
   // Predefined durations

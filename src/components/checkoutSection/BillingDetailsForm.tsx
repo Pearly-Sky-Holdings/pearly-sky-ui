@@ -249,7 +249,7 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
 
       <Grid container spacing={2}>
         {/* First Name & Last Name */}
-        <Grid item xs={6}>
+        <Grid item xs={12} md={12} lg={6}>
           <FormControl fullWidth size="small">
             <TextField
               fullWidth
@@ -265,7 +265,7 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
             />
           </FormControl>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={12} lg={6}>
           <FormControl fullWidth size="small">
             <TextField
               fullWidth
@@ -430,7 +430,7 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
         </Grid>
 
         {/* Address Fields */}
-        <Grid item xs={6}>
+        <Grid item xs={12} md={12} lg={6}>
           <FormControl fullWidth size="small">
             <TextField
               fullWidth
@@ -446,7 +446,7 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
             />
           </FormControl>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={12} lg={6}>
           <FormControl fullWidth size="small">
             <TextField
               fullWidth
@@ -586,7 +586,7 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
         </Grid>
 
         {/* Password Fields */}
-        <Grid item xs={6}>
+        <Grid item xs={12} md={12} lg={6}>
           <FormControl fullWidth size="small">
             <FormLabel>
               Password <span style={{ color: "red" }}>*</span>
@@ -616,9 +616,9 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
           </FormControl>
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={12} md={12} lg={6}>
           <FormControl fullWidth size="small">
-            <FormLabel>Confirm Password </FormLabel>
+            <FormLabel>Confirm Password <span style={{ color: "red" }}>*</span> </FormLabel>
             <TextField
               fullWidth
               placeholder="Confirm password"
