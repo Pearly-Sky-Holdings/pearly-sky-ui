@@ -56,8 +56,8 @@ const SanitizationBookingCart: React.FC<SanitizationBookingCartProps> = ({
     { value: "other", label: "Other sector" },
   ];
   const frequencyOptions = [
-    { value: "One-time", label: "One-time" },
-    { value: "weekly", label: "Weekly" },
+    { value: "one-time", label: "one-time" },
+    { value: "weekly", label: "weekly" },
     { value: "every two weeks", label: "every two weeks" },
     { value: "every three weeks", label: "every three weeks" },
     { value: "monthly", label: "monthly" },
@@ -65,19 +65,19 @@ const SanitizationBookingCart: React.FC<SanitizationBookingCartProps> = ({
   ];
 
   const contactTypeOptions = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-    { value: "other", label: "Other" },
+    { value: "male", label: "male" },
+    { value: "female", label: "female" },
+    { value: "any", label: "any" },
   ];
 
   const languageOptions = [
-    { value: "english", label: "English" },
-    { value: "french", label: "French" },
-    { value: "spanish", label: "Spanish" },
+    { value: "English", label: "English" },
+    { value: "French", label: "French" },
+    { value: "Fpanish", label: "Spanish" },
     { value: "Dutch", label: "Dutch" },
     { value: "German", label: "German" },
     { value: "Arabic", label: "Arabic" },
-    { value: "other", label: "other" },
+    { value: "any", label: "any" },
   ];
 
   const timeZoneOptions = [

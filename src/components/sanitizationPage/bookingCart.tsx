@@ -52,7 +52,7 @@ const SanitizationBookingCart: React.FC<SanitizationBookingCartProps> = ({
     { value: "transport sector", label: "Transport sector" },
     { value: "airport", label: "Airport" },
     { value: "retail building or shop", label: "Retail building or shop" },
-    { value: "other", label: "Other sector" },
+    { value: "other sector", label: "Other sector" },
   ];
   const frequencyOptions = [
     { value: "One-time", label: "One-time" },
@@ -64,9 +64,9 @@ const SanitizationBookingCart: React.FC<SanitizationBookingCartProps> = ({
   ];
 
   const contactTypeOptions = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-    { value: "other", label: "Other" },
+    { value: "male", label: "male" },
+    { value: "female", label: "female" },
+    { value: "any", label: "any" },
   ];
 
   const languageOptions = [
@@ -76,7 +76,7 @@ const SanitizationBookingCart: React.FC<SanitizationBookingCartProps> = ({
     { value: "Dutch", label: "Dutch" },
     { value: "German", label: "German" },
     { value: "Arabic", label: "Arabic" },
-    { value: "Other Language", label: "Other Language" },
+    { value: "any", label: "any" },
   ];
 
   const timeZoneOptions = [
