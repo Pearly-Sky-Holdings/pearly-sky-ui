@@ -169,11 +169,11 @@ export default function TopBar() {
                 borderRadius: "10px",
                 textTransform: "none",
                 fontWeight: "bold",
-                padding: "6px 16px",
+                padding: "3px 1px",
                 "&:hover": {
                   backgroundColor: "#002F6D",
                 },
-                px: isMobile ? 3 : 3,
+                px: isMobile ? 2 : 3,
               }}
               onClick={handleDashboard}
             >

@@ -250,15 +250,15 @@ function RegularBasicCleaningPage() {
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
       {/* Header Section */}
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col sm:flex-row gap-4 sm:gap-8">
-        <div className="w-full sm:w-1/3">
+      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col gap-4 lg:flex-row lg:gap-8">
+        <div className="w-full lg:w-2/3">
           <img
             src={regularService1}
             alt="Cleaning Service"
             className="rounded-lg w-full h-auto"
           />
         </div>
-        <div className="w-full sm:w-2/3">
+        <div className="w-fulllg:w-2/3">
           <div className="">
             <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
               {services.data.name}
