@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCustomerDetails } from "../../services/CleaningServices/index";
 import store from "../../store";
+import { useParams } from "react-router-dom";
 
 interface DataTableProps {
   onViewDetails: (item: any) => void;
@@ -10,15 +11,14 @@ interface DataTableProps {
 
 const DataTable: React.FC<DataTableProps> = ({ onViewDetails }) => {
   const dispatch = useDispatch<typeof store.dispatch>();
+  const { customerId } = useParams<{ customerId: string }>();
   const details = useSelector((state: any) => state.customerDetailsSlice.details);
 
   useEffect(() => {
-    dispatch(getCustomerDetails("3"));
-  }, []);
-
-  useEffect(() => {
-    console.log(details.data[0]?.serviceDetails);
-  },[details.data])
+    if (customerId) {
+      dispatch(getCustomerDetails(customerId));
+    }
+  }, [customerId]);
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white">

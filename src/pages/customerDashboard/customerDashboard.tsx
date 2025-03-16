@@ -4,11 +4,13 @@ import DateRangePicker from "../../components/customerDashboardCarts/DateRangePi
 import DataTable from "../../components/customerDashboardCarts/DataTable";
 import Modal from "../../components/customerDashboardCarts/Modal";
 import CustomerDetails from "../../components/customerDashboardCarts/CustomerDetails";
+import { useParams } from "react-router-dom";
 
 const CustomerDashboard: React.FC = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<any | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentDate, setCurrentDate] = useState("");
+  const { customerId } = useParams<{ customerId: string }>();
 
   useEffect(() => {
     // Set current date in the format: 08:30 AM, Thu 25 Feb 2025

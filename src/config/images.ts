@@ -1,4 +1,4 @@
-export const companyLogo: string = "./images/logo.png";
+export const companyLogo: string = "/images/logo.png";
 
 export const homePageImage1: string = "/images/home/homePageImage3.png";
 export const homePageImage2: string = "/images/home/homePageImage2.png";

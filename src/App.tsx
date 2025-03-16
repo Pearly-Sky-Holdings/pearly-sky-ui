@@ -100,7 +100,7 @@ function App() {
       <TopBar />
         <Routes>
         <Route element={<MainLayout />}>
-          <Route path="/customer-dashboard" element={<CustomerDashboard />} />
+          <Route path="/customer-dashboard/:customerId" element={<CustomerDashboard />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/help" element={<Help />} />
         </Route>

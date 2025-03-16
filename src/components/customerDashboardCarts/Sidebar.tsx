@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { NavItem } from "../../type";
-import { companyLogo } from "../../config/images";
+import { companyLogo} from "../../config/images";
 
 interface SidebarProps {
   items: NavItem[];

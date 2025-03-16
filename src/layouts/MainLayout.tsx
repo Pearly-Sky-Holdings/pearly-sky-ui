@@ -10,7 +10,7 @@ const MainLayout: React.FC = () => {
   const navItems: NavItem[] = [
     {
       name: 'Dashboard',
-      path: '/customer-dashboard',
+      path: '/customer-dashboard/:customerId',
       icon: <Home size={20} />,
       active: location.pathname === '/customer-dashboard' || location.pathname === '/'
     },
