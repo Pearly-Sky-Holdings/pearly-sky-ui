@@ -25,18 +25,11 @@ const countries: Country[] = [
 export default function TopBar() {
   const navigate = useNavigate();
   const [selectedCountry, setSelectedCountry] = useState("us");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   // Get language context
   const { setLanguage, translate } = useLanguage();
-
-  // Check if the user is logged in (token exists in localStorage)
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token);
-  }, []);
 
   // Update language when country changes
   useEffect(() => {
@@ -54,9 +47,7 @@ export default function TopBar() {
   
 
   // Handle dashboard navigation
-  const handleDashboard = () => {
-    navigate('/customer-dashboard/:customerId');
-  };
+ 
 
   const socialIcons = [
     { icon: <FaFacebookF />, link: "https://www.facebook.com/profile.php?id=61561165376278" },
@@ -160,26 +151,7 @@ export default function TopBar() {
             marginRight: isMobile ? "8px" : "1%",
           }}
         >
-          {isLoggedIn ? (
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "#002F6D",
-                color: "white",
-                borderRadius: "10px",
-                textTransform: "none",
-                fontWeight: "bold",
-                padding: "3px 1px",
-                "&:hover": {
-                  backgroundColor: "#002F6D",
-                },
-                px: isMobile ? 2 : 3,
-              }}
-              onClick={handleDashboard}
-            >
-              {translate('dashboard')}
-            </Button>
-          ) : (
+          
             <Button
               variant="contained"
               sx={{
@@ -198,7 +170,7 @@ export default function TopBar() {
             >
               {translate('login')}
             </Button>
-          )}
+          
         </Box>
       </Toolbar>
     </AppBar>

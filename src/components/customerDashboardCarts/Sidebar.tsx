@@ -1,13 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; // Import useNavigate for redirection
 import { NavItem } from "../../type";
-import { companyLogo} from "../../config/images";
+import { companyLogo } from "../../config/images";
 
 interface SidebarProps {
   items: NavItem[];
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ items }) => {
+  // Hook for navigation
+
   return (
     <div className="bg-blue-900 text-white h-screen w-64 flex flex-col">
       <div className="p-4 border-b border-blue-800">

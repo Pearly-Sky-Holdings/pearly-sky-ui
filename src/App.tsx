@@ -98,6 +98,7 @@ function App() {
       <LanguageProvider>
       <Router>
       <TopBar />
+      <NavigationBar />
         <Routes>
         <Route element={<MainLayout />}>
           <Route path="/customer-dashboard/:customerId" element={<CustomerDashboard />} />
@@ -107,7 +108,7 @@ function App() {
         </Routes>
         
 
-        <NavigationBar />
+        
 
         <Routes>
           {/* Main one-page scrollable site */}

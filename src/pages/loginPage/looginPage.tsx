@@ -18,9 +18,10 @@ import {
   DialogActions,
   Snackbar,
   Alert,
-  CircularProgress, // Import CircularProgress
+  CircularProgress,
+  IconButton,
 } from "@mui/material";
-import { AccountCircle, Lock } from "@mui/icons-material";
+import { AccountCircle, Lock, Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { loginPageImage } from "../../config/images.ts";
 import { useDispatch } from "react-redux";
@@ -58,7 +59,17 @@ const LoginPage = () => {
   );
 
   // State for Loading
-  const [isLoading, setIsLoading] = useState(false); // Add loading state
+  const [isLoading, setIsLoading] = useState(false);
+
+  // State for Password Visibility
+  const [showPassword, setShowPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  // Toggle Password Visibility
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowNewPassword = () => setShowNewPassword((show) => !show);
+  const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
 
   // Handle form field changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,7 +105,7 @@ const LoginPage = () => {
     setErrors(newErrors);
 
     if (valid) {
-      setIsLoading(true); // Start loading
+      setIsLoading(true);
       try {
         const result = await dispatch(
           getAuth({ email: formData.email, password: formData.password })
@@ -122,7 +133,7 @@ const LoginPage = () => {
         setSnackbarSeverity("error");
         setSnackbarOpen(true);
       } finally {
-        setIsLoading(false); // Stop loading
+        setIsLoading(false);
       }
     }
   };
@@ -157,7 +168,7 @@ const LoginPage = () => {
       return;
     }
 
-    setIsLoading(true); // Start loading
+    setIsLoading(true);
     try {
       const result = await dispatch(getOtp({ email: forgotPasswordEmail }));
       if (getOtp.fulfilled.match(result)) {
@@ -176,7 +187,7 @@ const LoginPage = () => {
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
     } finally {
-      setIsLoading(false); // Stop loading
+      setIsLoading(false);
     }
   };
 
@@ -208,7 +219,7 @@ const LoginPage = () => {
       return;
     }
 
-    setIsLoading(true); // Start loading
+    setIsLoading(true);
     try {
       const result = await dispatch(
         getForgotPassword({
@@ -245,7 +256,7 @@ const LoginPage = () => {
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
     } finally {
-      setIsLoading(false); // Stop loading
+      setIsLoading(false);
     }
   };
 
@@ -365,7 +376,7 @@ const LoginPage = () => {
                     fullWidth
                     placeholder="Password"
                     variant="outlined"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     margin="normal"
                     name="password"
                     value={formData.password}
@@ -376,6 +387,17 @@ const LoginPage = () => {
                       startAdornment: (
                         <InputAdornment position="start">
                           <Lock sx={{ color: "#888" }} />
+                        </InputAdornment>
+                      ),
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            edge="end"
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
                         </InputAdornment>
                       ),
                       sx: {
@@ -449,7 +471,7 @@ const LoginPage = () => {
                     type="submit"
                     variant="contained"
                     fullWidth
-                    disabled={isLoading} // Disable button when loading
+                    disabled={isLoading}
                     sx={{
                       fontSize: { xs: "11px", sm: "12px" },
                       fontWeight: "bold",
@@ -462,7 +484,7 @@ const LoginPage = () => {
                     }}
                   >
                     {isLoading ? (
-                      <CircularProgress size={24} color="inherit" /> // Show loading spinner
+                      <CircularProgress size={24} color="inherit" />
                     ) : (
                       "Login"
                     )}
@@ -554,7 +576,7 @@ const LoginPage = () => {
           <Button
             onClick={handleForgotPasswordSubmit}
             variant="contained"
-            disabled={isLoading} // Disable button when loading
+            disabled={isLoading}
             sx={{
               backgroundColor: "#002F6D",
               color: "white",
@@ -566,7 +588,7 @@ const LoginPage = () => {
             }}
           >
             {isLoading ? (
-              <CircularProgress size={24} color="inherit" /> // Show loading spinner
+              <CircularProgress size={24} color="inherit" />
             ) : (
               "Send OTP"
             )}
@@ -629,7 +651,7 @@ const LoginPage = () => {
           <Button
             onClick={handleOtpSubmit}
             variant="contained"
-            disabled={isLoading} // Disable button when loading
+            disabled={isLoading}
             sx={{
               backgroundColor: "#002F6D",
               color: "white",
@@ -641,7 +663,7 @@ const LoginPage = () => {
             }}
           >
             {isLoading ? (
-              <CircularProgress size={24} color="inherit" /> // Show loading spinner
+              <CircularProgress size={24} color="inherit" />
             ) : (
               "Verify OTP"
             )}
@@ -689,7 +711,7 @@ const LoginPage = () => {
             fullWidth
             placeholder="New Password"
             variant="outlined"
-            type="password"
+            type={showNewPassword ? "text" : "password"}
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             sx={{
@@ -699,12 +721,25 @@ const LoginPage = () => {
                 backgroundColor: "#f5f5f5",
               },
             }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle new password visibility"
+                    onClick={handleClickShowNewPassword}
+                    edge="end"
+                  >
+                    {showNewPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <TextField
             fullWidth
             placeholder="Confirm Password"
             variant="outlined"
-            type="password"
+            type={showConfirmPassword ? "text" : "password"}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             sx={{
@@ -713,6 +748,19 @@ const LoginPage = () => {
                 borderRadius: "8px",
                 backgroundColor: "#f5f5f5",
               },
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle confirm password visibility"
+                    onClick={handleClickShowConfirmPassword}
+                    edge="end"
+                  >
+                    {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
             }}
           />
           {passwordError && (
@@ -725,7 +773,7 @@ const LoginPage = () => {
           <Button
             onClick={handlePasswordReset}
             variant="contained"
-            disabled={isLoading} // Disable button when loading
+            disabled={isLoading}
             sx={{
               backgroundColor: "#002F6D",
               color: "white",
@@ -737,7 +785,7 @@ const LoginPage = () => {
             }}
           >
             {isLoading ? (
-              <CircularProgress size={24} color="inherit" /> // Show loading spinner
+              <CircularProgress size={24} color="inherit" />
             ) : (
               "Reset Password"
             )}
