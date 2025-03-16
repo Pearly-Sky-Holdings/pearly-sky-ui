@@ -471,19 +471,19 @@ const moveInAndOutTransportBookingCart: React.FC<SanitizationBookingCartProps> =
   ];
 
   const contactTypeOptions = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-    { value: "other", label: "Other" },
+    { value: "male", label: "male" },
+    { value: "female", label: "female" },
+    { value: "any", label: "any" },
   ];
 
   const languageOptions = [
     { value: "english", label: "English" },
-    { value: "french", label: "French" },
-    { value: "spanish", label: "Spanish" },
+    { value: "French", label: "French" },
+    { value: "Spanish", label: "Spanish" },
     { value: "Dutch", label: "Dutch" },
     { value: "German", label: "German" },
     { value: "Arabic", label: "Arabic" },
-    { value: "other", label: "Other" },
+    { value: "any", label: "any" },
   ];
 
   const timeZoneOptions = [
