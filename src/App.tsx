@@ -50,6 +50,7 @@ import SteamCleaning from "./pages/servicesPages/SteamCleaning.tsx";
 import PressureWashing from "./pages/servicesPages/pressureWashing.tsx";
 import SpecialEventCleaning from "./pages/servicesPages/specialEventCleaning.tsx";
 import Poolcleaning from "./pages/servicesPages/poolCleaning.tsx";
+import WelcomeAlert from './components/welcomeAlert/WelcomeAlert';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -95,6 +96,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <WelcomeAlert />
       <LanguageProvider>
       <Router>
       <TopBar />
