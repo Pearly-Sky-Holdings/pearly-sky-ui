@@ -51,6 +51,8 @@ import PressureWashing from "./pages/servicesPages/pressureWashing.tsx";
 import SpecialEventCleaning from "./pages/servicesPages/specialEventCleaning.tsx";
 import Poolcleaning from "./pages/servicesPages/poolCleaning.tsx";
 import WelcomeAlert from './components/welcomeAlert/WelcomeAlert';
+import CookiesPolicy from "./pages/cookiesPolicy/cookiesPolicy.tsx";
+import TermsAndConditionsPage from "./pages/termsAndConditions/termsAndConditions.tsx";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -380,6 +382,29 @@ function App() {
               </>
             }
           />
+
+           {/*Cookies Policy*/}
+           <Route
+            path="/cookie_policy"
+            element={
+              <>
+                <CookiesPolicy />
+                <Footer />
+              </>
+            }
+          />
+
+           {/*Terms And Conditions*/}
+           <Route
+            path="/terms_and_conditions_page"
+            element={
+              <>
+                <TermsAndConditionsPage />
+                <Footer />
+              </>
+            }
+          />
+
           <Route path="/login" element={<LoginPage />} />
 
           <Route path="/checkout" element={<CheckoutPage />} />
