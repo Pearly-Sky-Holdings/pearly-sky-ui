@@ -6,6 +6,7 @@ import {
   Snackbar,
   Alert,
   CircularProgress,
+  Backdrop,
 } from "@mui/material";
 import store from "../../store";
 import { useEffect, useState } from "react";
@@ -235,6 +236,25 @@ const CheckoutPage = () => {
           </Button>
         </Grid>
       </Grid>
+
+      {/* Full screen loading overlay */}
+      <Backdrop
+        sx={{ 
+          color: '#fff', 
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          flexDirection: 'column',
+          gap: 2
+        }}
+        open={saveLoader}
+      >
+        <CircularProgress color="inherit" size={60} />
+        <Typography variant="h6" component="div">
+          Processing your order...
+        </Typography>
+        <Typography variant="body2" component="div">
+          Please wait while we confirm your booking
+        </Typography>
+      </Backdrop>
 
       <Snackbar
         open={showSuccess}
