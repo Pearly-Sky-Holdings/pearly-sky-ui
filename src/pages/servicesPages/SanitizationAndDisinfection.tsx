@@ -16,7 +16,7 @@ import SanitizationBookingCart from "../../components/sanitizationPage/bookingCa
 import PersonalInformationForm from "../../components/personalInformationForm/personalInformationForm";
 import { SanitizationService } from "../../config/images";
 import EstimateList from "../../components/sanitizationPage/estimateList";
-
+import LoadingOverlay from "../../components/welcomeAlert/LoadingOverlay";
 
 function SanitizationAndDisinfection() {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ function SanitizationAndDisinfection() {
   const [timeZone, setTimeZone] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
    
   const [selectedData, setSelectedData] = useState<{ category: string; items: string[] }[]>([]);
 
@@ -107,18 +107,18 @@ const handleCheckboxChange = (section: Section, option: Option) => {
   });
 
   const handleBookNow = async () => {
+    // Validate Chemical
+    if (!chemical.customer && !chemical.company) {
+      alert("Chemical is required. Please select an option for Chemical.");
+      return; 
+    }
 
-     // Validate Chemical
-  if (!chemical.customer && !chemical.company) {
-    alert("Chemical is required. Please select an option for Chemical.");
-    return; 
-  }
-
-  // Validate Equipment
-  if (!equipment.customer && !equipment.company) {
-    alert("Equipment is required. Please select an option for Equipment.");
-    return; 
-  }
+    // Validate Equipment
+    if (!equipment.customer && !equipment.company) {
+      alert("Equipment is required. Please select an option for Equipment.");
+      return; 
+    }
+    
     // Validate required fields
     if (
       !frequency ||
@@ -189,6 +189,9 @@ const handleCheckboxChange = (section: Section, option: Option) => {
     console.log("Data:", data);
   
     try {
+      // Show loading overlay
+      setIsLoading(true);
+      
       // Make the API call
       const response = await fetch("https://back.pearlyskyplc.com/api/saveServiceDetails", {
         method: "POST",
@@ -214,6 +217,9 @@ const handleCheckboxChange = (section: Section, option: Option) => {
       // Handle network errors
       console.error("Network Error:", error);
       alert("An error occurred while submitting the request. Please check your connection and try again.");
+    } finally {
+      // Hide loading overlay
+      setIsLoading(false);
     }
   };
 
@@ -302,9 +308,7 @@ const handleCheckboxChange = (section: Section, option: Option) => {
 
         {/* Booking Details */}
         <div className="mt-10">
-
           <SanitizationBookingCart           
-
             propertyType={propertyType}
             setPropertyType={setPropertyType}
             frequency={frequency}
@@ -315,7 +319,6 @@ const handleCheckboxChange = (section: Section, option: Option) => {
             setLanguage={setLanguage}
             timeZone={timeZone}
             setTimeZone={setTimeZone}
-
           />
         </div>
 
@@ -434,6 +437,13 @@ const handleCheckboxChange = (section: Section, option: Option) => {
           Request Quotation
         </button>
       </div>
+
+      {/* Using the new LoadingOverlay component */}
+      <LoadingOverlay 
+        open={isLoading} 
+        message="Processing your order..."
+        subMessage="Please wait while we confirm your booking"
+      />
 
       {/* Payment Support Section */}
       <div>
