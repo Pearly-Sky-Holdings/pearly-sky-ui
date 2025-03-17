@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Sidebar from '../components/customerDashboardCarts/Sidebar';
-import { Home, Settings, HelpCircle } from 'lucide-react';
+import { Home, Settings, HelpCircle, LogOut } from 'lucide-react';
 import { NavItem } from '../type';
 
 const MainLayout: React.FC = () => {
@@ -25,6 +25,12 @@ const MainLayout: React.FC = () => {
       path: '/help',
       icon: <HelpCircle size={20} />,
       active: location.pathname === '/help'
+    },
+    {
+      name: 'Logout',
+      path: '/login',
+      icon: <LogOut size={20} />,
+      active: location.pathname === '/login'
     }
   ];
 
