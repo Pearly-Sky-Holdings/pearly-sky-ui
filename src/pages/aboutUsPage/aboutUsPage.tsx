@@ -42,7 +42,7 @@ const AboutUsPage: React.FC = () => {
             </Typography>
             <Box
               sx={{
-                height: "340px",
+                height: { xs: "160px", sm: "420px", md: "320px" }, 
                 backgroundColor: "#ccc",
                 display: "flex",
                 alignItems: "center",
@@ -72,7 +72,7 @@ const AboutUsPage: React.FC = () => {
             </Typography>
             <Box
               sx={{
-                height: "340px",
+                height: { xs: "160px", sm: "420px", md: "320px" },
                 backgroundColor: "#ccc",
                 display: "flex",
                 alignItems: "center",
