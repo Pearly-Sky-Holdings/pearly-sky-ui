@@ -25,7 +25,7 @@ const AboutUsPage: React.FC = () => {
         />
       </Box>
 
-      {/* Videos Section */}
+      
       <Box
         sx={{
           display: "grid",
@@ -34,7 +34,6 @@ const AboutUsPage: React.FC = () => {
           px: 3,
         }}
       >
-        {/* Booking Induction Video */}
         <Card sx={{ border: "2px solid #002F6D", borderRadius: 2 }}>
           <CardContent>
             <Typography variant="h6" mb={2}>
@@ -42,7 +41,7 @@ const AboutUsPage: React.FC = () => {
             </Typography>
             <Box
               sx={{
-                height: "340px",
+                height: { xs: "160px", sm: "420px", md: "320px" }, 
                 backgroundColor: "#ccc",
                 display: "flex",
                 alignItems: "center",
@@ -72,7 +71,7 @@ const AboutUsPage: React.FC = () => {
             </Typography>
             <Box
               sx={{
-                height: "340px",
+                height: { xs: "160px", sm: "420px", md: "320px" },
                 backgroundColor: "#ccc",
                 display: "flex",
                 alignItems: "center",
