@@ -6,6 +6,9 @@ import {
   Snackbar,
   Alert,
   CircularProgress,
+  Modal,
+  Box,
+  IconButton,
 } from "@mui/material";
 import store from "../../store";
 import { useEffect, useState } from "react";
@@ -15,7 +18,11 @@ import { saveServices } from "../../services/CleaningServices/saveService";
 import { useLocation, useNavigate } from "react-router-dom";
 import OrderSummary from "../../components/checkoutSection/OrderSummary";
 import PaymentMethod from "../../components/checkoutSection/PaymentMethod";
-import LoadingOverlay from "../../components/welcomeAlert/LoadingOverlay"; 
+import LoadingOverlay from "../../components/welcomeAlert/LoadingOverlay";
+import CloseIcon from "@mui/icons-material/Close"; // For the "Cut" button icon
+import {
+  successImage
+} from "../../config/images";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
@@ -24,6 +31,7 @@ const CheckoutPage = () => {
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
+  const [showThankYouModal, setShowThankYouModal] = useState(false); // State for showing the Thank You image
   const saveServiceData = useSelector(
     (state: any) => state.serviceDetailsSlice.service
   );
@@ -110,6 +118,41 @@ const CheckoutPage = () => {
     }
   };
 
+  // Function to handle navigation after the timer or "Cut" button
+  const navigateToRoute = () => {
+    if (data.serviceName == "Regular Basic") {
+      navigate("/regular-basic-cleaning", {
+        state: { showSuccessPopup: true },
+      });
+    } else if (data.serviceName == "Deep Cleaning") {
+      navigate("/deep-cleaning", {
+        state: { showSuccessPopup: true },
+      });
+    } else if (data.serviceName == "One Time Cleaning") {
+      navigate("/one-time-cleaning", {
+        state: { showSuccessPopup: true },
+      });
+    } else if (data.serviceName == "Last Minute") {
+      navigate("/last-minute-cleaning", {
+        state: { showSuccessPopup: true },
+      });
+    } else if (data.serviceName == "Move In/Out Cleaning") {
+      navigate("/move-in-out-cleaning", {
+        state: { showSuccessPopup: true },
+      });
+    } else if (data.serviceName == "Post Construction") {
+      navigate("/post-construction-cleaning", {
+        state: { showSuccessPopup: true },
+      });
+    } else if (
+      data.serviceName == "Airbnb And Short Term Rental Cleaning"
+    ) {
+      navigate("/airbnb_and_short_service", {
+        state: { showSuccessPopup: true },
+      });
+    }
+  };
+
   // Save Regular Service
   useEffect(() => {
     if (saveLoader) {
@@ -119,40 +162,16 @@ const CheckoutPage = () => {
         }
         if (saveServiceData.data.status === "success") {
           setShowSuccess(true);
-          setTimeout(() => {
-            if (data.serviceName == "Regular Basic") {
-              navigate("/regular-basic-cleaning", {
-                state: { showSuccessPopup: true },
-              });
-            } else if (data.serviceName == "Deep Cleaning") {
-              navigate("/deep-cleaning", {
-                state: { showSuccessPopup: true },
-              });
-            } else if (data.serviceName == "One Time Cleaning") {
-              navigate("/one-time-cleaning", {
-                state: { showSuccessPopup: true },
-              });
-            } else if (data.serviceName == "Last Minute") {
-              navigate("/last-minute-cleaning", {
-                state: { showSuccessPopup: true },
-              });
-            } else if (data.serviceName == "Move In/Out Cleaning") {
-              navigate("/move-in-out-cleaning", {
-                state: { showSuccessPopup: true },
-              });
-            } else if (data.serviceName == "Post Construction") {
-              navigate("/post-construction-cleaning", {
-                state: { showSuccessPopup: true },
-              });
-            } else if (
-              data.serviceName == "Airbnb And Short Term Rental Cleaning"
-            ) {
-              navigate("/airbnb_and_short_service", {
-                state: { showSuccessPopup: true },
-              });
-            }
-          }, 2000);
-          setSaveLoader(false);
+          setShowThankYouModal(true); // Show the Thank You image modal
+
+          // Set a 10-second timer to navigate to the route
+          const timer = setTimeout(() => {
+            setShowThankYouModal(false);
+            navigateToRoute();
+          }, 5000); // 10 seconds
+
+          // Clean up the timer on component unmount or if the user clicks "Cut"
+          return () => clearTimeout(timer);
         } else if (saveServiceData.data.status === "error") {
           setErrorMessage(saveServiceData.data.message);
           setShowError(true);
@@ -163,6 +182,12 @@ const CheckoutPage = () => {
       }
     }
   }, [saveServiceData.data, saveServiceData.errorMessage]);
+
+  // Handle the "Cut" button click
+  const handleCutButtonClick = () => {
+    setShowThankYouModal(false);
+    navigateToRoute();
+  };
 
   return (
     <Container maxWidth="xl" sx={{ marginBottom: "5%", color: "black" }}>
@@ -238,11 +263,49 @@ const CheckoutPage = () => {
       </Grid>
 
       {/* Using the new LoadingOverlay component */}
-      <LoadingOverlay 
-        open={saveLoader} 
+      <LoadingOverlay
+        open={saveLoader}
         message="Processing your order..."
         subMessage="Please wait while we confirm your booking"
       />
+
+      {/* Modal for Thank You Image */}
+      <Modal
+        open={showThankYouModal}
+        onClose={() => {}} // Prevent closing by clicking outside
+        aria-labelledby="thank-you-modal"
+        aria-describedby="thank-you-image-display"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "white",
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 2,
+            textAlign: "center",
+            maxWidth: "90%",
+          }}
+        >
+          {/* Thank You Image */}
+          <img
+            src={successImage}// Replace with the actual path to your image
+            alt="Thank You for Your Booking"
+            style={{ maxWidth: "100%", height: "auto" }}
+          />
+
+          {/* Cut Button */}
+          <IconButton
+            onClick={handleCutButtonClick}
+            sx={{ position: "absolute", top: 10, right: 10 }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Box>
+      </Modal>
 
       <Snackbar
         open={showSuccess}

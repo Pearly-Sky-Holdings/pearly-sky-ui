@@ -263,7 +263,7 @@ const Footer = () => {
                 {/* Contact Now Button */}
                 <Button
                   variant="outlined"
-                  href="https://wa.me/phone-number"
+                  href="https://wa.me/33635508169"
                   target="_blank"
                   rel="noopener noreferrer"
                   sx={{

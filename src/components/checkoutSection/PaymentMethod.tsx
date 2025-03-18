@@ -25,6 +25,7 @@ const paymentMethods = [
   // { id: "ideal", name: "iDEAL", img: "./images/paymentMethods/ideal.png" },
   { id: "paypal", name: "PayPal", img: "./images/paymentMethods/paypal.png" },
   { id: "card", name: "Card Payment", img: "./images/paymentMethods/visaMaster.png" },
+  { id: "cash", name: "Cash", img: "./images/paymentMethods/visaMaster.png" },
 ];
 interface PaymentMethodComponentProps {
   onPaymentMethodChange: (method: string) => void;
