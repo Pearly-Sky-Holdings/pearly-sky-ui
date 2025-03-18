@@ -1,4 +1,5 @@
 import React, { useState, FormEvent } from "react";
+import instance from "../../services/AxiosOrder"; 
 import {
   Grid,
   TextField,
@@ -23,11 +24,6 @@ interface FormData {
   zipPostal: string;
   country: string;
   resume: File | null;
-}
-
-// Define the props for the form component
-interface JobApplyFormProps {
-  // Add any props if needed, currently empty
 }
 
 const countries = [
@@ -56,7 +52,7 @@ const countries = [
   { name: "Belgium", code: "BE" },
 ];
 
-const JobApplyForm: React.FC<JobApplyFormProps> = ({}) => {
+const JobApplyForm: React.FC = () => {
   // Initialize form state
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
@@ -91,13 +87,73 @@ const JobApplyForm: React.FC<JobApplyFormProps> = ({}) => {
     }));
   };
 
-  // Handle form submission
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Add your form submission logic here (e.g., API call)
+  
+    const payload = {
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+      company: "Pearly Sky PLC",
+      country: formData.country,
+      city: formData.city,
+      province: formData.stateProvince,
+      apartment_type: formData.address,
+      street_address: formData.address,
+      postal_code: formData.zipPostal,
+      contact: formData.phone,
+      email: formData.email,
+    };
+  
+    try {
+      const response = await instance.post("saveJobApplication", payload);
+  
+      console.log("API Response:", response);
+  
+      if (response.status === 200 || response.status === 201) {
+        console.log("Application submitted successfully:", response.data);
+  
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          address: "",
+          city: "",
+          stateProvince: "",
+          zipPostal: "",
+          country: "",
+          resume: null,
+        });
+  
+        alert("Application submitted successfully!");
+      } else {
+        throw new Error(`Unexpected status code: ${response.status}`);
+      }
+    } catch (error: any) {
+      console.error("Error submitting application:", error);
+  
+      if (error?.response) {
+        const status = error.response.status;
+        let errorMessage = "Failed to submit application. Please try again.";
+  
+        if (status === 400) {
+          errorMessage = "Invalid data. Please check your inputs and try again.";
+        } else if (status === 401 || status === 403) {
+          errorMessage = "You are not authorized to perform this action.";
+        } else if (status === 404) {
+          errorMessage = "The requested resource was not found.";
+        } else if (status === 500) {
+          errorMessage = "A server error occurred. Please try again later.";
+        }
+  
+        alert(errorMessage);
+      } else if (error?.request) {
+        alert("No response from the server. Please check your connection.");
+      } else {
+        alert("An unexpected error occurred. Please try again.");
+      }
+    }
   };
-
   return (
     <Paper sx={{ p: 3, borderRadius: 2 }}>
       <Typography
