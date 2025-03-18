@@ -7,16 +7,19 @@ function CareerPage() {
   const navigate = useNavigate();
   const jobListings = [
     {
+      id: 1,
       title: "Cleaners Male / Female",
       type: "Full time",
       location: "France",
     },
     {
+      id: 2,
       title: "Children Care Worker Male / Female",
       type: "Full time",
       location: "France",
     },
     {
+      id: 3,
       title: "Elder Care Worker Male / Female",
       type: "Full time",
       location: "France",
@@ -91,7 +94,7 @@ function CareerPage() {
                     <button
                       className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-800 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                       onClick={() => {
-                        navigate("/upcomming");
+                        navigate(`/application-form/${job.id}`);
                       }}
                     >
                       Apply Now

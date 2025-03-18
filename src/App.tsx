@@ -51,6 +51,11 @@ import PressureWashing from "./pages/servicesPages/pressureWashing.tsx";
 import SpecialEventCleaning from "./pages/servicesPages/specialEventCleaning.tsx";
 import Poolcleaning from "./pages/servicesPages/poolCleaning.tsx";
 import WelcomeAlert from './components/welcomeAlert/WelcomeAlert';
+import CookiesPolicy from "./pages/cookiesPolicy/cookiesPolicy.tsx";
+import TermsAndConditionsPage from "./pages/termsAndConditions/termsAndConditions.tsx";
+import CleanersCareerAdvertisementPage from "./pages/jobAdvertisement/cleanerAdvertisment.tsx";
+import ChildCareWorkerAdvertismentPage from "./pages/jobAdvertisement/childCareWorkerAdvertisment.tsx";
+import EldersCareWorkerAdvertisment from "./pages/jobAdvertisement/eldersCareWorkerAdvertisment.tsx";
 import CleanerForm from "./components/jobApplyForm/jobApplyForm.tsx";
 import JobApplyForm from "./components/jobApplyForm/jobApplyForm.tsx";
 
@@ -382,15 +387,66 @@ function App() {
               </>
             }
           />
+
+
+           {/*Cookies Policy*/}
+           <Route
+            path="/cookie_policy"
+            element={
+              <>
+                <CookiesPolicy />
+                <Footer />
+              </>
+            }
+          />
+
+           {/*Terms And Conditions*/}
+           <Route
+            path="/terms_and_conditions_page"
+            element={
+              <>
+                <TermsAndConditionsPage />
+                <Footer />
+              </>
+            }
+          />
+
+          {/*Advertisement Page*/}
+          <Route
+            path="/application-form/1"
+            element={
+              <>
+                <CleanersCareerAdvertisementPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/application-form/2"
+            element={
+              <>
+                <ChildCareWorkerAdvertismentPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/application-form/3"
+            element={
+              <>
+                <EldersCareWorkerAdvertisment />
+
           <Route
             path="/jobApplyForm"
             element={
               <>
                 <JobApplyForm />
+
                 <Footer />
               </>
             }
           />
+
           <Route path="/login" element={<LoginPage />} />
 
           <Route path="/checkout" element={<CheckoutPage />} />
