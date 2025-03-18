@@ -53,6 +53,9 @@ import Poolcleaning from "./pages/servicesPages/poolCleaning.tsx";
 import WelcomeAlert from './components/welcomeAlert/WelcomeAlert';
 import CookiesPolicy from "./pages/cookiesPolicy/cookiesPolicy.tsx";
 import TermsAndConditionsPage from "./pages/termsAndConditions/termsAndConditions.tsx";
+import CleanersCareerAdvertisementPage from "./pages/jobAdvertisement/cleanerAdvertisment.tsx";
+import ChildCareWorkerAdvertismentPage from "./pages/jobAdvertisement/childCareWorkerAdvertisment.tsx";
+import EldersCareWorkerAdvertisment from "./pages/jobAdvertisement/eldersCareWorkerAdvertisment.tsx";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -404,6 +407,36 @@ function App() {
               </>
             }
           />
+
+          {/*Advertisement Page*/}
+          <Route
+            path="/application-form/1"
+            element={
+              <>
+                <CleanersCareerAdvertisementPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/application-form/2"
+            element={
+              <>
+                <ChildCareWorkerAdvertismentPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/application-form/3"
+            element={
+              <>
+                <EldersCareWorkerAdvertisment />
+                <Footer />
+              </>
+            }
+          />
+
 
           <Route path="/login" element={<LoginPage />} />
 
