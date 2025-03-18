@@ -45,18 +45,17 @@ import MainLayout from "./layouts/MainLayout.tsx";
 import Settings from "./pages/customerDashboard/setting.tsx";
 import Help from "./pages/customerDashboard/help.tsx";
 import MoveInAndOutTransportCleaning from "./pages/servicesPages/MoveInAndOutTransportCleaning.tsx";
-import { LanguageProvider } from './context/LanguageContext';
+import { LanguageProvider } from "./context/LanguageContext";
 import SteamCleaning from "./pages/servicesPages/SteamCleaning.tsx";
 import PressureWashing from "./pages/servicesPages/pressureWashing.tsx";
 import SpecialEventCleaning from "./pages/servicesPages/specialEventCleaning.tsx";
 import Poolcleaning from "./pages/servicesPages/poolCleaning.tsx";
-import WelcomeAlert from './components/welcomeAlert/WelcomeAlert';
+import WelcomeAlert from "./components/welcomeAlert/WelcomeAlert";
 import CookiesPolicy from "./pages/cookiesPolicy/cookiesPolicy.tsx";
 import TermsAndConditionsPage from "./pages/termsAndConditions/termsAndConditions.tsx";
 import CleanersCareerAdvertisementPage from "./pages/jobAdvertisement/cleanerAdvertisment.tsx";
 import ChildCareWorkerAdvertismentPage from "./pages/jobAdvertisement/childCareWorkerAdvertisment.tsx";
 import EldersCareWorkerAdvertisment from "./pages/jobAdvertisement/eldersCareWorkerAdvertisment.tsx";
-import CleanerForm from "./components/jobApplyForm/jobApplyForm.tsx";
 import JobApplyForm from "./components/jobApplyForm/jobApplyForm.tsx";
 
 function App() {
@@ -105,357 +104,356 @@ function App() {
     <ThemeProvider theme={theme}>
       <WelcomeAlert />
       <LanguageProvider>
-      <Router>
-      <TopBar />
-      <NavigationBar />
-        <Routes>
-        <Route element={<MainLayout />}>
-          <Route path="/customer-dashboard/:customerId" element={<CustomerDashboard />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/help" element={<Help />} />
-        </Route>
-        </Routes>
-        
+        <Router>
+          <TopBar />
+          <NavigationBar />
+          <Routes>
+            <Route element={<MainLayout />}>
+              <Route
+                path="/customer-dashboard/:customerId"
+                element={<CustomerDashboard />}
+              />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/help" element={<Help />} />
+            </Route>
+          </Routes>
 
-        
+          <Routes>
+            {/* Main one-page scrollable site */}
+            <Route
+              path="/"
+              element={
+                <>
+                  <HomePage />
+                  <SecondPage />
+                  <OurServicePage />
+                  <InformationPage />
+                  <GalleryPage />
+                  <SectorPage />
+                  <TeamOfExpertsPage />
+                  <OurShowcasePage />
+                  <CleanServices />
+                  <UiContactUsPage />
+                  <Footer />
+                </>
+              }
+            />
+            {/* Standalone OurLocations page */}
+            <Route
+              path="/our-locations"
+              element={
+                <>
+                  <OurLocations />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/contactUsPage"
+              element={
+                <>
+                  <ContactUsPage />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/regular-basic-cleaning"
+              element={
+                <>
+                  <RegularBasicCleaning />
+                  <Footer />
+                </>
+              }
+            />
 
-        <Routes>
-          {/* Main one-page scrollable site */}
-          <Route
-            path="/"
-            element={
-              <>
-                <HomePage />
-                <SecondPage />
-                <OurServicePage />
-                <InformationPage />
-                <GalleryPage />
-                <SectorPage />
-                <TeamOfExpertsPage />
-                <OurShowcasePage />
-                <CleanServices />
-                <UiContactUsPage />
-                <Footer />
-              </>
-            }
-          />
-          {/* Standalone OurLocations page */}
-          <Route
-            path="/our-locations"
-            element={
-              <>
-                <OurLocations />
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/contactUsPage"
-            element={
-              <>
-                <ContactUsPage />
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/regular-basic-cleaning"
-            element={
-              <>
-                <RegularBasicCleaning />
-                <Footer />
-              </>
-            }
-          />
+            <Route
+              path="/one-time-cleaning"
+              element={
+                <>
+                  <OneTimeCleaning />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/last-minute-cleaning"
+              element={
+                <>
+                  <LastMinuteCleaningPage />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/deep_cleaning"
+              element={
+                <>
+                  <DeepCleaningPage />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/move_in_out_cleaning"
+              element={
+                <>
+                  <MoveInOutCleaningPage />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/post_constructor_cleaning"
+              element={
+                <>
+                  <PostConstructionCleaningPage />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/airbnb_and_short_service"
+              element={
+                <>
+                  <AirbnbAndShortService />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/child_care_cleaning"
+              element={
+                <>
+                  <ChildCareCleaningPage />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/elder_care_cleaning"
+              element={
+                <>
+                  <ElderCareCleaningPage />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/sanitization_cleaning"
+              element={
+                <>
+                  <SanitizationAndDisinfection />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/commercial_cleaning"
+              element={
+                <>
+                  <CommercialAndOfficeCleaning />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/carpet_cleaning"
+              element={
+                <>
+                  <CarpetCleaning />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/move_in_out_and_transport_cleaning"
+              element={
+                <>
+                  <MoveInAndOutTransportCleaning />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/steam_cleaning"
+              element={
+                <>
+                  <SteamCleaning />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/pressure_washing"
+              element={
+                <>
+                  <PressureWashing />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/special_event_cleaning"
+              element={
+                <>
+                  <SpecialEventCleaning />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/pool_cleaning"
+              element={
+                <>
+                  <Poolcleaning />
+                  <Footer />
+                </>
+              }
+            />
 
-          <Route
-            path="/one-time-cleaning"
-            element={
-              <>
-                <OneTimeCleaning />
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/last-minute-cleaning"
-            element={
-              <>
-                <LastMinuteCleaningPage />
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/deep_cleaning"
-            element={
-              <>
-                <DeepCleaningPage />
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/move_in_out_cleaning"
-            element={
-              <>
-                <MoveInOutCleaningPage />
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/post_constructor_cleaning"
-            element={
-              <>
-                <PostConstructionCleaningPage />
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/airbnb_and_short_service"
-            element={
-              <>
-                <AirbnbAndShortService />
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/child_care_cleaning"
-            element={
-              <>
-                <ChildCareCleaningPage />
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/elder_care_cleaning"
-            element={
-              <>
-                <ElderCareCleaningPage />
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/sanitization_cleaning"
-            element={
-              <>
-                <SanitizationAndDisinfection />
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/commercial_cleaning"
-            element={
-              <>
-                <CommercialAndOfficeCleaning />
-                <Footer />
-              </>
-            }
-          />
-           <Route
-            path="/carpet_cleaning"
-            element={
-              <>
-                <CarpetCleaning />
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/move_in_out_and_transport_cleaning"
-            element={
-              <>
-                <MoveInAndOutTransportCleaning />
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/steam_cleaning"
-            element={
-              <>
-                <SteamCleaning />
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/pressure_washing"
-            element={
-              <>
-                <PressureWashing/>
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/special_event_cleaning"
-            element={
-              <>
-                <SpecialEventCleaning/>
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/pool_cleaning"
-            element={
-              <>
-                <Poolcleaning/>
-                <Footer />
-              </>
-            }
-          />
+            {/* Read more pages */}
+            <Route
+              path="/cleaning-industry-regulation"
+              element={
+                <>
+                  <CleaningIndustryRegulation />
 
-          {/* Read more pages */}
-          <Route
-            path="/cleaning-industry-regulation"
-            element={
-              <>
-                <CleaningIndustryRegulation />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/robotics-cleaning"
+              element={
+                <>
+                  <RoboticsCleaning />
 
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/robotics-cleaning"
-            element={
-              <>
-                <RoboticsCleaning />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/cleaning-hospitality"
+              element={
+                <>
+                  <CleaningHospitality />
 
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/cleaning-hospitality"
-            element={
-              <>
-                <CleaningHospitality />
+                  <Footer />
+                </>
+              }
+            />
 
-                <Footer />
-              </>
-            }
-          />
+            <Route
+              path="/hygiene-public-spaces"
+              element={
+                <>
+                  <HygienePublicSpaces />
 
-          <Route
-            path="/hygiene-public-spaces"
-            element={
-              <>
-                <HygienePublicSpaces />
+                  <Footer />
+                </>
+              }
+            />
 
-                <Footer />
-              </>
-            }
-          />
+            {/* Career Page */}
+            <Route
+              path="/career"
+              element={
+                <>
+                  <CareerPage />
+                  <Footer />
+                </>
+              }
+            />
 
-          {/* Career Page */}
-          <Route
-            path="/career"
-            element={
-              <>
-                <CareerPage />
-                <Footer />
-              </>
-            }
-          />
+            {/* Customer Page */}
+            <Route
+              path="/customer_page"
+              element={
+                <>
+                  <CustomerPage />
+                  <Footer />
+                </>
+              }
+            />
+            {/* AboutUs Page */}
+            <Route
+              path="/aboutUs"
+              element={
+                <>
+                  <AboutUsPage />
+                  <Footer />
+                </>
+              }
+            />
 
-          {/* Customer Page */}
-          <Route
-            path="/customer_page"
-            element={
-              <>
-                <CustomerPage />
-                <Footer />
-              </>
-            }
-          />
-          {/* AboutUs Page */}
-          <Route
-            path="/aboutUs"
-            element={
-              <>
-                <AboutUsPage />
-                <Footer />
-              </>
-            }
-          />
+            {/*Cookies Policy*/}
+            <Route
+              path="/cookie_policy"
+              element={
+                <>
+                  <CookiesPolicy />
+                  <Footer />
+                </>
+              }
+            />
 
+            {/*Terms And Conditions*/}
+            <Route
+              path="/terms_and_conditions_page"
+              element={
+                <>
+                  <TermsAndConditionsPage />
+                  <Footer />
+                </>
+              }
+            />
 
-           {/*Cookies Policy*/}
-           <Route
-            path="/cookie_policy"
-            element={
-              <>
-                <CookiesPolicy />
-                <Footer />
-              </>
-            }
-          />
+            {/*Advertisement Page*/}
+            <Route
+              path="/application-form/1"
+              element={
+                <>
+                  <CleanersCareerAdvertisementPage />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/application-form/2"
+              element={
+                <>
+                  <ChildCareWorkerAdvertismentPage />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/application-form/3"
+              element={
+                  <EldersCareWorkerAdvertisment />
+              }
+            />
+            <Route
+              path="/jobApplyForm"
+              element={
+                <>
+                  <JobApplyForm />
 
-           {/*Terms And Conditions*/}
-           <Route
-            path="/terms_and_conditions_page"
-            element={
-              <>
-                <TermsAndConditionsPage />
-                <Footer />
-              </>
-            }
-          />
+                  <Footer />
+                </>
+              }
+            />
 
-          {/*Advertisement Page*/}
-          <Route
-            path="/application-form/1"
-            element={
-              <>
-                <CleanersCareerAdvertisementPage />
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/application-form/2"
-            element={
-              <>
-                <ChildCareWorkerAdvertismentPage />
-                <Footer />
-              </>
-            }
-          />
-          <Route
-            path="/application-form/3"
-            element={
-              <>
-                <EldersCareWorkerAdvertisment />
+            <Route path="/login" element={<LoginPage />} />
 
-          <Route
-            path="/jobApplyForm"
-            element={
-              <>
-                <JobApplyForm />
+            <Route path="/checkout" element={<CheckoutPage />} />
 
-                <Footer />
-              </>
-            }
-          />
+            <Route path="/quotation" element={<Quotation />} />
 
-          <Route path="/login" element={<LoginPage />} />
-
-          <Route path="/checkout" element={<CheckoutPage />} />
-
-          <Route path="/quotation" element={<Quotation />} />
-
-          <Route path="/upcomming" element={<UpdateComingSoon />} />
-        </Routes>
-      </Router>
+            <Route path="/upcomming" element={<UpdateComingSoon />} />
+          </Routes>
+        </Router>
       </LanguageProvider>
     </ThemeProvider>
   );
