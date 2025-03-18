@@ -4,7 +4,7 @@ import { Box, Typography, Switch, Button } from '@mui/material';
 const CookieConsentAlert = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [cookiePreferences, setCookiePreferences] = useState({
-    necessary: true, // Always true, as per the UI (non-toggleable)
+    necessary: false, // Always true, as per the UI (non-toggleable)
     functional: false,
     performance: false,
     advertising: false,
@@ -18,10 +18,10 @@ const CookieConsentAlert = () => {
     }
   }, []);
 
-  const handleToggle = (type: any) => {
-    if (type === 'necessary') return; // Necessary cookies cannot be toggled off
+  const handleToggle = (type: keyof typeof cookiePreferences) => {
     setCookiePreferences((prev) => ({
       ...prev,
+      [type]: !prev[type] , // Toggle the value
     }));
   };
 
@@ -107,11 +107,7 @@ const CookieConsentAlert = () => {
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Switch
               checked={cookiePreferences.necessary}
-              
-              sx={{
-                '& .MuiSwitch-thumb': { bgcolor: '#002F6D' },
-                '& .MuiSwitch-track': { bgcolor: '#0D90C8' },
-              }}
+              onChange={() => handleToggle('necessary')}
             />
             <Typography variant="body2" sx={{ color: '#002F6D' }}>Necessary</Typography>
           </Box>
