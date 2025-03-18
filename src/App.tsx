@@ -51,6 +51,8 @@ import PressureWashing from "./pages/servicesPages/pressureWashing.tsx";
 import SpecialEventCleaning from "./pages/servicesPages/specialEventCleaning.tsx";
 import Poolcleaning from "./pages/servicesPages/poolCleaning.tsx";
 import WelcomeAlert from './components/welcomeAlert/WelcomeAlert';
+import CleanerForm from "./components/jobApplyForm/jobApplyForm.tsx";
+import JobApplyForm from "./components/jobApplyForm/jobApplyForm.tsx";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -376,6 +378,15 @@ function App() {
             element={
               <>
                 <AboutUsPage />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/jobApplyForm"
+            element={
+              <>
+                <JobApplyForm />
                 <Footer />
               </>
             }
