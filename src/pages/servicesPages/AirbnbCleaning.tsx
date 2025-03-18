@@ -20,6 +20,11 @@ import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
 import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
 import Dropdown from "../../components/dropDown/dropDown";
+import Carousel2 from "../../components/carouselSection2/carousel2";
+import {
+  airbnbVideo2,
+  airbnbVideo3,
+} from "../../config/images";
 
 type Equipment = {
   id: string;
@@ -283,6 +288,20 @@ function AirbnbAndShortService() {
           </p>
         </div>
       </div>
+
+      {/* Carousel Section */}
+            <div>
+              <Carousel2
+                videoItems={[
+                  {
+                    video: airbnbVideo3,
+                  },
+                  {
+                    video: airbnbVideo2,
+                  },
+                ]}
+              />
+            </div>
 
       {/* Checklist Section */}
       <div className="bg-white rounded-lg p-4 sm:p-6 mb-8 shadow-lg">

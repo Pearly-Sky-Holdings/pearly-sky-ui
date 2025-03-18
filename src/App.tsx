@@ -56,6 +56,8 @@ import TermsAndConditionsPage from "./pages/termsAndConditions/termsAndCondition
 import CleanersCareerAdvertisementPage from "./pages/jobAdvertisement/cleanerAdvertisment.tsx";
 import ChildCareWorkerAdvertismentPage from "./pages/jobAdvertisement/childCareWorkerAdvertisment.tsx";
 import EldersCareWorkerAdvertisment from "./pages/jobAdvertisement/eldersCareWorkerAdvertisment.tsx";
+import CleanerForm from "./components/jobApplyForm/jobApplyForm.tsx";
+import JobApplyForm from "./components/jobApplyForm/jobApplyForm.tsx";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -386,6 +388,7 @@ function App() {
             }
           />
 
+
            {/*Cookies Policy*/}
            <Route
             path="/cookie_policy"
@@ -432,11 +435,17 @@ function App() {
             element={
               <>
                 <EldersCareWorkerAdvertisment />
+
+          <Route
+            path="/jobApplyForm"
+            element={
+              <>
+                <JobApplyForm />
+
                 <Footer />
               </>
             }
           />
-
 
           <Route path="/login" element={<LoginPage />} />
 

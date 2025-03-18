@@ -15,6 +15,7 @@ import { saveServices } from "../../services/CleaningServices/saveService";
 import { useLocation, useNavigate } from "react-router-dom";
 import OrderSummary from "../../components/checkoutSection/OrderSummary";
 import PaymentMethod from "../../components/checkoutSection/PaymentMethod";
+import LoadingOverlay from "../../components/welcomeAlert/LoadingOverlay"; 
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
@@ -110,7 +111,6 @@ const CheckoutPage = () => {
   };
 
   // Save Regular Service
-
   useEffect(() => {
     if (saveLoader) {
       if (saveServiceData.isSuccess && !saveServiceData.isLoading) {
@@ -163,6 +163,7 @@ const CheckoutPage = () => {
       }
     }
   }, [saveServiceData.data, saveServiceData.errorMessage]);
+
   return (
     <Container maxWidth="xl" sx={{ marginBottom: "5%", color: "black" }}>
       <Typography
@@ -235,6 +236,13 @@ const CheckoutPage = () => {
           </Button>
         </Grid>
       </Grid>
+
+      {/* Using the new LoadingOverlay component */}
+      <LoadingOverlay 
+        open={saveLoader} 
+        message="Processing your order..."
+        subMessage="Please wait while we confirm your booking"
+      />
 
       <Snackbar
         open={showSuccess}

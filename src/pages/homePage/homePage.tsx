@@ -4,7 +4,7 @@ import {
   Typography,
   useTheme,
   useMediaQuery,
-  IconButton
+  IconButton,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -18,12 +18,12 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "../../context/LanguageContext";
+import CookieConsentAlert from "../../components/welcomeAlert/WelcomeAlert"; // Import the new component
 import "./HomePage.css";
 
 export default function HomePage() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  // Use the language context
   const { translate } = useLanguage();
 
   const allImages = [
@@ -103,14 +103,17 @@ export default function HomePage() {
         boxSizing: "border-box",
       }}
     >
+      {/* Cookie Consent Popup */}
+      <CookieConsentAlert />
+
       {/* Header */}
       <Typography
         variant={isMobile ? "h5" : "h4"}
         sx={{
           fontWeight: "bold",
-          background: "linear-gradient(90deg, #002F6D, #0D90C8)", // Gradient from #002F6D to #0D90C8
-          WebkitBackgroundClip: "text", // Clip the background to the text
-          WebkitTextFillColor: "transparent", // Make the text transparent
+          background: "linear-gradient(90deg, #002F6D, #0D90C8)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
           mb: 2,
           mt: 5,
           px: isMobile ? 2 : 0,
@@ -165,7 +168,6 @@ export default function HomePage() {
         }}
       >
         {isMobile ? (
-          // Mobile View - Single Image Carousel
           <Box sx={{ position: "relative", height: "300px", mb: 4 }}>
             <AnimatePresence>
               {allImages.map(
@@ -279,7 +281,6 @@ export default function HomePage() {
             </Box>
           </Box>
         ) : (
-          // Desktop View - Image Pairs
           <Box
             sx={{
               display: "flex",
