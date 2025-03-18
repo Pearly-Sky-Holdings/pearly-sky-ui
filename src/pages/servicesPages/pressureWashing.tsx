@@ -16,6 +16,7 @@ import CommercialBookingCart from "../../components/commercialAndOfficeCleaning/
 import PersonalInformationForm from "../../components/personalInformationForm/personalInformationForm";
 import { pressureService } from "../../config/images";
 import PressureWashingType from "../../components/PressureWashing/pressureWashingType";
+import LoadingOverlay from "../../components/welcomeAlert/LoadingOverlay";
 
 
 function PressureWashing() {
@@ -32,6 +33,7 @@ function PressureWashing() {
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
   const [numCleaners, setNumCleaners ] = useState(""); 
+  const [isLoading, setIsLoading] = useState(false);
 
   const [selectedItems, setSelectedItems] = useState<string[]>([]); 
 
@@ -191,6 +193,8 @@ const handleBookNow = async () => {
   console.log("Data:", data);
 
   try {
+
+    setIsLoading(true);
     
     const response = await fetch("https://back.pearlyskyplc.com/api/saveServiceDetails", {
       method: "POST",
@@ -215,6 +219,9 @@ const handleBookNow = async () => {
     
     console.error("Network Error:", error);
     alert("An error occurred while submitting the request. Please check your connection and try again.");
+  }finally {
+    // Hide loading overlay
+    setIsLoading(false);
   }
 };
 
@@ -433,6 +440,13 @@ const handleBookNow = async () => {
           Request Quotation
         </button>
       </div>
+
+      {/* Using the new LoadingOverlay component */}
+      <LoadingOverlay 
+        open={isLoading} 
+        message="Processing your order..."
+        subMessage="Please wait while we confirm your booking"
+      />
 
       {/* Payment Support Section */}
       <div>

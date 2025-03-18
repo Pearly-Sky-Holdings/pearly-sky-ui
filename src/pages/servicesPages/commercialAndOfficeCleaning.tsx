@@ -15,6 +15,7 @@ import dayjs from "dayjs";
 import CommercialBookingCart from "../../components/commercialAndOfficeCleaning/commercialBookingCart";
 import PersonalInformationForm from "../../components/personalInformationForm/personalInformationForm";
 import { CommercialService } from "../../config/images";
+import LoadingOverlay from "../../components/welcomeAlert/LoadingOverlay";
 
 
 function CommercialAndOfficeCleaning() {
@@ -31,6 +32,7 @@ function CommercialAndOfficeCleaning() {
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
   const [numCleaners, setNumCleaners ] = useState(""); 
+  const [isLoading, setIsLoading] = useState(false);
 
   // Memoize the form change handler
   const handleFormChange = useCallback((data: any) => {
@@ -179,7 +181,9 @@ const handleBookNow = async () => {
   console.log("Data:", data);
 
   try {
-    
+    // Show loading overlay
+    setIsLoading(true);
+
     const response = await fetch("https://back.pearlyskyplc.com/api/saveServiceDetails", {
       method: "POST",
       headers: {
@@ -203,6 +207,9 @@ const handleBookNow = async () => {
     
     console.error("Network Error:", error);
     alert("An error occurred while submitting the request. Please check your connection and try again.");
+  }finally {
+    // Hide loading overlay
+    setIsLoading(false);
   }
 };
 
@@ -423,6 +430,13 @@ const handleBookNow = async () => {
           Request Quotation
         </button>
       </div>
+
+      {/* Using the new LoadingOverlay component */}
+      <LoadingOverlay 
+        open={isLoading} 
+        message="Processing your order..."
+        subMessage="Please wait while we confirm your booking"
+      />
 
       {/* Payment Support Section */}
       <div>

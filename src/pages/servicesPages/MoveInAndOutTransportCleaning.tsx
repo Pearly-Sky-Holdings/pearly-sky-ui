@@ -15,6 +15,7 @@ import dayjs from "dayjs";
 import PersonalInformationForm from "../../components/personalInformationForm/personalInformationForm";
 import { MoveInOutTransportService } from "../../config/images";
 import MoveInAndOutTransportBookingCart from "../../components/MoveInAndOutTransportCleaning/moveInAndOutTransportBookingCart";
+import LoadingOverlay from "../../components/welcomeAlert/LoadingOverlay";
 
 function MoveInAndOutTransportCleaning() {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ function MoveInAndOutTransportCleaning() {
   const [timeZone, setTimeZone] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   // Memoize the form change handler
   const handleFormChange = useCallback((data: any) => {
@@ -169,6 +171,7 @@ function MoveInAndOutTransportCleaning() {
     console.log("Data:", data);
 
     try {
+      setIsLoading(true);
       const response = await fetch(
         "https://back.pearlyskyplc.com/api/saveServiceDetails",
         {
@@ -193,6 +196,9 @@ function MoveInAndOutTransportCleaning() {
       alert(
         "An error occurred while submitting the request. Please check your connection and try again."
       );
+    } finally {
+      // Hide loading overlay
+      setIsLoading(false);
     }
   };
 
@@ -392,6 +398,13 @@ function MoveInAndOutTransportCleaning() {
           Request Quotation
         </button>
       </div>
+
+      {/* Using the new LoadingOverlay component */}
+      <LoadingOverlay 
+        open={isLoading} 
+        message="Processing your order..."
+        subMessage="Please wait while we confirm your booking"
+      />
 
       {/* Payment Support Section */}
       <div>

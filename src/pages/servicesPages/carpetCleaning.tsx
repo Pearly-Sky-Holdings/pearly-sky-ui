@@ -16,6 +16,7 @@ import SanitizationBookingCart from "../../components/sanitizationPage/bookingCa
 import { CarpetCleaningService } from "../../config/images";
 import EstimateList from "../../components/CarpetAndUpholsteryCleaning/carpetPackageList";
 import PersonalInformationForm from "../../components/personalInformationForm/personalInformationForm";
+import LoadingOverlay from "../../components/welcomeAlert/LoadingOverlay";
 
 
 
@@ -33,6 +34,7 @@ function CarpetAndUpholsteryCleaning() {
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
   const [selectedItems, setSelectedItems] = useState<string[]>([]); 
+  const [isLoading, setIsLoading] = useState(false);
 
    
 const handleSelectionChange = (selectedItems: string[]) => {
@@ -194,6 +196,8 @@ const handleCheckboxChange = (section: Section, option: Option) => {
     console.log("Data:", data);
   
     try {
+
+      setIsLoading(true);
       //  API call
       const response = await fetch("https://back.pearlyskyplc.com/api/saveServiceDetails", {
         method: "POST",
@@ -219,6 +223,9 @@ const handleCheckboxChange = (section: Section, option: Option) => {
       // Handle network errors
       console.error("Network Error:", error);
       alert("An error occurred while submitting the request. Please check your connection and try again.");
+    } finally {
+      // Hide loading overlay
+      setIsLoading(false);
     }
   };
 
@@ -436,6 +443,13 @@ const handleCheckboxChange = (section: Section, option: Option) => {
           Request Quotation
         </button>
       </div>
+
+      {/* Using the new LoadingOverlay component */}
+      <LoadingOverlay 
+        open={isLoading} 
+        message="Processing your order..."
+        subMessage="Please wait while we confirm your booking"
+      />
 
       {/* Payment Support Section */}
       <div>
