@@ -119,14 +119,14 @@ const services = [
     title: "Move-In/Out Transport Service",
     description: "Simplify your move with our transport service, ensuring your belongings are handled carefully and transported safely.",
     image: MoveInOutTransportService,
-    link: "/upcomming"
+    link: "/move_in_out_and_transport_cleaning"
   },
   {
     id: 14,
     title: "Steam Cleaning",
     description: "Harness the power of steam to deep-clean and sanitize your surfaces, removing stubborn dirt, bacteria, and allergens effectively.",
     image: steamService,
-    link: "/upcomming"
+    link: "/steam_cleaning"
   },
   {
     id: 15,
@@ -140,21 +140,21 @@ const services = [
     title: "Event Cleaning",
     description: "Whether it's an annual holiday party or a week of business conferences, an important part of ensuring the event you have planned goes smoothly",
     image: eventService,
-    link: "/upcomming"
+    link: "/special_event_cleaning"
   },
   {
     id: 17,
     title: "Pool cleaning",
     description: "Nothing beats relaxing in a pool on these hot days. To make sure your pool is crystal clear and safe for swimming, we offer you all types of indoor and outdoor pool cleaning",
     image: poolService,
-    link: "/upcomming"
+    link: "/pool_cleaning"
   },
   {
     id: 18,
     title: "Pressure Washing",
     description: "Professional Pressure Washing Services Residential and commerical pressure washing service",
     image: pressureService,
-    link: "/upcomming"
+    link: "/pressure_washing"
   },
 ];
 
