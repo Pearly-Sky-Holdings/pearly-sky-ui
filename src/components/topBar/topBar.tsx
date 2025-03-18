@@ -43,12 +43,6 @@ export default function TopBar() {
     setSelectedCountry(code);
   };
 
-  // Handle logout
-  
-
-  // Handle dashboard navigation
- 
-
   const socialIcons = [
     { icon: <FaFacebookF />, link: "https://www.facebook.com/profile.php?id=61561165376278" },
     { icon: <AiFillInstagram />, link: "https://www.instagram.com/pearlyskycleaning/?next=%2F" },
@@ -59,21 +53,33 @@ export default function TopBar() {
   ];
 
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: "white", width: "100%", left: 0, top: 0 }}>
+    <AppBar position="static" sx={{ backgroundColor: "white", width: "100%", left: 0, top: 0 }}>
       <Toolbar 
         sx={{ 
           display: "flex", 
+          flexDirection: isMobile ? "column" : "row", // Column layout for mobile, row for desktop
           justifyContent: "space-between",
           alignItems: "center",
           minHeight: "0.1vh", 
           paddingY: "0.1vh",
           px: isMobile ? 1 : 2,
-          py: isMobile ? 1 : 0
+          py: isMobile ? 1 : 0,
+          gap: isMobile ? 1 : 0, // Add gap between rows on mobile
+          overflow: "hidden", // Prevent overflow issues
         }}
       >
-        {/* Left Side - Country Selector (Hidden on mobile) */}
-        {!isMobile && (
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1, marginLeft: "5%" }}>
+        {/* First Row - Country Selector and Login Button */}
+        <Box 
+          sx={{ 
+            display: "flex", 
+            alignItems: "center", 
+            justifyContent: "space-between", 
+            width: "100%", // Ensure full width for proper alignment
+            gap: 1,
+          }}
+        >
+          {/* Country Selector */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <img
               src={`https://flagcdn.com/w40/${selectedCountry}.png`}
               alt="flag"
@@ -86,7 +92,7 @@ export default function TopBar() {
               onChange={(e) => handleCountryChange(e.target.value)}
               sx={{
                 color: "black",
-                minWidth: 120,
+                minWidth: isMobile ? 100 : 120,
                 fontWeight: "bold",
                 border: "none",
                 outline: "none",
@@ -105,73 +111,101 @@ export default function TopBar() {
               ))}
             </Select>
           </Box>
+
+          {/* Login Button */}
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#002F6D",
+              color: "white",
+              borderRadius: "10px",
+              textTransform: "none",
+              fontWeight: "bold",
+              padding: "6px 16px",
+              "&:hover": {
+                backgroundColor: "#002F6D",
+              },
+            }}
+            onClick={() => navigate("/login")}
+          >
+            {translate('login')}
+          </Button>
+        </Box>
+
+        {/* Second Row - Social Media Icons (Only on mobile) */}
+        {isMobile && (
+          <Box 
+            sx={{ 
+              display: "flex", 
+              alignItems: "center",
+              gap: 1,
+              justifyContent: "center",
+              width: "100%",
+              background: "#F5FBFF",
+              padding: 1, // Add padding for better spacing
+            }}
+          >
+            {socialIcons.map(({ icon, link }) => (
+              <IconButton
+                key={link}
+                component="a"
+                href={link}
+                target="_blank"
+                sx={{
+                  color: "#002F6D",
+                  backgroundColor: "#D3D3D3",
+                  borderRadius: "50%",
+                  width: 30,
+                  height: 30,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transition: "0.3s",
+                  "&:hover": { backgroundColor: "#BBDEFB" },
+                }}
+              >
+                <Box sx={{ fontSize: 16 }}>{icon}</Box>
+              </IconButton>
+            ))}
+          </Box>
         )}
 
-        {/* Center - Social Media Icons */}
-        <Box 
-          sx={{ 
-            display: "flex", 
-            alignItems: "center",
-            gap: isMobile ? 1 : 2,
-            position: "absolute",
-            left: isMobile ? "35%" : "60%",
-            transform: "translateX(-50%)",
-          }}
-        >
-          {socialIcons.map(({ icon, link }) => (
-            <IconButton
-              key={link}
-              component="a"
-              href={link}
-              target="_blank"
-              sx={{
-                color: "#002F6D",
-                backgroundColor: "#D3D3D3",
-                borderRadius: "50%",
-                width: isMobile ? 30 : 35,
-                height: isMobile ? 30 : 35,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                transition: "0.3s",
-                "&:hover": { backgroundColor: "#BBDEFB" },
-              }}
-            >
-              <Box sx={{ fontSize: isMobile ? 16 : 20 }}>{icon}</Box>
-            </IconButton>
-          ))}
-        </Box>
-
-        {/* Right Side - Conditional Button */}
-        <Box 
-          sx={{ 
-            display: "flex", 
-            alignItems: "center",
-            marginLeft: "auto",
-            marginRight: isMobile ? "8px" : "1%",
-          }}
-        >
-          
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "#002F6D",
-                color: "white",
-                borderRadius: "10px",
-                textTransform: "none",
-                fontWeight: "bold",
-                padding: "6px 16px",
-                "&:hover": {
-                  backgroundColor: "#002F6D",
-                },
-                px: isMobile ? 3 : 3,
-              }}
-              onClick={() => navigate("/login")}
-            >
-              {translate('login')}
-            </Button>
-          
-        </Box>
+        {/* Social Media Icons (Only on desktop) */}
+        {!isMobile && (
+          <Box 
+            sx={{ 
+              display: "flex", 
+              alignItems: "center",
+              gap: 2,
+              position: "absolute",
+              left: "50%",
+              transform: "translateX(-50%)",
+            }}
+          >
+            {socialIcons.map(({ icon, link }) => (
+              <IconButton
+                key={link}
+                component="a"
+                href={link}
+                target="_blank"
+                sx={{
+                  color: "#002F6D",
+                  backgroundColor: "#D3D3D3",
+                  borderRadius: "50%",
+                  width: 35,
+                  height: 35,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transition: "0.3s",
+                  "&:hover": { backgroundColor: "#BBDEFB" },
+                }}
+              >
+                <Box sx={{ fontSize: 20 }}>{icon}</Box>
+              </IconButton>
+            ))}
+          </Box>
+        )}
       </Toolbar>
     </AppBar>
   );
