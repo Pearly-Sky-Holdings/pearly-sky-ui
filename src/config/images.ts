@@ -238,7 +238,8 @@ export const aboutUs1: string = "/video/aboutUs/aboutUs_video1.mp4";
 export const aboutUs2: string = "/video/aboutUs/aboutUs_video2.mp4";
 
 
-
+// success image
+export const successImage: string = "/images/successWindow/thank_you_booking.jpg";
 
 
 

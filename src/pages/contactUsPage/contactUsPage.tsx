@@ -225,7 +225,7 @@ const ContactUsPage: React.FC = () => {
               {/* WhatsApp */}
               <Box
                 component="a"
-                href="https://wa.me/94775678335"
+                href="https://wa.me/33635508169"
                 target="_blank"
                 rel="noopener noreferrer"
                 sx={{
