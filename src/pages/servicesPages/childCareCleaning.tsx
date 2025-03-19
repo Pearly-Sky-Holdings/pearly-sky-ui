@@ -22,6 +22,11 @@ import BookingSectionCart2 from "../../components/bookingSectionChildAndElderCar
 import TermsAndConditionsChild from "../../components/termsAndConditions/termAndConditionsChild";
 import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
 
+interface ChildInfo {
+  age: string;
+  gender: string;
+  name: string;
+}
 function ChildCareCleaningPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
@@ -33,11 +38,10 @@ function ChildCareCleaningPage() {
   const [acceptTerms2, setAcceptTerms2] = useState(false);
   const [numChild, setNumChild] = useState("");
   const [duration, setDuration] = useState("1");
-  const [childAge, setChildAge] = useState<string[]>([]);
+  const [childInfo, setChildInfo] = useState<ChildInfo[]>([]);
   const [language, setLanguage] = useState("");
   const [frequency, setFrequency] = useState("");
   const [contactType, setContactType] = useState("");
-  const [type, setType] = useState("");
   const [numProfession, setNumProfession] = useState("");
   const [profession, setProfession] = useState("");
   const [propertyType, setPropertyType] = useState("");
@@ -72,7 +76,8 @@ function ChildCareCleaningPage() {
 
   const calculateTotalPrice = () => {
     const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
-    const basePrice = hourlyRate * parseFloat(duration) * (parseInt(numProfession) || 1);  // Base price in USD
+    const basePrice =
+      hourlyRate * parseFloat(duration) * (parseInt(numProfession) || 1); // Base price in USD
 
     // Calculate total price in the user's selected currency
     const totalPriceInSelectedCurrency = basePrice * conversionRate;
@@ -102,7 +107,6 @@ function ChildCareCleaningPage() {
       !duration ||
       !frequency ||
       !language ||
-      !type ||
       !contactType ||
       !propertyType ||
       !numChild ||
@@ -111,7 +115,14 @@ function ChildCareCleaningPage() {
       alert("Please fill all required fields before proceeding to checkout.");
       return;
     }
-    
+    const incompleteChildInfo = childInfo.some(
+      (child) => !child.age || !child.gender || !child.name
+    );
+    if (parseInt(numChild) > 0 && incompleteChildInfo) {
+      alert("Please fill in all child information (age, gender, name) for each child.");
+      return;
+    }
+
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
       service_id: "8",
@@ -121,10 +132,9 @@ function ChildCareCleaningPage() {
       request_care_professional: numProfession,
       frequency,
       language,
-      type,
       contactType,
       numChild,
-      age: `[${childAge.join(",")}]`,
+      childInfo: childInfo,
       special_request: specialRequest,
       price: currencySymbol + priceBreakdown.totalPrice.toString(),
       service_providing_place: propertyType,
@@ -149,7 +159,7 @@ function ChildCareCleaningPage() {
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
       {/* Header Section */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col gap-4 lg:flex-row lg:gap-8">
-        <div className="w-full lg:w-2/3">
+        <div className="w-full lg:w-5/3">
           <img
             src={childCareImage1}
             alt="Cleaning Service"
@@ -266,10 +276,6 @@ function ChildCareCleaningPage() {
             }}
             frequency={frequency}
             setFrequency={setFrequency}
-            childAge={childAge}
-            setChildAge={setChildAge}
-            type={type}
-            setType={setType}
             numChild={numChild}
             setNumChild={setNumChild}
             numProfession={numProfession}
@@ -288,6 +294,8 @@ function ChildCareCleaningPage() {
             propertyType={propertyType}
             setPropertyType={setPropertyType}
             pageType={"child"}
+            childInfo={childInfo}
+            setChildInfo={setChildInfo}
           />
         </div>
 

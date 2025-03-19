@@ -22,6 +22,12 @@ import Carousel2 from "../../components/carouselSection2/carousel2";
 import TermsAndConditionsChild from "../../components/termsAndConditions/termAndConditionsChild";
 import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
 
+
+interface ChildInfo {
+  age: string;
+  gender: string;
+  name: string;
+}
 function ElderCareCleaningPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
@@ -35,8 +41,7 @@ function ElderCareCleaningPage() {
   const [acceptTerms2, setAcceptTerms2] = useState(false);
   const [language, setLanguage] = useState("");
   const [contactType, setContactType] = useState("");
-  const [childAge, setChildAge] = useState<string[]>([]);
-  const [type, setType] = useState("");
+  const [childInfo, setChildInfo] = useState<ChildInfo[]>([]);
   const [numProfession, setNumProfession] = useState("");
   const [profession, setProfession] = useState("");
   const [numChild, setNumChild] = useState("");
@@ -102,13 +107,20 @@ function ElderCareCleaningPage() {
       !duration ||
       !frequency ||
       !language ||
-      !type ||
       !contactType ||
       !propertyType ||
       !numChild ||
       !specialRequest
     ) {
       alert("Please fill all required fields before proceeding to checkout.");
+      return;
+    }
+
+    const incompleteChildInfo = childInfo.some(
+      (child) => !child.age || !child.gender || !child.name
+    );
+    if (parseInt(numChild) > 0 && incompleteChildInfo) {
+      alert("Please fill in all child information (age, gender, name) for each child.");
       return;
     }
     
@@ -121,14 +133,13 @@ function ElderCareCleaningPage() {
       request_care_professional: numProfession,
       frequency,
       language,
-      type,
       contactType,
       numChild,
+      childInfo: childInfo,
       special_request: specialRequest,
       price: currencySymbol + priceBreakdown.totalPrice.toString(),
       service_providing_place: propertyType,
       note: document.querySelector("textarea")?.value || "",
-      selectedCurrency,
     };
     const data = {
       serviceName: "Elder Care",
@@ -149,7 +160,7 @@ function ElderCareCleaningPage() {
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
       {/* Header Section */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col gap-4 lg:flex-row lg:gap-8">
-        <div className="w-full lg:w-2/3">
+        <div className="w-full lg:w-5/3">
           <img
             src={elderCareImage1}
             alt="Cleaning Service"
@@ -263,20 +274,16 @@ function ElderCareCleaningPage() {
             setDuration={(val) => {
               setChangeValue(true);
               setDuration(val);
-            }}
+            } }
             frequency={frequency}
             setFrequency={setFrequency}
-            childAge={childAge}
-            setChildAge={setChildAge}
-            type={type}
-            setType={setType}
             numChild={numChild}
             setNumChild={setNumChild}
             numProfession={numProfession}
             setNumProfession={(val) => {
               setChangeValue(true);
               setNumProfession(val);
-            }}
+            } }
             profession={profession}
             setProfession={setProfession}
             contactType={contactType}
@@ -288,7 +295,9 @@ function ElderCareCleaningPage() {
             propertyType={propertyType}
             setPropertyType={setPropertyType}
             pageType={"elder"}
-          />
+            childInfo={childInfo}
+            setChildInfo={setChildInfo}
+            />
         </div>
 
         {/* File Upload and Additional Note */}

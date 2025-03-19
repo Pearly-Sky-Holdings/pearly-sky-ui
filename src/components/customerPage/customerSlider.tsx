@@ -19,7 +19,7 @@ const CustomerSlider: React.FC = () => {
       sx={{
         mt: 1,
         overflow: "hidden",
-        width: "100%",        
+        width: "100%",
         py: 5,
       }}
     >
@@ -28,7 +28,7 @@ const CustomerSlider: React.FC = () => {
         fontWeight="bold"
         textAlign="center"
         color="#002F6D"
-        mb={4}
+        mb={18}
       >
         Our Customers
       </Typography>
@@ -36,7 +36,7 @@ const CustomerSlider: React.FC = () => {
       <Box
         sx={{
           display: "flex",
-          gap: { xs: 5, md: 10},
+          gap: { xs: 5, md: 10 },
           animation: "scroll 30s linear infinite",
           "@keyframes scroll": {
             "0%": { transform: "translateX(0%)" },
@@ -59,14 +59,14 @@ const CustomerSlider: React.FC = () => {
           >
             <Box
               sx={{
-                width: { xs: "100px", md: "200px" },
-                height: { xs: "100px", md: "200px" },
+                width: { xs: "90px", md: "150px" },
+                height: { xs: "90px", md: "150px" },
                 borderRadius: "50%",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 background: "linear-gradient(to bottom, #002F6D, #0D90C8)",
-                mb: 1,                
+                mb: 1,
                 overflow: "hidden",
                 transition: "transform 0.3s ease",
                 "&:hover": {

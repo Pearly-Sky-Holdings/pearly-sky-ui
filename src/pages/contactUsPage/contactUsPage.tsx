@@ -61,7 +61,7 @@ const emails = [
   { label: "Support", address: "support@pearlyskyplc.com" },
   { label: "Sales", address: "Sales@pearlyskyplc.com" },
   { label: "Helpdesk", address: "Helpdesk@pearlyskyplc.com" },
-  { label: "Recruiting", address: "Recruiting@pearlyskyplc.com" },
+  { label: "Recruiting", address: "Administration@pearlyskyplc.com" },
 ];
 
 const ContactUsPage: React.FC = () => {
