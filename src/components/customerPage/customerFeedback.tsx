@@ -88,7 +88,8 @@ const CustomerFeedback: React.FC = () => {
         variant="h4"
         fontWeight="bold"
         textAlign="center"
-        mb={4}
+        mb={18}
+        mt={10}
         sx={{ color: "#002F6D" }}
       >
         Customer Feedback

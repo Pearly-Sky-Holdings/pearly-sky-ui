@@ -27,6 +27,7 @@ import {
   flagSwitzerland,
   flagBelgium,
 } from "../../config/images.ts";
+import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection.tsx";
 
 type Location = {
   id: string;
@@ -39,7 +40,7 @@ type Location = {
   email5?: string;
   address?: string;
   serviceCities?: string[];
-  Company_number?:string;
+  Company_number?: string;
   siren?: string;
   register_number?: string;
 };
@@ -57,7 +58,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "15 Rue Des Halles, 75001 Paris.",
-      siren:"930 651 625",
+      siren: "930 651 625",
       serviceCities: [
         "Paris",
         "Nice",
@@ -108,7 +109,7 @@ function OurLocations() {
         "Derby",
         "Southampton",
         "Liverpool",
-        "Kingston upon Hull",        
+        "Kingston upon Hull",
         "Portsmouth",
         "Manchester",
         "Chester",
@@ -196,7 +197,13 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: ["Sydney"," Melbourne"," Brisbane","Perth"," Adelaide"],
+      serviceCities: [
+        "Sydney",
+        " Melbourne",
+        " Brisbane",
+        "Perth",
+        " Adelaide",
+      ],
     },
     {
       id: "uae",
@@ -209,7 +216,11 @@ function OurLocations() {
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
       serviceCities: [
-        "Dubai Abu","Dhabi","Sharjah","Ras Alkhaimah","Jebel Ali"
+        "Dubai Abu",
+        "Dhabi",
+        "Sharjah",
+        "Ras Alkhaimah",
+        "Jebel Ali",
       ],
     },
     {
@@ -222,7 +233,13 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: ["Toronto","Montreal","Ottawa","Vancouver","Jebel Ali"],
+      serviceCities: [
+        "Toronto",
+        "Montreal",
+        "Ottawa",
+        "Vancouver",
+        "Jebel Ali",
+      ],
     },
     {
       id: "finland",
@@ -234,7 +251,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: ["Helsinki","Oulu","Turku","Tampere"],
+      serviceCities: ["Helsinki", "Oulu", "Turku", "Tampere"],
     },
     {
       id: "saudi-arabia",
@@ -246,9 +263,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Riyadh Jeddah"       
-      ],
+      serviceCities: ["Riyadh Jeddah"],
     },
     {
       id: "italy",
@@ -260,7 +275,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: ["Rome","Venice","Florence","Milan","Naples"],
+      serviceCities: ["Rome", "Venice", "Florence", "Milan", "Naples"],
     },
     {
       id: "potugal",
@@ -284,9 +299,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "New York"," Los Angeles"," Philadelphia","Houston"
-      ],
+      serviceCities: ["New York", " Los Angeles", " Philadelphia", "Houston"],
     },
     {
       id: "ireland",
@@ -298,12 +311,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Dublin",
-        "Belfast",
-        "Cork",
-        "Limerick",
-        "Galway"],
+      serviceCities: ["Dublin", "Belfast", "Cork", "Limerick", "Galway"],
     },
     {
       id: "austria",
@@ -315,12 +323,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Vienna",
-        "Villach ",
-        "Innsbruck",
-        "Graz",
-        "Bregenz"],
+      serviceCities: ["Vienna", "Villach ", "Innsbruck", "Graz", "Bregenz"],
     },
     {
       id: "netherlands",
@@ -334,10 +337,10 @@ function OurLocations() {
       address: "Update soon",
       serviceCities: [
         "Amsterdam",
-        "Utrecht" ,
+        "Utrecht",
         "Rotterdam",
         "Groningen",
-        "The Hague"
+        "The Hague",
       ],
     },
     {
@@ -350,10 +353,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Zurich",
-         "Geneva Basel",
-        "Bern Lausanne"],
+      serviceCities: ["Zurich", "Geneva Basel", "Bern Lausanne"],
     },
     {
       id: "qatar",
@@ -365,11 +365,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Al Wakrah",
-        "Doha",
-        "Al Rayyan",
-        "Dukhan"],
+      serviceCities: ["Al Wakrah", "Doha", "Al Rayyan", "Dukhan"],
     },
     {
       id: "denmark",
@@ -381,12 +377,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Helsinki",
-        "Oulu",
-        "Turku",
-        "Tampere"
-      ],
+      serviceCities: ["Helsinki", "Oulu", "Turku", "Tampere"],
     },
     {
       id: "new-zealand",
@@ -398,11 +389,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Auckland",
-        "Hamilton",
-        "Wellington",
-        "Christchurch"],
+      serviceCities: ["Auckland", "Hamilton", "Wellington", "Christchurch"],
     },
     {
       id: "poland",
@@ -426,11 +413,9 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Luxembourg City"
-      ],
+      serviceCities: ["Luxembourg City"],
     },
-   
+
     {
       id: "spain",
       name: "Spain",
@@ -441,11 +426,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Barcelona",
-        "Madrid",
-        "Palma",
-        "Granada"],
+      serviceCities: ["Barcelona", "Madrid", "Palma", "Granada"],
     },
   ];
 
@@ -475,8 +456,10 @@ function OurLocations() {
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold text-center mb-8"
-        style={{color:"#002F6B"}}>
+        <h1
+          className="text-3xl font-bold text-center mb-8"
+          style={{ color: "#002F6B" }}
+        >
           Our Locations
         </h1>
 
@@ -504,6 +487,9 @@ function OurLocations() {
               />
             ))}
           </div>
+        </div>
+        <div>
+          <PaymentSupportSection />
         </div>
       </div>
     </div>

@@ -1,5 +1,12 @@
+import React, { useState } from "react";
 import Dropdown from "../dropDown/dropDown";
 import { Info as InfoIcon } from "@mui/icons-material";
+
+interface ChildInfo {
+  age: string;
+  gender: string;
+  name: string;
+}
 
 interface BookingSectionCartProps {
   numChild: string;
@@ -12,10 +19,6 @@ interface BookingSectionCartProps {
   setContactType: (contactType: string) => void;
   language: string;
   setLanguage: (language: string) => void;
-  childAge: string[];
-  setChildAge: (ages: string[]) => void;
-  type: string;
-  setType: (type: string) => void;
   numProfession: string;
   setNumProfession: (numProfession: string) => void;
   profession: string;
@@ -25,6 +28,8 @@ interface BookingSectionCartProps {
   setSpecialRequest: (specialRequest: string) => void;
   propertyType: string;
   setPropertyType: (propertyType: string) => void;
+  childInfo: ChildInfo[];
+  setChildInfo: (info: ChildInfo[]) => void;
 }
 
 const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
@@ -38,10 +43,6 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
   setContactType,
   language,
   setLanguage,
-  childAge,
-  setChildAge,
-  type,
-  setType,
   numProfession,
   setNumProfession,
   specialRequest,
@@ -49,7 +50,11 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
   propertyType,
   setPropertyType,
   pageType,
+  childInfo,
+  setChildInfo,
 }) => {
+  const [isOtherSelected, setIsOtherSelected] = useState(false);
+
   const durationOptions = [
     { value: "2", label: "2 hours" },
     { value: "2.5", label: "2.5 hours" },
@@ -80,6 +85,7 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
     { value: "3", label: "3 " },
     { value: "4", label: "4" },
     { value: "5", label: "5" },
+    { value: "other", label: "Other" },
   ];
 
   const numCareProfession = [
@@ -163,21 +169,40 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
     { value: "other", label: "Other" },
   ];
 
+  const genderOptions = [
+    { value: "male", label: "Male" },
+    { value: "female", label: "Female" },
+    { value: "other", label: "Other" },
+  ];
+
   const handleDurationChange = (value: string) => {
     setDuration(value);
   };
 
   const handleNumChildChange = (value: string) => {
     setNumChild(value);
-    const numChildren = parseInt(value, 10);
-    const newChildAges = Array(numChildren).fill("");
-    setChildAge(newChildAges);
+    setIsOtherSelected(value === "other");
+
+    if (value !== "other") {
+      const numChildren = parseInt(value, 10);
+      const newChildInfo = Array(numChildren)
+        .fill(null)
+        .map((_, index) => childInfo[index] || { age: "", gender: "", name: "" });
+      setChildInfo(newChildInfo);
+    }
   };
 
-  const handleChildAgeChange = (index: number, value: string) => {
-    const newChildAges = [...childAge];
-    newChildAges[index] = value;
-    setChildAge(newChildAges);
+  const handleChildInfoChange = (
+    index: number,
+    field: keyof ChildInfo,
+    value: string
+  ) => {
+    const newChildInfo = [...childInfo];
+    newChildInfo[index] = {
+      ...newChildInfo[index],
+      [field]: value,
+    };
+    setChildInfo(newChildInfo);
   };
 
   return (
@@ -194,13 +219,12 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
           label="Request Care Professionals"
           value={numProfession}
           options={numCareProfession}
-          onChange={setNumProfession}
+          onChange={(value) => setNumProfession(value)}
         />
         {parseFloat(duration) > 8 && (
-          <div className="text-sm text-blue-500   px-1">
+          <div className="text-sm text-blue-500 px-1">
             <InfoIcon sx={{ color: "black", mx: 1 }} />
-            If you need more than 8 hours, please select additional care
-            professionals.
+            If you need more than 8 hours, please select additional care professionals.
           </div>
         )}
       </div>
@@ -209,55 +233,83 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
         label="Select Frequency"
         value={frequency}
         options={frequencyOptions}
-        onChange={setFrequency}
+        onChange={(value) => setFrequency(value)}
       />
       <Dropdown
         label="Preferred Language to Contact"
         value={language}
         options={languageOptions}
-        onChange={setLanguage}
-      />
-      <Dropdown
-        label={pageType === "child" ? "Children Gender" : "Elder Gender"}
-        value={type}
-        options={contactTypeOptions}
-        onChange={setType}
+        onChange={(value) => setLanguage(value)}
       />
       <Dropdown
         label="Care Professional Gender"
         value={contactType}
         options={contactTypeOptions}
-        onChange={setContactType}
+        onChange={(value) => setContactType(value)}
       />
-      <Dropdown
-        label={pageType === "child" ? "Number of Children" : "Number of Elders"}
-        value={numChild}
-        options={numchildOptions}
-        onChange={handleNumChildChange}
-      />
+      <div>
+        <Dropdown
+          label={pageType === "child" ? "Number of Children" : "Number of Elders"}
+          value={numChild}
+          options={numchildOptions}
+          onChange={handleNumChildChange}
+        />
+        {isOtherSelected && (
+          <div className="text-md text-blue-500 px-1">
+            <InfoIcon sx={{ color: "black", mx: 1 }} />
+            Kindly specify the number of elders and their ages in the additional notes section.
+          </div>
+        )}
+      </div>
+
       {parseInt(numChild, 10) > 0 &&
         Array.from({ length: parseInt(numChild, 10) }, (_, index) => (
-          <Dropdown
+          <div
             key={index}
-            label={`${pageType === "child" ? "Child" : "Elder"} Age ${
-              index + 1
-            }`}
-            value={childAge[index] || ""}
-            options={pageType === "child" ? childageOption : elderageOption}
-            onChange={(value) => handleChildAgeChange(index, value)}
-          />
+            className="flex flex-col sm:flex-row sm:space-x-2 space-y-4 sm:space-y-0"
+          >
+            <div className="w-full sm:w-1/3">
+              <Dropdown
+                label={`Child ${index + 1} Age`}
+                value={childInfo[index]?.age || ""}
+                options={pageType === "child" ? childageOption : elderageOption}
+                onChange={(value) => handleChildInfoChange(index, "age", value)}
+              />
+            </div>
+            <div className="w-full sm:w-1/3">
+              <Dropdown
+                label={`Gender`}
+                value={childInfo[index]?.gender || ""}
+                options={genderOptions}
+                onChange={(value) => handleChildInfoChange(index, "gender", value)}
+              />
+            </div>
+            <div className="w-full sm:w-1/3">
+              <label className="text-sm font-medium text-blue-900">
+                Name
+              </label>
+              <input
+                type="text"
+                className="w-full border mt-2 border-blue-900 rounded p-2 text-black placeholder-gray-400 hover:border-[#002F6D] focus:border-[#002F6D] outline-none"
+                placeholder="Enter Name"
+                value={childInfo[index]?.name || ""}
+                onChange={(e) => handleChildInfoChange(index, "name", e.target.value)}
+              />
+            </div>
+          </div>
         ))}
+
       <Dropdown
         label="Special Request"
         value={specialRequest}
         options={specialRequestOptions}
-        onChange={setSpecialRequest}
+        onChange={(value) => setSpecialRequest(value)}
       />
       <Dropdown
         label="Service Providing Place"
         value={propertyType}
         options={propertyTypeOptions}
-        onChange={setPropertyType}
+        onChange={(value) => setPropertyType(value)}
       />
     </div>
   );
