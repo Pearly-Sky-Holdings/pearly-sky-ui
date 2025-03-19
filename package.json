@@ -24,6 +24,7 @@
     "@types/react-calendar": "^3.9.0",
     "@types/three": "^0.173.0",
     "axios": "^1.7.9",
+    "country-flag-icons": "^1.5.18",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "framer-motion": "^12.4.2",

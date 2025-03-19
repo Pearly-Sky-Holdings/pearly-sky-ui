@@ -31,6 +31,7 @@ function MoveInAndOutTransportCleaning() {
   const [language, setLanguage] = useState("");
   const [timeZone, setTimeZone] = useState("");
   const [propertyType, setPropertyType] = useState("");
+  const [country, setCountry] = useState("");
   const [contactType, setContactType] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -49,17 +50,22 @@ function MoveInAndOutTransportCleaning() {
     dispatch(getServices("11"));
   }, [dispatch]);
 
-  const [materials, setMaterials] = useState({
-    customer: false,
-    company: false,
-  });
+  const [materials, setMaterials] = useState({ customer: false,company: false,});
+  const [equipment, setEquipment] = useState({ customer: false, company: false });
+  
 
-  type Section = "materials";
+  type Section = "equipment"|"materials";
   type Option = "customer" | "company";
 
   const handleCheckboxChange = (section: Section, option: Option) => {
     if (section === "materials") {
       setMaterials({
+        customer: option === "customer",
+        company: option === "company",
+      });
+    }
+    else if (section === "equipment") {
+      setEquipment({
         customer: option === "customer",
         company: option === "company",
       });
@@ -100,8 +106,11 @@ function MoveInAndOutTransportCleaning() {
     alert("Chemical is required. Please select an option for Chemical.");
     return; 
   }
-
- 
+  // Validate Equipment
+  if (!equipment.customer && !equipment.company) {
+    alert("Equipment is required. Please select an option for Equipment.");
+    return; 
+  }
 
     if (
       !propertyType ||
@@ -113,7 +122,8 @@ function MoveInAndOutTransportCleaning() {
       !acceptTerms2||
       !locationFrom||
       !locationTo||
-      !propertySize
+      !propertySize||
+      !country
     ) {
       alert("Please fill all required fields before proceeding to checkout.");
       return;
@@ -166,6 +176,7 @@ function MoveInAndOutTransportCleaning() {
       details: serviceDetails,
       personalInformation: formData,
       materials,
+      equipment
     };
 
     console.log("Data:", data);
@@ -295,6 +306,8 @@ function MoveInAndOutTransportCleaning() {
             setLocationTo={setLocationTo}
             propertySize={propertySize}
             setPropertySize={setPropertySize}
+            country={country}
+            setCountry={setCountry}
           />
         </div>
 
@@ -333,12 +346,37 @@ function MoveInAndOutTransportCleaning() {
           </div>
         </div>
 
-        <div className="flex flex-wrap p-8 gap-10 md:gap-100 mb-10">
+        <div className="flex flex-col md:flex-row md:gap-10 p-4 mb-6">
           {/* Equipment Section */}
-          <div className="w-full md:w-auto">
-            <h2 className="text-lg text-black font-bold mb-4">Materials</h2>
-            <div className="space-y-2 text-black">
+          <div className="w-full mb-14 md:mb-0">
+            <h2 className="text-lg text-black font-bold mb-2">Equipment</h2>
+            <div className="text-black">
+              <label className="flex items-center space-x-2 mb-1">
+                <input
+                  type="checkbox"
+                  className="w-4 h-4"
+                  checked={equipment.customer}
+                  onChange={() => handleCheckboxChange("equipment", "customer")}
+                />
+                <span>Provide by customer</span>
+              </label>
               <label className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  className="w-4 h-4"
+                  checked={equipment.company}
+                  onChange={() => handleCheckboxChange("equipment", "company")}
+                />
+                <span>Provide by company</span>
+              </label>
+            </div>
+          </div>
+
+          {/* Chemical Section */}
+          <div className="w-full">
+            <h2 className="text-lg text-black font-bold mb-2">Materials</h2>
+            <div className="text-black">
+              <label className="flex items-center space-x-2 mb-1">
                 <input
                   type="checkbox"
                   className="w-4 h-4"

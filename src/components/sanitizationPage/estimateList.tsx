@@ -19,6 +19,7 @@ const EstimateList: React.FC<EstimateListProps> = ({ onSelectionChange }) => {
     Kitchen: false,
     'Living Room': false,
     'House Appliances': false,
+    Other:false,
   });
 
   // Data for categories and their items
@@ -28,6 +29,7 @@ const EstimateList: React.FC<EstimateListProps> = ({ onSelectionChange }) => {
     Kitchen: ['Coffee Pods', 'Trash Bag', 'Cutting board', 'Dish Brush / Sponge', 'Dish Soap & Dishwasher Pods'],
     'Living Room': ['TV Stand', 'Coffee Table', 'Couch/Chair', 'Curtains/Shades', 'Streaming device'],
     'House Appliances': ['Oven', 'Fridge', 'Iron', 'Washing Machine', 'Vacuum Cleaner'],
+    Other:['other']
   };
 
   // Handle checkbox change
@@ -121,6 +123,20 @@ const EstimateList: React.FC<EstimateListProps> = ({ onSelectionChange }) => {
               <Checkbox checked={selectedCategories['House Appliances']} onChange={() => handleCheckboxChange('House Appliances')} />
             </Box>
             {categories['House Appliances'].map((item, index) => (
+              <Typography key={index} variant="body1" sx={{ mt: 1,color: 'black' }}>
+                {item}
+              </Typography>
+            ))}          
+        </Grid>
+
+        <Grid item xs={12} md={4} sx={{padding:2}}>          
+            <Box sx={{ display: 'flex',  alignItems: 'center' }}>
+              <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#002F6D' }}>
+                Other
+              </Typography>
+              <Checkbox checked={selectedCategories['Other']} onChange={() => handleCheckboxChange('Other')} />
+            </Box>
+            {categories['Other'].map((item, index) => (
               <Typography key={index} variant="body1" sx={{ mt: 1,color: 'black' }}>
                 {item}
               </Typography>

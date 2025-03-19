@@ -403,14 +403,14 @@ const handleCheckboxChange = (section: Section, option: Option) => {
         <div>
           <PersonalInformationForm onChangeCallback={handleFormChange} />
           {/* Display form data in another section */}
-          <div style={{ marginTop: "20px" }}>
-            {/* <h2>Live Form Data:</h2>
+          {/* <div style={{ marginTop: "20px" }}>
+            <h2>Live Form Data:</h2>
             <pre>{JSON.stringify(formData, null, 2)}</pre>
             <pre>{JSON.stringify(equipment, null, 2)}</pre>
             <pre>{JSON.stringify(chemical, null, 2)}</pre>
             <pre>{JSON.stringify(propertyType, null, 2)}</pre>
-            <pre>{JSON.stringify(selectedData, null, 2)}</pre> */}
-          </div>
+            <pre>{JSON.stringify(selectedData, null, 2)}</pre>
+          </div> */}
         </div>
 
         {/* Terms Checkbox */}
