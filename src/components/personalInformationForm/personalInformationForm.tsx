@@ -8,8 +8,11 @@ import {
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import { useEffect } from "react"; // Add useState
-import { useDebounce } from "use-debounce"; // Install and use use-debounce
+import { useEffect } from "react";
+import { useDebounce } from "use-debounce";
+import PhoneInput, { getCountryCallingCode, Country } from "react-phone-number-input"; // Import Country
+import 'react-phone-number-input/style.css';
+
 
 const StyledTextField = styled(TextField)({
   "& .MuiOutlinedInput-root": {
@@ -26,12 +29,33 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-const prefixes = ["Mr.", "Ms.", "Mrs.", "Dr.","Other"];
-const countries = [
- " Australia ","Austria ","Belgium","Canada ","Denmark","Finland","France","Germany ","Ireland","Italy","Luxembourg", 
-"Netherlands","New Zealand","Poland","Portugal ","Qatar","Saudi Arabia","Scotland ","Spain ","Sri Lanka","Switzerland ",
-"United Arab Emirates ","United Kingdom","United States" 
- ];
+const prefixes = ["Mr.", "Ms.", "Mrs.", "Dr.", "Other"];
+const countries: { name: string; code: Country }[] = [ // Use Country type
+  { name: "Australia", code: "AU" },
+  { name: "Austria", code: "AT" },
+  { name: "Belgium", code: "BE" },
+  { name: "Canada", code: "CA" },
+  { name: "Denmark", code: "DK" },
+  { name: "Finland", code: "FI" },
+  { name: "France", code: "FR" },
+  { name: "Germany", code: "DE" },
+  { name: "Ireland", code: "IE" },
+  { name: "Italy", code: "IT" },
+  { name: "Luxembourg", code: "LU" },
+  { name: "Netherlands", code: "NL" },
+  { name: "New Zealand", code: "NZ" },
+  { name: "Poland", code: "PL" },
+  { name: "Portugal", code: "PT" },
+  { name: "Qatar", code: "QA" },
+  { name: "Saudi Arabia", code: "SA" },
+  { name: "Scotland", code: "GB" },
+  { name: "Spain", code: "ES" },
+  { name: "Sri Lanka", code: "LK" },
+  { name: "Switzerland", code: "CH" },
+  { name: "United Arab Emirates", code: "AE" },
+  { name: "United Kingdom", code: "GB" },
+  { name: "United States", code: "US" },
+];
 
 type FormValues = {
   prefix: string;
@@ -45,11 +69,11 @@ type FormValues = {
   city: string;
   state: string;
   zip: string;
-  country: string;
+  country: string; // Use Country type
 };
 
 const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data: FormValues) => void }) => {
-  const { control, watch } = useForm<FormValues>({
+  const { control, watch, setValue } = useForm<FormValues>({
     defaultValues: {
       prefix: "",
       firstName: "",
@@ -62,19 +86,29 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
       city: "",
       state: "",
       zip: "",
-      country: "",
+      country: " ", 
     },
   });
 
-  const formValues = watch();
+  const formValues = watch() as FormValues;
 
   // Debounce the form values
-  const [debouncedFormValues] = useDebounce(formValues, 300); // 300ms delay
+  const [debouncedFormValues] = useDebounce(formValues, 300);
 
   useEffect(() => {
-    // Call the callback with debounced values
     onChangeCallback(debouncedFormValues);
   }, [debouncedFormValues, onChangeCallback]);
+
+  useEffect(() => {
+    if (formValues.country) {
+      // Find the country code based on the selected country name
+      const selectedCountry = countries.find((c) => c.name === formValues.country);
+      if (selectedCountry) {
+        const countryCode = getCountryCallingCode(selectedCountry.code);
+        setValue("phone", `+${countryCode}`);
+      }
+    }
+  }, [formValues.country, setValue]);
 
   const renderLabel = (label: string, required = false) => (
     <Typography variant="subtitle2" gutterBottom>
@@ -90,7 +124,7 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
       <Grid container spacing={3}>
         {/* Prefix */}
         <Grid item xs={12} sm={2}>
-          {renderLabel("Prefix",true)}
+          {renderLabel("Prefix", true)}
           <FormControl fullWidth>
             <Controller
               name="prefix"
@@ -169,8 +203,72 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
           />
         </Grid>
 
-        {/* Email */}
+        
+        {/* Country */}
         <Grid item xs={12} sm={6}>
+          {renderLabel("Country", true)}
+          <FormControl fullWidth>
+            <Controller
+              name="country"
+              control={control}
+              rules={{ required: "Country is required" }}
+              render={({ field }) => (
+                <Select {...field} displayEmpty
+                  sx={{
+                    borderRadius: '12px',
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      borderColor: 'blue',
+                    },
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                      borderColor: 'darkblue',
+                    },
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      borderColor: 'blue',
+                    },
+                  }}>
+                  <MenuItem value="" disabled>
+                    Select Country
+                  </MenuItem>
+                  {countries.map((country) => (
+                    <MenuItem key={country.code} value={country.name}>
+                      {country.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              )}
+            />
+          </FormControl>
+        </Grid>
+
+        {/* Phone */}
+        <Grid item xs={12} sm={6} >
+        {renderLabel("Phone Number", true)}
+          <FormControl fullWidth size="small">
+            <Controller
+              name="phone"
+              control={control}
+              render={({ field }) => (
+                <PhoneInput
+                  {...field}
+                  international
+                  defaultCountry="US"
+                  placeholder="Phone number"
+                  style={{
+                    borderRadius: "12px",
+                    border: "1px solid blue",
+                    hover:"dark-blue",
+                    padding: "15px",
+                    backgroundColor: "#fff",
+                    color: "#000",
+                  }}
+                />
+              )}
+            />
+          </FormControl>
+        </Grid>
+
+        {/* Email */}
+        <Grid item xs={12} >
           {renderLabel("Email Address", true)}
           <Controller
             name="email"
@@ -192,28 +290,6 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
           />
         </Grid>
 
-        {/* Phone */}
-        <Grid item xs={12} sm={6}>
-          {renderLabel("Phone",true)}
-          <Controller
-            name="phone"
-            control={control}
-            rules={{
-              required: "Phone Number is required",
-              pattern: {
-                value: /^[+\d]?[0-9 ]{7,15}$/,
-                message: "Invalid phone number",
-              },
-            }}
-            render={({ field }) => (
-              <StyledTextField
-                {...field}
-                placeholder="Ex: +1 300 400 5000"
-                fullWidth
-              />
-            )}
-          />
-        </Grid>
 
         {/* Address */}
         <Grid item xs={12}>
@@ -263,7 +339,7 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
         </Grid>
 
         {/* State */}
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={3}>
           {renderLabel("State/Province", true)}
           <Controller
             name="state"
@@ -280,7 +356,7 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
         </Grid>
 
         {/* ZIP Code */}
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={3}>
           {renderLabel("ZIP / Postal Code", true)}
           <Controller
             name="zip"
@@ -302,41 +378,7 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
           />
         </Grid>
 
-        {/* Country */}
-        <Grid item xs={12} sm={6}>
-          {renderLabel("Country", true)}
-          <FormControl fullWidth>
-            <Controller
-              name="country"
-              control={control}
-              rules={{ required: "Country is required" }}
-              render={({ field }) => (
-                <Select {...field} displayEmpty
-                  sx={{
-                    borderRadius: '12px',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: 'blue',
-                    },
-                    '&:hover .MuiOutlinedInput-notchedOutline': {
-                      borderColor: 'darkblue',
-                    },
-                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                      borderColor: 'blue',
-                    },
-                  }}>
-                  <MenuItem value="" disabled>
-                    Select Country
-                  </MenuItem>
-                  {countries.map((country) => (
-                    <MenuItem key={country} value={country}>
-                      {country}
-                    </MenuItem>
-                  ))}
-                </Select>
-              )}
-            />
-          </FormControl>
-        </Grid>
+        
       </Grid>
     </form>
   );

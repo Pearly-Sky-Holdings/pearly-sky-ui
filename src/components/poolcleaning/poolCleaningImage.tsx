@@ -10,26 +10,26 @@ const ImageComponent = () => {
       icon: PoolCleaning1,      
       items: 
       [
-        "Cleaning a Pool",
-        "Check water level",
-        "Check water chemistry",
-        "Use a test kit or take a sample to the local pool store.",
-        "Use a surface skimmer or leaf net to collect all floating debris",
-        "Clean deck around the pool or spa of all leaves and debris to keep them from blowing into the pool.",
-        "Brush the walls first and then brush the floor staring at the shallow end and working toward the bottom drain."
-         ],
+        "Check Water Level",
+        "Check Water Chemistry",
+        "Remove Floating Debris",
+       " Clean the Pool Deck",
+       " Clean Pool Tiles ",
+       " Brush the Pool Walls and Floor"
+
+],
     },
     {
       icon: PoolCleaning2,       
       items: 
       [
-        "Clean the tile around the pool edge, using only pool tile soap.",
-        "Be sure that all equipment is operating correctly and there are no visible leaks.",
-        "Clean the skimmer basket and the pump strainer basket if needed.",
-        "Check the pressure on the filter while the pump is running",
-        "Vacuum the pool using the correct vac-head for your pool surface.",
-        "Brush the entire pool using the nylon brush attached to the tele-pole.",
-        "Be sure to put all the pool cleaning equipment and chemicals away safely.",
+        "Inspect Pool Equipment",
+        "Check Filter Pressure",
+       " Vacuum the Pool",
+       " Brush the Entire Pool",
+        "Clean Skimmer and Pump Baskets",
+        "Store Equipment and Chemicals Safely"
+        
         ],
     },
     
@@ -57,8 +57,8 @@ const ImageComponent = () => {
                 backgroundRepeat: "no-repeat",
                 overflow: "visible",
                 "&:hover": {
-                  transform: "scale(1.02)", // Zoom effect
-                  boxShadow: "0px 4px 20px rgba(0,0,0,0.5)", // Enhanced shadow on hover
+                  transform: "scale(1.02)", 
+                  boxShadow: "0px 4px 20px rgba(0,0,0,0.5)",
                 },
               }}
             >

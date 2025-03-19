@@ -112,6 +112,12 @@ const handleCheckboxChange = (section: Section, option: Option) => {
     alert("Chemical is required. Please select an option for Chemical.");
     return; // Stop further execution
   }
+
+   // Validate Equipment
+   if (!equipment.customer && !equipment.company) {
+    alert("Equipment is required. Please select an option for Equipment.");
+    return; 
+  }
     // Validate required fields
     if (
       !frequency ||
@@ -179,6 +185,7 @@ const handleCheckboxChange = (section: Section, option: Option) => {
       personalInformation: formData,      
       chemical,      
       selectedItems,
+      equipment
     };
     console.log("Data:", data);
   
@@ -339,12 +346,37 @@ const handleCheckboxChange = (section: Section, option: Option) => {
           </div>          
         </div>        
 
-        <div className="flex flex-wrap p-8 gap-10 md:gap-100 mb-10">
-          {/* Chemical Section */}
-          <div className="w-full md:w-auto">
-            <h2 className="text-lg text-black font-bold mb-4">Chemical</h2>
-            <div className="space-y-2 text-black">
+        <div className="flex flex-col md:flex-row md:gap-10 p-4 mb-6">
+          {/* Equipment Section */}
+          <div className="w-full mb-14 md:mb-0">
+            <h2 className="text-lg text-black font-bold mb-2">Equipment</h2>
+            <div className="text-black">
+              <label className="flex items-center space-x-2 mb-1">
+                <input
+                  type="checkbox"
+                  className="w-4 h-4"
+                  checked={equipment.customer}
+                  onChange={() => handleCheckboxChange("equipment", "customer")}
+                />
+                <span>Provide by customer</span>
+              </label>
               <label className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  className="w-4 h-4"
+                  checked={equipment.company}
+                  onChange={() => handleCheckboxChange("equipment", "company")}
+                />
+                <span>Provide by company</span>
+              </label>
+            </div>
+          </div>
+
+          {/* Chemical Section */}
+          <div className="w-full">
+            <h2 className="text-lg text-black font-bold mb-2">Chemical</h2>
+            <div className="text-black">
+              <label className="flex items-center space-x-2 mb-1">
                 <input
                   type="checkbox"
                   className="w-4 h-4"
@@ -365,6 +397,8 @@ const handleCheckboxChange = (section: Section, option: Option) => {
             </div>
           </div>
         </div>
+
+
 
         <div>
           <PersonalInformationForm onChangeCallback={handleFormChange} />
