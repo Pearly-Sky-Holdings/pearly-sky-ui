@@ -59,7 +59,8 @@ const CookieConsentAlert = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        zIndex: 50,
+        zIndex: 1000000,
+        paddingTop:10
       }}
     >
       <Box
