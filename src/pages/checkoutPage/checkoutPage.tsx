@@ -151,6 +151,14 @@ const CheckoutPage = () => {
       navigate("/airbnb_and_short_service", {
         state: { showSuccessPopup: true },
       });
+    }else if (data.serviceName == "Child Care") {
+      navigate("/child-care", {
+        state: { showSuccessPopup: true },
+      });
+    } else if (data.serviceName == "Elder Care") {
+      navigate("/elder-care", {
+        state: { showSuccessPopup: true },
+      });
     }
   };
 
