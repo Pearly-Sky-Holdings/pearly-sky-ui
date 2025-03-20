@@ -208,7 +208,7 @@ const CheckoutPage = () => {
         Checkout
       </Typography>
 
-      <Grid container spacing={4}>
+      <Grid container spacing={2}>
         <Grid item xs={20} md={7}>
           <BillingDetailsForm setFormData={setFormData} formData={formData} />
         </Grid>
