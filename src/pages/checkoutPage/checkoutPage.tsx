@@ -110,8 +110,7 @@ const CheckoutPage = () => {
         request_care_professional: data.details.request_care_professional,
         service_providing_place: data.details.service_providing_place,
         special_request: data.details.special_request,
-        gender: data.details.type,
-        age: data.details.age,
+        personal_information: data.details.childInfo,
         payment_method: selectedPaymentMethod,
       };
       setSaveLoader(true);
