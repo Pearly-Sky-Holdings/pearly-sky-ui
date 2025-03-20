@@ -1,10 +1,12 @@
 import React from "react";
 import { Box, Typography, Card, CardContent } from "@mui/material";
 import { aboutUs1, aboutUs2 } from "../../config/images";
+import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
+
 
 const AboutUsPage: React.FC = () => {
   return (
-    <Box sx={{ py: 5, backgroundColor: "#f0f8ff" }}>
+    <Box sx={{ py: 5, backgroundColor: "#f0f8ff",mt:5,  }}>
       {/* Header */}
       <Typography
         variant="h4"
@@ -17,14 +19,13 @@ const AboutUsPage: React.FC = () => {
       </Typography>
 
       {/* Vision, Mission, Values, Objectives Image */}
-      <Box display="flex" justifyContent="center" mb={5}>
+      <Box display="flex" justifyContent="center" mb={20} mt={10}>
         <img
           src="/images/aboutUsPage/vision.png"
           alt="Vision, Mission, Values, Objectives"
           style={{ maxWidth: "300px", borderRadius: "50%" }}
         />
       </Box>
-
       
       <Box
         sx={{
@@ -34,7 +35,7 @@ const AboutUsPage: React.FC = () => {
           px: 3,
         }}
       >
-        <Card sx={{ border: "2px solid #002F6D", borderRadius: 2 }}>
+        <Card sx={{ border: "2px solid #002F6D", borderRadius: 2 , background: "linear-gradient(135deg, #002F6D, #0D90C8)", }}>
           <CardContent>
             <Typography variant="h6" mb={2}>
               Health and Safety Video
@@ -47,8 +48,9 @@ const AboutUsPage: React.FC = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 overflow: "hidden",
-                borderRadius: 2,
-              }}
+                borderRadius: 2,  
+
+                  }}
             >
               <video
                 controls
@@ -64,7 +66,7 @@ const AboutUsPage: React.FC = () => {
         </Card>
 
         {/* Health and Safety Video */}
-        <Card sx={{ border: "2px solid #002F6D", borderRadius: 2 }}>
+        <Card sx={{ border: "2px solid #002F6D", borderRadius: 2,background: "linear-gradient(135deg,#0D90C8, #002F6D )",  }}>
           <CardContent>
             <Typography variant="h6" mb={2}>
               Booking Induction Video
@@ -93,6 +95,10 @@ const AboutUsPage: React.FC = () => {
           </CardContent>
         </Card>
       </Box>
+       {/* Payment Support Section */}
+            <div >
+              <PaymentSupportSection />
+            </div>
     </Box>
   );
 };

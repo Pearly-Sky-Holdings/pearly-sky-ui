@@ -567,7 +567,7 @@ const MoveInAndOutTransportBookingCart: React.FC<SanitizationBookingCartProps> =
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5 mt-5">
       {/* First Row: Select Country */}
-      <div className="col-span-2">
+      <div className="col-span-1 md:col-span-2">
       <label className="text-blue-900">Select Country</label> 
         <FormControl fullWidth>
           <Controller
