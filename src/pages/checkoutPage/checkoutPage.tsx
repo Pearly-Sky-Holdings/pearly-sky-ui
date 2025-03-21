@@ -152,11 +152,11 @@ const CheckoutPage = () => {
         state: { showSuccessPopup: true },
       });
     }else if (data.serviceName == "Child Care") {
-      navigate("/child-care", {
+      navigate("/child_care_cleaning", {
         state: { showSuccessPopup: true },
       });
     } else if (data.serviceName == "Elder Care") {
-      navigate("/elder-care", {
+      navigate("/elder_care_cleaning", {
         state: { showSuccessPopup: true },
       });
     }
@@ -208,7 +208,7 @@ const CheckoutPage = () => {
         Checkout
       </Typography>
 
-      <Grid container spacing={4}>
+      <Grid container spacing={2}>
         <Grid item xs={20} md={7}>
           <BillingDetailsForm setFormData={setFormData} formData={formData} />
         </Grid>
