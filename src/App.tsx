@@ -57,6 +57,7 @@ import CleanersCareerAdvertisementPage from "./pages/jobAdvertisement/cleanerAdv
 import ChildCareWorkerAdvertismentPage from "./pages/jobAdvertisement/childCareWorkerAdvertisment.tsx";
 import EldersCareWorkerAdvertisment from "./pages/jobAdvertisement/eldersCareWorkerAdvertisment.tsx";
 import JobApplyForm from "./components/jobApplyForm/jobApplyForm.tsx";
+import SignUp from "./pages/signUpPage/signUpPage.tsx";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -446,6 +447,8 @@ function App() {
             />
 
             <Route path="/login" element={<LoginPage />} />
+
+            <Route path="/signup" element={<SignUp />} />
 
             <Route path="/checkout" element={<CheckoutPage />} />
 
