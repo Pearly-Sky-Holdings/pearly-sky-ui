@@ -27,14 +27,22 @@ import {
   flagSwitzerland,
   flagBelgium,
 } from "../../config/images.ts";
+import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection.tsx";
 
 type Location = {
   id: string;
   name: string;
   flag: string;
-  email?: string;
+  email1?: string;
+  email2?: string;
+  email3?: string;
+  email4?: string;
+  email5?: string;
   address?: string;
   serviceCities?: string[];
+  Company_number?: string;
+  siren?: string;
+  register_number?: string;
 };
 
 function OurLocations() {
@@ -45,8 +53,12 @@ function OurLocations() {
       id: "france",
       name: "France",
       flag: flagFrance,
-      email: "info@pearlyskyholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "15 Rue Des Halles, 75001 Paris.",
+      siren: "930 651 625",
       serviceCities: [
         "Paris",
         "Nice",
@@ -77,9 +89,13 @@ function OurLocations() {
       id: "uk",
       name: "United Kingdom",
       flag: flagUk,
-      email: "info@pearlyskyholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address:
         "3rd Floor, 45 Albemarle Street, London, England , W1s 4JL United Kingdom",
+      Company_number: "15307255",
       serviceCities: [
         "London",
         "Yake",
@@ -93,7 +109,7 @@ function OurLocations() {
         "Derby",
         "Southampton",
         "Liverpool",
-        "Kingston upon Hull",        
+        "Kingston upon Hull",
         "Portsmouth",
         "Manchester",
         "Chester",
@@ -119,15 +135,23 @@ function OurLocations() {
       id: "sl",
       name: "Sri Lanka",
       flag: flagSrilanka,
-      email: "us@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "No - 188/2 Kandy Road , Pahala Imbulgoda, Imbulgoda, Sri Lanka",
+      register_number: "PV 00295748",
       serviceCities: ["Colombo", "Kandy", "Negombo", "Nuwara Eliya"],
     },
     {
       id: "scotland",
       name: "Scotland",
       flag: flagScotland,
-      email: "info@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
       serviceCities: [
         "Edinburgh",
@@ -143,7 +167,11 @@ function OurLocations() {
       id: "germany",
       name: "Germany",
       flag: flagGermany,
-      email: "uk@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
       serviceCities: ["Berlin", "Hamburg", "Munich", "Cologne", "Frankfurt"],
     },
@@ -151,7 +179,11 @@ function OurLocations() {
       id: "belgium",
       name: "Belgium",
       flag: flagBelgium,
-      email: "uk@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
       serviceCities: ["Bruseels"],
     },
@@ -159,59 +191,101 @@ function OurLocations() {
       id: "australia",
       name: "Australia",
       flag: flagAustralia,
-      email: "us@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: ["Sydney"," Melbourne"," Brisbane","Perth"," Adelaide"],
+      serviceCities: [
+        "Sydney",
+        " Melbourne",
+        " Brisbane",
+        "Perth",
+        " Adelaide",
+      ],
     },
     {
       id: "uae",
       name: "United Arab Emirates",
       flag: flagUAE,
-      email: "info@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
       serviceCities: [
-        "Dubai Abu","Dhabi","Sharjah","Ras Alkhaimah","Jebel Ali"
+        "Dubai Abu",
+        "Dhabi",
+        "Sharjah",
+        "Ras Alkhaimah",
+        "Jebel Ali",
       ],
     },
     {
       id: "canada",
       name: "Canada",
       flag: flagCanada,
-      email: "uk@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: ["Toronto","Montreal","Ottawa","Vancouver","Jebel Ali"],
+      serviceCities: [
+        "Toronto",
+        "Montreal",
+        "Ottawa",
+        "Vancouver",
+        "Jebel Ali",
+      ],
     },
     {
       id: "finland",
       name: "Finland",
       flag: flagFinland,
-      email: "us@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: ["Helsinki","Oulu","Turku","Tampere"],
+      serviceCities: ["Helsinki", "Oulu", "Turku", "Tampere"],
     },
     {
       id: "saudi-arabia",
       name: "Saudi Arabia",
       flag: flagSaudiArabia,
-      email: "info@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Riyadh Jeddah"       
-      ],
+      serviceCities: ["Riyadh Jeddah"],
     },
     {
       id: "italy",
       name: "Italy",
       flag: flagItaly,
-      email: "uk@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: ["Rome","Venice","Florence","Milan","Naples"],
+      serviceCities: ["Rome", "Venice", "Florence", "Milan", "Naples"],
     },
     {
       id: "potugal",
       name: "Portugal",
       flag: flagPortugal,
-      email: "us@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
       serviceCities: ["Lisbon"],
     },
@@ -219,105 +293,113 @@ function OurLocations() {
       id: "us",
       name: "United States",
       flag: flagUs,
-      email: "info@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "New York"," Los Angeles"," Philadelphia","Houston"
-      ],
+      serviceCities: ["New York", " Los Angeles", " Philadelphia", "Houston"],
     },
     {
       id: "ireland",
       name: "Ireland",
       flag: flagIreland,
-      email: "uk@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Dublin",
-        "Belfast",
-        "Cork",
-        "Limerick",
-        "Galway"],
+      serviceCities: ["Dublin", "Belfast", "Cork", "Limerick", "Galway"],
     },
     {
       id: "austria",
       name: "Austria",
       flag: flagAustria,
-      email: "us@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Vienna",
-        "Villach ",
-        "Innsbruck",
-        "Graz",
-        "Bregenz"],
+      serviceCities: ["Vienna", "Villach ", "Innsbruck", "Graz", "Bregenz"],
     },
     {
       id: "netherlands",
       name: "Netherlands",
       flag: flagNetherlands,
-      email: "info@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
       serviceCities: [
         "Amsterdam",
-        "Utrecht" ,
+        "Utrecht",
         "Rotterdam",
         "Groningen",
-        "The Hague"
+        "The Hague",
       ],
     },
     {
       id: "switzerland",
       name: "Switzerland",
       flag: flagSwitzerland,
-      email: "uk@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Zurich",
-         "Geneva Basel",
-        "Bern Lausanne"],
+      serviceCities: ["Zurich", "Geneva Basel", "Bern Lausanne"],
     },
     {
       id: "qatar",
       name: "Qatar",
       flag: flagQatar,
-      email: "us@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Al Wakrah",
-        "Doha",
-        "Al Rayyan",
-        "Dukhan"],
+      serviceCities: ["Al Wakrah", "Doha", "Al Rayyan", "Dukhan"],
     },
     {
       id: "denmark",
       name: "Denmark",
       flag: flagDenmark,
-      email: "info@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Helsinki",
-        "Oulu",
-        "Turku",
-        "Tampere"
-      ],
+      serviceCities: ["Helsinki", "Oulu", "Turku", "Tampere"],
     },
     {
       id: "new-zealand",
       name: "New Zealand",
       flag: flagNewZealand,
-      email: "uk@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Auckland",
-        "Hamilton",
-        "Wellington",
-        "Christchurch"],
+      serviceCities: ["Auckland", "Hamilton", "Wellington", "Christchurch"],
     },
     {
       id: "poland",
       name: "Poland",
       flag: flagPoland,
-      email: "us@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
       serviceCities: ["Warsaw"],
     },
@@ -325,24 +407,26 @@ function OurLocations() {
       id: "luxembourg",
       name: "Luxembourg",
       flag: flagluxembourg,
-      email: "info@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Luxembourg City"
-      ],
+      serviceCities: ["Luxembourg City"],
     },
-   
+
     {
       id: "spain",
       name: "Spain",
       flag: flagSpain,
-      email: "us@ventilationholdings.com",
+      email1: "Info@Pearlyskyplc.com",
+      email2: "support@pearlyskyplc.com",
+      email3: "Recruiting@pearlyskyplc.com",
+      email4: "Sales@pearlyskyplc.com",
+      email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Barcelona",
-        "Madrid",
-        "Palma",
-        "Granada"],
+      serviceCities: ["Barcelona", "Madrid", "Palma", "Granada"],
     },
   ];
 
@@ -372,7 +456,10 @@ function OurLocations() {
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">
+        <h1
+          className="text-3xl font-bold text-center mb-8"
+          style={{ color: "#002F6B" }}
+        >
           Our Locations
         </h1>
 
@@ -400,6 +487,9 @@ function OurLocations() {
               />
             ))}
           </div>
+        </div>
+        <div>
+          <PaymentSupportSection />
         </div>
       </div>
     </div>

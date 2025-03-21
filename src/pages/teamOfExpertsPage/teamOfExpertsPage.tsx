@@ -1,27 +1,32 @@
 import React from "react";
 import TeamCard from "../../components/teamCard/teamCard";
 const emailIcon = "./images/teamExperts/email_icon.png";
+import { oshan, anusha, nipuna, Shakila} from "../../config/images";
 
 const teamMembers = [
   {
-    name: "Call Center",
-    image: "./images/teamExperts/callCenter.png",
-    email: "callcenter@company.com",
+    name: "Mr Oshan Bandara",
+    title:"Operations Manager",
+    image: oshan,
+    email: "oshanhb@pearlyskyplc.com ",
   },
   {
-    name: "Sales Manager",
-    image: "./images/teamExperts/salesManager.png",
-    email: "callcenter@company.com",
+    name: "Mrs Anusha Niroshini",
+    title:"Sales Director",
+    image: anusha,
+    email: "anushatan@pearlyskyplc.com",
   },
   {
-    name: "Customer Relationship Manager",
-    image: "./images/teamExperts/customerManager.png",
-    email: "callcenter@company.com",
+    name: "Mr Nipuna Piyumal",
+    title:"Technical Support ",
+    image: nipuna,
+    email: "nipunapiyumal@pearlyskyplc.com",
   },
   {
-    name: "Team Expertise",
-    image: "./images/teamExperts/teamExperts.png",
-    email: "callcenter@company.com",
+    name: "Mr Shakila Bandara",
+    title:"Operations Manager",
+    image: Shakila,
+    email: "shakilaib@pearlyskyplc.com",
   },
 ];
 
@@ -38,10 +43,10 @@ const TeamOfExpertsPage: React.FC = () => {
         </p>
       </div>
 
-      {/* Team Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-10">
+      {/* Team Cards - Modified grid layout for tablet */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10 ">
         {teamMembers.map((member, index) => (
-          <TeamCard key={index} name={member.name} image={member.image} emailIcon={emailIcon}  email={member.email} />
+          <TeamCard key={index} name={member.name} title={member.title} image={member.image} emailIcon={emailIcon} email={member.email} />
         ))}
       </div>
     </div>

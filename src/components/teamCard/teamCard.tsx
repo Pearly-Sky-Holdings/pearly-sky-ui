@@ -3,12 +3,13 @@ import { motion } from "framer-motion";
 
 interface TeamCardProps {
   name: string;
+  title: string;
   image: string;
   emailIcon: string;
   email: string;
 }
 
-const TeamCard: React.FC<TeamCardProps> = ({ name, image, emailIcon, email }) => {
+const TeamCard: React.FC<TeamCardProps> = ({ name, title, image, emailIcon, email }) => {
   return (
     <motion.div
     style={{boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",}}
@@ -20,7 +21,7 @@ const TeamCard: React.FC<TeamCardProps> = ({ name, image, emailIcon, email }) =>
     >
       {/* Image  */}
       <motion.div
-        className="w-40 h-40 bg-white rounded-full flex items-center justify-center overflow-hidden mt-5"
+        className="lg:w-[200px] lg:h-[200px] md:w-[100px] md:h-[100px] w-[200px] h-[200px] bg-white rounded-full flex items-center justify-center overflow-hidden mt-5"
         whileHover={{ scale: 1.1 }}
         transition={{ duration: 0.3 }}
       >
@@ -30,6 +31,11 @@ const TeamCard: React.FC<TeamCardProps> = ({ name, image, emailIcon, email }) =>
       {/* Name */}
       <div className="mt-5">
         <h3 className="text-lg font-semibold text-center">{name}</h3>
+      </div>
+
+      {/* title */}
+      <div className="mt-2">
+        <h3 className="text-lg font-semibold text-center">{title}</h3>
       </div>
 
      

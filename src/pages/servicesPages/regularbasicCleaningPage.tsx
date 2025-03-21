@@ -7,44 +7,43 @@ import { format } from "date-fns";
 import "react-calendar/dist/Calendar.css";
 import TimeSlots from "../../components/timeSlot/timeSlot";
 import "./CustomCalendar.css";
+import ServicesCarosel from "../../components/servicesCarousel/regularOneTime";
 import EquipmentSection from "../../components/equipmentSection/equipmentSection";
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
-import { getPackege } from "../../services/CleaningServices/index";
+import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
+import { getPackege, getServices } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
-import ServicesCarosel from "../../components/oneTimeCleaning/servicesCarousel";
+
+import { regularService1 } from "../../config/images";
 import store from "../../store";
+import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
+import QuantityControl from "../../components/QuantityControl/quantityControl";
 import Dropdown from "../../components/dropDown/dropDown";
-import { PropertySizeOptions } from "../../components/data/PropertySizeOptions";
-import { Duration } from "../../components/data/Duration";
-import {
-  regularService1,
-  regularServiceEquipment1,
-  regularServiceEquipment2,
-  regularServiceEquipment3,
-  regularServiceEquipment4,
-  supportPayment1,
-  supportPayment2,
-  supportPayment3,
-  supportPayment4,
-  supportPayment5,
-  supportPayment6,
-  supportPayment7,
-  supportPayment8,
-  supportPayment9,
-  supportPayment10,
-} from "../../config/images";
-
-
 
 function RegularBasicCleaningPage() {
+  type selectService = {
+    package_id: number;
+    price: number;
+    qty: number;
+    name?: string;
+  };
+
+  type Equipment = {
+    id: string;
+    price: number;
+    name?: string;
+  };
+
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const packages = useSelector((state: any) => state.packagesSlice.package);
-  const [selectedServices, setSelectedServices] = useState<object[]>([]);
-  const [ovenQty, setOvenQty] = useState("0");
+  const services = useSelector((state: any) => state.servicesSlice.service);
+  const [selectedServices, setSelectedServices] = useState<selectService[]>([]);
+
   const [showTermsCard, setShowTermsCard] = useState(false);
-  const [fridgeQty, setFridgeQty] = useState("0");
+  const [fridgeQty, setFridgeQty] = useState("1");
+  const [ovenQty, setOvenQty] = useState("1");
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
   const [propertySize, setPropertySize] = useState("");
@@ -57,269 +56,220 @@ function RegularBasicCleaningPage() {
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
   const [selectedSolvent, setSelectedSolvent] = useState("");
-  const [ setSelectedEquipmentOption] = useState("");
-  const [selectedEquipments, setSelectedEquipments] = useState<
-    Array<{ id: string; price: number }>
-  >([]);
-  const [checkedList, setCheckedList] = useState<string[]>([]);
+  const [_selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
+  const [selectedEquipments, setSelectedEquipments] = useState<Equipment[]>([]);
+  const [checkedList, setCheckedList] = useState<String[]>([]);
+
+  // Currency state - Changed default from EUR to USD
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const [currencySymbol, setCurrencySymbol] = useState("$");
+  const [conversionRate, setConversionRate] = useState(1);
+  const [conversionRateBaseEur, setConversionRateBaseEur] = useState(1);
+
+  const [maxTime, setMaxTime] = useState<number>(1);
+  const [changeValue, setChangeValue] = useState<boolean>(false);
+  const [count, setCount] = useState(0);
+
   const [priceBreakdown, setPriceBreakdown] = useState({
-    basePrice: 27.0,
+    hourlyRate: parseInt(services.data.price),
     serviceCosts: 0,
     equipmentCosts: 0,
-    totalPrice: 27.0,
+    totalPrice: 25,
+    basePrice: 25,
   });
 
-    // Use the class to get property size options
-    const propertySizeOptions = PropertySizeOptions.getOptions();
-    const durationOptions = Duration.getOptions();
+  // Handler for currency changes from CurrencyConverter component
+  const handleCurrencyUpdate = (
+    currency: string,
+    symbol: string,
+    rate: number,
+    rateBaseEur: number
+  ) => {
+    if (count >= 2) {
+      setChangeValue(true);
+    }
+    setSelectedCurrency(currency);
+    setCurrencySymbol(symbol);
+    setConversionRate(rate);
+    setConversionRateBaseEur(rateBaseEur);
+    setCount(count + 1);
+  };
 
   useEffect(() => {
-    setPriceBreakdown(calculateTotalPrice());
-  }, [selectedServices, selectedEquipments]);
+    if (changeValue) {
+      setChangeValue(false);
+      setPriceBreakdown(calculateTotalPrice());
+    }
+  }, [selectedServices, selectedEquipments, conversionRate, duration]);
 
   useEffect(() => {
     dispatch(getPackege("1"));
+    dispatch(getServices("1"));
   }, []);
+
   const calculateTotalPrice = () => {
-    let basePrice = 27.0;
+    const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
+    const basePrice = hourlyRate * maxTime; // Base price in USD
+
     let serviceCosts = 0;
     let equipmentCosts = 0;
 
-    selectedServices.forEach((serviceId) => {
-      const service = packages.data.find(
-        (p: any) => p.package_id.toString() === serviceId
-      );
-      if (service) {
-        serviceCosts += parseFloat(service.price.replace("$", ""));
-      }
+    // Calculate service costs in USD
+    selectedServices.forEach((service) => {
+      serviceCosts += service.price * (service.qty || 1) * conversionRate;
     });
 
+    // Calculate equipment costs in USD
     selectedEquipments.forEach((equipment) => {
-      equipmentCosts += equipment.price;
+      equipmentCosts += equipment.price * conversionRate;
     });
 
-    const totalPrice = basePrice + serviceCosts + equipmentCosts;
+    // Calculate total price in the user's selected currency
+    const totalPriceInSelectedCurrency =
+      basePrice * conversionRate + equipmentCosts + serviceCosts;
+
     return {
-      basePrice,
+      hourlyRate,
       serviceCosts,
       equipmentCosts,
-      totalPrice,
+      totalPrice: totalPriceInSelectedCurrency, // Total price in the selected currency
+      basePrice: basePrice * conversionRate, // Base price in the selected currency
     };
   };
-  const handleSelectEquipment = (equipment: any) => {
-    setSelectedEquipments([
-      ...selectedEquipments,
-      { id: equipment.id, price: equipment.price },
-    ]);
+
+  const handleEquipmentSelect = (equipment: Equipment, selected: boolean) => {
+    setChangeValue(true);
+    if (selected) {
+      if (!selectedEquipments.some((e) => e.id === equipment.id)) {
+        setSelectedEquipments((prev) => [
+          ...prev,
+          { id: equipment.id, price: equipment.price },
+        ]);
+      }
+    } else {
+      setSelectedEquipments((prev) =>
+        prev.filter((e) => e.id !== equipment.id)
+      );
+    }
+  };
+
+  const handleSolventChange = (solvent: string) => {
+    setSelectedSolvent(solvent);
+  };
+
+  const handleEquipmentOptionChange = (option: string) => {
+    setSelectedEquipmentOption(option);
   };
 
   const handleBookNow = () => {
+    if (
+      !propertySize ||
+      !duration ||
+      !numCleaners ||
+      !frequency ||
+      !propertyType ||
+      !contactType ||
+      !language ||
+      !selectedDate ||
+      !selectedTime ||
+      !acceptTerms1 ||
+      !acceptTerms2
+    ) {
+      alert("Please fill all required fields before proceeding to checkout.");
+      return;
+    }
+
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
     const serviceDetails = {
       service_id: "1",
+      price: currencySymbol + priceBreakdown.totalPrice.toString(),
       date,
       time: selectedTime,
       property_size: propertySize,
-      duration: Number(duration),
-      number_of_cleaners: Number(numCleaners),
+      duration: duration,
+      number_of_cleaners: parseInt(numCleaners),
+      note: document.querySelector("textarea")?.value || "",
       frequency,
-      package_details: [
-        {
-          package_id: 1,
-          price: 3000.0,
-          qty: 1,
-        },
-      ],
-      person_type: contactType,
-      language,
+      package_details: selectedServices.some(
+        (service) => service.package_id === 21 || service.package_id === 22
+      )
+        ? selectedServices.map((obj) => {
+            if (obj.package_id === 21)
+              return { ...obj, qty: Number(fridgeQty) };
+            if (obj.package_id === 22) return { ...obj, qty: Number(ovenQty) };
+            return obj;
+          })
+        : selectedServices,
+      request_gender: contactType,
+      request_language: language,
       business_property: propertyType,
       cleaning_solvents: selectedSolvent,
-      // equipmentOption: selectedEquipmentOption,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
-      price: priceBreakdown.totalPrice,
-      note: document.querySelector("textarea")?.value || "",
+
+      currency: "USD",
     };
-    console.log("Service Details:", serviceDetails);
-    navigate("/checkout", { state: { serviceDetails } });
+    const data = {
+      serviceName: "Regular Basic",
+      details: serviceDetails,
+      orderSummary: {
+        selectedServices,
+        selectedEquipments,
+        basePrice: priceBreakdown.basePrice,
+        totalPrice: priceBreakdown.totalPrice,
+        currencySymbol,
+        selectedCurrency,
+        conversionRate,
+      },
+    };
+    console.log("Service Details:", data);
+    navigate("/checkout", { state: { data } });
   };
 
-  const solvents = [
-    { value: "customer", label: "Provided by the Customer" },
-    { value: "company", label: "Request the Company" },
-  ];
-
-  const equipmentOptions = [
-    { value: "basic", label: "Provided by the Customer" },
-    { value: "advanced", label: "Request the Company" },
-  ];
-
-  const equipments = [
-    {
-      id: "cleaning-solvent ",
-      name: "Cleaning Solvent (Eco Friendly Chemicals)",
-      price: 15.99,
-      image: regularServiceEquipment1,
-    },
-    {
-      id: "mop",
-      name: "MOP",
-      price: 11.99,
-      image: regularServiceEquipment2,
-    },
-    {
-      id: "materials",
-      name: "Other Cleaning Materials",
-      price: 19.99,
-      image: regularServiceEquipment3,
-    },
-    {
-      id: "vacuum",
-      name: "Vacuum Cleaner",
-      price: 29.99,
-      image: regularServiceEquipment4,
-    },
-  ];
-
-  const bookingTerms = [
-    {
-      title: "Consider Property Size and Architecture",
-      items: [
-        "Evaluate the size and layout of your property before deciding on the number of cleaners",
-        "Larger properties or complex layouts may require more time or additional cleaners",
-      ],
-    },
-    {
-      title: "Factor in Additional Cleaning Services",
-      items: [
-        "Some services may require specialized cleaning or additional time",
-        "Consider bundling services for better value",
-      ],
-    },
-    {
-      title: "Limitations or Continuous Working Hours",
-      items: [
-        "Maximum continuous working hours apply",
-        "Plan the number of cleaners accordingly",
-      ],
-    },
-    {
-      title: "Booking cancellation",
-      items: [
-        "24-hour notice required for cancellations",
-        "Late cancellations may incur fees",
-      ],
-    },
-    {
-      title: "Accept company cookies policy",
-      items: [],
-    },
-  ];
-
-  const paymentMethods = [
-    { icon: supportPayment1, alt: "Visa" },
-    { icon: supportPayment2, alt: "Stripe" },
-    { icon: supportPayment3, alt: "PayPal" },
-    { icon: supportPayment4, alt: "Mastercard" },
-    { icon: supportPayment5, alt: "American Express" },
-    { icon: supportPayment6, alt: "Apple Pay" },
-    { icon: supportPayment7, alt: "Google Pay" },
-    { icon: supportPayment8, alt: "Bitcoin" },
-    { icon: supportPayment9, alt: "Amazon Pay" },
-    { icon: supportPayment10, alt: "Discover" },
-  ];
-
-
-  const numCleanersOptions = [
-    { value: "1", label: "1 " },
-    { value: "2", label: "2 " },
-    { value: "3", label: "3 " },
-    { value: "4", label: "4" },
-    { value: "5", label: "5" },
-    { value: "6", label: "6" },
-    { value: "7", label: "7" },
-    { value: "8", label: "8" },
-    { value: "9", label: "9" },
-    { value: "10", label: "10" },
-    { value: "15", label: "15" },
-    { value: "20", label: "20" },
-    { value: "25", label: "25" },
-    { value: "50", label: "50" },
-    { value: "75", label: "75" },
-    { value: "100", label: "100" },
-  ];
-
-  const propertyTypeOptions = [
-    { value: "home", label: "Home" },
-    { value: "apartment", label: "Apartment" },
-    { value: "villa", label: "Villa" },
-    { value: "commercial property", label: "Commercial property" },
-    { value: "government office", label: "Government office" },
-    { value: "public office", label: "Public office" },
-    { value: "private office", label: "Private office " },
-    { value: "daycare centre", label: "Daycare centre " },
-    { value: "elders care centre", label: "Elder's Care Centre" },
-    { value: "shopping mall", label: "Shopping mall" },
-    { value: "government hospital", label: "Government hospital" },
-    { value: "private hospital", label: "Private hospital" },
-    { value: "sport centre", label: "Sport centre" },
-    { value: "gym", label: "Gym " },
-    { value: "restaurant", label: "Restaurant" },
-    { value: "hotel", label: "Hotel" },
-    {value: "school private or government",label: "School Private or Government",},
-    { value: "transport sector", label: "Transport sector" },
-    { value: "airport", label: "Airport" },
-    { value: "retail building or shop", label: "Retail building or shop" },
-    { value: "other", label: "Other sector" },
-  ];
+  // Update service names when packages data is loaded
+  useEffect(() => {
+    if (packages.isSuccess && packages.data) {
+      setSelectedServices((prevServices) =>
+        prevServices.map((service) => {
+          const packageInfo = packages.data.find(
+            (pkg: any) => pkg.package_id === service.package_id
+          );
+          return packageInfo ? { ...service, name: packageInfo.name } : service;
+        })
+      );
+    }
+  }, [packages.isSuccess, packages.data]);
 
   const frequencyOptions = [
-    { value: "once", label: "One-time" },
+    { value: "daily", label: "Daily" },
     { value: "weekly", label: "Weekly" },
-    { value: "every2weeks", label: "Every 02 weeks" },
-    { value: "every3weeks", label: "Every 03 weeks" },
-    { value: "monthly", label: "Monthly" },
-  ];
-
-  const contactTypeOptions = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-  ];
-
-  const languageOptions = [
-    { value: "english", label: "English" },
-    { value: "french", label: "French" },
-    { value: "spanish", label: "Spanish" },
+    { value: "every 2 weeks", label: "Every 2 Weeks" },
+    { value: "every 3 weeks", label: "Every 3 Weeks" },
+    { value: "every month", label: "Every Month" },
   ];
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
       {/* Header Section */}
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col sm:flex-row gap-4 sm:gap-8">
-        <div className="w-full sm:w-1/3">
+      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col gap-4 lg:flex-row lg:gap-8">
+        <div className="w-full lg:w-2/3">
           <img
             src={regularService1}
             alt="Cleaning Service"
             className="rounded-lg w-full h-auto"
           />
         </div>
-        <div className="w-full sm:w-2/3">
+        <div className="w-fulllg:w-2/3">
           <div className="">
             <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
-              Regular Basic Cleaning
+              {services.data.name}
             </h1>
             <div className="mt-4 mb-4 ml-4">
-              <div className="flex gap-3">
-                <p className="text-xl sm:text-2xl font-semibold text-black">
-                  C$ 27.00
-                </p>
-                <select className="border rounded p-0.5 text-blue-900 h-7">
-                  <option>EUR</option>
-                  <option>USD</option>
-                  <option>GBP</option>
-                  <option>AED</option>
-                  <option>NZD</option>
-                </select>
-              </div>
+              {/* Using the CurrencyConverter component with USD as initial currency */}
+              <CurrencyConverter
+                basePrice={parseFloat(services.data.price)}
+                onCurrencyChange={handleCurrencyUpdate}
+                initialCurrency="EUR"
+              />
             </div>
           </div>
           <p className="text-gray-600 mb-4 text-sm sm:text-base">
@@ -341,9 +291,15 @@ function RegularBasicCleaningPage() {
         </div>
       </div>
 
+      <div>
+        <h2 className="text-xl font-semibold mb-4 text-blue-900">
+          Package checklist
+        </h2>
+      </div>
+
       {/* Carousel Section */}
       <div>
-        <ServicesCarosel index={2}/>
+        <ServicesCarosel />
       </div>
 
       {/* Checklist Section */}
@@ -365,18 +321,20 @@ function RegularBasicCleaningPage() {
                   className="hidden"
                   checked={checkedList.includes(service.package_id.toString())}
                   onChange={(e) => {
+                    setChangeValue(true);
                     if (e.target.checked) {
                       setSelectedServices([
                         ...selectedServices,
                         {
-                          id: Number(service.package_id),
+                          package_id: Number(service.package_id),
                           price: parseInt(service.price),
+                          name: service.name,
                           qty:
                             service.name === "Oven Cleaning"
-                              ? Number(ovenQty)
+                              ? Number(ovenQty) || 1
                               : service.name === "Fridge Cleaning"
-                              ? Number(fridgeQty)
-                              : 0,
+                              ? Number(fridgeQty) || 1
+                              : 1,
                         },
                       ]);
                       setCheckedList([
@@ -384,6 +342,13 @@ function RegularBasicCleaningPage() {
                         service.package_id.toString(),
                       ]);
                     } else {
+                      setSelectedServices(
+                        selectedServices.filter(
+                          (item) =>
+                            item.package_id.toString() !==
+                            service.package_id.toString()
+                        )
+                      );
                       setCheckedList(
                         checkedList.filter(
                           (id) => id !== service.package_id.toString()
@@ -424,28 +389,46 @@ function RegularBasicCleaningPage() {
                     {service.name}
                   </span>
                   {service.price !== "0$" && (
-                    <div className="mt-1 text-xs text-gray-500">
-                      <span>{service.price}</span>
-                      <select
-                        className="ml-2 border rounded px-1 py-0.5 text-xs"
-                        value={
-                          service.name === "Oven Cleaning" ? ovenQty : fridgeQty
-                        }
-                        onChange={(e) => {
-                          if (service.name === "Oven Cleaning") {
-                            setOvenQty(e.target.value);
-                            console.log("oven", e.target.value);
-                          } else {
-                            setFridgeQty(e.target.value);
-                            console.log("fridge", e.target.value);
-                          }
-                        }}
-                      >
-                        <option>No of pieces</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                      </select>
+                    <div className="mt-1 text-xs text-gray-500 flex items-center space-x-5">
+                      <span>
+                        {currencySymbol}
+                        {(parseInt(service.price) * conversionRate).toFixed(2)}
+                      </span>
+                      {(service.name === "Oven Cleaning" ||
+                        service.name === "Fridge Cleaning") &&
+                        checkedList.includes(service.package_id.toString()) && (
+                          <QuantityControl
+                            quantity={
+                              service.name === "Oven Cleaning"
+                                ? ovenQty
+                                : fridgeQty
+                            }
+                            onChange={(newQuantity) => {
+                              setChangeValue(true);
+                              if (service.name === "Oven Cleaning") {
+                                setOvenQty(newQuantity);
+                                // Update the quantity in selectedServices
+                                setSelectedServices((prev) =>
+                                  prev.map((s) =>
+                                    s.package_id === Number(service.package_id)
+                                      ? { ...s, qty: Number(newQuantity) || 1 }
+                                      : s
+                                  )
+                                );
+                              } else {
+                                setFridgeQty(newQuantity);
+                                // Update the quantity in selectedServices
+                                setSelectedServices((prev) =>
+                                  prev.map((s) =>
+                                    s.package_id === Number(service.package_id)
+                                      ? { ...s, qty: Number(newQuantity) || 1 }
+                                      : s
+                                  )
+                                );
+                              }
+                            }}
+                          />
+                        )}
                     </div>
                   )}
                 </div>
@@ -462,13 +445,15 @@ function RegularBasicCleaningPage() {
       {/* Equipment Section */}
       <div>
         <EquipmentSection
-          title="Select your cleaning solvents and equipment"
-          solvents={solvents}
-          equipmentOptions={equipmentOptions}
-          equipments={equipments}
-          onSolventChange={setSelectedSolvent}
-          onEquipmentOptionChange={setSelectedEquipmentOption}
-          onEquipmentSelect={handleSelectEquipment}
+          onSolventChange={handleSolventChange}
+          onEquipmentOptionChange={handleEquipmentOptionChange}
+          onEquipmentSelect={handleEquipmentSelect}
+          solvents={[]}
+          equipmentOptions={[]}
+          equipments={[]}
+          selectedCurrency={selectedCurrency}
+          currencySymbol={currencySymbol}
+          conversionRate={conversionRateBaseEur}
         />
       </div>
 
@@ -515,49 +500,33 @@ function RegularBasicCleaningPage() {
         </div>
 
         {/* Booking Details */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <Dropdown
-            label="Approx. Property Size"
-            value={propertySize}
-            options={propertySizeOptions}
-            onChange={setPropertySize}
-          />
-          <Dropdown
-            label="Duration (in hours)"
-            value={duration}
-            options={durationOptions}
-            onChange={setDuration}
-          />
-          <Dropdown
-            label="Number of Cleaners"
-            value={numCleaners}
-            options={numCleanersOptions}
-            onChange={setNumCleaners}
-          />
-          <Dropdown
-            label="Select your business or property"
-            value={propertyType}
-            options={propertyTypeOptions}
-            onChange={setPropertyType}
-          />
-          <Dropdown
-            label="Select Frequency"
-            value={frequency}
-            options={frequencyOptions}
-            onChange={setFrequency}
+        <div>
+          <BookingSectionCart
+            propertySize={propertySize}
+            setPropertySize={setPropertySize}
+            numCleaners={numCleaners}
+            setNumCleaners={setNumCleaners}
+            duration={duration}
+            setDuration={(val) => {
+              setChangeValue(true);
+              setDuration(val);
+            }}
+            propertyType={propertyType}
+            setPropertyType={setPropertyType}
+            contactType={contactType}
+            setContactType={setContactType}
+            language={language}
+            setLanguage={setLanguage}
+            onBasePriceChange={(maxTime) => {
+              setMaxTime(maxTime);
+            }}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Dropdown
-              label="Contact Person Type"
-              value={contactType}
-              options={contactTypeOptions}
-              onChange={setContactType}
-            />
-            <Dropdown
-              label="Select Language"
-              value={language}
-              options={languageOptions}
-              onChange={setLanguage}
+              label="Select Frequency"
+              value={frequency}
+              options={frequencyOptions}
+              onChange={setFrequency}
             />
           </div>
         </div>
@@ -565,7 +534,7 @@ function RegularBasicCleaningPage() {
         {/* File Upload and Additional Note */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
-            <label className="block mb-2 text-black">
+            <label className="block mb-2 text-blue-900">
               Upload Images or Documents
             </label>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center min-h-[150px] flex items-center justify-center">
@@ -589,7 +558,7 @@ function RegularBasicCleaningPage() {
           </div>
 
           <div>
-            <label className="block mb-2 text-black">Additional Note</label>
+            <label className="block mb-2 text-blue-900">Additional Note</label>
             <textarea
               className="w-full min-h-[150px] border border-blue-900 rounded p-2 text-gray-700 resize-none"
               placeholder="Type your note here..."
@@ -618,7 +587,6 @@ function RegularBasicCleaningPage() {
         {/* Terms and Conditions */}
         {showTermsCard && (
           <TermsAndConditions
-            terms={bookingTerms}
             isAccepted={acceptTerms1}
             onAcceptChange={setAcceptTerms1}
             className="mb-6"
@@ -629,9 +597,15 @@ function RegularBasicCleaningPage() {
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              Base Cost <span className="text-gray-400">(C$ 27.00)</span>
+              Base Cost{" "}
+              <span className="text-gray-400">
+                ({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})
+              </span>
             </span>
-            <span>C${priceBreakdown.basePrice.toFixed(2)}</span>
+            <span>
+              {currencySymbol}
+              {priceBreakdown.basePrice.toFixed(2)}
+            </span>
           </div>
 
           {/* Selected Services Costs */}
@@ -643,7 +617,10 @@ function RegularBasicCleaningPage() {
                   ({selectedServices.length} services)
                 </span>
               </span>
-              <span>C${priceBreakdown.serviceCosts.toFixed(2)}</span>
+              <span>
+                {currencySymbol}
+                {priceBreakdown.serviceCosts.toFixed(2)}
+              </span>
             </div>
           )}
 
@@ -656,14 +633,20 @@ function RegularBasicCleaningPage() {
                   ({selectedEquipments.length} items)
                 </span>
               </span>
-              <span>C${priceBreakdown.equipmentCosts.toFixed(2)}</span>
+              <span>
+                {currencySymbol}
+                {priceBreakdown.equipmentCosts.toFixed(2)}
+              </span>
             </div>
           )}
 
           {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
             <span>Total</span>
-            <span>C${priceBreakdown.totalPrice.toFixed(2)}</span>
+            <span>
+              {currencySymbol}
+              {priceBreakdown.totalPrice.toFixed(2)}
+            </span>
           </div>
         </div>
 
@@ -671,6 +654,7 @@ function RegularBasicCleaningPage() {
         <button
           className="w-full mt-8 bg-blue-900 text-white py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={!acceptTerms1 || !acceptTerms2}
+          style={{ backgroundColor: "#1c398e" }}
           onClick={handleBookNow}
         >
           Book Now
@@ -679,10 +663,7 @@ function RegularBasicCleaningPage() {
 
       {/* Payment Support Section */}
       <div>
-        <PaymentSupportSection
-          title="We Support"
-          paymentMethods={paymentMethods}
-        />
+        <PaymentSupportSection />
       </div>
     </div>
   );

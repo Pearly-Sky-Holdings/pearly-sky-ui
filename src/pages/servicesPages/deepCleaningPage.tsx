@@ -7,241 +7,283 @@ import { format } from "date-fns";
 import "react-calendar/dist/Calendar.css";
 import TimeSlots from "../../components/timeSlot/timeSlot";
 import "./CustomCalendar.css";
+import Carousel from "../../components/servicesCarousel/lastMinutes";
 import EquipmentSection from "../../components/equipmentSection/equipmentSection";
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
-import { getPackege } from "../../services/CleaningServices/index";
+import { getPackege, getServices } from "../../services/CleaningServices/index";
+import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
 import dayjs from "dayjs";
-import ServicesCarosel from "../../components/oneTimeCleaning/servicesCarousel";
-import {
-  DeepService,
-  regularServiceEquipment1,
-  regularServiceEquipment2,
-  regularServiceEquipment3,
-  regularServiceEquipment4,
-  supportPayment1,
-  supportPayment2,
-  supportPayment3,
-  supportPayment4,
-  supportPayment5,
-  supportPayment6,
-  supportPayment7,
-  supportPayment8,
-  supportPayment9,
-  supportPayment10,
-} from "../../config/images";
+
+import { DeepService1 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
+import QuantityControl from "../../components/QuantityControl/quantityControl";
+import Dropdown from "../../components/dropDown/dropDown";
 
-
+type Equipment = {
+  id: string;
+  price: number;
+  name?: string;
+};
 function DeepCleaningPage() {
- const navigate = useNavigate();
-   const dispatch = useDispatch<typeof store.dispatch>();
-   const packages = useSelector((state: any) => state.packagesSlice.package);
-   const [selectedServices, setSelectedServices] = useState<object[]>([]);
-   const [ovenQty, setOvenQty] = useState("0");
-   const [showTermsCard, setShowTermsCard] = useState(false);
-   const [fridgeQty, setFridgeQty] = useState("0");
-   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-   const [selectedTime, setSelectedTime] = useState("");
-   const [propertySize, setPropertySize] = useState("");
-   const [duration, setDuration] = useState("");
-   const [numCleaners, setNumCleaners] = useState("");
-   const [frequency, setFrequency] = useState("");
-   const [acceptTerms1, setAcceptTerms1] = useState(false);
-   const [acceptTerms2, setAcceptTerms2] = useState(false);
-   const [language, setLanguage] = useState("");
-   const [propertyType, setPropertyType] = useState("");
-   const [contactType, setContactType] = useState("");
-   const [selectedSolvent, setSelectedSolvent] = useState("");
-   const [selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
-   const [selectedEquipments, setSelectedEquipments] = useState<
-     Array<{ id: string; price: number }>
-   >([]);
-   const [checkedList, setCheckedList] = useState<string[]>([]);
-   const [priceBreakdown, setPriceBreakdown] = useState({
-     basePrice: 57.72,
-     serviceCosts: 0,
-     equipmentCosts: 0,
-     totalPrice: 57.72,
-   });
- 
- 
-   useEffect(() => {
-     setPriceBreakdown(calculateTotalPrice());
-   }, [selectedServices, selectedEquipments]);
- 
-   useEffect(() => {
-     dispatch(getPackege("1"));
-   }, []);
-   const calculateTotalPrice = () => {
-     let basePrice = 57.72;
-     let serviceCosts = 0;
-     let equipmentCosts = 0;
- 
-     selectedServices.forEach((serviceId) => {
-       const service = packages.data.find(
-         (p: any) => p.package_id.toString() === serviceId
-       );
-       if (service) {
-         serviceCosts += parseFloat(service.price.replace("$", ""));
-       }
-     });
- 
-     selectedEquipments.forEach((equipment) => {
-       equipmentCosts += equipment.price;
-     });
- 
-     const totalPrice = basePrice + serviceCosts + equipmentCosts;
-     return {
-       basePrice,
-       serviceCosts,
-       equipmentCosts,
-       totalPrice,
-     };
-   };
-   const handleSelectEquipment = (equipment: any) => {
-     setSelectedEquipments([
-       ...selectedEquipments,
-       { id: equipment.id, price: equipment.price },
-     ]);
-   };
- 
-   const handleBookNow = () => {
-     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
-     const serviceDetails = {
-       service_id: "1",
-       date,
-       time: selectedTime,
-       property_size: propertySize,
-       duration: Number(duration),
-       number_of_cleaners: Number(numCleaners),
-       frequency,
-       package_details: [
-         {
-           package_id: 1,
-           price: 3000.0,
-           qty: 1,
-         },
-       ],
-       person_type: contactType,
-       language,
-       business_property: propertyType,
-       cleaning_solvents: selectedSolvent,
-       equipmentOption: selectedEquipmentOption,
-       Equipment: selectedEquipments.map((e) => e.id).join(","),
-       price: priceBreakdown.totalPrice,
-       note: document.querySelector("textarea")?.value || "",
-     };
-     console.log("Service Details:", serviceDetails);
-     navigate("/checkout", { state: { serviceDetails } });
-   };
- 
-   const solvents = [
-     { value: "customer", label: "Provided by the Customer" },
-     { value: "company", label: "Request the Company" },
-   ];
- 
-   const equipmentOptions = [
-     { value: "basic", label: "Provided by the Customer" },
-     { value: "advanced", label: "Request the Company" },
-   ];
- 
-   const equipments = [
-     {
-       id: "cleaning-solvent ",
-       name: "Cleaning Solvent (Eco Friendly Chemicals)",
-       price: 15.99,
-       image: regularServiceEquipment1,
-     },
-     {
-       id: "mop",
-       name: "MOP",
-       price: 11.99,
-       image: regularServiceEquipment2,
-     },
-     {
-       id: "materials",
-       name: "Other Cleaning Materials",
-       price: 19.99,
-       image: regularServiceEquipment3,
-     },
-     {
-       id: "vacuum",
-       name: "Vacuum Cleaner",
-       price: 29.99,
-       image: regularServiceEquipment4,
-     },
-   ];
- 
-   const paymentMethods = [
-     { icon: supportPayment1, alt: "Visa" },
-     { icon: supportPayment2, alt: "Stripe" },
-     { icon: supportPayment3, alt: "PayPal" },
-     { icon: supportPayment4, alt: "Mastercard" },
-     { icon: supportPayment5, alt: "American Express" },
-     { icon: supportPayment6, alt: "Apple Pay" },
-     { icon: supportPayment7, alt: "Google Pay" },
-     { icon: supportPayment8, alt: "Bitcoin" },
-     { icon: supportPayment9, alt: "Amazon Pay" },
-     { icon: supportPayment10, alt: "Discover" },
-   ];
+  type selectService = {
+    package_id: number;
+    price: number;
+    qty: number;
+  };
+  const navigate = useNavigate();
+  const dispatch = useDispatch<typeof store.dispatch>();
+  const packages = useSelector((state: any) => state.packagesSlice.package);
+  const services = useSelector((state: any) => state.servicesSlice.service);
+  const [selectedServices, setSelectedServices] = useState<selectService[]>([]);
+  const [ovenQty, setOvenQty] = useState("0");
+  const [showTermsCard, setShowTermsCard] = useState(false);
+  const [fridgeQty, setFridgeQty] = useState("0");
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [selectedTime, setSelectedTime] = useState("");
+  const [propertySize, setPropertySize] = useState("");
+  const [duration, setDuration] = useState("");
+  const [numCleaners, setNumCleaners] = useState("");
+  const [frequency, setFrequency] = useState("");
+  const [acceptTerms1, setAcceptTerms1] = useState(false);
+  const [acceptTerms2, setAcceptTerms2] = useState(false);
+  const [language, setLanguage] = useState("");
+  const [propertyType, setPropertyType] = useState("");
+  const [contactType, setContactType] = useState("");
+  const [selectedSolvent, setSelectedSolvent] = useState("");
+  const [_selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
+  const [selectedEquipments, setSelectedEquipments] = useState<
+    Array<{ id: string; price: number }>
+  >([]);
+  const [checkedList, setCheckedList] = useState<String[]>([]);
 
-   return (
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const [currencySymbol, setCurrencySymbol] = useState("$");
+  const [conversionRate, setConversionRate] = useState(1);
+  const [maxTime, setMaxTime] = useState<number>(1);
+  const [conversionRateBaseEur, setConversionRateBaseEur] = useState(1);
+
+  const [changeValue, setChangeValue] = useState<boolean>(false);
+  const [count, setCount] = useState(0);
+
+  const [priceBreakdown, setPriceBreakdown] = useState({
+    hourlyRate: parseInt(services.data.price),
+    serviceCosts: 0,
+    equipmentCosts: 0,
+    totalPrice: 30,
+    basePrice: 30,
+  });
+
+  const handleCurrencyUpdate = (
+    currency: string,
+    symbol: string,
+    rate: number,
+    rateBaseEur: number
+  ) => {
+    if (count >= 2) {
+      setChangeValue(true);
+    }
+    setSelectedCurrency(currency);
+    setCurrencySymbol(symbol);
+    setConversionRate(rate);
+    setConversionRateBaseEur(rateBaseEur);
+    setCount(count + 1);
+  };
+
+  useEffect(() => {
+    if (changeValue) {
+      setChangeValue(false);
+      setPriceBreakdown(calculateTotalPrice());
+    }
+  }, [selectedServices, selectedEquipments, conversionRate, duration]);
+
+  useEffect(() => {
+    dispatch(getPackege("4"));
+    dispatch(getServices("4"));
+  }, []);
+  const calculateTotalPrice = () => {
+    const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
+    const basePrice = hourlyRate * maxTime; // Base price in USD
+
+    let serviceCosts = 0;
+    let equipmentCosts = 0;
+
+    // Calculate service costs in USD
+    selectedServices.forEach((service) => {
+      serviceCosts += service.price * (service.qty || 1) * conversionRate;
+    });
+
+    // Calculate equipment costs in USD
+    selectedEquipments.forEach((equipment) => {
+      equipmentCosts += equipment.price * conversionRate;
+    });
+
+    // Calculate total price in the user's selected currency
+    const totalPriceInSelectedCurrency =
+      basePrice * conversionRate + equipmentCosts + serviceCosts;
+
+    return {
+      hourlyRate,
+      serviceCosts,
+      equipmentCosts,
+      totalPrice: totalPriceInSelectedCurrency, // Total price in the selected currency
+      basePrice: basePrice * conversionRate, // Base price in the selected currency
+    };
+  };
+  const handleEquipmentSelect = (equipment: Equipment, selected: boolean) => {
+    setChangeValue(true);
+    if (selected) {
+      // Check if the equipment is already in the array
+      if (!selectedEquipments.some((e) => e.id === equipment.id)) {
+        setSelectedEquipments((prev) => [
+          ...prev,
+          { id: equipment.id, price: equipment.price },
+        ]);
+      }
+    } else {
+      // Remove the equipment if it exists
+      setSelectedEquipments((prev) =>
+        prev.filter((e) => e.id !== equipment.id)
+      );
+    }
+  };
+  const handleSolventChange = (solvent: string) => {
+    setSelectedSolvent(solvent);
+  };
+
+  const handleEquipmentOptionChange = (option: string) => {
+    setSelectedEquipmentOption(option);
+  };
+
+  const handleBookNow = () => {
+    if (
+      !propertySize ||
+      !duration ||
+      !numCleaners ||
+      !frequency ||
+      !propertyType ||
+      !contactType ||
+      !language ||
+      !selectedDate ||
+      !selectedTime ||
+      !acceptTerms1 ||
+      !acceptTerms2
+    ) {
+      alert("Please fill all required fields before proceeding to checkout.");
+      return;
+    }
+
+    const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
+    const serviceDetails = {
+      service_id: "4",
+      date,
+      time: selectedTime,
+      property_size: propertySize,
+      duration: duration,
+      number_of_cleaners: parseInt(numCleaners),
+      frequency,
+      package_details: selectedServices.some(
+        (service) => service.package_id === 21 || service.package_id === 22
+      )
+        ? selectedServices.map((obj) => {
+            if (obj.package_id === 21)
+              return { ...obj, qty: Number(fridgeQty) };
+            if (obj.package_id === 22) return { ...obj, qty: Number(ovenQty) };
+            return obj;
+          })
+        : selectedServices,
+      person_type: contactType,
+      language,
+      business_property: propertyType,
+      cleaning_solvents: selectedSolvent,
+      equipmentOption: _selectedEquipmentOption,
+      Equipment: selectedEquipments.map((e) => e.id).join(","),
+      price: currencySymbol + priceBreakdown.totalPrice.toString(),
+      currency: selectedCurrency,
+      note: document.querySelector("textarea")?.value || "",
+    };
+    const data = {
+      serviceName: "Deep Cleaning",
+      details: serviceDetails,
+      orderSummary: {
+        selectedServices,
+        selectedEquipments,
+        basePrice: priceBreakdown.basePrice,
+        totalPrice: priceBreakdown.totalPrice,
+        currencySymbol,
+        selectedCurrency,
+        conversionRate,
+      },
+    };
+    console.log("Service Details:", serviceDetails);
+    navigate("/checkout", { state: { data } });
+  };
+  const frequencyOptions = [
+    { value: "weekly", label: "Weekly" },
+    { value: "every two weeks", label: "Every Two Weeks" },
+    { value: "monthly", label: "Monthly " },
+    { value: "other", label: "Other " },
+  ];
+
+  return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
       {/* Header Section */}
-      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col sm:flex-row gap-4 sm:gap-8">
-        <div className="w-full sm:w-1/3">
+      <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8 flex flex-col gap-4 lg:flex-row lg:gap-8">
+        <div className="w-full lg:w-4/3">
           <img
-            src={DeepService}
+            src={DeepService1}
             alt="Cleaning Service"
             className="rounded-lg w-full h-auto"
           />
         </div>
-        <div className="w-full sm:w-2/3">
+        <div className="w-fulllg:w-2/3">
           <div className="">
             <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
-              Deep Cleaning
+              {services.data.name}
             </h1>
             <div className="mt-4 mb-4 ml-4">
-              <div className="flex gap-3">
-                <p className="text-xl sm:text-2xl font-semibold text-black">
-                  C$ 57.72
-                </p>
-                <select className="border rounded p-0.5 text-blue-900 h-7">
-                  <option>EUR</option>
-                  <option>USD</option>
-                  <option>GBP</option>
-                  <option>AED</option>
-                  <option>NZD</option>
-                </select>
-              </div>
+              <CurrencyConverter
+                basePrice={parseFloat(services.data.price)}
+                onCurrencyChange={handleCurrencyUpdate}
+                initialCurrency="EUR"
+              />
             </div>
           </div>
           <p className="text-gray-600 mb-4 text-sm sm:text-base">
-          Deep cleaning, provided by professional cleaning services, is a thorough and detailed cleaning solution that
-           goes beyond routine maintenance. This all-encompassing method includes careful attention to detail and 
-           specifically focuses on areas often ignored in standard cleaning protocols.
+            Deep cleaning, provided by professional cleaning services, is a
+            thorough and detailed cleaning solution that goes beyond routine
+            maintenance. This all-encompassing method includes careful attention
+            to detail and specifically focuses on areas often ignored in
+            standard cleaning protocols.
           </p>
-          <p>The deep cleaning routine consists of necessary tasks like:</p>
+          <p className="text-gray-600 mb-2 text-sm sm:text-base">
+            The deep cleaning routine consists of necessary tasks like:
+          </p>
           <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
             <li>Sanitizing high-touch surfaces</li>
             <li>Meticulously scrubbing and disinfecting bathroom fixtures</li>
-            <li>Performing deep cleaning on carpets.</li>
+            <li>Performing deep cleaning on carpets</li>
             <li>Precise dusting and vent cleaning</li>
           </ul>
           <p className="text-gray-600 text-sm sm:text-base">
-          The main goal of this intensive process is the eradicate collected dirt, grime, and allergens, 
-          promoting a healthier and more hygienic living or working atmosphere. Generally, recommended semi-annually 
-          or annually, deep cleaning is instrumental in upholding cleanliness standards and preventing thebuildup of 
-          contaminants.
+            The main goal of this intensive process is the eradicate collected
+            dirt, grime, and allergens, promoting a healthier and more hygienic
+            living or working atmosphere. Generally, recommended semi-annually
+            or annually, deep cleaning is instrumental in upholding cleanliness
+            standards and preventing thebuildup of contaminants.
           </p>
         </div>
       </div>
 
+      <div>
+        <h2 className="text-xl font-semibold mb-4 text-blue-900">
+          Package checklist
+        </h2>
+      </div>
       {/* Carousel Section */}
       <div>
-         <ServicesCarosel index={2}/>
+        <Carousel />
       </div>
 
       {/* Checklist Section */}
@@ -263,18 +305,20 @@ function DeepCleaningPage() {
                   className="hidden"
                   checked={checkedList.includes(service.package_id.toString())}
                   onChange={(e) => {
+                    setChangeValue(true);
                     if (e.target.checked) {
                       setSelectedServices([
                         ...selectedServices,
                         {
-                          id: Number(service.package_id),
+                          package_id: Number(service.package_id),
                           price: parseInt(service.price),
+
                           qty:
                             service.name === "Oven Cleaning"
-                              ? Number(ovenQty)
+                              ? Number(ovenQty) || 1
                               : service.name === "Fridge Cleaning"
-                              ? Number(fridgeQty)
-                              : 0,
+                              ? Number(fridgeQty) || 1
+                              : 1,
                         },
                       ]);
                       setCheckedList([
@@ -282,6 +326,13 @@ function DeepCleaningPage() {
                         service.package_id.toString(),
                       ]);
                     } else {
+                      setSelectedServices(
+                        selectedServices.filter(
+                          (item) =>
+                            item.package_id.toString() !==
+                            service.package_id.toString()
+                        )
+                      );
                       setCheckedList(
                         checkedList.filter(
                           (id) => id !== service.package_id.toString()
@@ -322,28 +373,46 @@ function DeepCleaningPage() {
                     {service.name}
                   </span>
                   {service.price !== "0$" && (
-                    <div className="mt-1 text-xs text-gray-500">
-                      <span>{service.price}</span>
-                      <select
-                        className="ml-2 border rounded px-1 py-0.5 text-xs"
-                        value={
-                          service.name === "Oven Cleaning" ? ovenQty : fridgeQty
-                        }
-                        onChange={(e) => {
-                          if (service.name === "Oven Cleaning") {
-                            setOvenQty(e.target.value);
-                            console.log("oven", e.target.value);
-                          } else {
-                            setFridgeQty(e.target.value);
-                            console.log("fridge", e.target.value);
-                          }
-                        }}
-                      >
-                        <option>No of pieces</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                      </select>
+                    <div className="mt-1 text-xs text-gray-500 flex items-center space-x-5">
+                      <span>
+                        {currencySymbol}
+                        {(parseInt(service.price) * conversionRate).toFixed(2)}
+                      </span>
+                      {(service.name === "Oven Cleaning" ||
+                        service.name === "Fridge Cleaning") &&
+                        checkedList.includes(service.package_id.toString()) && (
+                          <QuantityControl
+                            quantity={
+                              service.name === "Oven Cleaning"
+                                ? ovenQty
+                                : fridgeQty
+                            }
+                            onChange={(newQuantity) => {
+                              setChangeValue(true);
+                              if (service.name === "Oven Cleaning") {
+                                setOvenQty(newQuantity);
+                                // Update the quantity in selectedServices
+                                setSelectedServices((prev) =>
+                                  prev.map((s) =>
+                                    s.package_id === Number(service.package_id)
+                                      ? { ...s, qty: Number(newQuantity) || 1 }
+                                      : s
+                                  )
+                                );
+                              } else {
+                                setFridgeQty(newQuantity);
+                                // Update the quantity in selectedServices
+                                setSelectedServices((prev) =>
+                                  prev.map((s) =>
+                                    s.package_id === Number(service.package_id)
+                                      ? { ...s, qty: Number(newQuantity) || 1 }
+                                      : s
+                                  )
+                                );
+                              }
+                            }}
+                          />
+                        )}
                     </div>
                   )}
                 </div>
@@ -360,13 +429,15 @@ function DeepCleaningPage() {
       {/* Equipment Section */}
       <div>
         <EquipmentSection
-          title="Select your cleaning solvents and equipment"
-          solvents={solvents}
-          equipmentOptions={equipmentOptions}
-          equipments={equipments}
-          onSolventChange={setSelectedSolvent}
-          onEquipmentOptionChange={setSelectedEquipmentOption}
-          onEquipmentSelect={handleSelectEquipment}
+          onSolventChange={handleSolventChange}
+          onEquipmentOptionChange={handleEquipmentOptionChange}
+          onEquipmentSelect={handleEquipmentSelect}
+          solvents={[]}
+          equipmentOptions={[]}
+          equipments={[]}
+          selectedCurrency={selectedCurrency}
+          currencySymbol={currencySymbol}
+          conversionRate={conversionRateBaseEur}
         />
       </div>
 
@@ -413,8 +484,35 @@ function DeepCleaningPage() {
         </div>
 
         {/* Booking Details */}
-        <div >
-          <BookingSectionCart />
+        <div>
+          <BookingSectionCart
+            propertySize={propertySize}
+            setPropertySize={setPropertySize}
+            numCleaners={numCleaners}
+            setNumCleaners={setNumCleaners}
+            duration={duration}
+            setDuration={(val) => {
+              setChangeValue(true);
+              setDuration(val);
+            }}
+            propertyType={propertyType}
+            setPropertyType={setPropertyType}
+            contactType={contactType}
+            setContactType={setContactType}
+            language={language}
+            setLanguage={setLanguage}
+            onBasePriceChange={(maxTime) => {
+              setMaxTime(maxTime);
+            }}
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Dropdown
+              label="Select Frequency"
+              value={frequency}
+              options={frequencyOptions}
+              onChange={setFrequency}
+            />
+          </div>
         </div>
 
         {/* File Upload and Additional Note */}
@@ -483,9 +581,15 @@ function DeepCleaningPage() {
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              Base Cost <span className="text-gray-400">(C$ 57.72)</span>
+              Base Cost{" "}
+              <span className="text-gray-400">
+                ({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})
+              </span>
             </span>
-            <span>C${priceBreakdown.basePrice.toFixed(2)}</span>
+            <span>
+              {currencySymbol}
+              {priceBreakdown.basePrice.toFixed(2)}
+            </span>
           </div>
 
           {/* Selected Services Costs */}
@@ -497,7 +601,10 @@ function DeepCleaningPage() {
                   ({selectedServices.length} services)
                 </span>
               </span>
-              <span>C${priceBreakdown.serviceCosts.toFixed(2)}</span>
+              <span>
+                {currencySymbol}
+                {priceBreakdown.serviceCosts.toFixed(2)}
+              </span>
             </div>
           )}
 
@@ -510,14 +617,20 @@ function DeepCleaningPage() {
                   ({selectedEquipments.length} items)
                 </span>
               </span>
-              <span>C${priceBreakdown.equipmentCosts.toFixed(2)}</span>
+              <span>
+                {currencySymbol}
+                {priceBreakdown.equipmentCosts.toFixed(2)}
+              </span>
             </div>
           )}
 
           {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
             <span>Total</span>
-            <span>C${priceBreakdown.totalPrice.toFixed(2)}</span>
+            <span>
+              {currencySymbol}
+              {priceBreakdown.totalPrice.toFixed(2)}
+            </span>
           </div>
         </div>
 
@@ -526,6 +639,7 @@ function DeepCleaningPage() {
           className="w-full mt-8 bg-blue-900 text-white py-4 rounded-lg font-semibold hover:bg-blue-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={!acceptTerms1 || !acceptTerms2}
           onClick={handleBookNow}
+          style={{ backgroundColor: "#1c398e" }}
         >
           Book Now
         </button>
@@ -533,14 +647,10 @@ function DeepCleaningPage() {
 
       {/* Payment Support Section */}
       <div>
-        <PaymentSupportSection
-          title="We Support"
-          paymentMethods={paymentMethods}
-        />
+        <PaymentSupportSection />
       </div>
     </div>
   );
- 
 }
 
 export default DeepCleaningPage;

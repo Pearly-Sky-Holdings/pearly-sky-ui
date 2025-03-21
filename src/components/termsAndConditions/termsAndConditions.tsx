@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface TermsItem {
   title: string;
@@ -48,8 +48,8 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({
     {
       title: "Booking cancellation",
       items: [
-        "24-hour notice required for cancellations",
-        "Late cancellations may incur fees",
+        "According to your choice company will either refund the money  or the job can be rescheduled  on next available time slot.",
+        "If above procedures are not followed, there’s no guarantee of refunding",
       ],
     },
     {
@@ -59,7 +59,10 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({
   ];
 
   return (
-    <div className={`bg-blue-950 text-white rounded-lg p-4 md:p-6 ${className}`}>
+    <div
+      className={` bg-blue-950 bg-cover bg-center text-white rounded-lg p-4 md:p-6 ${className}`}
+     
+    >
       <h3 className="text-lg md:text-xl font-semibold mb-4">{title}</h3>
       <ol className="list-decimal pl-4 md:pl-5 space-y-4">
         {terms.map((term, index) => (

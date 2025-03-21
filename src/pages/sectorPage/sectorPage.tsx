@@ -6,6 +6,12 @@ import {
   sectorImage3,
   sectorImage4,
   sectorImage5,
+  finance,
+  healthcare,
+  privateProperties,
+  retail,
+  sports,
+  residential,
 } from "../../config/images";
 
 const sectors = [
@@ -17,17 +23,17 @@ const sectors = [
   {
     title: "Sports",
     description: "Elevating performance and passion through every game.",
-    image: "",
+    image: sports,
   },
- {
+  {
     title: "Private Properties",
     description: "Exclusive spaces tailored for comfort and luxury.",
-    image: "",
+    image: privateProperties,
   },
   {
     title: "Residential",
     description: "Creating welcoming and vibrant communities.",
-    image: "",
+    image: residential,
   },
   {
     title: "Hotels & Restaurants",
@@ -39,20 +45,15 @@ const sectors = [
     description: "Empowering minds through knowledge and innovation.",
     image: sectorImage4,
   },
-{
+  {
     title: "Healthcare",
     description: "Transforming healthcare for a healthier tomorrow.",
-    image: "",
+    image: healthcare,
   },
-{
+  {
     title: "Finance",
     description: "Unlocking financial growth and security.",
-    image: "",
-  },
-{
-    title: "Government",
-    description: "Shaping effective governance for a better society.",
-    image: "",
+    image: finance,
   },
   {
     title: "Leisure & Hospitality",
@@ -67,8 +68,8 @@ const sectors = [
   {
     title: "Retail",
     description: "Redefining the shopping experience with innovation and convenience.",
-    image: "",
-  }
+    image: retail,
+  },
 ];
 
 const OurSector = () => {
@@ -137,12 +138,12 @@ const OurSector = () => {
             <Card
               key={index}
               sx={{
-                minWidth: 200, 
+                minWidth: 200,
                 maxWidth: 250,
                 borderRadius: 6,
                 display: "flex",
                 flexDirection: "column",
-                height: { xs: "400px", sm: "450px", md: "400px" },
+                height: { xs: "350px", sm: "400px", md: "350px" }, // Reduced height
                 boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
                 transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
                 "&:hover": {
@@ -157,9 +158,9 @@ const OurSector = () => {
                 sx={{
                   borderTopLeftRadius: "130%",
                   borderTopRightRadius: "130%",
-                  height: { xs: "50%", sm: "60%" },
+                  height: { xs: "45%", sm: "50%" }, // Reduced image height
                   objectFit: "cover",
-                  padding: { xs: "1vh", sm: "2vh", md: "3vh" },
+                  padding: { xs: "0.5vh", sm: "1vh", md: "1vh" }, // Reduced padding
                 }}
                 image={sector.image}
                 alt={sector.title}
@@ -170,20 +171,9 @@ const OurSector = () => {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
-                  padding: { xs: 2, sm: 3 },
+                  padding: { xs: "8px", sm: "8px" }, // Reduced padding
                 }}
               >
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontWeight: "bold",
-                    color: "#0D47A1",
-                    textAlign: "center",
-                    mb: 2,
-                  }}
-                >
-                  {sector.title}
-                </Typography>
                 <Typography
                   variant="body2"
                   color="textSecondary"
@@ -196,6 +186,19 @@ const OurSector = () => {
                     WebkitBoxOrient: "vertical",
                   }}
                 >
+                  
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: "bold",
+                    color: "#0D47A1",
+                    textAlign: "center",
+                   
+                  }}
+                >
+                  {sector.title}
+                </Typography>
+                  
                   {sector.description}
                 </Typography>
               </CardContent>

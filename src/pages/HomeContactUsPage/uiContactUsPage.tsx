@@ -4,7 +4,6 @@ import { Button } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import {contactImage1} from "../../config/images";
-import { Link } from 'react-router-dom';
 
 // Validation Schema
 const validationSchema = yup.object().shape({
@@ -39,13 +38,13 @@ const UIContactUs: React.FC = () => {
   };
 
   return (
-    <div className="w-full min-h-screen-lg flex items-center justify-center bg-gray-100 px-4 py-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4  bg-white shadow-lg rounded-lg p-6 md:p-10 w-full">
+    <div className="w-full  flex items-center justify-center  py-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10  bg-white   p-6 md:p-10 w-full">
         {/* Contact Form */}
         <div className="w-full">
-          <h2 className="text-4xl font-bold text-[#002F6D] mb-4">
+          <h6 className="text-4xl font-semibold text-[#002F6D] mb-4">
             Get in Touch With Us
-          </h2>
+          </h6>
           <p className="text-black  mb-6">
             Drop Pearly Sky Company Pvt Ltd regarding any of your queries.
           </p>
@@ -57,7 +56,7 @@ const UIContactUs: React.FC = () => {
                 type="text"
                 placeholder="Name"
                 {...register("name")}
-                className="w-full px-4 py-2 border border-[#0D90C8] rounded-2xl focus:outline-none text-[#002F6D] focus:ring-2 focus:ring-[#0D90C8] placeholder-gray-500"
+                className="w-full px-4 py-2 border border-[#0D90C8] rounded-lg focus:outline-none text-[#002F6D] focus:ring-2 focus:ring-[#0D90C8] placeholder-gray-500"
               />
               <p className="text-red-500 text-sm">{errors.name?.message}</p>
             </div>
@@ -68,7 +67,7 @@ const UIContactUs: React.FC = () => {
                 type="email"
                 placeholder="Email"
                 {...register("email")}
-                className="w-full px-4 py-2 border border-[#0D90C8] rounded-2xl focus:outline-none text-[#002F6D] focus:ring-2 focus:ring-[#0D90C8] placeholder-gray-500"
+                className="w-full px-4 py-2 border border-[#0D90C8] rounded-lg focus:outline-none text-[#002F6D] focus:ring-2 focus:ring-[#0D90C8] placeholder-gray-500"
               />
               <p className="text-red-500 text-sm">{errors.email?.message}</p>
             </div>
@@ -79,7 +78,7 @@ const UIContactUs: React.FC = () => {
                 type="tel"
                 placeholder="Phone"
                 {...register("phone")}
-                className="w-full px-4 py-2 border border-[#0D90C8] rounded-2xl focus:outline-none text-[#002F6D] focus:ring-2 focus:ring-[#0D90C8] placeholder-gray-500"
+                className="w-full px-4 py-2 border border-[#0D90C8] rounded-lg focus:outline-none text-[#002F6D] focus:ring-2 focus:ring-[#0D90C8] placeholder-gray-500"
               />
               <p className="text-red-500 text-sm">{errors.phone?.message}</p>
             </div>
@@ -89,7 +88,7 @@ const UIContactUs: React.FC = () => {
               <textarea
                 placeholder="Message"
                 {...register("message")}
-                className="w-full px-4 py-2 border border-[#0D90C8] text-[#002F6D] rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#0D90C8] h-28 placeholder-gray-500"
+                className="w-full px-4 py-2 border border-[#0D90C8] text-[#002F6D] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0D90C8] h-28 placeholder-gray-500"
               ></textarea>
               <p className="text-red-500 text-sm">{errors.message?.message}</p>
             </div>
@@ -108,7 +107,7 @@ const UIContactUs: React.FC = () => {
               "&:hover": { backgroundColor: "#008CDA" },
             }}
           >
-            Contact Us
+            Submit
           </Button>
           </form>
         </div>
@@ -120,29 +119,9 @@ const UIContactUs: React.FC = () => {
             alt="Customer Support"
             className="w-full h-full object-cover rounded-lg shadow-lg"
             style={{
-              boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
+              
               transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",}}
           />
-          <Button
-          variant="contained"
-          component={Link}
-          to="/contactUsPage"
-            className=""
-            sx={{
-              position: "absolute",
-              top: "20px",
-              left: "20px",
-              fontSize: "12px",
-              fontWeight: "bold",
-              backgroundColor: "#002F6D",
-              color: "white",
-              paddingX:"10px",
-              borderRadius: "12px",
-              "&:hover": { backgroundColor: "#008CDA" },
-            }}
-          >
-            Contact Us
-          </Button>
         </div>
       </div>
     </div>

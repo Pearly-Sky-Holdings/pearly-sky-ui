@@ -1,46 +1,85 @@
-import { AppBar, Toolbar, Select, MenuItem, Box, IconButton, useTheme, useMediaQuery } from "@mui/material";
+import { AppBar, Toolbar, Select, MenuItem, Box, IconButton, useTheme, useMediaQuery, Button } from "@mui/material";
 import { LinkedIn } from "@mui/icons-material";
 import { FaFacebookF, FaYoutube } from "react-icons/fa";
 import { AiFillInstagram, AiFillTikTok } from "react-icons/ai";
 import { FaXTwitter } from "react-icons/fa6";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useLanguage, countryToLanguage } from "../../context/LanguageContext";
 
-const countries = [
-  { code: "us", name: "United States" },
-  { code: "gb", name: "United Kingdom" },
-  { code: "fr", name: "France" },
-  { code: "de", name: "Germany" },
-  { code: "jp", name: "Japan" },
+// Define the country interface for better type safety
+interface Country {
+  code: string;
+  nameKey: string; // Translation key for country name
+}
+
+const countries: Country[] = [
+  { code: "us", nameKey: "unitedStates" },
+  { code: "gb", nameKey: "unitedKingdom" },
+  { code: "fr", nameKey: "france" },
+  { code: "de", nameKey: "germany" },
+  { code: "jp", nameKey: "japan" },
+  { code: "lk", nameKey: "sriLanka" },
 ];
 
 export default function TopBar() {
+  const navigate = useNavigate();
   const [selectedCountry, setSelectedCountry] = useState("us");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+  // Get language context
+  const { setLanguage, translate } = useLanguage();
+
+  // Update language when country changes
+  useEffect(() => {
+    const languageCode = countryToLanguage[selectedCountry];
+    if (languageCode) {
+      setLanguage(languageCode);
+    }
+  }, [selectedCountry, setLanguage]);
+
+  const handleCountryChange = (code: string) => {
+    setSelectedCountry(code);
+  };
+
   const socialIcons = [
-    { icon: <FaFacebookF />, link: "https://facebook.com" },
-    { icon: <AiFillInstagram />, link: "https://instagram.com" },
-    { icon: <FaXTwitter />, link: "https://x.com" },
-    { icon: <FaYoutube />, link: "https://youtube.com" },
-    { icon: <AiFillTikTok />, link: "https://tiktok.com" },
-    { icon: <LinkedIn />, link: "https://linkedin.com" }
+    { icon: <FaFacebookF />, link: "https://www.facebook.com/profile.php?id=61561165376278" },
+    { icon: <AiFillInstagram />, link: "https://www.instagram.com/pearlyskycleaning/?next=%2F" },
+    { icon: <FaXTwitter />, link: "https://x.com/PEARLYSKYPVTLTD" },
+    { icon: <FaYoutube />, link: "https://www.youtube.com/@pearlyskycleaningservice" },
+    { icon: <AiFillTikTok />, link: "https://www.tiktok.com/@pearlyskycleaningservice?_t=ZN-8uNBR57FgaU&_r=1" },
+    { icon: <LinkedIn />, link: "https://www.linkedin.com/company/pearly-sky-company-private-ltd/" }
   ];
 
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: "white", width: "100%", left: 0, top: 0 }}>
+    <AppBar position="static" sx={{ backgroundColor: "white", width: "100%", left: 0, top: 0 }}>
       <Toolbar 
         sx={{ 
           display: "flex", 
-          justifyContent: isMobile ? "center" : "space-between",
+          flexDirection: isMobile ? "column" : "row", // Column layout for mobile, row for desktop
+          justifyContent: "space-between",
+          alignItems: "center",
           minHeight: "0.1vh", 
           paddingY: "0.1vh",
-          px: isMobile ? 1 : 2
+          px: isMobile ? 1 : 2,
+          py: isMobile ? 1 : 0,
+          gap: isMobile ? 1 : 0, // Add gap between rows on mobile
+          overflow: "hidden", // Prevent overflow issues
         }}
       >
-        {/* Left Side - Country Selector (Hidden on mobile) */}
-        {!isMobile && (
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1, marginLeft: "5%" }}>
+        {/* First Row - Country Selector and Login Button */}
+        <Box 
+          sx={{ 
+            display: "flex", 
+            alignItems: "center", 
+            justifyContent: "space-between", 
+            width: "100%", // Ensure full width for proper alignment
+            gap: 1,
+          }}
+        >
+          {/* Country Selector */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <img
               src={`https://flagcdn.com/w40/${selectedCountry}.png`}
               alt="flag"
@@ -50,10 +89,10 @@ export default function TopBar() {
             />
             <Select
               value={selectedCountry}
-              onChange={(e) => setSelectedCountry(e.target.value)}
+              onChange={(e) => handleCountryChange(e.target.value)}
               sx={{
                 color: "black",
-                minWidth: 120,
+                minWidth: isMobile ? 100 : 120,
                 fontWeight: "bold",
                 border: "none",
                 outline: "none",
@@ -67,47 +106,106 @@ export default function TopBar() {
             >
               {countries.map((country) => (
                 <MenuItem key={country.code} value={country.code}>
-                  {country.name}
+                  {translate(country.nameKey)}
                 </MenuItem>
               ))}
             </Select>
           </Box>
+
+          {/* Login Button */}
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#002F6D",
+              color: "white",
+              borderRadius: "10px",
+              textTransform: "none",
+              fontWeight: "bold",
+              padding: "6px 16px",
+              "&:hover": {
+                backgroundColor: "#002F6D",
+              },
+            }}
+            onClick={() => navigate("/login")}
+          >
+            {translate('login')}
+          </Button>
+        </Box>
+
+        {/* Second Row - Social Media Icons (Only on mobile) */}
+        {isMobile && (
+          <Box 
+            sx={{ 
+              display: "flex", 
+              alignItems: "center",
+              gap: 1,
+              justifyContent: "center",
+              width: "100%",
+              background: "#F5FBFF",
+              padding: 1, // Add padding for better spacing
+            }}
+          >
+            {socialIcons.map(({ icon, link }) => (
+              <IconButton
+                key={link}
+                component="a"
+                href={link}
+                target="_blank"
+                sx={{
+                  color: "#002F6D",
+                  backgroundColor: "#D3D3D3",
+                  borderRadius: "50%",
+                  width: 30,
+                  height: 30,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transition: "0.3s",
+                  "&:hover": { backgroundColor: "#BBDEFB" },
+                }}
+              >
+                <Box sx={{ fontSize: 16 }}>{icon}</Box>
+              </IconButton>
+            ))}
+          </Box>
         )}
 
-        {/* Right Side - Social Media Links (Centered on mobile) */}
-        <Box 
-          sx={{ 
-            display: "flex", 
-            gap: isMobile ? 1 : 1.5,
-            marginRight: isMobile ? 0 : "5%",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            py: { xs: 1, sm: 0 }
-          }}
-        >
-          {socialIcons.map(({ icon, link }) => (
-            <IconButton
-              key={link}
-              component="a"
-              href={link}
-              target="_blank"
-              sx={{
-                color: "#002F6D",
-                backgroundColor: "#D3D3D3",
-                borderRadius: "50%",
-                width: isMobile ? 30 : 35,
-                height: isMobile ? 30 : 35,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                transition: "0.3s",
-                "&:hover": { backgroundColor: "#BBDEFB" },
-              }}
-            >
-              <Box sx={{ fontSize: isMobile ? 16 : 20 }}>{icon}</Box>
-            </IconButton>
-          ))}
-        </Box>
+        {/* Social Media Icons (Only on desktop) */}
+        {!isMobile && (
+          <Box 
+            sx={{ 
+              display: "flex", 
+              alignItems: "center",
+              gap: 2,
+              position: "absolute",
+              left: "50%",
+              transform: "translateX(-50%)",
+            }}
+          >
+            {socialIcons.map(({ icon, link }) => (
+              <IconButton
+                key={link}
+                component="a"
+                href={link}
+                target="_blank"
+                sx={{
+                  color: "#002F6D",
+                  backgroundColor: "#D3D3D3",
+                  borderRadius: "50%",
+                  width: 35,
+                  height: 35,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transition: "0.3s",
+                  "&:hover": { backgroundColor: "#BBDEFB" },
+                }}
+              >
+                <Box sx={{ fontSize: 20 }}>{icon}</Box>
+              </IconButton>
+            ))}
+          </Box>
+        )}
       </Toolbar>
     </AppBar>
   );

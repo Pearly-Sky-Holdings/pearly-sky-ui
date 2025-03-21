@@ -7,6 +7,7 @@ interface Service {
   image: string;
   title: string;
   description: string;
+  link: string;
 }
 
 interface ServiceListProps {

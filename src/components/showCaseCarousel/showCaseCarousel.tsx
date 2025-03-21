@@ -11,14 +11,15 @@ import {
   ArrowBack as ArrowBackIcon, 
   ArrowForward as ArrowForwardIcon 
 } from '@mui/icons-material';
-import { OurShowcase1, OurShowcase2, OurShowcase3, OurShowcase4, OurShowcase5 } from "../../config/images";
+import { OurShowcase1, OurShowcase2, OurShowcase3, OurShowcase4,OurShowcase5,OurShowcase6} from "../../config/images";
 
 const showcaseImages = [
   OurShowcase1,
   OurShowcase2,
   OurShowcase3,
   OurShowcase4,
-  OurShowcase5
+  OurShowcase5,
+  OurShowcase6,
 ];
 
 const WorkShowcase = () => {
@@ -121,7 +122,7 @@ const WorkShowcase = () => {
                 sx={{
                   width: '100%',
                   height: '100%',
-                  objectFit: 'cover',
+                  objectFit: 'fill',
                   borderRadius: 2,
                   boxShadow: index === 1 
                     ? '0 20px 40px rgba(0,0,0,0.3), 0 15px 12px rgba(0,0,0,0.22)'

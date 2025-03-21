@@ -1,34 +1,99 @@
+import React, { useState } from "react";
 import {
-    TextField,
-    Typography,
-    FormControl,
-    Paper,
-    FormLabel,
-    InputAdornment,
-  } from "@mui/material";
-  
-  const PaymentMethod = () => {
-    return (
-      <Paper sx={{ p: 4, borderRadius: 2 }}>
-        <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  Grid,
+} from "@mui/material";
+
+const paymentMethods = [
+  {
+    id: "stripe",
+    name: "Stripe Payment",
+    img: "./images/paymentMethods/visaMaster.png",
+  },
+  // { id: "eps", name: "EPS", img: "./images/paymentMethods/eps.png" },
+  // {
+  //   id: "bancontact",
+  //   name: "Bancontact",
+  //   img: "./images/paymentMethods/bancontact.png",
+  // },
+  // { id: "ideal", name: "iDEAL", img: "./images/paymentMethods/ideal.png" },
+  { id: "paypal", name: "PayPal", img: "./images/paymentMethods/paypal.png" },
+  { id: "card", name: "Card Payment", img: "./images/paymentMethods/visaMaster.png" },
+  { id: "cash", name: "Cash", img: "./images/paymentMethods/visaMaster.png" },
+];
+interface PaymentMethodComponentProps {
+  onPaymentMethodChange: (method: string) => void;
+}
+
+const PaymentMethodComponent: React.FC<PaymentMethodComponentProps> = ({onPaymentMethodChange}) => {
+  const [selectedMethod, setSelectedMethod] = useState("card");
+
+  const handleMethodChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const method = event.target.value;
+    setSelectedMethod(method);
+    onPaymentMethodChange(method);
+  };
+
+  return (
+    <Card
+      variant="outlined"
+      style={{
+        maxWidth: 600,
+        margin: "auto",
+        padding: "20px",
+        marginTop: "20px",
+        borderRadius: "12px",
+        backgroundColor: "#F7F8FC",
+      }}
+    >
+      <CardContent>
+        <Typography
+          variant="h6"
+          fontWeight="bold"
+          sx={{ color: "#002F6D", marginBottom: "16px" }}
+        >
           Payment Method
         </Typography>
-  
-        <FormControl fullWidth size="small" sx={{ mt: 2 }}>
-          <FormLabel>Card Number <span style={{ color: "red" }}>*</span></FormLabel>
-          <TextField 
-            fullWidth 
-            placeholder="Enter card number" 
-            variant="outlined" 
-            size="small"
-            InputProps={{ 
-              startAdornment: <InputAdornment position="start">💳</InputAdornment>,
-              sx: { borderRadius: "12px", border: "1px solid #0D90C8" } 
-            }} 
-          />
-        </FormControl>
-      </Paper>
-    );
-  };
-  
-  export default PaymentMethod;
+        <RadioGroup value={selectedMethod} onChange={handleMethodChange}>
+          {paymentMethods.map((method) => (
+            <Box key={method.id} style={{ padding: "1px 0" }}>
+              <Grid
+                container
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Grid item display="flex" alignItems="center">
+                  <Typography style={{ marginRight: "10px" }}>
+                    {method.name}
+                  </Typography>
+                  <img
+                    src={method.img}
+                    alt={method.name}
+                    style={{ height: "20px" }}
+                  />
+                </Grid>
+                <Grid item>
+                  <FormControlLabel
+                    value={method.id}
+                    control={<Radio />}
+                    label=""
+                  />
+                </Grid>
+              </Grid>
+            </Box>
+          ))}
+          
+        </RadioGroup>
+        
+      </CardContent>
+    </Card>
+  );
+};
+
+export default PaymentMethodComponent;

@@ -1,15 +1,17 @@
-import { Box, Container, Typography, IconButton, Stack } from "@mui/material";
+import { Box, Container, Typography, IconButton, Stack, Button } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import YouTubeIcon from "@mui/icons-material/YouTube";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { useNavigate } from "react-router-dom";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import PhoneIcon from "@mui/icons-material/Phone";
+import FooterNav from "../../components/footerNav/footerNav.tsx";
 
 import {
   companyLogo,
-  footerImage2,
+  qrCode,
   footerImage3,
   footerImage4,
   flagAustralia,
@@ -67,17 +69,9 @@ const countries = [
 ];
 
 const Footer = () => {
-  const navigate = useNavigate();
 
-  // Function to handle navigation to any page and scroll to top
-  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
-    e.preventDefault();
-    navigate(path);
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
+   useNavigate();
+
 
   return (
     <Box
@@ -126,115 +120,10 @@ const Footer = () => {
               to keep your space spotless.
             </Typography>
           </Box>
-
-          {/* Home */}
-          <Box
-            sx={{
-              marginLeft: { xs: 0, md: 2 },
-              display: "flex",
-              flexDirection: "column",
-              alignItems: { xs: "center", md: "flex-start" },
-            }}
-          >
-            <Typography
-              variant="h6"
-              sx={{
-                mb: 2,
-                fontWeight: "bold",
-                textAlign: { xs: "center", md: "left" },
-              }}
-            >
-              Home
-            </Typography>
-            <Stack spacing={2} alignItems={{ xs: "center", md: "flex-start" }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: { xs: "center", md: "flex-start" },
-                }}
-              >
-                <Typography
-                  variant="body1"
-                  sx={{
-                    cursor: "pointer",
-                    "&:hover": { opacity: 0.8 },
-                  }}
-                >
-                  Services
-                </Typography>
-                <KeyboardArrowDownIcon sx={{ ml: 0.5 }} />
-              </Box>
-              <Typography
-                variant="body1"
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.8 },
-                  textAlign: { xs: "center", md: "left" },
-                }}
-              >
-                Company
-              </Typography>
-              <Typography
-                variant="body1"
-                component="a"
-                href="/contactUsPage"
-                onClick={(e) => handleNavigation(e, '/contactUsPage')}
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.8 },
-                  textAlign: { xs: "center", md: "left" },
-                  textDecoration: "none",
-                  color: "inherit"
-                }}
-              >
-                Contact Us
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.8 },
-                  textAlign: { xs: "center", md: "left" },
-                }}
-              >
-                Careers
-              </Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: { xs: "center", md: "flex-start" },
-                }}
-              >
-                <Typography
-                  variant="body1"
-                  sx={{
-                    cursor: "pointer",
-                    "&:hover": { opacity: 0.8 },
-                  }}
-                >
-                  Other Services
-                </Typography>
-                <KeyboardArrowDownIcon sx={{ ml: 0.5 }} />
-              </Box>
-              <Typography
-                component="a"
-                href="/our-locations"
-                onClick={(e) => handleNavigation(e, '/our-locations')}
-                variant="body1"
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.8 },
-                  textAlign: { xs: "center", md: "left" },
-                  textDecoration: "none",
-                  color: "inherit"
-                }}
-              >
-                Our Location
-              </Typography>
-            </Stack>
-          </Box>
-
+          
+          {/* Footer NavigationBar */}
+          <FooterNav/>
+                    
           {/* QR Code and Social Media */}
           <Box
             sx={{
@@ -261,6 +150,7 @@ const Footer = () => {
                   width: 40,
                   height: 40,
                 }}
+                onClick={() => window.open("https://www.facebook.com/profile.php?id=61561165376278", "_blank")}
               >
                 <FacebookIcon sx={{ fontSize: 20 }} />
               </IconButton>
@@ -276,6 +166,7 @@ const Footer = () => {
                   width: 40,
                   height: 40,
                 }}
+                onClick={() => window.open("https://www.instagram.com/pearlyskycleaning/?next=%2F", "_blank")}
               >
                 <InstagramIcon sx={{ fontSize: 20 }} />
               </IconButton>
@@ -291,6 +182,7 @@ const Footer = () => {
                   width: 40,
                   height: 40,
                 }}
+                onClick={() => window.open("https://x.com/PEARLYSKYPVTLTD", "_blank")}
               >
                 <TwitterIcon sx={{ fontSize: 20 }} />
               </IconButton>
@@ -306,6 +198,7 @@ const Footer = () => {
                   width: 40,
                   height: 40,
                 }}
+                onClick={() => window.open("https://www.youtube.com/@pearlyskycleaningservice", "_blank")}
               >
                 <YouTubeIcon sx={{ fontSize: 20 }} />
               </IconButton>
@@ -316,14 +209,16 @@ const Footer = () => {
                   bgcolor: "rgba(255, 255, 255, 0.2)",
                   "&:hover": {
                     bgcolor: "rgba(255, 255, 255, 0.3)",
-                    color: "black",
+                    color: "red",
                   },
                   width: 40,
                   height: 40,
                 }}
+                onClick={() => window.open("", "_blank")}
               >
-                <GitHubIcon sx={{ fontSize: 20 }} />
+                <LinkedInIcon sx={{ fontSize: 20 }} />
               </IconButton>
+              
             </Stack>
 
             <Stack
@@ -358,6 +253,63 @@ const Footer = () => {
             >
               Scan the QR code or visit us at iOS App Store or Google Play Store
             </Typography>
+
+            <Stack
+              direction="row"
+              spacing={2}
+              justifyContent={{ xs: "center", md: "flex-start" }}
+              sx={{ width: "100%" }}
+            >
+                {/* Contact Now Button */}
+                <Button
+                  variant="outlined"
+                  href="https://wa.me/33635508169"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    color: "white",
+                    borderColor: "white",
+                    borderRadius: "30px",
+                    padding: "0.5rem 0.5rem",
+                    fontSize: "0.7rem",
+                    textTransform: "none",
+                    "&:hover": {
+                      backgroundColor: "white",
+                      color: "#0A285F",
+                    },
+                  }}
+                >
+                  <WhatsAppIcon fontSize="small" />
+                  <span>Whats app</span>
+                </Button>
+
+                {/* Hotline Button */}
+                <Button
+                  variant="outlined"
+                  href="tel:phone-number"
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    color: "white",
+                    borderColor: "white",
+                    borderRadius: "30px",
+                    padding: "0.5rem 0.5rem",
+                    fontSize: "0.8rem",
+                    textTransform: "none",
+                    "&:hover": {
+                      backgroundColor: "white",
+                      color: "#0A285F",
+                    },
+                  }}
+                >
+                  <PhoneIcon fontSize="small" />
+                  <span>Hotline. . .</span>
+                </Button>
+              </Stack>
           </Box>
 
           {/* QR Code */}
@@ -369,7 +321,7 @@ const Footer = () => {
             }}
           >
             <img
-              src={footerImage2}
+              src={qrCode}
               alt="QR Code"
               style={{ width: "200px", height: "200px" }}
             />
