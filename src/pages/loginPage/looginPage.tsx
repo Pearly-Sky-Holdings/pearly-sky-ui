@@ -510,7 +510,7 @@ const LoginPage = () => {
                         color: "#008CDA",
                       }}
                     >
-                      Signup
+                      <a href="/signup" style={{ textDecoration: "underline" }}>SignUp</a>
                     </Typography>
                   </Typography>
                 </form>

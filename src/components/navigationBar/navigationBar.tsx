@@ -31,13 +31,13 @@ export default function NavigationBar() {
 
   const navItems = [
     { label: "Home", path: "/" },
-    { label: "Services", path: "/services", isDropdown: true },
-    { label: "Company", path: "https://pearlyskyplc.com" },
-    { label: "Contact Us", path: "/contactUsPage" },
-    { label: "Careers", path: "/career" },    
     { label: "About Us", path: "/aboutUs" },
-    { label: "Our Locations", path: "/our-locations" },
-    { label: "Our Customers", path: "/customer_page" },
+    { label: "Company", path: "https://pearlyskyplc.com" },
+    { label: "Services", path: "/services", isDropdown: true },  
+    { label: "Our Customers", path: "/customer_page" }, 
+    { label: "Careers", path: "/career" },     
+    { label: "Our Locations", path: "/our-locations" },    
+    { label: "Contact Us", path: "/contactUsPage" },
   ];
 
   const serviceDropdownItems = [
@@ -168,7 +168,7 @@ export default function NavigationBar() {
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "#002F6D", width: "100%", left: 0, top: 0 }}>
       <ScrollToTop />
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between", px: 2 }}>
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Link to="/" style={{ textDecoration: "none", color: "white" }}>
             <img src={companyLogo} alt="logo" style={{ width: isMobile ? "30%" : "40%" }} />
