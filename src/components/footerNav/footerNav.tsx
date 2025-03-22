@@ -126,12 +126,12 @@ const serviceLinks = [
 ];
 
 const navigationLinks = [
-  { label: "Company", path: "https://pearlyskyplc.com" },
-  { label: "Contact Us", path: "/contactUsPage" },
-  { label: "Careers", path: "/career" },
   { label: "About Us", path: "/aboutUs" },
-  { label: "Our Location", path: "/our-locations" },
+  { label: "Company", path: "https://pearlyskyplc.com" },  
   { label: "Our Customers", path: "/customer_page" },
+  { label: "Careers", path: "/career" }, 
+  { label: "Our Location", path: "/our-locations" },
+  { label: "Contact Us", path: "/contactUsPage" },
 ];
 
 export default FooterNav;

@@ -83,12 +83,12 @@ const CustomerFeedback: React.FC = () => {
   // };
 
   return (
-    <Box sx={{ py: 5, backgroundColor: "#f0f8ff", mt: 5 }}>
+    <Box sx={{ backgroundColor: "#f0f8ff", mb:10}}>
       <Typography
         variant="h4"
         fontWeight="bold"
         textAlign="center"
-        mb={18}
+        mb={10}
         mt={10}
         sx={{ color: "#002F6D" }}
       >
