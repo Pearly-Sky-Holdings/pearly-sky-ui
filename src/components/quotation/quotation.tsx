@@ -409,11 +409,13 @@ const Quotation = () => {
           onClick={() => navigate(-1)} >
           Back
         </Button>
-        <Button
-          variant="contained"
-          onClick={handleSendData} >
-          Download 
-        </Button>
+        {!isMobile && (
+          <Button
+            variant="contained"
+            onClick={handleSendData} >
+            Download 
+          </Button>
+        )}
       </Box>
    
     </Box>

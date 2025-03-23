@@ -17,6 +17,14 @@ import PersonalInformationForm from "../../components/personalInformationForm/pe
 import { SanitizationService } from "../../config/images";
 import EstimateList from "../../components/sanitizationPage/estimateList";
 import LoadingOverlay from "../../components/welcomeAlert/LoadingOverlay";
+import {
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from "@mui/material";
 
 function SanitizationAndDisinfection() {
   const navigate = useNavigate();
@@ -32,6 +40,9 @@ function SanitizationAndDisinfection() {
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState("");
    
   const [selectedData, setSelectedData] = useState<{ category: string; items: string[] }[]>([]);
 
@@ -40,6 +51,10 @@ function SanitizationAndDisinfection() {
     setSelectedData(data);
     console.log("Selected Data:", data);
   }, []);
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
 
  
   // Memoize the form change handler
@@ -90,6 +105,8 @@ const handleCheckboxChange = (section: Section, option: Option) => {
     zip: string;
     phone: string;
     email: string;
+    password: string;
+    confirmPassword: string;
   }
 
   const [formData, setFormData] = useState<FormData>({
@@ -104,35 +121,179 @@ const handleCheckboxChange = (section: Section, option: Option) => {
     zip: "",
     phone: "",
     email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const handleBookNow = async () => {
-    // Validate Chemical
-    if (!chemical.customer && !chemical.company) {
-      alert("Chemical is required. Please select an option for Chemical.");
-      return; 
-    }
+   // Validate Chemical
+   if (!chemical.customer && !chemical.company) {
+    setDialogMessage("Chemical is required. Please select an option for Chemical.");
+    setOpenDialog(true);
+    return;
+  }
 
-    // Validate Equipment
-    if (!equipment.customer && !equipment.company) {
-      alert("Equipment is required. Please select an option for Equipment.");
-      return; 
-    }
-    
-    // Validate required fields
-    if (
-      !frequency ||
-      !propertyType ||
-      !contactType ||
-      !language ||
-      !timeZone ||
-      !selectedDate ||
-      !selectedTime ||
-      !acceptTerms2
-    ) {
-      alert("Please fill all required fields before proceeding to checkout.");
-      return;
-    }
+  // Validate Equipment
+  if (!equipment.customer && !equipment.company) {
+    setDialogMessage("Equipment is required. Please select an option for Equipment.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate First Name
+  if (!formData.firstName) {
+    setDialogMessage("First Name is required. Please enter your first name.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Last Name
+  if (!formData.lastName) {
+    setDialogMessage("Last Name is required. Please enter your last name.");
+    setOpenDialog(true);
+    return;
+  }
+
+  
+  // Validate Country
+  if (!formData.country) {
+    setDialogMessage("Country is required. Please select your country.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Address
+  if (!formData.address) {
+    setDialogMessage("Address is required. Please enter your address.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate City
+  if (!formData.city) {
+    setDialogMessage("City is required. Please enter your city.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate State
+  if (!formData.state) {
+    setDialogMessage("State is required. Please enter your state.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate ZIP Code
+  if (!formData.zip) {
+    setDialogMessage("ZIP Code is required. Please enter your ZIP code.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Phone
+  if (!formData.phone) {
+    setDialogMessage("Phone is required. Please enter your phone number.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Email
+  if (!formData.email) {
+    setDialogMessage("Email is required. Please enter your email address.");
+    setOpenDialog(true);
+    return;
+  } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(formData.email)) {
+    setDialogMessage("Invalid email address. Please enter a valid email.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Password
+  if (!formData.password) {
+    setDialogMessage("Password is required. Please enter your password.");
+    setOpenDialog(true);
+    return;
+  } else if (formData.password.length < 8) {
+    setDialogMessage("Password must be at least 8 characters long.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Confirm Password
+  if (!formData.confirmPassword) {
+    setDialogMessage("Confirm Password is required. Please confirm your password.");
+    setOpenDialog(true);
+    return;
+  } else if (formData.password !== formData.confirmPassword) {
+    setDialogMessage("Passwords do not match. Please check your password and confirm password.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Password Match
+  if (formData.password !== formData.confirmPassword) {
+    setDialogMessage("Passwords do not match. Please check your password and confirm password.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Frequency
+  if (!frequency) {
+    setDialogMessage("Frequency is required. Please select a frequency.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Property Type
+  if (!propertyType) {
+    setDialogMessage("Property Type is required. Please select a property type.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Contact Type
+  if (!contactType) {
+    setDialogMessage("Contact Type is required. Please select a contact type.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Language
+  if (!language) {
+    setDialogMessage("Language is required. Please select a language.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Time Zone
+  if (!timeZone) {
+    setDialogMessage("Time Zone is required. Please select a time zone.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Selected Date
+  if (!selectedDate) {
+    setDialogMessage("Date is required. Please select a date.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Selected Time
+  if (!selectedTime) {
+    setDialogMessage("Time is required. Please select a time.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Terms and Conditions
+  if (!acceptTerms2) {
+    setDialogMessage("You must accept the terms and conditions to proceed.");
+    setOpenDialog(true);
+    return;
+  }
+
+  console.log("All fields are valid. Proceeding to checkout...");
   
     // selected date
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
@@ -141,27 +302,25 @@ const handleCheckboxChange = (section: Section, option: Option) => {
     const customer = {
       first_name: formData.firstName,
       last_name: formData.lastName,
-      company: formData.company || "", // Optional field
+      company: formData.company || "", 
       country: formData.country,
       street_address: formData.address,
-      apartment_type: formData.apartment || "", // Optional field
+      apartment_type: formData.apartment || "", 
       city: formData.city,
       province: formData.state,
       postal_code: formData.zip,
       contact: formData.phone,
       email: formData.email,
-      password: " 1234", // Default password or generate one
+      password: formData.password, 
     };
   
     // service details
     const serviceDetails = {
-      customer, // Include customer details
+      customer, 
       service_id: "10", 
       price: "00.00", 
       date,
-      time: selectedTime,
-      // property_size: "0 sqft", 
-      // duration: "0",        
+      time: selectedTime,             
       note: document.querySelector("textarea")?.value || "",
       request_gender: contactType, 
       request_language: language,
@@ -449,6 +608,19 @@ const handleCheckboxChange = (section: Section, option: Option) => {
       <div>
         <PaymentSupportSection />
       </div>
+
+      {/* Dialog for displaying validation messages */}
+      <Dialog open={openDialog} onClose={handleCloseDialog}>
+        <DialogTitle sx={{ background: "#800000", color: "white" ,textAlign:"center"}}>Validation Error</DialogTitle>
+        <DialogContent >
+          <DialogContentText sx={{mt:3 ,textAlign:"center",color:"#800000"}}>{dialogMessage}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="primary" sx={{background: "#800000", color: "white" ,textAlign:"center"}}>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
