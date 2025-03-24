@@ -29,7 +29,7 @@ const AboutUsPage: React.FC = () => {
         <Grid item xs={12} md={6}>
             <Box display="flex" justifyContent="center">
               <img
-                src="/images/aboutUsPage/cleaning1.jpg" //  image path
+                src="/images/aboutUsPage/aboutUs.png" //  image path
                 alt="Cleaning Services"
                 style={{ maxWidth: "100%", borderRadius: "10px" }}
               />
@@ -46,15 +46,17 @@ const AboutUsPage: React.FC = () => {
         </Grid>
 
         {/* Our Story Section */}
-        <Typography variant="h4" fontWeight="bold"  mb={2} 
+        
+        <Grid container spacing={4} alignItems="center" sx={{mb:{xs:5,sm:10,md:15}}}>          
+          <Grid item xs={12} md={6}>
+            <Typography variant="h4" fontWeight="bold"  mb={2} 
         sx={{
           color: "#002F6D",
           fontSize: { xs: "20px", sm: "28px", md: "35px" }, 
         }}>
           Our Story
         </Typography>
-        <Grid container spacing={4} alignItems="center" sx={{mb:{xs:5,sm:10,md:15}}}>          
-          <Grid item xs={12} md={6}>
+            
             <Typography variant="body1" color="black">
             Founded in [24 November 2023], Pearly Sky Cleaning Services began as a small local business with a 
             big vision: to revolutionize the cleaning industry. Over the years, we’ve grown into a trusted name, 
@@ -65,7 +67,7 @@ const AboutUsPage: React.FC = () => {
           <Grid item xs={12} md={6}>
             <Box display="flex" justifyContent="center">
               <img
-                src="/images/aboutUsPage/our-story.jpg" //  image path
+                src="/images/aboutUsPage/ourStory.png" //  image path
                 alt="Our Story"
                 style={{ maxWidth: "100%", borderRadius: "10px" }}
               />
@@ -103,13 +105,13 @@ const AboutUsPage: React.FC = () => {
       {/* List */}
       <Grid container spacing={3} justifyContent="center">
       <Grid item xs={12} md={6}>
-            <Box display="flex" justifyContent="center">
-              <img
-                src="/images/aboutUsPage/our-story.jpg" //  image path
-                alt="Our Story"
-                style={{ maxWidth: "100%", borderRadius: "10px" }}
-              />
-            </Box>
+        <Box display="flex" justifyContent="center">
+          <img
+            src="/images/aboutUsPage/whyChooseUs.png" //  image path
+            alt="Our Story"
+            style={{ maxWidth: "100%", borderRadius: "10px" }}
+          />
+        </Box>
       </Grid>        
              
       <Grid item xs={12} md={6} >

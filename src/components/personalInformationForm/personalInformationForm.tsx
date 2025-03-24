@@ -1,4 +1,4 @@
-import  { useState, ChangeEvent, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDebounce } from "use-debounce";
 import PhoneInput, { getCountryCallingCode, Country } from "react-phone-number-input";
@@ -14,7 +14,8 @@ import {
   IconButton,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import {  Visibility, VisibilityOff } from "@mui/icons-material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+// import zIndex from "@mui/material/styles/zIndex";
 
 const StyledTextField = styled(TextField)({
   "& .MuiOutlinedInput-root": {
@@ -76,24 +77,13 @@ type FormValues = {
   confirmPassword: string;
 };
 
-interface FormData {
-  name: string;
-  contactNumber: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
-interface FormErrors {
-  name: string;
-  contactNumber: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
 const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data: FormValues) => void }) => {
-  const { control, watch, setValue } = useForm<FormValues>({
+  const {
+    control,
+    watch,
+    setValue,
+    formState: {  },
+  } = useForm<FormValues>({
     defaultValues: {
       prefix: "",
       firstName: "",
@@ -107,9 +97,10 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
       state: "",
       zip: "",
       country: "",
-      password: " ",
+      password: "",
       confirmPassword: "",
     },
+    mode: "onChange", // Enable real-time validation
   });
 
   const formValues = watch();
@@ -129,47 +120,8 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
     }
   }, [formValues.country, setValue]);
 
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    contactNumber: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const [errors, setErrors] = useState<FormErrors>({
-    name: "",
-    contactNumber: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const validateField = (name: keyof FormData, value: string): string => {
-    switch (name) {
-      case "name":
-        return !value ? "Name is required" : "";
-      case "contactNumber":
-        return !value ? "Contact Number is required" : !/^\d{10}$/.test(value) ? "Invalid Contact Number" : "";
-      case "email":
-        return !value ? "Email is required" : !/\S+@\S+\.\S+/.test(value) ? "Invalid Email" : "";
-      case "password":
-        return !value ? "Password is required" : value.length < 8 ? "Password must be at least 8 characters" : "";
-      case "confirmPassword":
-        return !value ? "Please confirm your password" : value !== formData.password ? "Passwords do not match" : "";
-      default:
-        return "";
-    }
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    setErrors({ ...errors, [name]: validateField(name as keyof FormData, value) });
-  };
 
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
@@ -182,7 +134,7 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
 
   return (
     <form style={{ color: "black" }}>
-      <Typography variant="h5" gutterBottom sx={{ mb: 5, textDecoration: 'underline' }}>
+      <Typography variant="h5" gutterBottom sx={{ mb: 5, textDecoration: "underline" }}>
         Personal Information
       </Typography>
       <Grid container spacing={3}>
@@ -193,11 +145,17 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
             <Controller
               name="prefix"
               control={control}
+              rules={{ required: "Prefix is required" }}
               render={({ field }) => (
-                <Select {...field} displayEmpty sx={selectStyles}>
-                  <MenuItem value="" disabled>Select Prefix</MenuItem>
+                <Select {...field} displayEmpty sx={selectStyles} 
+                >
+                  <MenuItem value="" disabled > 
+                    Select Prefix
+                  </MenuItem>
                   {prefixes.map((prefix) => (
-                    <MenuItem key={prefix} value={prefix}>{prefix}</MenuItem>
+                    <MenuItem key={prefix} value={prefix}>
+                      {prefix}
+                    </MenuItem>
                   ))}
                 </Select>
               )}
@@ -212,7 +170,15 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
             name="firstName"
             control={control}
             rules={{ required: "First Name is required" }}
-            render={({ field }) => <StyledTextField {...field} placeholder="Ex: John" fullWidth />}
+            render={({ field, fieldState: { error } }) => (
+              <StyledTextField
+                {...field}
+                placeholder="Ex: John"
+                fullWidth
+                error={!!error}
+                helperText={error ? error.message : null}
+              />
+            )}
           />
         </Grid>
 
@@ -233,7 +199,15 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
             name="lastName"
             control={control}
             rules={{ required: "Last Name is required" }}
-            render={({ field }) => <StyledTextField {...field} placeholder="Ex: Doe" fullWidth />}
+            render={({ field, fieldState: { error } }) => (
+              <StyledTextField
+                {...field}
+                placeholder="Ex: Doe"
+                fullWidth
+                error={!!error}
+                helperText={error ? error.message : null}
+              />
+            )}
           />
         </Grid>
 
@@ -245,11 +219,21 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
               name="country"
               control={control}
               rules={{ required: "Country is required" }}
-              render={({ field }) => (
-                <Select {...field} displayEmpty sx={selectStyles}>
-                  <MenuItem value="" disabled>Select Country</MenuItem>
+              render={({ field, fieldState: { error } }) => (
+                <Select
+                  {...field}
+                  displayEmpty
+                  sx={selectStyles}
+                  error={!!error}
+                  renderValue={(value) => (value ? value : "Select Country")}
+                >
+                  <MenuItem value="" disabled>
+                    Select Country
+                  </MenuItem>
                   {countries.map((country) => (
-                    <MenuItem key={country.code} value={country.name}>{country.name}</MenuItem>
+                    <MenuItem key={country.code} value={country.name}>
+                      {country.name}
+                    </MenuItem>
                   ))}
                 </Select>
               )}
@@ -264,13 +248,16 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
             <Controller
               name="phone"
               control={control}
-              render={({ field }) => (
+              rules={{ required: "Phone Number is required" }}
+              render={({ field, fieldState: { error } }) => (
                 <PhoneInput
                   {...field}
                   international
                   defaultCountry="US"
                   placeholder="Phone number"
                   style={phoneInputStyles}
+                  error={!!error}
+                  helperText={error ? error.message : null}
                 />
               )}
             />
@@ -290,7 +277,15 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
                 message: "Invalid email address",
               },
             }}
-            render={({ field }) => <StyledTextField {...field} placeholder="Ex: john@gmail.com" fullWidth />}
+            render={({ field, fieldState: { error } }) => (
+              <StyledTextField
+                {...field}
+                placeholder="Ex: john@gmail.com"
+                fullWidth
+                error={!!error}
+                helperText={error ? error.message : null}
+              />
+            )}
           />
         </Grid>
 
@@ -301,7 +296,15 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
             name="address"
             control={control}
             rules={{ required: "Address is required" }}
-            render={({ field }) => <StyledTextField {...field} placeholder="Ex: Wallaby Way" fullWidth />}
+            render={({ field, fieldState: { error } }) => (
+              <StyledTextField
+                {...field}
+                placeholder="Ex: Wallaby Way"
+                fullWidth
+                error={!!error}
+                helperText={error ? error.message : null}
+              />
+            )}
           />
         </Grid>
 
@@ -322,7 +325,15 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
             name="city"
             control={control}
             rules={{ required: "City is required" }}
-            render={({ field }) => <StyledTextField {...field} placeholder="Ex: Sydney" fullWidth />}
+            render={({ field, fieldState: { error } }) => (
+              <StyledTextField
+                {...field}
+                placeholder="Ex: Sydney"
+                fullWidth
+                error={!!error}
+                helperText={error ? error.message : null}
+              />
+            )}
           />
         </Grid>
 
@@ -333,7 +344,15 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
             name="state"
             control={control}
             rules={{ required: "State is required" }}
-            render={({ field }) => <StyledTextField {...field} placeholder="Ex: New South Wales" fullWidth />}
+            render={({ field, fieldState: { error } }) => (
+              <StyledTextField
+                {...field}
+                placeholder="Ex: New South Wales"
+                fullWidth
+                error={!!error}
+                helperText={error ? error.message : null}
+              />
+            )}
           />
         </Grid>
 
@@ -350,61 +369,84 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
                 message: "Invalid ZIP Code",
               },
             }}
-            render={({ field }) => <StyledTextField {...field} placeholder="Ex: 2000" fullWidth />}
+            render={({ field, fieldState: { error } }) => (
+              <StyledTextField
+                {...field}
+                placeholder="Ex: 2000"
+                fullWidth
+                error={!!error}
+                helperText={error ? error.message : null}
+              />
+            )}
           />
         </Grid>
 
         {/* Password Field */}
         <Grid item xs={12} sm={6}>
           {renderLabel("Password", true)}
-          <StyledTextField           
-            required
-            fullWidth
+          <Controller
             name="password"
-            placeholder="Enter your password"
-            type={showPassword ? "text" : "password"}
-            value={formData.password}
-            onChange={handleChange}
-            error={!!errors.password}
-            helperText={errors.password}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleClickShowPassword} edge="end" sx={{ color: "gray", mr: 1 }}>
-                    {showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-              sx: inputStyles,
+            control={control}
+            rules={{
+              required: "Password is required",
+              minLength: {
+                value: 8,
+                message: "Password must be at least 8 characters",
+              },
             }}
-            
+            render={({ field, fieldState: { error } }) => (
+              <StyledTextField
+                {...field}
+                placeholder="Enter your password"
+                type={showPassword ? "text" : "password"}
+                fullWidth
+                error={!!error}
+                helperText={error ? error.message : null}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleClickShowPassword} edge="end" sx={{ color: "gray", mr: 1 }}>
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                  sx: inputStyles,
+                }}
+              />
+            )}
           />
         </Grid>
 
         {/* Confirm Password Field */}
         <Grid item xs={12} sm={6}>
           {renderLabel("Confirm Password", true)}
-          <StyledTextField            
-            required
-            fullWidth
+          <Controller
             name="confirmPassword"
-            placeholder="Confirm your password"
-            type={showConfirmPassword ? "text" : "password"}
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            error={!!errors.confirmPassword}
-            helperText={errors.confirmPassword}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleClickShowConfirmPassword} edge="end" sx={{ color: "gray", mr: 1 }}>
-                    {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-              sx: inputStyles,
+            control={control}
+            rules={{
+              required: "Please confirm your password",
+              validate: (value) => value === formValues.password || "Passwords do not match",
             }}
-            sx={{ mb: 2 }}
+            render={({ field, fieldState: { error } }) => (
+              <StyledTextField
+                {...field}
+                placeholder="Confirm your password"
+                type={showConfirmPassword ? "text" : "password"}
+                fullWidth
+                error={!!error}
+                helperText={error ? error.message : null}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={handleClickShowConfirmPassword} edge="end" sx={{ color: "gray", mr: 1 }}>
+                        {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                  sx: inputStyles,
+                }}
+              />
+            )}
           />
         </Grid>
       </Grid>
@@ -413,16 +455,18 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
 };
 
 const selectStyles = {
-  borderRadius: '12px',
-  '& .MuiOutlinedInput-notchedOutline': {
-    borderColor: 'blue',
+  borderRadius: "12px",
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderColor: "blue",
   },
-  '&:hover .MuiOutlinedInput-notchedOutline': {
-    borderColor: 'darkblue',
+  "&:hover .MuiOutlinedInput-notchedOutline": {
+    borderColor: "darkblue",
   },
-  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-    borderColor: 'blue',
+  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    borderColor: "blue",
   },
+  zIndex:1,
+  
 };
 
 const phoneInputStyles = {
