@@ -6,7 +6,6 @@ import {
   Paper,
   IconButton,
 } from "@mui/material";
-
 import CleaningServiceCard from "../../components/ServiceCard/CleaningServiceCard";
 import {
   chooseClening1,
@@ -18,29 +17,32 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import PinterestIcon from "@mui/icons-material/Pinterest";
-
-const otherServices = [
-  {
-    id: 1,
-    title: "Cleaning Industry Regulation",
-    image: chooseClening1,
-    link: "/cleaning-industry-regulation",
-  },
-  {
-    id: 3,
-    title: "Cleaning Hospitality",
-    image: chooseClening3,
-    link: "/cleaning-hospitality",
-  },
-  {
-    id: 4,
-    title: "Robotics in Cleaning",
-    image: chooseClening4,
-    link: "/robotics-cleaning",
-  },
-];
+import { useLanguage } from "../../context/LanguageContext";
 
 const HygienePublicSpaces = () => {
+  const { translate } = useLanguage();
+
+  const otherServices = [
+    {
+      id: 1,
+      titleKey: "cleaningIndustryRegulation",
+      image: chooseClening1,
+      link: "/cleaning-industry-regulation",
+    },
+    {
+      id: 3,
+      titleKey: "cleaningHospitality",
+      image: chooseClening3,
+      link: "/cleaning-hospitality",
+    },
+    {
+      id: 4,
+      titleKey: "roboticsInCleaning",
+      image: chooseClening4,
+      link: "/robotics-cleaning",
+    },
+  ];
+
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* Main content section with image and text */}
@@ -54,7 +56,7 @@ const HygienePublicSpaces = () => {
             <Box
               component="img"
               src={readMoreImage2}
-              alt="Cleaning Industry Regulation"
+              alt={translate('hygienePublicSpacesImageAlt')}
               sx={{
                 width: "100%",
                 height: "100%",
@@ -68,46 +70,35 @@ const HygienePublicSpaces = () => {
           {/* Right side - Content */}
           <Grid item xs={12} md={7}>
             <Typography
-              variant="h3" // Increased font size
+              variant="h3"
               component="h1"
               sx={{ color: "#002F6D", fontWeight: "bold", mb: 2 }}
             >
-              Hygiene in Public Spaces
+              {translate('hygienePublicSpacesTitle')}
             </Typography>
 
             <Typography paragraph sx={{ fontSize: "1.1rem" }}>
-              Maintaining hygiene in public spaces is crucial for public health
-              and safety. From shopping malls to transportation hubs, proper
-              cleaning protocols help prevent the spread of diseases and create
-              a pleasant environment for all users.
+              {translate('hygienePublicSpacesIntro')}
             </Typography>
 
             <Typography
               variant="h5"
               sx={{ color: "#002F6D", fontWeight: "bold", mt: 2 }}
             >
-              High-Touch Surface Cleaning
+              {translate('highTouchSurfaceTitle')}
             </Typography>
             <Typography paragraph sx={{ fontSize: "1.1rem" }}>
-              Regular disinfection of high-touch surfaces such as door handles,
-              elevator buttons, handrails, and public seating is essential to
-              reduce the transmission of pathogens. Our professional teams use
-              hospital-grade disinfectants that are effective against a wide
-              range of bacteria and viruses.
+              {translate('highTouchSurfaceContent')}
             </Typography>
 
             <Typography
               variant="h5"
               sx={{ color: "#002F6D", fontWeight: "bold", mt: 2 }}
             >
-              Public Restroom Sanitation
+              {translate('publicRestroomTitle')}
             </Typography>
             <Typography paragraph sx={{ fontSize: "1.1rem" }}>
-              Public restrooms require special attention to maintain proper
-              hygiene. Our comprehensive cleaning protocols include thorough
-              disinfection of all surfaces, regular restocking of supplies, and
-              proper waste management to ensure these facilities remain clean
-              and safe for all users.
+              {translate('publicRestroomContent')}
             </Typography>
           </Grid>
         </Grid>
@@ -115,30 +106,27 @@ const HygienePublicSpaces = () => {
           variant="h5"
           sx={{ color: "#002F6D", fontWeight: "bold", mt: 2 }}
         >
-          Air Quality Management
+          {translate('airQualityTitle')}
         </Typography>
         <Typography paragraph sx={{ fontSize: "1.1rem" }}>
-          Indoor air quality in public spaces significantly impacts health and
-          comfort. Our services include HVAC system maintenance, air filter
-          replacement, and the use of air purification technologies to reduce
-          airborne contaminants and create a healthier environment for everyone.
+          {translate('airQualityContent')}
         </Typography>
         {/* Social sharing section */}
         <Box sx={{ display: "flex", alignItems: "center", mt: 4 }}>
           <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-            SHARE ARTICLE :
+            {translate('shareArticle')} :
           </Typography>
           <Box sx={{ display: "flex", gap: 1 }}>
-            <IconButton size="small" sx={{ color: "#1877F2" }}>
+            <IconButton size="small" sx={{ color: "#1877F2" }} aria-label={translate('shareOnFacebook')}>
               <FacebookIcon />
             </IconButton>
-            <IconButton size="small" sx={{ color: "#1DA1F2" }}>
+            <IconButton size="small" sx={{ color: "#1DA1F2" }} aria-label={translate('shareOnTwitter')}>
               <TwitterIcon />
             </IconButton>
-            <IconButton size="small" sx={{ color: "#0A66C2" }}>
+            <IconButton size="small" sx={{ color: "#0A66C2" }} aria-label={translate('shareOnLinkedIn')}>
               <LinkedInIcon />
             </IconButton>
-            <IconButton size="small" sx={{ color: "#E60023" }}>
+            <IconButton size="small" sx={{ color: "#E60023" }} aria-label={translate('shareOnPinterest')}>
               <PinterestIcon />
             </IconButton>
           </Box>
@@ -149,7 +137,12 @@ const HygienePublicSpaces = () => {
       <Grid container spacing={3} sx={{ mt: 4 }}>
         {otherServices.map((service) => (
           <Grid item xs={12} sm={6} md={4} key={service.id}>
-            <CleaningServiceCard {...service} />
+            <CleaningServiceCard 
+              id={service.id}
+              title={translate(service.titleKey)}
+              image={service.image}
+              link={service.link}
+            />
           </Grid>
         ))}
       </Grid>

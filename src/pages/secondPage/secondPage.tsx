@@ -1,9 +1,11 @@
 import { Card, CardContent, Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import { girl, homeVideo1 } from "../../config/images";
+import { useLanguage } from "../../context/LanguageContext";
 
 export default function SecondPage() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { translate } = useLanguage();
 
   return (
     <Box
@@ -56,7 +58,7 @@ export default function SecondPage() {
             }}
           >
             <source src={homeVideo1} type="video/mp4" />
-            Your browser does not support the video tag.
+            {translate('videoNotSupported')}
           </video>
         </CardContent>
       </Card>
@@ -87,16 +89,17 @@ export default function SecondPage() {
           }}
         >
           <Typography variant={isMobile ? "body2" : "body1"}>
-            Wishing you a life full of{" "}
-            <span style={{ color: "#008CDA", fontWeight: "bold" }}>freshness</span>,{" "}
-            <span style={{ color: "#008CDA", fontWeight: "bold" }}>clarity</span>, <span>and order! Let us help you make your spaces a reflection of your best half.</span>
+            {translate('secondPageMessage1')}{" "}
+            <span style={{ color: "#008CDA", fontWeight: "bold" }}>{translate('freshness')}</span>,{" "}
+            <span style={{ color: "#008CDA", fontWeight: "bold" }}>{translate('clarity')}</span>,{" "}
+            <span>{translate('secondPageMessage2')}</span>
           </Typography> 
         </Box>
 
         {/* Image */}
         <img
           src={girl} 
-          alt="Cleaning Lady"
+          alt={translate('cleaningProfessionalAlt')}
           style={{ 
             width: isMobile ? "80%" : "60%", 
             height: "auto",

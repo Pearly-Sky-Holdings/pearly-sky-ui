@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import PhoneIcon from "@mui/icons-material/Phone";
 import FooterNav from "../../components/footerNav/footerNav.tsx";
+import { useLanguage } from "../../context/LanguageContext";
 
 import {
   companyLogo,
@@ -40,38 +41,36 @@ import {
   flagBelgium,
 } from "../../config/images.ts";
 
-const countries = [
-  { name: "France", flag: flagFrance },
-  { name: "United Kingdom", flag: flagUk },
-  { name: "Sri Lanka", flag: flagSrilanka },
-  { name: "Scotland", flag: flagScotland },
-  { name: "Germany", flag: flagGermany },
-  { name: "Australia", flag: flagAustralia },
-  { name: "United Arab Emirates", flag: flagUAE },
-  { name: "Canada", flag: flagCanada },
-  { name: "Finland", flag: flagFinland },
-  { name: "Saudi Arabia", flag: flagSaudiArabia },
-  { name: "Italy", flag: flagItaly },
-  { name: "United States", flag: flagUs },
-  { name: "Ireland", flag: flagIreland },
-  { name: "Austria", flag: flagAustria },
-  { name: "Netherlands", flag: flagNetherlands },
-  { name: "Switzerland", flag: flagSwitzerland },
-  { name: "Qatar", flag: flagQatar },
-  { name: "Denmark", flag: flagDenmark },
-  { name: "New Zealand", flag: flagNewZealand },
-  { name: "Poland", flag: flagPoland },
-  { name: "Luxembourg", flag: flagluxembourg },
-  { name: "Portugal", flag: flagPortugal },
-  { name: "Spain", flag: flagSpain },
-  { name: "Belgium", flag: flagBelgium },
-  { name: "Ireland", flag: flagIreland },
-];
-
 const Footer = () => {
+  const { translate } = useLanguage();
+  const navigate = useNavigate();
 
-   useNavigate();
-
+  const countries = [
+    { nameKey: "france", flag: flagFrance },
+    { nameKey: "unitedKingdom", flag: flagUk },
+    { nameKey: "sriLanka", flag: flagSrilanka },
+    { nameKey: "scotland", flag: flagScotland },
+    { nameKey: "germany", flag: flagGermany },
+    { nameKey: "australia", flag: flagAustralia },
+    { nameKey: "unitedArabEmirates", flag: flagUAE },
+    { nameKey: "canada", flag: flagCanada },
+    { nameKey: "finland", flag: flagFinland },
+    { nameKey: "saudiArabia", flag: flagSaudiArabia },
+    { nameKey: "italy", flag: flagItaly },
+    { nameKey: "unitedStates", flag: flagUs },
+    { nameKey: "ireland", flag: flagIreland },
+    { nameKey: "austria", flag: flagAustria },
+    { nameKey: "netherlands", flag: flagNetherlands },
+    { nameKey: "switzerland", flag: flagSwitzerland },
+    { nameKey: "qatar", flag: flagQatar },
+    { nameKey: "denmark", flag: flagDenmark },
+    { nameKey: "newZealand", flag: flagNewZealand },
+    { nameKey: "poland", flag: flagPoland },
+    { nameKey: "luxembourg", flag: flagluxembourg },
+    { nameKey: "portugal", flag: flagPortugal },
+    { nameKey: "spain", flag: flagSpain },
+    { nameKey: "belgium", flag: flagBelgium },
+  ];
 
   return (
     <Box
@@ -99,7 +98,7 @@ const Footer = () => {
           >
             <img
               src={companyLogo}
-              alt="Pearly Sky"
+              alt={translate('companyLogoAlt')}
               style={{
                 width: "200px",
                 marginBottom: "1.5rem",
@@ -114,10 +113,7 @@ const Footer = () => {
                 textAlign: { xs: "center", md: "justify" },
               }}
             >
-              Pearly Sky Cleaning offers professional, eco-friendly cleaning
-              services for homes, offices, and hotels across France. We focus on
-              quality and customer satisfaction, delivering tailored solutions
-              to keep your space spotless.
+              {translate('companyDescription')}
             </Typography>
           </Box>
           
@@ -151,6 +147,7 @@ const Footer = () => {
                   height: 40,
                 }}
                 onClick={() => window.open("https://www.facebook.com/profile.php?id=61561165376278", "_blank")}
+                aria-label={translate('facebookLink')}
               >
                 <FacebookIcon sx={{ fontSize: 20 }} />
               </IconButton>
@@ -167,6 +164,7 @@ const Footer = () => {
                   height: 40,
                 }}
                 onClick={() => window.open("https://www.instagram.com/pearlyskycleaning/?next=%2F", "_blank")}
+                aria-label={translate('instagramLink')}
               >
                 <InstagramIcon sx={{ fontSize: 20 }} />
               </IconButton>
@@ -183,6 +181,7 @@ const Footer = () => {
                   height: 40,
                 }}
                 onClick={() => window.open("https://x.com/PEARLYSKYPVTLTD", "_blank")}
+                aria-label={translate('twitterLink')}
               >
                 <TwitterIcon sx={{ fontSize: 20 }} />
               </IconButton>
@@ -199,6 +198,7 @@ const Footer = () => {
                   height: 40,
                 }}
                 onClick={() => window.open("https://www.youtube.com/@pearlyskycleaningservice", "_blank")}
+                aria-label={translate('youtubeLink')}
               >
                 <YouTubeIcon sx={{ fontSize: 20 }} />
               </IconButton>
@@ -215,10 +215,10 @@ const Footer = () => {
                   height: 40,
                 }}
                 onClick={() => window.open("", "_blank")}
+                aria-label={translate('linkedinLink')}
               >
                 <LinkedInIcon sx={{ fontSize: 20 }} />
               </IconButton>
-              
             </Stack>
 
             <Stack
@@ -230,14 +230,14 @@ const Footer = () => {
               <Box>
                 <img
                   src={footerImage3}
-                  alt="Google Play"
+                  alt={translate('googlePlayAlt')}
                   style={{ height: "40px" }}
                 />
               </Box>
               <Box>
                 <img
                   src={footerImage4}
-                  alt="App Store"
+                  alt={translate('appStoreAlt')}
                   style={{ height: "40px" }}
                 />
               </Box>
@@ -251,7 +251,7 @@ const Footer = () => {
                 width: "100%",
               }}
             >
-              Scan the QR code or visit us at iOS App Store or Google Play Store
+              {translate('downloadAppText')}
             </Typography>
 
             <Stack
@@ -260,56 +260,54 @@ const Footer = () => {
               justifyContent={{ xs: "center", md: "flex-start" }}
               sx={{ width: "100%" }}
             >
-                {/* Contact Now Button */}
-                <Button
-                  variant="outlined"
-                  href="https://wa.me/33635508169"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    color: "white",
-                    borderColor: "white",
-                    borderRadius: "30px",
-                    padding: "0.5rem 0.5rem",
-                    fontSize: "0.7rem",
-                    textTransform: "none",
-                    "&:hover": {
-                      backgroundColor: "white",
-                      color: "#0A285F",
-                    },
-                  }}
-                >
-                  <WhatsAppIcon fontSize="small" />
-                  <span>Whats app</span>
-                </Button>
+              <Button
+                variant="outlined"
+                href="https://wa.me/33635508169"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  color: "white",
+                  borderColor: "white",
+                  borderRadius: "30px",
+                  padding: "0.5rem 0.5rem",
+                  fontSize: "0.7rem",
+                  textTransform: "none",
+                  "&:hover": {
+                    backgroundColor: "white",
+                    color: "#0A285F",
+                  },
+                }}
+              >
+                <WhatsAppIcon fontSize="small" />
+                <span>{translate('whatsappButton')}</span>
+              </Button>
 
-                {/* Hotline Button */}
-                <Button
-                  variant="outlined"
-                  href="tel:phone-number"
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    color: "white",
-                    borderColor: "white",
-                    borderRadius: "30px",
-                    padding: "0.5rem 0.5rem",
-                    fontSize: "0.8rem",
-                    textTransform: "none",
-                    "&:hover": {
-                      backgroundColor: "white",
-                      color: "#0A285F",
-                    },
-                  }}
-                >
-                  <PhoneIcon fontSize="small" />
-                  <span>Hotline. . .</span>
-                </Button>
-              </Stack>
+              <Button
+                variant="outlined"
+                href="tel:phone-number"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  color: "white",
+                  borderColor: "white",
+                  borderRadius: "30px",
+                  padding: "0.5rem 0.5rem",
+                  fontSize: "0.8rem",
+                  textTransform: "none",
+                  "&:hover": {
+                    backgroundColor: "white",
+                    color: "#0A285F",
+                  },
+                }}
+              >
+                <PhoneIcon fontSize="small" />
+                <span>{translate('hotlineButton')}</span>
+              </Button>
+            </Stack>
           </Box>
 
           {/* QR Code */}
@@ -322,7 +320,7 @@ const Footer = () => {
           >
             <img
               src={qrCode}
-              alt="QR Code"
+              alt={translate('qrCodeAlt')}
               style={{ width: "200px", height: "200px" }}
             />
           </Box>
@@ -388,7 +386,7 @@ const Footer = () => {
                 >
                   <img
                     src={country.flag}
-                    alt={country.name}
+                    alt={translate(country.nameKey)}
                     style={{
                       width: "100%",
                       height: "100%",
@@ -406,7 +404,7 @@ const Footer = () => {
                     fontSize: { xs: "0.75rem", md: "0.875rem" },
                   }}
                 >
-                  {country.name}
+                  {translate(country.nameKey)}
                 </Typography>
               </Box>
             ))}
@@ -426,7 +424,7 @@ const Footer = () => {
             fontSize: { xs: "0.75rem", md: "0.875rem" },
           }}
         >
-          Copyright © 2024 pearly sky company pvt ltd. All rights reserved
+          {translate('copyrightText')}
         </Typography>
       </Container>
     </Box>

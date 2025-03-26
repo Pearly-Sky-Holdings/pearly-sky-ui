@@ -6,7 +6,6 @@ import {
   Paper,
   IconButton,
 } from "@mui/material";
-
 import CleaningServiceCard from "../../components/ServiceCard/CleaningServiceCard";
 import {
   chooseClening1,
@@ -18,29 +17,32 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import PinterestIcon from "@mui/icons-material/Pinterest";
-
-const otherServices = [
-  {
-    id: 1,
-    title: "Cleaning Industry Regulation",
-    image: chooseClening1,
-    link: "/cleaning-industry-regulation",
-  },
-  {
-    id: 2,
-    title: "Hygiene in Public Spaces",
-    image: chooseClening2,
-    link: "/hygiene-public-spaces",
-  },
-  {
-    id: 4,
-    title: "Robotics in Cleaning",
-    image: chooseClening4,
-    link: "/robotics-cleaning",
-  },
-];
+import { useLanguage } from "../../context/LanguageContext";
 
 const CleaningHospitality = () => {
+  const { translate } = useLanguage();
+
+  const otherServices = [
+    {
+      id: 1,
+      titleKey: "cleaningIndustryRegulation",
+      image: chooseClening1,
+      link: "/cleaning-industry-regulation",
+    },
+    {
+      id: 2,
+      titleKey: "hygieneInPublicSpaces",
+      image: chooseClening2,
+      link: "/hygiene-public-spaces",
+    },
+    {
+      id: 4,
+      titleKey: "roboticsInCleaning",
+      image: chooseClening4,
+      link: "/robotics-cleaning",
+    },
+  ];
+
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* Main content section with image and text */}
@@ -54,7 +56,7 @@ const CleaningHospitality = () => {
             <Box
               component="img"
               src={readMoreImage3}
-              alt="Cleaning Industry Regulation"
+              alt={translate('cleaningHospitalityImageAlt')}
               sx={{
                 width: "100%",
                 height: "100%",
@@ -68,48 +70,35 @@ const CleaningHospitality = () => {
           {/* Right side - Content */}
           <Grid item xs={12} md={7}>
             <Typography
-              variant="h3" // Increased font size
+              variant="h3"
               component="h1"
               sx={{ color: "#002F6D", fontWeight: "bold", mb: 2 }}
             >
-              Cleaning Hospitality
+              {translate('cleaningHospitalityTitle')}
             </Typography>
 
             <Typography paragraph sx={{ fontSize: "1.1rem" }}>
-              In the hospitality industry, cleanliness is directly linked to
-              guest satisfaction and business reputation. Our specialized
-              cleaning services for hotels, restaurants, and other hospitality
-              venues ensure the highest standards of hygiene while enhancing the
-              guest experience.
+              {translate('cleaningHospitalityIntro')}
             </Typography>
 
             <Typography
               variant="h5"
               sx={{ color: "#002F6D", fontWeight: "bold", mt: 2 }}
             >
-              Guest Room Sanitation
+              {translate('guestRoomSanitationTitle')}
             </Typography>
             <Typography paragraph sx={{ fontSize: "1.1rem" }}>
-              Our comprehensive room cleaning protocols go beyond basic
-              housekeeping. We implement hospital-grade disinfection techniques
-              for all high-touch surfaces, use HEPA-filtered vacuum cleaners for
-              improved air quality, and apply specialized treatments for soft
-              furnishings to ensure a pristine environment for each guest.
+              {translate('guestRoomSanitationContent')}
             </Typography>
 
             <Typography
               variant="h5"
               sx={{ color: "#002F6D", fontWeight: "bold", mt: 2 }}
             >
-              Food Service Area Cleanin
+              {translate('foodServiceAreaTitle')}
             </Typography>
             <Typography paragraph sx={{ fontSize: "1.1rem" }}>
-              Restaurant and kitchen cleanliness is critical for food safety and
-              regulatory compliance. Our teams are trained in food safety
-              protocols and use specialized cleaning agents that are effective
-              yet safe for food preparation areas. We help maintain compliance
-              with health department regulations while ensuring a safe
-              environment for both staff and customers.
+              {translate('foodServiceAreaContent')}
             </Typography>
           </Grid>
         </Grid>
@@ -117,32 +106,27 @@ const CleaningHospitality = () => {
           variant="h5"
           sx={{ color: "#002F6D", fontWeight: "bold", mt: 2 }}
         >
-          Public Area Maintenance
+          {translate('publicAreaMaintenanceTitle')}
         </Typography>
         <Typography paragraph sx={{ fontSize: "1.1rem" }}>
-          Lobbies, corridors, and other public spaces create the first
-          impression for guests. Our specialized cleaning programs for these
-          high-traffic areas include regular maintenance of floors, walls, and
-          fixtures, as well as specialized treatments for carpets, upholstery,
-          and decorative elements to maintain their appearance and extend their
-          lifespan.
+          {translate('publicAreaMaintenanceContent')}
         </Typography>
         {/* Social sharing section */}
         <Box sx={{ display: "flex", alignItems: "center", mt: 4 }}>
           <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-            SHARE ARTICLE :
+            {translate('shareArticle')} :
           </Typography>
           <Box sx={{ display: "flex", gap: 1 }}>
-            <IconButton size="small" sx={{ color: "#1877F2" }}>
+            <IconButton size="small" sx={{ color: "#1877F2" }} aria-label={translate('shareOnFacebook')}>
               <FacebookIcon />
             </IconButton>
-            <IconButton size="small" sx={{ color: "#1DA1F2" }}>
+            <IconButton size="small" sx={{ color: "#1DA1F2" }} aria-label={translate('shareOnTwitter')}>
               <TwitterIcon />
             </IconButton>
-            <IconButton size="small" sx={{ color: "#0A66C2" }}>
+            <IconButton size="small" sx={{ color: "#0A66C2" }} aria-label={translate('shareOnLinkedIn')}>
               <LinkedInIcon />
             </IconButton>
-            <IconButton size="small" sx={{ color: "#E60023" }}>
+            <IconButton size="small" sx={{ color: "#E60023" }} aria-label={translate('shareOnPinterest')}>
               <PinterestIcon />
             </IconButton>
           </Box>
@@ -153,7 +137,12 @@ const CleaningHospitality = () => {
       <Grid container spacing={3} sx={{ mt: 4 }}>
         {otherServices.map((service) => (
           <Grid item xs={12} sm={6} md={4} key={service.id}>
-            <CleaningServiceCard {...service} />
+            <CleaningServiceCard 
+              id={service.id}
+              title={translate(service.titleKey)}
+              image={service.image}
+              link={service.link}
+            />
           </Grid>
         ))}
       </Grid>

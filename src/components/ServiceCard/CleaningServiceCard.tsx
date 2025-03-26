@@ -1,4 +1,5 @@
 import { Card, CardContent, CardMedia, Typography, Box, Link } from "@mui/material";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface CleaningServiceCardProps {
   title: string;
@@ -7,6 +8,9 @@ interface CleaningServiceCardProps {
 }
 
 const CleaningServiceCard = ({ title, image, link }: CleaningServiceCardProps) => {
+const { translate } = useLanguage();
+
+
   return (
     <Card
       sx={{
@@ -75,7 +79,7 @@ const CleaningServiceCard = ({ title, image, link }: CleaningServiceCardProps) =
               },
             }}
           >
-            Read More
+             {translate('readMore')}
           </Link>
         </Box>
       </CardContent>

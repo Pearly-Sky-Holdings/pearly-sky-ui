@@ -13,68 +13,70 @@ import {
   sports,
   residential,
 } from "../../config/images";
-
-const sectors = [
-  {
-    title: "Commercial & Mixed Utilities",
-    description: "Building efficient spaces that power growth and innovation.",
-    image: sectorImage2,
-  },
-  {
-    title: "Sports",
-    description: "Elevating performance and passion through every game.",
-    image: sports,
-  },
-  {
-    title: "Private Properties",
-    description: "Exclusive spaces tailored for comfort and luxury.",
-    image: privateProperties,
-  },
-  {
-    title: "Residential",
-    description: "Creating welcoming and vibrant communities.",
-    image: residential,
-  },
-  {
-    title: "Hotels & Restaurants",
-    description: "Unforgettable stays and dining experiences await.",
-    image: sectorImage3,
-  },
-  {
-    title: "Education",
-    description: "Empowering minds through knowledge and innovation.",
-    image: sectorImage4,
-  },
-  {
-    title: "Healthcare",
-    description: "Transforming healthcare for a healthier tomorrow.",
-    image: healthcare,
-  },
-  {
-    title: "Finance",
-    description: "Unlocking financial growth and security.",
-    image: finance,
-  },
-  {
-    title: "Leisure & Hospitality",
-    description: "Elevating experiences in leisure and hospitality.",
-    image: sectorImage5,
-  },
-  {
-    title: "Elders Home - Care House",
-    description: "Providing compassionate care and a home-like environment to our elders.",
-    image: sectorImage1,
-  },
-  {
-    title: "Retail",
-    description: "Redefining the shopping experience with innovation and convenience.",
-    image: retail,
-  },
-];
+import { useLanguage } from "../../context/LanguageContext";
 
 const OurSector = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { translate } = useLanguage();
+
+  const sectors = [
+    {
+      titleKey: "commercialMixedUtilities",
+      descriptionKey: "commercialMixedUtilitiesDesc",
+      image: sectorImage2,
+    },
+    {
+      titleKey: "sportsSector",
+      descriptionKey: "sportsSectorDesc",
+      image: sports,
+    },
+    {
+      titleKey: "privateProperties",
+      descriptionKey: "privatePropertiesDesc",
+      image: privateProperties,
+    },
+    {
+      titleKey: "residentialSector",
+      descriptionKey: "residentialSectorDesc",
+      image: residential,
+    },
+    {
+      titleKey: "hotelsRestaurants",
+      descriptionKey: "hotelsRestaurantsDesc",
+      image: sectorImage3,
+    },
+    {
+      titleKey: "educationSector",
+      descriptionKey: "educationSectorDesc",
+      image: sectorImage4,
+    },
+    {
+      titleKey: "healthcareSector",
+      descriptionKey: "healthcareSectorDesc",
+      image: healthcare,
+    },
+    {
+      titleKey: "financeSector",
+      descriptionKey: "financeSectorDesc",
+      image: finance,
+    },
+    {
+      titleKey: "leisureHospitality",
+      descriptionKey: "leisureHospitalityDesc",
+      image: sectorImage5,
+    },
+    {
+      titleKey: "eldersHomeCare",
+      descriptionKey: "eldersHomeCareDesc",
+      image: sectorImage1,
+    },
+    {
+      titleKey: "retailSector",
+      descriptionKey: "retailSectorDesc",
+      image: retail,
+    },
+  ];
 
   useEffect(() => {
     const scrollContainer = scrollRef.current;
@@ -109,7 +111,7 @@ const OurSector = () => {
           mb: 4,
         }}
       >
-        Our Sector
+        {translate('ourSectorTitle')}
       </Typography>
       <Box
         ref={scrollRef}
@@ -143,7 +145,7 @@ const OurSector = () => {
                 borderRadius: 6,
                 display: "flex",
                 flexDirection: "column",
-                height: { xs: "350px", sm: "400px", md: "350px" }, // Reduced height
+                height: { xs: "350px", sm: "400px", md: "350px" },
                 boxShadow: "0px 4px 10px rgba(37, 150, 190, 0.5)",
                 transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
                 "&:hover": {
@@ -158,12 +160,12 @@ const OurSector = () => {
                 sx={{
                   borderTopLeftRadius: "130%",
                   borderTopRightRadius: "130%",
-                  height: { xs: "45%", sm: "50%" }, // Reduced image height
+                  height: { xs: "45%", sm: "50%" },
                   objectFit: "cover",
-                  padding: { xs: "0.5vh", sm: "1vh", md: "1vh" }, // Reduced padding
+                  padding: { xs: "0.5vh", sm: "1vh", md: "1vh" },
                 }}
                 image={sector.image}
-                alt={sector.title}
+                alt={translate(sector.titleKey)}
               />
               <CardContent
                 sx={{
@@ -171,7 +173,7 @@ const OurSector = () => {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
-                  padding: { xs: "8px", sm: "8px" }, // Reduced padding
+                  padding: { xs: "8px", sm: "8px" },
                 }}
               >
                 <Typography
@@ -186,20 +188,17 @@ const OurSector = () => {
                     WebkitBoxOrient: "vertical",
                   }}
                 >
-                  
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontWeight: "bold",
-                    color: "#0D47A1",
-                    textAlign: "center",
-                   
-                  }}
-                >
-                  {sector.title}
-                </Typography>
-                  
-                  {sector.description}
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontWeight: "bold",
+                      color: "#0D47A1",
+                      textAlign: "center",
+                    }}
+                  >
+                    {translate(sector.titleKey)}
+                  </Typography>
+                  {translate(sector.descriptionKey)}
                 </Typography>
               </CardContent>
             </Card>

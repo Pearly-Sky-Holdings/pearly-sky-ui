@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Grid, Box, Button } from "@mui/material";
 import ServiceCard from "./ServiceCard";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface Service {
   id: number;
@@ -17,6 +18,7 @@ interface ServiceListProps {
 export default function ServiceList({ services }: ServiceListProps) {
   const [visibleCount, setVisibleCount] = useState(6);
   const maxVisibleCount = services.length;
+  const { translate } = useLanguage();
 
   const handleSeeMore = () => {
     setVisibleCount((prevCount) =>
@@ -46,7 +48,7 @@ export default function ServiceList({ services }: ServiceListProps) {
             textDecoration: "underline"
           }}
         >
-          See More
+          {translate('seeMore')}
         </Button>
       )}
     </Box>

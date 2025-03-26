@@ -15,33 +15,35 @@ import {
   galleryImage13,
 } from "../../config/images";
 import { useState, useEffect } from "react";
-
-const progressData = [
-  { label: "Assessment and Planning", value: 100 },
-  { label: "Execution", value: 95 },
-  { label: "Project Completion", value: 95 },
-];
-
-const images = [
-  galleryImage1,
-  galleryImage2,
-  galleryImage3,
-  galleryImage4,
-  galleryImage5,
-  galleryImage6,
-  galleryImage7,
-  galleryImage8,
-  galleryImage9,
-  galleryImage10,
-  galleryImage11,
-  galleryImage12,
-  galleryImage13,
-];
+import { useLanguage } from "../../context/LanguageContext";
 
 const Gallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { translate } = useLanguage();
+
+  const progressData = [
+    { labelKey: "assessmentPlanning", value: 100 },
+    { labelKey: "execution", value: 95 },
+    { labelKey: "projectCompletion", value: 95 },
+  ];
+
+  const images = [
+    galleryImage1,
+    galleryImage2,
+    galleryImage3,
+    galleryImage4,
+    galleryImage5,
+    galleryImage6,
+    galleryImage7,
+    galleryImage8,
+    galleryImage9,
+    galleryImage10,
+    galleryImage11,
+    galleryImage12,
+    galleryImage13,
+  ];
 
   // Auto-slide functionality
   useEffect(() => {
@@ -72,7 +74,7 @@ const Gallery = () => {
   }
 
   return (
-    <div className=" bg-gray-50 py-12">
+    <div className="bg-gray-50 py-12">
       <div className="max-w-7xl mx-auto px-4">
         {/* Progress Section - Different layouts for mobile, tablet and desktop */}
         {isMobile ? (
@@ -80,7 +82,7 @@ const Gallery = () => {
           <Box display="flex" flexDirection="column" alignItems="center" mb={8}>
             {progressData.map((item) => (
               <Box
-                key={item.label}
+                key={item.labelKey}
                 textAlign="center"
                 mb={2}
                 p={2}
@@ -93,7 +95,7 @@ const Gallery = () => {
                   {item.value}%
                 </Typography>
                 <Typography variant="body2" color="black">
-                  {item.label}
+                  {translate(item.labelKey)}
                 </Typography>
               </Box>
             ))}
@@ -113,12 +115,12 @@ const Gallery = () => {
               boxShadow="0px 4px 10px rgba(37, 150, 190, 0.5)"
             >
               {progressData.map((item) => (
-                <Box key={item.label} textAlign="center">
+                <Box key={item.labelKey} textAlign="center">
                   <Typography variant="h6" color="#008CDA" fontWeight="bold">
                     {item.value}%
                   </Typography>
                   <Typography variant="body2" color="black">
-                    {item.label}
+                    {translate(item.labelKey)}
                   </Typography>
                 </Box>
               ))}
@@ -128,7 +130,7 @@ const Gallery = () => {
 
         {/* Gallery Section */}
         <h2 className="text-2xl font-bold text-[#003370] text-center mb-6">
-          Gallery
+          {translate('galleryTitle')}
         </h2>
 
         <div className="relative">
@@ -138,6 +140,7 @@ const Gallery = () => {
               <div
                 onClick={prevSlide}
                 className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white p-2 rounded-full shadow-lg z-10 hover:bg-gray-100 cursor-pointer"
+                aria-label={translate('previousSlide')}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -157,6 +160,7 @@ const Gallery = () => {
               <div
                 onClick={nextSlide}
                 className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white p-2 rounded-full shadow-lg z-10 hover:bg-gray-100 cursor-pointer"
+                aria-label={translate('nextSlide')}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -191,7 +195,7 @@ const Gallery = () => {
               <div className="aspect-[4/3.6] rounded-lg overflow-hidden">
                 <img
                   src={currentImages[0]}
-                  alt="Gallery"
+                  alt={translate('galleryImageAlt')}
                   className="w-full h-full object-cover transition-transform duration-500"
                 />
               </div>
@@ -217,20 +221,20 @@ const Gallery = () => {
                   <div className="aspect-[4/3] rounded-lg overflow-hidden">
                     <img
                       src={currentImages[1]}
-                      alt="Gallery"
+                      alt={translate('galleryImageAlt')}
                       className="w-full h-full object-cover transition-transform duration-500"
                     />
                   </div>
                   <div className="aspect-[4/3] rounded-lg overflow-hidden">
                     <img
                       src={currentImages[2]}
-                      alt="Gallery"
+                      alt={translate('galleryImageAlt')}
                       className="w-full h-full object-cover transition-transform duration-500"
                     />
                   </div>
                 </div>
 
-                {/* Horizontal Stack - Modified for mobile to use aspect-[4/3] instead of aspect-[7/16] */}
+                {/* Horizontal Stack */}
                 <div
                   className={`${
                     isMobile ? "col-span-1 space-y-4" : "col-span-7 grid grid-cols-2 gap-4"
@@ -241,14 +245,14 @@ const Gallery = () => {
                       <div className="aspect-[4/3] rounded-lg overflow-hidden">
                         <img
                           src={currentImages[3]}
-                          alt="Gallery"
+                          alt={translate('galleryImageAlt')}
                           className="w-full h-full object-cover transition-transform duration-500"
                         />
                       </div>
                       <div className="aspect-[4/3] rounded-lg overflow-hidden">
                         <img
                           src={currentImages[4]}
-                          alt="Gallery"
+                          alt={translate('galleryImageAlt')}
                           className="w-full h-full object-cover transition-transform duration-500"
                         />
                       </div>
@@ -258,14 +262,14 @@ const Gallery = () => {
                       <div className="aspect-[7/16] rounded-lg overflow-hidden">
                         <img
                           src={currentImages[3]}
-                          alt="Gallery"
+                          alt={translate('galleryImageAlt')}
                           className="w-full h-full object-cover transition-transform duration-500"
                         />
                       </div>
                       <div className="aspect-[7/16] rounded-lg overflow-hidden">
                         <img
                           src={currentImages[4]}
-                          alt="Gallery"
+                          alt={translate('galleryImageAlt')}
                           className="w-full h-full object-cover transition-transform duration-500"
                         />
                       </div>
@@ -289,6 +293,7 @@ const Gallery = () => {
                         ? "bg-blue-600 w-4"
                         : "bg-gray-300"
                     }`}
+                    aria-label={`${translate('goToSlide')} ${index + 1}`}
                   />
                 )
               )}
