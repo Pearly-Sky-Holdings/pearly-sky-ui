@@ -19,47 +19,49 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MenuIcon from "@mui/icons-material/Menu";
 import { companyLogo } from "../../config/images";
 import ScrollToTop from "../../components/scrollToTop/ScrollToTop";
+import { useLanguage } from "../../context/LanguageContext";
 
 export default function NavigationBar() {
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
+  const { translate } = useLanguage();
 
   const [servicesAnchorEl, setServicesAnchorEl] = React.useState<HTMLElement | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [servicesOpen, setServicesOpen] = React.useState(false);
 
   const navItems = [
-    { label: "Home", path: "/" },
-    { label: "About Us", path: "/aboutUs" },
-    { label: "Company", path: "https://pearlyskyplc.com" },
-    { label: "Services", path: "/services", isDropdown: true },  
-    { label: "Our Customers", path: "/customer_page" }, 
-    { label: "Careers", path: "/career" },     
-    { label: "Our Locations", path: "/our-locations" },    
-    { label: "Contact Us", path: "/contactUsPage" },
+    { labelKey: "home", path: "/" },
+    { labelKey: "aboutUs", path: "/aboutUs" },
+    { labelKey: "company", path: "https://pearlyskyplc.com" },
+    { labelKey: "services", path: "/services", isDropdown: true },  
+    { labelKey: "ourCustomers", path: "/customer_page" }, 
+    { labelKey: "career", path: "/career" },     
+    { labelKey: "ourLocations", path: "/our-locations" },    
+    { labelKey: "contactUs", path: "/contactUsPage" },
   ];
 
   const serviceDropdownItems = [
-    { label: "Regular Basic Cleaning", path: "/regular-basic-cleaning" },
-    { label: "One Time Cleaning", path: "/one-time-cleaning" },
-    { label: "Last Minute Cleaning", path: "/last-minute-cleaning" },
-    { label: "Deep Cleaning", path: "/deep_cleaning" },
-    { label: "Move In/Out Cleaning", path: "/move_in_out_cleaning" },
-    { label: "Post Construction & Renovation Cleaning", path: "/post_constructor_cleaning" },
-    { label: "Airbnb And Short Term Rental Cleaning", path: "/airbnb_and_short_service" },
-    { label: "Child Care Cleaning", path: "/child_care_cleaning" },
-    { label: "Elder's Care Cleaning", path: "/elder_care_cleaning" },
-
-    { label: "Sanitization & Disinfection", path: "/sanitization_cleaning" },
-    { label: "Commercial & Office Cleaning", path: "/commercial_cleaning" },
-    { label: "Carpet & Upholstery Cleaning", path: "/carpet_cleaning" },
-    { label: "Move In/Out Transport Service", path: "/move_in_out_and_transport_cleaning" },
-    { label: "Steam Cleaning", path: "/steam_cleaning" },
-    { label: "Pressure Washing", path: "/pressure_washing",},
-    { label: "Event Cleaning", path: "/special_event_cleaning" },
-    { label: "Pool cleaning", path: "/pool_cleaning" },
-    { label: "Laundry Services", path: "/upcomming" },
+    { labelKey: "nregularBasicCleaning", path: "/regular-basic-cleaning" },
+    { labelKey: "noneTimeCleaning", path: "/one-time-cleaning" },
+    { labelKey: "nlastMinuteCleaning", path: "/last-minute-cleaning" },
+    { labelKey: "ndeepCleaning", path: "/deep_cleaning" },
+    { labelKey: "nmoveInOutCleaning", path: "/move_in_out_cleaning" },
+    { labelKey: "npostConstructionCleaning", path: "/post_constructor_cleaning" },
+    { labelKey: "nairbnbCleaning", path: "/airbnb_and_short_service" },
+    { labelKey: "nchildCareCleaning", path: "/child_care_cleaning" },
+    { labelKey: "nelderCareCleaning", path: "/elder_care_cleaning" },
+    { labelKey: "nsanitizationDisinfection", path: "/sanitization_cleaning" },
+    { labelKey: "ncommercialOfficeCleaning", path: "/commercial_cleaning" },
+    { labelKey: "ncarpetCleaning", path: "/carpet_cleaning" },
+    { labelKey: "nmoveInOutTransportService", path: "/move_in_out_and_transport_cleaning" },
+    { labelKey: "nsteamCleaning", path: "/steam_cleaning" },
+    { labelKey: "npressureWashing", path: "/pressure_washing" },
+    { labelKey: "neventCleaning", path: "/special_event_cleaning" },
+    { labelKey: "npoolCleaning", path: "/pool_cleaning" },
+    { labelKey: "nlaundryServices", path: "/upcomming" },
   ];
 
   const handleServicesClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -78,8 +80,6 @@ export default function NavigationBar() {
     navigate(path);
     handleCloseDropdowns();
   };
-
-  const [servicesOpen, setServicesOpen] = React.useState(false);
 
   const toggleServicesDropdown = () => {
     setServicesOpen(!servicesOpen);
@@ -101,32 +101,32 @@ export default function NavigationBar() {
       <List>
         {navItems.map((item) => (
           item.isDropdown ? (
-            <React.Fragment key={item.label}>
+            <React.Fragment key={item.labelKey}>
               <ListItem
-          component="div"
-          onClick={toggleServicesDropdown}
-          sx={{
-            color: "white",
-            display: "flex",
-            justifyContent: "space-between",
-            cursor: "pointer",
-            padding: "10px 16px",
-          }}
-        >
-          <ListItemText primary="Services" />
-          <KeyboardArrowDownIcon
-            sx={{
-              transform: servicesOpen ? "rotate(180deg)" : "rotate(0deg)",
-              transition: "transform 0.3s",
-            }}
-          />
-        </ListItem>
+                component="div"
+                onClick={toggleServicesDropdown}
+                sx={{
+                  color: "white",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  cursor: "pointer",
+                  padding: "10px 16px",
+                }}
+              >
+                <ListItemText primary={translate('services')} />
+                <KeyboardArrowDownIcon
+                  sx={{
+                    transform: servicesOpen ? "rotate(180deg)" : "rotate(0deg)",
+                    transition: "transform 0.3s",
+                  }}
+                />
+              </ListItem>
 
               {servicesOpen && (
                 <List sx={{ pl: 4, backgroundColor: "#003366" }}>
                   {serviceDropdownItems.map((subItem) => (
                     <ListItem
-                      key={subItem.label}
+                      key={subItem.labelKey}
                       component={Link}
                       to={subItem.path}
                       onClick={toggleMobileMenu}
@@ -137,7 +137,7 @@ export default function NavigationBar() {
                         },
                       }}
                     >
-                      <ListItemText primary={subItem.label} />
+                      <ListItemText primary={translate(subItem.labelKey)} />
                     </ListItem>
                   ))}
                 </List>
@@ -145,7 +145,7 @@ export default function NavigationBar() {
             </React.Fragment>
           ) : (
             <ListItem
-              key={item.label}
+              key={item.labelKey}
               component={Link}
               to={item.path}
               onClick={toggleMobileMenu}
@@ -156,14 +156,13 @@ export default function NavigationBar() {
                 },
               }}
             >
-              <ListItemText primary={item.label} />
+              <ListItemText primary={translate(item.labelKey)} />
             </ListItem>
           )
         ))}
       </List>
     </Drawer>
   );
-  
 
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "#002F6D", width: "100%", left: 0, top: 0 }}>
@@ -171,7 +170,7 @@ export default function NavigationBar() {
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-            <img src={companyLogo} alt="logo" style={{ width: isMobile ? "30%" : "40%" }} />
+            <img src={companyLogo} alt={translate('companyLogoAlt')} style={{ width: isMobile ? "30%" : "40%" }} />
           </Link>
         </Box>
         {isMobile ? (
@@ -180,8 +179,8 @@ export default function NavigationBar() {
           </IconButton>
         ) : (
           <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
-            {navItems.map(({ label, path, isDropdown }) => (
-              <Box key={label} sx={{ display: "flex", alignItems: "center" }}>
+            {navItems.map(({ labelKey, path, isDropdown }) => (
+              <Box key={labelKey} sx={{ display: "flex", alignItems: "center" }}>
                 {isDropdown ? (
                   <>
                     <IconButton
@@ -193,7 +192,7 @@ export default function NavigationBar() {
                         transition: "border-bottom 0.3s",
                       }}
                     >
-                      <Typography>{label}</Typography>
+                      <Typography>{translate(labelKey)}</Typography>
                       <KeyboardArrowDownIcon
                         sx={{
                           color: "white",
@@ -213,8 +212,8 @@ export default function NavigationBar() {
                       sx={{ "& .MuiPaper-root": { marginTop: "8px" } }}
                     >
                       {serviceDropdownItems.map((subItem) => (
-                        <MenuItem key={subItem.label} onClick={() => handleMenuItemClick(subItem.path)}>
-                          <Typography>{subItem.label}</Typography>
+                        <MenuItem key={subItem.labelKey} onClick={() => handleMenuItemClick(subItem.path)}>
+                          <Typography>{translate(subItem.labelKey)}</Typography>
                         </MenuItem>
                       ))}
                     </Menu>
@@ -231,7 +230,7 @@ export default function NavigationBar() {
                       transition: "border-bottom 0.3s",
                     }}
                   >
-                    <Typography>{label}</Typography>
+                    <Typography>{translate(labelKey)}</Typography>
                   </Link>
                 )}
               </Box>
@@ -242,4 +241,4 @@ export default function NavigationBar() {
       </Toolbar>
     </AppBar>
   );
-} 
+}

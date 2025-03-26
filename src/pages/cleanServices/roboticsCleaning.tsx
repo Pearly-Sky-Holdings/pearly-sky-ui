@@ -6,7 +6,6 @@ import {
   Paper,
   IconButton,
 } from "@mui/material";
-
 import CleaningServiceCard from "../../components/ServiceCard/CleaningServiceCard";
 import {
   chooseClening1,
@@ -18,29 +17,32 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import PinterestIcon from "@mui/icons-material/Pinterest";
-
-const otherServices = [
-  {
-    id: 1,
-    title: "Cleaning Industry Regulation",
-    image: chooseClening1,
-    link: "/cleaning-industry-regulation",
-  },
-  {
-    id: 2,
-    title: "Hygiene in Public Spaces",
-    image: chooseClening2,
-    link: "/hygiene-public-spaces",
-  },
-  {
-    id: 3,
-    title: "Cleaning Hospitality",
-    image: chooseClening3,
-    link: "/cleaning-hospitality",
-  },
-];
+import { useLanguage } from "../../context/LanguageContext";
 
 const RoboticsCleaning = () => {
+  const { translate } = useLanguage();
+
+  const otherServices = [
+    {
+      id: 1,
+      titleKey: "cleaningIndustryRegulation",
+      image: chooseClening1,
+      link: "/cleaning-industry-regulation",
+    },
+    {
+      id: 2,
+      titleKey: "hygieneInPublicSpaces",
+      image: chooseClening2,
+      link: "/hygiene-public-spaces",
+    },
+    {
+      id: 3,
+      titleKey: "cleaningHospitality",
+      image: chooseClening3,
+      link: "/cleaning-hospitality",
+    },
+  ];
+
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       {/* Main content section with image and text */}
@@ -54,7 +56,7 @@ const RoboticsCleaning = () => {
             <Box
               component="img"
               src={readMoreImage4}
-              alt="Cleaning Industry Regulation"
+              alt={translate('roboticsCleaningImageAlt')}
               sx={{
                 width: "100%",
                 height: "100%",
@@ -68,34 +70,25 @@ const RoboticsCleaning = () => {
           {/* Right side - Content */}
           <Grid item xs={12} md={7}>
             <Typography
-              variant="h3" // Increased font size
+              variant="h3"
               component="h1"
               sx={{ color: "#002F6D", fontWeight: "bold", mb: 2 }}
             >
-              Robotics in Cleaning
+              {translate('roboticsCleaningTitle')}
             </Typography>
 
             <Typography paragraph sx={{ fontSize: "1.1rem" }}>
-              The integration of robotics and automation in the cleaning
-              industry is revolutionizing how cleaning tasks are performed. Our
-              cutting-edge robotic cleaning solutions offer increased
-              efficiency, consistency, and cost-effectiveness while reducing
-              human exposure to hazardous environments.
+              {translate('roboticsCleaningIntro')}
             </Typography>
 
             <Typography
               variant="h5"
               sx={{ color: "#002F6D", fontWeight: "bold", mt: 2 }}
             >
-              UV Disinfection Robots
+              {translate('uvDisinfectionTitle')}
             </Typography>
             <Typography paragraph sx={{ fontSize: "1.1rem" }}>
-              Our UV-C disinfection robots provide hospital-grade sanitization
-              without chemicals. These autonomous units emit powerful
-              ultraviolet light that destroys the DNA of pathogens, including
-              bacteria, viruses, and other microorganisms, making them ideal for
-              healthcare facilities, schools, and other environments where
-              thorough disinfection is critical.
+              {translate('uvDisinfectionContent')}
             </Typography>
           </Grid>
         </Grid>
@@ -103,32 +96,27 @@ const RoboticsCleaning = () => {
           variant="h5"
           sx={{ color: "#002F6D", fontWeight: "bold", mt: 2 }}
         >
-          Data-Driven Cleaning
+          {translate('dataDrivenTitle')}
         </Typography>
         <Typography paragraph sx={{ fontSize: "1.1rem" }}>
-          Our robotic cleaning solutions are equipped with advanced analytics
-          capabilities that track cleaning performance, identify high-traffic
-          areas requiring additional attention, and optimize cleaning schedules
-          based on usage patterns. This data-driven approach ensures resources
-          are allocated efficiently while maintaining the highest standards of
-          cleanliness.
+          {translate('dataDrivenContent')}
         </Typography>
         {/* Social sharing section */}
         <Box sx={{ display: "flex", alignItems: "center", mt: 4 }}>
           <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-            SHARE ARTICLE :
+            {translate('shareArticle')} :
           </Typography>
           <Box sx={{ display: "flex", gap: 1 }}>
-            <IconButton size="small" sx={{ color: "#1877F2" }}>
+            <IconButton size="small" sx={{ color: "#1877F2" }} aria-label={translate('shareOnFacebook')}>
               <FacebookIcon />
             </IconButton>
-            <IconButton size="small" sx={{ color: "#1DA1F2" }}>
+            <IconButton size="small" sx={{ color: "#1DA1F2" }} aria-label={translate('shareOnTwitter')}>
               <TwitterIcon />
             </IconButton>
-            <IconButton size="small" sx={{ color: "#0A66C2" }}>
+            <IconButton size="small" sx={{ color: "#0A66C2" }} aria-label={translate('shareOnLinkedIn')}>
               <LinkedInIcon />
             </IconButton>
-            <IconButton size="small" sx={{ color: "#E60023" }}>
+            <IconButton size="small" sx={{ color: "#E60023" }} aria-label={translate('shareOnPinterest')}>
               <PinterestIcon />
             </IconButton>
           </Box>
@@ -139,7 +127,12 @@ const RoboticsCleaning = () => {
       <Grid container spacing={3} sx={{ mt: 4 }}>
         {otherServices.map((service) => (
           <Grid item xs={12} sm={6} md={4} key={service.id}>
-            <CleaningServiceCard {...service} />
+            <CleaningServiceCard 
+              id={service.id}
+              title={translate(service.titleKey)}
+              image={service.image}
+              link={service.link}
+            />
           </Grid>
         ))}
       </Grid>

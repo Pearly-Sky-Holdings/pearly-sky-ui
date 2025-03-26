@@ -1,5 +1,6 @@
 import { Card, CardContent, CardMedia, Typography, Button, Box } from "@mui/material";
 import { Link } from 'react-router-dom';
+import { useLanguage } from "../../context/LanguageContext";
 
 interface Service {
   image: string;
@@ -9,6 +10,8 @@ interface Service {
 }
 
 export default function ServiceCard({ service }: Readonly<{ service: Service }>) {
+  const { translate } = useLanguage();
+
   return (
     <Card
       sx={{
@@ -58,7 +61,7 @@ export default function ServiceCard({ service }: Readonly<{ service: Service }>)
             "&:hover": { backgroundColor: "#008CDA" },
           }}
         >
-          Book Now
+          {translate('bookNow')}
         </Button>
       </Box>
     </Card>

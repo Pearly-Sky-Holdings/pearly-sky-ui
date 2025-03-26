@@ -2,6 +2,11 @@ import React from "react";
 import { Box, Typography, Card, CardContent, Grid , List, ListItem,  ListItemText } from "@mui/material";
 import { aboutUs1, aboutUs2 } from "../../config/images";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
+import {
+  aboutUs,
+  aboutUs3,
+  whyChooseUs
+} from "../../config/images";
 
 const AboutUsPage: React.FC = () => {
   return (
@@ -29,7 +34,9 @@ const AboutUsPage: React.FC = () => {
         <Grid item xs={12} md={6}>
             <Box display="flex" justifyContent="center">
               <img
-                src="/images/aboutUsPage/aboutUs.png" //  image path
+
+                src={aboutUs} //  image path
+
                 alt="Cleaning Services"
                 style={{ maxWidth: "100%", borderRadius: "10px" }}
               />
@@ -67,7 +74,8 @@ const AboutUsPage: React.FC = () => {
           <Grid item xs={12} md={6}>
             <Box display="flex" justifyContent="center">
               <img
-                src="/images/aboutUsPage/ourStory.png" //  image path
+                src={aboutUs3} //  image path
+
                 alt="Our Story"
                 style={{ maxWidth: "100%", borderRadius: "10px" }}
               />
@@ -105,13 +113,14 @@ const AboutUsPage: React.FC = () => {
       {/* List */}
       <Grid container spacing={3} justifyContent="center">
       <Grid item xs={12} md={6}>
-        <Box display="flex" justifyContent="center">
-          <img
-            src="/images/aboutUsPage/whyChooseUs.png" //  image path
-            alt="Our Story"
-            style={{ maxWidth: "100%", borderRadius: "10px" }}
-          />
-        </Box>
+            <Box display="flex" justifyContent="center">
+              <img
+                src={whyChooseUs} //  image path
+                alt="Our Story"
+                style={{ maxWidth: "100%", borderRadius: "10px" }}
+              />
+            </Box>
+
       </Grid>        
              
       <Grid item xs={12} md={6} >
