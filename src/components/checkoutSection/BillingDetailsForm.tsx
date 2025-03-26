@@ -182,7 +182,7 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@(gmail\.com|[^\s@]+\.(com|org|net|edu|co\.uk))$/i;
     return emailRegex.test(email);
   };
 
