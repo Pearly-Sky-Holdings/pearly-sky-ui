@@ -138,11 +138,11 @@ const CheckoutPage = () => {
         state: { showSuccessPopup: true },
       });
     } else if (data.serviceName == "Move In/Out Cleaning") {
-      navigate("/move-in-out-cleaning", {
+      navigate("/move_in_out_cleaning", {
         state: { showSuccessPopup: true },
       });
     } else if (data.serviceName == "Post Construction") {
-      navigate("/post-construction-cleaning", {
+      navigate("/post_constructor_cleaning", {
         state: { showSuccessPopup: true },
       });
     } else if (

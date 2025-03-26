@@ -426,7 +426,7 @@ const Footer = () => {
             fontSize: { xs: "0.75rem", md: "0.875rem" },
           }}
         >
-          Copyright © 2024 pearly sky company pvt ltd. All rights reserved
+          Copyright © 2024 Pearly Sky Company Private Limited. All Rights Reserved.
         </Typography>
       </Container>
     </Box>
