@@ -15,11 +15,11 @@ interface Country {
 
 const countries: Country[] = [
   { code: "us", nameKey: "unitedStates" },
-  { code: "gb", nameKey: "unitedKingdom" },
+  // { code: "gb", nameKey: "unitedKingdom" },
   { code: "fr", nameKey: "france" },
-  { code: "de", nameKey: "germany" },
-  { code: "jp", nameKey: "japan" },
-  { code: "lk", nameKey: "sriLanka" },
+  // { code: "de", nameKey: "germany" },
+  // { code: "jp", nameKey: "japan" },
+  // { code: "lk", nameKey: "sriLanka" },
 ];
 
 export default function TopBar() {
