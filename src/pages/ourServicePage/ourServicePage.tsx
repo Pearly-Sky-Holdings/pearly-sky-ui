@@ -178,7 +178,7 @@ export default function ServicesPage() {
       </Typography>
       <ServiceList services={rawServices.map(service => ({
         ...service,
-        title: service.title || translate(service.titleKey || ''),
+        title: translate(service.titleKey || ''),
         description: translate(service.descriptionKey),
       }))} />
     </Box>

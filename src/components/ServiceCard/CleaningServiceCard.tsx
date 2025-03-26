@@ -2,6 +2,7 @@ import { Card, CardContent, CardMedia, Typography, Box, Link } from "@mui/materi
 import { useLanguage } from "../../context/LanguageContext";
 
 interface CleaningServiceCardProps {
+  id?: number;
   title: string;
   image: string;
   link: string;

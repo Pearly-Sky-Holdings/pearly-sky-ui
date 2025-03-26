@@ -43,7 +43,7 @@ import {
 
 const Footer = () => {
   const { translate } = useLanguage();
-  const navigate = useNavigate();
+  useNavigate();
 
   const countries = [
     { nameKey: "france", flag: flagFrance },
