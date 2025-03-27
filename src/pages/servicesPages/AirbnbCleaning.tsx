@@ -410,9 +410,7 @@ function AirbnbAndShortService() {
                     </label>
                   ))}
                 </div>
-                <div className="mt-9 text-blue-950">
-                  <h1>Refill costs will be added up in the final payment</h1>
-                </div>
+                
               </div>
 
               {/* Bedrooms Column */}
@@ -520,6 +518,9 @@ function AirbnbAndShortService() {
               {items?.errorMessage || "Failed to load items."}
             </div>
           )}
+        </div>
+        <div className="mt-9 text-blue-950">
+        <h1>Refill costs will be added up in the final payment</h1>
         </div>
       </div>
 
