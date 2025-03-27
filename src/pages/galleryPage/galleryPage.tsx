@@ -13,6 +13,8 @@ import {
   galleryImage11,
   galleryImage12,
   galleryImage13,
+  galleryImage14,
+  galleryImage15
 } from "../../config/images";
 import { useState, useEffect } from "react";
 import { useLanguage } from "../../context/LanguageContext";
@@ -43,6 +45,8 @@ const Gallery = () => {
     galleryImage11,
     galleryImage12,
     galleryImage13,
+    galleryImage14,
+    galleryImage15
   ];
 
   // Auto-slide functionality
