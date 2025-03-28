@@ -10,6 +10,7 @@ import "./CustomCalendar.css";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
 import { getServices } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
+import { useLanguage } from "../../context/LanguageContext";
 
 import {
   elderCareVideo,
@@ -22,16 +23,17 @@ import Carousel2 from "../../components/carouselSection2/carousel2";
 import TermsAndConditionsChild from "../../components/termsAndConditions/termAndConditionsChild";
 import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
 
-
 interface ChildInfo {
   age: string;
   gender: string;
   name: string;
 }
+
 function ElderCareCleaningPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const services = useSelector((state: any) => state.servicesSlice.service);
+  const { translate } = useLanguage();
   const [showTermsCard, setShowTermsCard] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedTime, setSelectedTime] = useState("");
@@ -76,16 +78,14 @@ function ElderCareCleaningPage() {
   };
 
   const calculateTotalPrice = () => {
-    const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
-    const basePrice = hourlyRate * parseFloat(duration) * (parseInt(numProfession) || 1); // Base price in USD
-
-    // Calculate total price in the user's selected currency
+    const hourlyRate = parseInt(services.data.price, 10);
+    const basePrice = hourlyRate * parseFloat(duration) * (parseInt(numProfession) || 1);
     const totalPriceInSelectedCurrency = basePrice * conversionRate;
 
     return {
       hourlyRate,
-      totalPrice: totalPriceInSelectedCurrency, // Total price in the selected currency
-      basePrice: basePrice * conversionRate, // Base price in the selected currency
+      totalPrice: totalPriceInSelectedCurrency,
+      basePrice: basePrice * conversionRate,
     };
   };
 
@@ -94,7 +94,7 @@ function ElderCareCleaningPage() {
       setChangeValue(false);
       setPriceBreakdown(calculateTotalPrice());
     }
-  }, [conversionRate, duration, numProfession]); // Add numProfession as a dependency
+  }, [conversionRate, duration, numProfession]);
 
   useEffect(() => {
     dispatch(getServices("9"));
@@ -112,7 +112,7 @@ function ElderCareCleaningPage() {
       !numChild ||
       !specialRequest
     ) {
-      alert("Please fill all required fields before proceeding to checkout.");
+      alert(translate('fillAllFieldsAlert'));
       return;
     }
 
@@ -120,7 +120,7 @@ function ElderCareCleaningPage() {
       (child) => !child.age || !child.gender || !child.name
     );
     if (parseInt(numChild) > 0 && incompleteChildInfo) {
-      alert("Please fill in all child information (age, gender, name) for each child.");
+      alert(translate('fillChildInfoAlert'));
       return;
     }
     
@@ -163,7 +163,7 @@ function ElderCareCleaningPage() {
         <div className="w-full lg:w-5/3">
           <img
             src={elderCareImage1}
-            alt="Cleaning Service"
+            alt={translate('elderCareImageAlt')}
             className="rounded-lg w-full h-auto"
           />
         </div>
@@ -181,32 +181,17 @@ function ElderCareCleaningPage() {
             </div>
           </div>
           <p className="text-gray-600 mb-4 text-sm sm:text-base">
-            Child Care Services provide a safe, nurturing, and enriching
-            environment for children, ensuring their well-being and development.
-            Whether at home or on the go, caregivers offer personalized support
-            to meet each child’s needs with care and attention. 
+            {translate('elderCareDescription')}
           </p>
           <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
-            <li>
-              Supervising and engaging children in educational and recreational
-              activities
-            </li>
-            <li>
-              Assisting with homework while fostering creativity and learning
-            </li>
-            <li>
-              Preparing nutritious meals and ensuring hygiene through bathing,
-              dressing, and diaper changes
-            </li>
-            <li>Light housekeeping and maintaining a clean, organized space</li>
-            <li>
-              Providing transportation for school, appointments, and outings
-            </li>
+            <li>{translate('elderCareBenefit1')}</li>
+            <li>{translate('elderCareBenefit2')}</li>
+            <li>{translate('elderCareBenefit3')}</li>
+            <li>{translate('elderCareBenefit4')}</li>
+            <li>{translate('elderCareBenefit5')}</li>
           </ul>
           <p className="text-gray-600 text-sm sm:text-base">
-            By combining attentive care with structured routines, these services
-            promote a balanced, stimulating, and supportive atmosphere where
-            children can thrive emotionally, socially, and academically.
+            {translate('elderCareConclusion')}
           </p>
         </div>
       </div>
@@ -228,7 +213,7 @@ function ElderCareCleaningPage() {
       {/* Booking Section */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8">
         <h2 className="text-2xl font-bold text-blue-900 mb-6">
-          Select Suitable Date and Time to Complete Booking
+          {translate('selectDateTimeTitle')}
         </h2>
 
         <div className="mb-6 shadow-lg p-4 sm:p-6 rounded-lg border border-blue-400">
@@ -236,7 +221,7 @@ function ElderCareCleaningPage() {
             {/* Calendar Section */}
             <div className="flex flex-col">
               <label className="block mb-2 text-blue-900 font-semibold">
-                Select Date
+                {translate('selectDateLabel')}
               </label>
               <div className="calendar-container p-4 rounded-lg">
                 <Calendar
@@ -274,7 +259,7 @@ function ElderCareCleaningPage() {
             setDuration={(val) => {
               setChangeValue(true);
               setDuration(val);
-            } }
+            }}
             frequency={frequency}
             setFrequency={setFrequency}
             numChild={numChild}
@@ -283,7 +268,7 @@ function ElderCareCleaningPage() {
             setNumProfession={(val) => {
               setChangeValue(true);
               setNumProfession(val);
-            } }
+            }}
             profession={profession}
             setProfession={setProfession}
             contactType={contactType}
@@ -297,14 +282,14 @@ function ElderCareCleaningPage() {
             pageType={"elder"}
             childInfo={childInfo}
             setChildInfo={setChildInfo}
-            />
+          />
         </div>
 
         {/* File Upload and Additional Note */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
             <label className="block mb-2 text-black">
-              Upload Images or Documents
+              {translate('uploadFilesLabel')}
             </label>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center min-h-[150px] flex items-center justify-center">
               <div>
@@ -315,10 +300,10 @@ function ElderCareCleaningPage() {
                 >
                   <div className="flex flex-col items-center space-y-2">
                     <span className="text-sm">
-                      Click to upload or drag and drop
+                      {translate('uploadInstructions')}
                     </span>
                     <span className="text-xs text-gray-500">
-                      Maximum file size: 10MB
+                      {translate('maxFileSize')}
                     </span>
                   </div>
                 </label>
@@ -327,10 +312,12 @@ function ElderCareCleaningPage() {
           </div>
 
           <div>
-            <label className="block mb-2 text-black">Additional Note</label>
+            <label className="block mb-2 text-black">
+              {translate('additionalNoteLabel')}
+            </label>
             <textarea
               className="w-full min-h-[150px] border border-blue-900 rounded p-2 text-gray-700 resize-none"
-              placeholder="Type your note here..."
+              placeholder={translate('additionalNotePlaceholder')}
             ></textarea>
           </div>
 
@@ -347,7 +334,7 @@ function ElderCareCleaningPage() {
                 }}
               />
               <span className="text-sm">
-                By selecting this I accept terms and conditions
+                {translate('acceptTermsLabel')}
               </span>
             </label>
           </div>
@@ -366,7 +353,7 @@ function ElderCareCleaningPage() {
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              Base Cost{" "}
+              {translate('baseCostLabel')}{" "}
               <span className="text-gray-400">
                 ({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})
               </span>
@@ -379,7 +366,7 @@ function ElderCareCleaningPage() {
 
           {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
-            <span>Total</span>
+            <span>{translate('totalLabel')}</span>
             <span>
               {currencySymbol}
               {priceBreakdown.totalPrice.toFixed(2)}
@@ -394,7 +381,7 @@ function ElderCareCleaningPage() {
           onClick={handleBookNow}
           style={{ backgroundColor: "#1c398e" }}
         >
-          Book Now
+          {translate('bookNow')}
         </button>
       </div>
 

@@ -9,30 +9,36 @@ import {
   FormControlLabel,
   Grid,
 } from "@mui/material";
+import { useLanguage } from "../../context/LanguageContext";
 
-const paymentMethods = [
-  {
-    id: "stripe",
-    name: "Stripe Payment",
-    img: "./images/paymentMethods/visaMaster.png",
-  },
-  // { id: "eps", name: "EPS", img: "./images/paymentMethods/eps.png" },
-  // {
-  //   id: "bancontact",
-  //   name: "Bancontact",
-  //   img: "./images/paymentMethods/bancontact.png",
-  // },
-  // { id: "ideal", name: "iDEAL", img: "./images/paymentMethods/ideal.png" },
-  { id: "paypal", name: "PayPal", img: "./images/paymentMethods/paypal.png" },
-  { id: "card", name: "Card Payment", img: "./images/paymentMethods/visaMaster.png" },
-  { id: "cash", name: "Cash", img: "./images/paymentMethods/visaMaster.png" },
-];
-interface PaymentMethodComponentProps {
+const PaymentMethodComponent: React.FC<{
   onPaymentMethodChange: (method: string) => void;
-}
-
-const PaymentMethodComponent: React.FC<PaymentMethodComponentProps> = ({onPaymentMethodChange}) => {
+}> = ({ onPaymentMethodChange }) => {
+  const { translate } = useLanguage();
   const [selectedMethod, setSelectedMethod] = useState("card");
+
+  const paymentMethods = [
+    {
+      id: "stripe",
+      name: translate('stripePayment'),
+      img: "./images/paymentMethods/visaMaster.png",
+    },
+    { 
+      id: "paypal", 
+      name: translate('paypal'), 
+      img: "./images/paymentMethods/paypal.png" 
+    },
+    { 
+      id: "card", 
+      name: translate('cardPayment'), 
+      img: "./images/paymentMethods/visaMaster.png" 
+    },
+    { 
+      id: "cash", 
+      name: translate('cash'), 
+      img: "./images/paymentMethods/visaMaster.png" 
+    },
+  ];
 
   const handleMethodChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const method = event.target.value;
@@ -58,16 +64,12 @@ const PaymentMethodComponent: React.FC<PaymentMethodComponentProps> = ({onPaymen
           fontWeight="bold"
           sx={{ color: "#002F6D", marginBottom: "16px" }}
         >
-          Payment Method
+          {translate('paymentMethod')}
         </Typography>
         <RadioGroup value={selectedMethod} onChange={handleMethodChange}>
           {paymentMethods.map((method) => (
             <Box key={method.id} style={{ padding: "1px 0" }}>
-              <Grid
-                container
-                alignItems="center"
-                justifyContent="space-between"
-              >
+              <Grid container alignItems="center" justifyContent="space-between">
                 <Grid item display="flex" alignItems="center">
                   <Typography style={{ marginRight: "10px" }}>
                     {method.name}
@@ -88,9 +90,7 @@ const PaymentMethodComponent: React.FC<PaymentMethodComponentProps> = ({onPaymen
               </Grid>
             </Box>
           ))}
-          
         </RadioGroup>
-        
       </CardContent>
     </Card>
   );

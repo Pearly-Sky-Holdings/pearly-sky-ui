@@ -14,19 +14,21 @@ import PaymentSupportSection from "../../components/paymentSupportSection/paymen
 import { getPackege, getServices } from "../../services/CleaningServices/index";
 import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
 import dayjs from "dayjs";
-
 import { MoveInAndOutService1 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
 import QuantityControl from "../../components/QuantityControl/quantityControl";
 import Dropdown from "../../components/dropDown/dropDown";
+import { useLanguage } from "../../context/LanguageContext";
 
 type Equipment = {
   id: string;
   price: number;
   name?: string;
 };
+
 function MoveInOutCleaningPage() {
+  const { translate } = useLanguage();
   type selectService = {
     package_id: number;
     price: number;
@@ -57,13 +59,11 @@ function MoveInOutCleaningPage() {
     Array<{ id: string; price: number }>
   >([]);
   const [checkedList, setCheckedList] = useState<String[]>([]);
-
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const [currencySymbol, setCurrencySymbol] = useState("$");
   const [conversionRate, setConversionRate] = useState(1);
   const [maxTime, setMaxTime] = useState<number>(1);
   const [conversionRateBaseEur, setConversionRateBaseEur] = useState(1);
-
   const [changeValue, setChangeValue] = useState<boolean>(false);
   const [count, setCount] = useState(0);
 
@@ -74,6 +74,11 @@ function MoveInOutCleaningPage() {
     totalPrice: 32,
     basePrice: 32,
   });
+
+  const frequencyOptions = [
+    { value: "move in/out", label: translate('moveInOutOption') },
+    { value: "other", label: translate('other') },
+  ];
 
   const handleCurrencyUpdate = (
     currency: string,
@@ -102,24 +107,22 @@ function MoveInOutCleaningPage() {
     dispatch(getPackege("5"));
     dispatch(getServices("5"));
   }, []);
+
   const calculateTotalPrice = () => {
-    const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
-    const basePrice = hourlyRate * maxTime; // Base price in USD
+    const hourlyRate = parseInt(services.data.price, 10);
+    const basePrice = hourlyRate * maxTime;
 
     let serviceCosts = 0;
     let equipmentCosts = 0;
 
-    // Calculate service costs in USD
     selectedServices.forEach((service) => {
       serviceCosts += service.price * (service.qty || 1) * conversionRate;
     });
 
-    // Calculate equipment costs in USD
     selectedEquipments.forEach((equipment) => {
       equipmentCosts += equipment.price * conversionRate;
     });
 
-    // Calculate total price in the user's selected currency
     const totalPriceInSelectedCurrency =
       basePrice * conversionRate + equipmentCosts + serviceCosts;
 
@@ -127,14 +130,14 @@ function MoveInOutCleaningPage() {
       hourlyRate,
       serviceCosts,
       equipmentCosts,
-      totalPrice: totalPriceInSelectedCurrency, // Total price in the selected currency
-      basePrice: basePrice * conversionRate, // Base price in the selected currency
+      totalPrice: totalPriceInSelectedCurrency,
+      basePrice: basePrice * conversionRate,
     };
   };
+
   const handleEquipmentSelect = (equipment: Equipment, selected: boolean) => {
     setChangeValue(true);
     if (selected) {
-      // Check if the equipment is already in the array
       if (!selectedEquipments.some((e) => e.id === equipment.id)) {
         setSelectedEquipments((prev) => [
           ...prev,
@@ -142,12 +145,12 @@ function MoveInOutCleaningPage() {
         ]);
       }
     } else {
-      // Remove the equipment if it exists
       setSelectedEquipments((prev) =>
         prev.filter((e) => e.id !== equipment.id)
       );
     }
   };
+
   const handleSolventChange = (solvent: string) => {
     setSelectedSolvent(solvent);
   };
@@ -170,7 +173,7 @@ function MoveInOutCleaningPage() {
       !acceptTerms1 ||
       !acceptTerms2
     ) {
-      alert("Please fill all required fields before proceeding to checkout.");
+      alert(translate('fillAllFieldsAlert'));
       return;
     }
 
@@ -216,13 +219,8 @@ function MoveInOutCleaningPage() {
         conversionRate,
       },
     };
-    console.log("Service Details:", serviceDetails);
     navigate("/checkout", { state: { data } });
   };
-  const frequencyOptions = [
-    { value: "move in/out", label: "Move In/Out" },
-    { value: "other", label: "Other " },
-  ];
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
@@ -231,7 +229,7 @@ function MoveInOutCleaningPage() {
         <div className="w-full lg:w-4/3">
           <img
             src={MoveInAndOutService1}
-            alt="Cleaning Service"
+            alt={translate('cleaningServiceAlt')}
             className="rounded-lg w-full h-auto"
           />
         </div>
@@ -249,37 +247,29 @@ function MoveInOutCleaningPage() {
             </div>
           </div>
           <p className="text-gray-600 mb-4 text-sm sm:text-base">
-            Move-in/out cleaning is a specialized service offered by cleaning
-            companies and is prepared for individuals transitioning into or out
-            of a property. This subtle cleaning procedure is specially made to
-            prepare a space for new occupants or ensure the departure leaves the
-            premises in impeccable condition. 
+            {translate('moveInOutDescription')}
           </p>
           <p className="text-gray-600 mb-2 text-sm sm:text-base">
-            It generally covers deep cleaning tasks such as surface scrubbing,
-            high-touch area :
+            {translate('coversTasks')}
           </p>
           <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
-            <li>Sanitization</li>
-            <li>Appliance cleaning</li>
-            <li>Fixture maintenance</li>
-            <li>Overall cleanliness</li>
+            <li>{translate('sanitization')}</li>
+            <li>{translate('applianceCleaning')}</li>
+            <li>{translate('fixtureMaintenance')}</li>
+            <li>{translate('overallCleanliness')}</li>
           </ul>
           <p className="text-gray-600 text-sm sm:text-base">
-            The objective of this cleaning is to present the space in optimal
-            condition for incoming residents or to meet landlords’ expectations
-            during move-outs. The ultimate aim of move-in/out cleaning services
-            is to set up a fresh, energetic and welcoming atmosphere for the
-            upcoming phase in the property’s utilization.
+            {translate('moveInOutObjective')}
           </p>
         </div>
       </div>
 
       <div>
         <h2 className="text-xl font-semibold mb-4 text-blue-900">
-          Package checklist
+          {translate('packageChecklist')}
         </h2>
       </div>
+
       {/* Carousel Section */}
       <div>
         <Carousel />
@@ -288,10 +278,10 @@ function MoveInOutCleaningPage() {
       {/* Checklist Section */}
       <div className="bg-white rounded-lg p-4 sm:p-6 mb-8 shadow-lg">
         <h2 className="text-xl font-semibold mb-4 text-blue-900">
-          Select Additional Service Including to Your Package Checklist
+          {translate('selectAdditionalServices')}
         </h2>
         {packages.isLoading ? (
-          <div className="text-center py-4">Loading packages...</div>
+          <div className="text-center py-4">{translate('loadingPackages')}</div>
         ) : packages.isSuccess ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {packages.data.map((service: any) => (
@@ -311,7 +301,6 @@ function MoveInOutCleaningPage() {
                         {
                           package_id: Number(service.package_id),
                           price: parseInt(service.price),
-
                           qty:
                             service.name === "Oven Cleaning"
                               ? Number(ovenQty) || 1
@@ -341,7 +330,6 @@ function MoveInOutCleaningPage() {
                   }}
                   disabled={service.status !== "active"}
                 />
-                {/* Custom checkbox */}
                 <div
                   className={`w-5 h-5 border-2 border-gray-400 rounded flex items-center justify-center transition-colors ${
                     checkedList.includes(service.package_id.toString())
@@ -349,7 +337,6 @@ function MoveInOutCleaningPage() {
                       : "bg-white border-gray-400"
                   } ${service.status !== "active" ? "opacity-50" : ""}`}
                 >
-                  {/* Checkmark icon */}
                   {checkedList.includes(service.package_id.toString()) && (
                     <svg
                       className="w-3 h-3 text-white"
@@ -390,7 +377,6 @@ function MoveInOutCleaningPage() {
                               setChangeValue(true);
                               if (service.name === "Oven Cleaning") {
                                 setOvenQty(newQuantity);
-                                // Update the quantity in selectedServices
                                 setSelectedServices((prev) =>
                                   prev.map((s) =>
                                     s.package_id === Number(service.package_id)
@@ -400,7 +386,6 @@ function MoveInOutCleaningPage() {
                                 );
                               } else {
                                 setFridgeQty(newQuantity);
-                                // Update the quantity in selectedServices
                                 setSelectedServices((prev) =>
                                   prev.map((s) =>
                                     s.package_id === Number(service.package_id)
@@ -443,7 +428,7 @@ function MoveInOutCleaningPage() {
       {/* Booking Section */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8">
         <h2 className="text-2xl font-bold text-blue-900 mb-6">
-          Select Suitable Date and Time to Complete Booking
+          {translate('selectDateTime')}
         </h2>
 
         <div className="mb-6 shadow-lg p-4 sm:p-6 rounded-lg border border-blue-400">
@@ -451,7 +436,7 @@ function MoveInOutCleaningPage() {
             {/* Calendar Section */}
             <div className="flex flex-col">
               <label className="block mb-2 text-blue-900 font-semibold">
-                Select Date
+                {translate('selectDate')}
               </label>
               <div className="calendar-container p-4 rounded-lg">
                 <Calendar
@@ -504,9 +489,10 @@ function MoveInOutCleaningPage() {
               setMaxTime(maxTime);
             }}
           />
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Dropdown
-              label="Select Frequency"
+              label={translate('selectFrequency')}
               value={frequency}
               options={frequencyOptions}
               onChange={setFrequency}
@@ -518,7 +504,7 @@ function MoveInOutCleaningPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
             <label className="block mb-2 text-black">
-              Upload Images or Documents
+              {translate('uploadFiles')}
             </label>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center min-h-[150px] flex items-center justify-center">
               <div>
@@ -529,10 +515,10 @@ function MoveInOutCleaningPage() {
                 >
                   <div className="flex flex-col items-center space-y-2">
                     <span className="text-sm">
-                      Click to upload or drag and drop
+                      {translate('clickToUpload')}
                     </span>
                     <span className="text-xs text-gray-500">
-                      Maximum file size: 10MB
+                      {translate('maxFileSize')}
                     </span>
                   </div>
                 </label>
@@ -541,10 +527,12 @@ function MoveInOutCleaningPage() {
           </div>
 
           <div>
-            <label className="block mb-2 text-black">Additional Note</label>
+            <label className="block mb-2 text-black">
+              {translate('additionalNote')}
+            </label>
             <textarea
               className="w-full min-h-[150px] border border-blue-900 rounded p-2 text-gray-700 resize-none"
-              placeholder="Type your note here..."
+              placeholder={translate('typeNoteHere')}
             ></textarea>
           </div>
 
@@ -561,7 +549,7 @@ function MoveInOutCleaningPage() {
                 }}
               />
               <span className="text-sm">
-                By selecting this I accept terms and conditions
+                {translate('acceptTermsCondition')}
               </span>
             </label>
           </div>
@@ -580,7 +568,7 @@ function MoveInOutCleaningPage() {
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              Base Cost{" "}
+              {translate('baseCost')}{" "}
               <span className="text-gray-400">
                 ({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})
               </span>
@@ -595,9 +583,9 @@ function MoveInOutCleaningPage() {
           {selectedServices.length > 0 && (
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
               <span className="mb-2 md:mb-0">
-                Selected Services{" "}
+                {translate('selectedServices')}{" "}
                 <span className="text-gray-400">
-                  ({selectedServices.length} services)
+                  ({selectedServices.length} {translate('services')})
                 </span>
               </span>
               <span>
@@ -611,9 +599,9 @@ function MoveInOutCleaningPage() {
           {selectedEquipments.length > 0 && (
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
               <span className="mb-2 md:mb-0">
-                Selected Equipment{" "}
+                {translate('selectedEquipment')}{" "}
                 <span className="text-gray-400">
-                  ({selectedEquipments.length} items)
+                  ({selectedEquipments.length} {translate('items')})
                 </span>
               </span>
               <span>
@@ -625,7 +613,7 @@ function MoveInOutCleaningPage() {
 
           {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
-            <span>Total</span>
+            <span>{translate('total')}</span>
             <span>
               {currencySymbol}
               {priceBreakdown.totalPrice.toFixed(2)}
@@ -640,7 +628,7 @@ function MoveInOutCleaningPage() {
           onClick={handleBookNow}
           style={{ backgroundColor: "#1c398e" }}
         >
-          Book Now
+          {translate('bookNow')}
         </button>
       </div>
 

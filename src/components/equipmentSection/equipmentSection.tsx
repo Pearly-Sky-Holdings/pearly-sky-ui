@@ -5,6 +5,7 @@ import {
   regularServiceEquipment3,
   regularServiceEquipment4,
 } from "../../config/images";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface Solvent {
   value: string;
@@ -37,49 +38,50 @@ interface EquipmentSectionProps {
 }
 
 const EquipmentSection: React.FC<EquipmentSectionProps> = ({
-  title = "Select your cleaning solvents and equipment",
+  title,
   onSolventChange,
   onEquipmentOptionChange,
   onEquipmentSelect,
   currencySymbol = "€",
   conversionRate = 1,
 }) => {
+  const { translate } = useLanguage();
   const [cleaningSolvent, setCleaningSolvent] = useState("");
   const [cleaningEquipment, setCleaningEquipment] = useState("");
   const [selectedEquipments, setSelectedEquipments] = useState<string[]>([]);
 
   const solventsOptions = [
-    { value: "customer", label: "Provided by the Customer" },
-    { value: "company", label: "Request the Company" },
+    { value: "customer", label: translate('providedByCustomer') },
+    { value: "company", label: translate('requestFromCompany') },
   ];
 
   const equipmentOptionsDetails = [
-    { value: "customer", label: "Provided by the Customer" },
-    { value: "company", label: "Request the Company" },
+    { value: "customer", label: translate('providedByCustomer') },
+    { value: "company", label: translate('requestFromCompany') },
   ];
 
   const equipmentsDetails = [
     {
       id: "cleaning-solvent",
-      name: "Cleaning Solvent (Eco Friendly Chemicals)",
+      name: translate('cleaningSolvent'),
       price: 11.00,
       image: regularServiceEquipment1,
     },
     {
       id: "mop",
-      name: "MOP",
+      name: translate('mop'),
       price: 6.00,
       image: regularServiceEquipment4,
     },
     {
       id: "materials",
-      name: "Other Cleaning Materials",
+      name: translate('otherCleaningMaterials'),
       price: 6.00,
       image: regularServiceEquipment2,
     },
     {
       id: "vacuum",
-      name: "Vacuum Cleaner",
+      name: translate('vacuumCleaner'),
       price: 8.00,
       image: regularServiceEquipment3,
     },
@@ -92,7 +94,7 @@ const EquipmentSection: React.FC<EquipmentSectionProps> = ({
         onEquipmentSelect(
           equipmentsDetails.find((e) => e.id === "cleaning-solvent") || {
             id: "cleaning-solvent",
-            name: "Cleaning Solvent",
+            name: translate('cleaningSolvent'),
             price: 11.00,
             image: "",
           },
@@ -104,7 +106,7 @@ const EquipmentSection: React.FC<EquipmentSectionProps> = ({
       onEquipmentSelect(
         equipmentsDetails.find((e) => e.id === "cleaning-solvent") || {
           id: "cleaning-solvent",
-          name: "Cleaning Solvent",
+          name: translate('cleaningSolvent'),
           price: 11.00,
           image: "",
         },
@@ -197,17 +199,19 @@ const EquipmentSection: React.FC<EquipmentSectionProps> = ({
   return (
     <div>
       <div className="mb-4 bg-white rounded-lg p-4 sm:p-6 shadow-lg">
-        <h2 className="text-xl font-semibold mb-4 text-blue-900">{title}</h2>
+        <h2 className="text-xl font-semibold mb-4 text-blue-900">
+          {title || translate('selectCleaningEquipmentTitle')}
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
           <div>
-            <label className="block mb-2 text-blue-900">Cleaning Solvents</label>
+            <label className="block mb-2 text-blue-900">{translate('cleaningSolvents')}</label>
             <select
               className="w-full border rounded p-2 text-blue-900"
               value={cleaningSolvent}
               onChange={handleSolventChange}
               required
             >
-              <option value="">Select cleaning solvent</option>
+              <option value="">{translate('selectCleaningSolvent')}</option>
               {solventsOptions.map((solvent) => (
                 <option key={solvent.value} value={solvent.value}>
                   {solvent.label}
@@ -217,14 +221,14 @@ const EquipmentSection: React.FC<EquipmentSectionProps> = ({
           </div>
 
           <div>
-            <label className="block mb-2 text-blue-900">Cleaning Equipment</label>
+            <label className="block mb-2 text-blue-900">{translate('cleaningEquipment')}</label>
             <select
               className="w-full border rounded p-2 text-blue-900"
               value={cleaningEquipment}
               onChange={handleEquipmentOptionChange}
               required
             >
-              <option value="">Select cleaning equipment</option>
+              <option value="">{translate('selectCleaningEquipment')}</option>
               {equipmentOptionsDetails.map((equipment) => (
                 <option key={equipment.value} value={equipment.value}>
                   {equipment.label}
@@ -236,7 +240,7 @@ const EquipmentSection: React.FC<EquipmentSectionProps> = ({
       </div>
 
       <div className="mb-4 bg-white rounded-lg p-4 sm:p-6 shadow-lg">
-        <h2 className="text-xl font-semibold mb-8 text-blue-900">Equipments</h2>
+        <h2 className="text-xl font-semibold mb-8 text-blue-900">{translate('equipments')}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
           {equipmentsDetails.map((equipment) => (
             <div
@@ -261,7 +265,7 @@ const EquipmentSection: React.FC<EquipmentSectionProps> = ({
                 <span>{equipment.name}</span>
               </label>
               <p className="text-sm text-gray-600">
-                Price: {currencySymbol} {(equipment.price * conversionRate).toFixed(2)}
+                {translate('price')}: {currencySymbol} {(equipment.price * conversionRate).toFixed(2)}
               </p>
             </div>
           ))}

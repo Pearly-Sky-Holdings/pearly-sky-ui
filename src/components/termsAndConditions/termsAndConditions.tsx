@@ -1,4 +1,5 @@
 import React from "react";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface TermsItem {
   title: string;
@@ -15,55 +16,58 @@ interface TermsAndConditionsProps {
 }
 
 const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({
-  title = "Before you book",
+  title,
   showCheckbox = true,
   isAccepted = false,
   onAcceptChange,
-  checkboxLabel = "I have read and accept the above terms and considerations",
+  checkboxLabel,
   className = "",
 }) => {
-  // Integrated bookingTerms data directly into the component
+  const { translate } = useLanguage();
+
+  // Translated terms data
   const terms: TermsItem[] = [
     {
-      title: "Consider Property Size and Architecture",
+      title: translate('termsPropertySizeTitle'),
       items: [
-        "Evaluate the size and layout of your property before deciding on the number of cleaners",
-        "Larger properties or complex layouts may require more time or additional cleaners",
+        translate('termsPropertySizeItem1'),
+        translate('termsPropertySizeItem2'),
       ],
     },
     {
-      title: "Factor in Additional Cleaning Services",
+      title: translate('termsAdditionalServicesTitle'),
       items: [
-        "Some services may require specialized cleaning or additional time",
-        "Consider bundling services for better value",
+        translate('termsAdditionalServicesItem1'),
+        translate('termsAdditionalServicesItem2'),
       ],
     },
     {
-      title: "Limitations or Continuous Working Hours",
+      title: translate('termsWorkingHoursTitle'),
       items: [
-        "Maximum continuous working hours apply",
-        "Plan the number of cleaners accordingly",
+        translate('termsWorkingHoursItem1'),
+        translate('termsWorkingHoursItem2'),
       ],
     },
     {
-      title: "Booking cancellation",
+      title: translate('termsCancellationTitle'),
       items: [
-        "According to your choice company will either refund the money  or the job can be rescheduled  on next available time slot.",
-        "If above procedures are not followed, there’s no guarantee of refunding",
+        translate('termsCancellationItem1'),
+        translate('termsCancellationItem2'),
       ],
     },
     {
-      title: "Accept company cookies policy",
+      title: translate('termsCookiesTitle'),
       items: [],
     },
   ];
 
   return (
     <div
-      className={` bg-blue-950 bg-cover bg-center text-white rounded-lg p-4 md:p-6 ${className}`}
-     
+      className={`bg-blue-950 bg-cover bg-center text-white rounded-lg p-4 md:p-6 ${className}`}
     >
-      <h3 className="text-lg md:text-xl font-semibold mb-4">{title}</h3>
+      <h3 className="text-lg md:text-xl font-semibold mb-4">
+        {title || translate('termsDefaultTitle')}
+      </h3>
       <ol className="list-decimal pl-4 md:pl-5 space-y-4">
         {terms.map((term, index) => (
           <li key={index}>
@@ -87,7 +91,9 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({
               checked={isAccepted}
               onChange={(e) => onAcceptChange?.(e.target.checked)}
             />
-            <span className="text-sm">{checkboxLabel}</span>
+            <span className="text-sm">
+              {checkboxLabel || translate('termsCheckboxLabel')}
+            </span>
           </label>
         </div>
       )}

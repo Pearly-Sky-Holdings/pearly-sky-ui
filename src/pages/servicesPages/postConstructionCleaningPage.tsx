@@ -22,7 +22,6 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
-
 import {
   postConstructorImage1,
   postConstructorImage2,
@@ -35,6 +34,7 @@ import {
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
 import Dropdown from "../../components/dropDown/dropDown";
+import { useLanguage } from "../../context/LanguageContext";
 
 type Equipment = {
   id: string;
@@ -43,6 +43,7 @@ type Equipment = {
 };
 
 function PostConstructionCleaningPage() {
+  const { translate } = useLanguage();
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const services = useSelector((state: any) => state.servicesSlice.service);
@@ -112,34 +113,31 @@ function PostConstructionCleaningPage() {
   useEffect(() => {
     dispatch(getServices("6"));
   }, []);
-  const calculateTotalPrice = () => {
-    const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
-    const basePrice = hourlyRate * maxTime; // Base price in USD
 
-    let serviceCosts = 0;
+  const calculateTotalPrice = () => {
+    const hourlyRate = parseInt(services.data.price, 10);
+    const basePrice = hourlyRate * maxTime;
+
     let equipmentCosts = 0;
 
-    // Calculate equipment costs in USD
     selectedEquipments.forEach((equipment) => {
       equipmentCosts += equipment.price * conversionRate;
     });
 
-    // Calculate total price in the user's selected currency
-    const totalPriceInSelectedCurrency =
-      basePrice * conversionRate + equipmentCosts + serviceCosts;
+    const totalPriceInSelectedCurrency = basePrice * conversionRate + equipmentCosts;
 
     return {
       hourlyRate,
-      serviceCosts,
+      serviceCosts: 0,
       equipmentCosts,
-      totalPrice: totalPriceInSelectedCurrency, // Total price in the selected currency
-      basePrice: basePrice * conversionRate, // Base price in the selected currency
+      totalPrice: totalPriceInSelectedCurrency,
+      basePrice: basePrice * conversionRate,
     };
   };
+
   const handleEquipmentSelect = (equipment: Equipment, selected: boolean) => {
     setChangeValue(true);
     if (selected) {
-      // Check if the equipment is already in the array
       if (!selectedEquipments.some((e) => e.id === equipment.id)) {
         setSelectedEquipments((prev) => [
           ...prev,
@@ -147,12 +145,12 @@ function PostConstructionCleaningPage() {
         ]);
       }
     } else {
-      // Remove the equipment if it exists
       setSelectedEquipments((prev) =>
         prev.filter((e) => e.id !== equipment.id)
       );
     }
   };
+
   const handleSolventChange = (solvent: string) => {
     setSelectedSolvent(solvent);
   };
@@ -175,7 +173,7 @@ function PostConstructionCleaningPage() {
       !acceptTerms1 ||
       !acceptTerms2
     ) {
-      alert("Please fill all required fields before proceeding to checkout.");
+      alert(translate('pleaseFillAllFields'));
       return;
     }
 
@@ -199,7 +197,7 @@ function PostConstructionCleaningPage() {
       note: document.querySelector("textarea")?.value || "",
     };
     const data = {
-      serviceName: "Post Construction",
+      serviceName: translate('postConstruction'),
       details: serviceDetails,
       orderSummary: {
         selectedEquipments,
@@ -210,7 +208,6 @@ function PostConstructionCleaningPage() {
         conversionRate,
       },
     };
-    console.log("Data:", data);
     navigate("/checkout", { state: { data } });
   };
 
@@ -218,64 +215,65 @@ function PostConstructionCleaningPage() {
     {
       icon: postConstructorImage1,
       items: [
-        "Floor cleaning",
-        "Removing debris",
-        "Mopping",
-        "Mirrors cleaning",
+        translate('floorCleaning'),
+        translate('removingDebris'),
+        translate('mopping'),
+        translate('mirrorsCleaning'),
       ],
     },
     {
       icon: postConstructorImage2,
       items: [
-        "Clean windows",
-        "Clean the doors",
-        "Cleaning fixtures",
-        "Cleaning solutions",
+        translate('cleanWindows'),
+        translate('cleanDoors'),
+        translate('cleaningFixtures'),
+        translate('cleaningSolutions'),
       ],
     },
     {
       icon: postConstructorImage3,
       items: [
-        "Vacuuming",
-        "Wipe down hard surfaces",
-        "Bathroom cleaning",
-        "Buckets and scrub brushes",
+        translate('vacuuming'),
+        translate('wipeDownSurfaces'),
+        translate('bathroomCleaning'),
+        translate('bucketsBrushes'),
       ],
     },
     {
       icon: postConstructorImage4,
       items: [
-        "Sweep and vacuum/mop floors",
-        "Vacuum cleaner",
-        "Window cleaning",
-        "Appliance cleaning",
+        translate('sweepVacuumFloors'),
+        translate('vacuumCleaner'),
+        translate('windowCleaning'),
+        translate('applianceCleaning'),
       ],
     },
     {
       icon: postConstructorImage5,
       items: [
-        "Dust fans and ceiling",
-        "Dust removal",
-        "Remove trash",
-        "Dusting",
+        translate('dustFansCeiling'),
+        translate('dustRemoval'),
+        translate('removeTrash'),
+        translate('dusting'),
       ],
     },
     {
       icon: postConstructorImage6,
       items: [
-        "Clean all gates",
-        "Clean inside cabinets and drawers",
-        "Clean sink and food spaces",
-        "Trash bags",
+        translate('cleanAllGates'),
+        translate('cleanCabinetsDrawers'),
+        translate('cleanSinkSpaces'),
+        translate('trashBags'),
       ],
     },
   ];
 
   const frequencyOptions = [
-    { value: "construction end", label: "Construction End" },
-    { value: "project handover", label: "Project Handover" },
-    { value: "other", label: "Other " },
+    { value: "construction end", label: translate('constructionEnd') },
+    { value: "project handover", label: translate('projectHandover') },
+    { value: "other", label: translate('other') },
   ];
+
   return (
     <div className="max-w-7xl mx-auto p-4 mt-6 sm:p-2">
       {/* Header Section */}
@@ -283,7 +281,7 @@ function PostConstructionCleaningPage() {
         <div className="w-full lg:w-4/3">
           <img
             src={postConstructionService}
-            alt="Cleaning Service"
+            alt={translate('cleaningService')}
             className="rounded-lg w-full h-full object-cover"
           />
         </div>
@@ -302,18 +300,13 @@ function PostConstructionCleaningPage() {
           </div>
           <div className="flex-grow">
             <p className="text-gray-600 mb-4 text-sm sm:text-base">
-              Experience the joy of a spotless home with Pearly Sky’s trusted
-              maid services, now available in Dubai and France. Our professional
-              team delivers tailored cleaning solutions, from one-time deep
-              cleans to regular maintenance plans, ensuring your home stays
-              immaculate and stress-free. Let us handle the cleaning, so you can
-              focus on what truly matters
+              {translate('postConstructionDescription')}
             </p>
           </div>
         </div>
       </div>
 
-      {/* packege list */}
+      {/* Package list */}
       <div
         className="rounded-lg shadow-lg p-4 sm:p-6 mb-8"
         style={{ backgroundColor: "rgba(37, 150, 190, 0.14)" }}
@@ -325,7 +318,7 @@ function PostConstructionCleaningPage() {
           color="primary"
           sx={{ mb: 4, fontWeight: "medium" }}
         >
-          Package Checklist
+          {translate('packageChecklist')}
         </Typography>
 
         <Grid container spacing={3}>
@@ -410,7 +403,7 @@ function PostConstructionCleaningPage() {
       {/* Booking Section */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8">
         <h2 className="text-2xl font-bold text-blue-900 mb-6">
-          Select Suitable Date and Time to Complete Booking
+          {translate('selectDateTime')}
         </h2>
 
         <div className="mb-6 shadow-lg p-4 sm:p-6 rounded-lg border border-blue-400">
@@ -418,7 +411,7 @@ function PostConstructionCleaningPage() {
             {/* Calendar Section */}
             <div className="flex flex-col">
               <label className="block mb-2 text-blue-900 font-semibold">
-                Select Date
+                {translate('selectDate')}
               </label>
               <div className="calendar-container p-4 rounded-lg">
                 <Calendar
@@ -473,7 +466,7 @@ function PostConstructionCleaningPage() {
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Dropdown
-              label="Select Frequency"
+              label={translate('selectFrequency')}
               value={frequency}
               options={frequencyOptions}
               onChange={setFrequency}
@@ -485,7 +478,7 @@ function PostConstructionCleaningPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
             <label className="block mb-2 text-black">
-              Upload Images or Documents
+              {translate('uploadFiles')}
             </label>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center min-h-[150px] flex items-center justify-center">
               <div>
@@ -496,10 +489,10 @@ function PostConstructionCleaningPage() {
                 >
                   <div className="flex flex-col items-center space-y-2">
                     <span className="text-sm">
-                      Click to upload or drag and drop
+                      {translate('clickToUpload')}
                     </span>
                     <span className="text-xs text-gray-500">
-                      Maximum file size: 10MB
+                      {translate('maxFileSize')}
                     </span>
                   </div>
                 </label>
@@ -508,10 +501,12 @@ function PostConstructionCleaningPage() {
           </div>
 
           <div>
-            <label className="block mb-2 text-black">Additional Note</label>
+            <label className="block mb-2 text-black">
+              {translate('additionalNote')}
+            </label>
             <textarea
               className="w-full min-h-[150px] border border-blue-900 rounded p-2 text-gray-700 resize-none"
-              placeholder="Type your note here..."
+              placeholder={translate('typeYourNote')}
             ></textarea>
           </div>
 
@@ -528,7 +523,7 @@ function PostConstructionCleaningPage() {
                 }}
               />
               <span className="text-sm">
-                By selecting this I accept terms and conditions
+                {translate('acceptTerms')}
               </span>
             </label>
           </div>
@@ -547,7 +542,7 @@ function PostConstructionCleaningPage() {
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              Base Cost{" "}
+              {translate('baseCost')}{" "}
               <span className="text-gray-400">
                 ({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})
               </span>
@@ -562,9 +557,9 @@ function PostConstructionCleaningPage() {
           {selectedEquipments.length > 0 && (
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
               <span className="mb-2 md:mb-0">
-                Selected Equipment{" "}
+                {translate('selectedEquipment')}{" "}
                 <span className="text-gray-400">
-                  ({selectedEquipments.length} items)
+                  ({selectedEquipments.length} {translate('items')})
                 </span>
               </span>
               <span>
@@ -576,7 +571,7 @@ function PostConstructionCleaningPage() {
 
           {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
-            <span>Total</span>
+            <span>{translate('total')}</span>
             <span>
               {currencySymbol}
               {priceBreakdown.totalPrice.toFixed(2)}
@@ -591,7 +586,7 @@ function PostConstructionCleaningPage() {
           onClick={handleBookNow}
           style={{ backgroundColor: "#1c398e" }}
         >
-          Book Now
+          {translate('bookNow')}
         </button>
       </div>
 

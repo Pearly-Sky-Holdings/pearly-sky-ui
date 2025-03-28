@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
+import { useLanguage } from "../../context/LanguageContext";
 
 const customerLogos = [
   { id: 1, logo: "/images/logo.png", name: "Pearly Sky" },
@@ -14,6 +15,7 @@ const customerLogos = [
 ];
 
 const CustomerSlider: React.FC = () => {
+  const { translate } = useLanguage();
   return (
     <Box
       sx={{
@@ -30,7 +32,7 @@ const CustomerSlider: React.FC = () => {
         color="#002F6D"
         mb={18}
       >
-        Our Customers
+       {translate('ourcustomers')}
       </Typography>
 
       <Box
