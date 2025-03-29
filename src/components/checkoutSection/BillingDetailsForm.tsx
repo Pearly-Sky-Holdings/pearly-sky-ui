@@ -12,6 +12,9 @@ import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { parsePhoneNumber } from 'libphonenumber-js';
+import { isValidPhoneNumber } from "react-phone-number-input";
+
 import {
   flagAustralia,
   flagAustria,
@@ -180,10 +183,32 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@(gmail\.com|[^\s@]+\.(com|org|net|edu|co\.uk))$/i;
     return emailRegex.test(email);
+  };
+
+  const handlePhoneChange = (value: string | undefined) => {
+    setFormData({ ...formData, contact: value || '' });
+    
+    // Clear error when user starts typing
+    if (phoneError) {
+      setPhoneError(null);
+    }
+
+    // Validate phone number in real-time
+    if (value) {
+      try {
+        const phoneNumber = parsePhoneNumber(value);
+        if (!isValidPhoneNumber(value)) {
+          setPhoneError(`Please enter a valid ${phoneNumber?.country} phone number`);
+        }
+      } catch (error) {
+        setPhoneError("Please enter a valid phone number");
+      }
+    }
   };
 
   const validatePassword = (password: string) => {
@@ -318,24 +343,33 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} sx={{ mb: 3 }}>
-          <FormControl fullWidth size="small">
-            <PhoneInput
-              international
-              defaultCountry="US"
-              value={formData.contact || ""}
-              onChange={(value) => setFormData({ ...formData, contact: value })}
-              placeholder="Phone number"
-              style={{
-                borderRadius: "12px",
-                border: "1px solid #0D90C8",
-                padding: "8px",
-                backgroundColor: "#fff",
-                color: "#000",
-              }}
-            />
-          </FormControl>
-        </Grid>
+        {/* Phone Input Section */}
+      <Grid item xs={12} sx={{ mb: 3 }}>
+        <FormControl fullWidth size="small">
+          <Typography variant="subtitle2" gutterBottom>
+            Phone Number <span style={{ color: "red" }}>*</span>
+          </Typography>
+          <PhoneInput
+            international
+            defaultCountry="US"
+            value={formData.contact || ""}
+            onChange={handlePhoneChange}
+            placeholder="Phone number"
+            style={{
+              borderRadius: "12px",
+              border: `1px solid ${phoneError ? "#ff1744" : "#0D90C8"}`,
+              padding: "8px",
+              backgroundColor: "#fff",
+              color: "#000",
+            }}
+          />
+          {phoneError && (
+            <Typography variant="caption" color="error" sx={{ mt: 1, display: 'block' }}>
+              {phoneError}
+            </Typography>
+          )}
+        </FormControl>
+      </Grid>
 
         <Typography sx={{ mt: 2, ml: 2 }}>
           Location of the home to be cleaned
