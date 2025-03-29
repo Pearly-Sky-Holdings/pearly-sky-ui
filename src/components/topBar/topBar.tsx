@@ -18,8 +18,9 @@ const countries: Country[] = [
   // { code: "gb", nameKey: "unitedKingdom" },
   { code: "fr", nameKey: "france" },
   // { code: "de", nameKey: "germany" },
+  { code: "zh", nameKey: "Chinese" },
   { code: "jp", nameKey: "japan" },
-  // { code: "lk", nameKey: "sriLanka" },
+  
 ];
 
 export default function TopBar() {
@@ -102,7 +103,6 @@ export default function TopBar() {
                   color: "black",
                 },
               }}
-              disableUnderline
             >
               {countries.map((country) => (
                 <MenuItem key={country.code} value={country.code}>

@@ -185,7 +185,7 @@ function MoveInAndOutTransportCleaning() {
       );
 
       if (response.ok) {
-        const result = await response.json();
+        await response.json();
         navigate("/quotation", { state: { data } });
       } else {
         console.error("API Error:", response.statusText);

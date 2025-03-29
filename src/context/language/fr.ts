@@ -1,11 +1,11 @@
 export const frTranslations = {
   // TopBar translations ===============================================
   login: "Connexion",
-  unitedStates: "États-Unis",
-  unitedKingdom: "Royaume-Uni",
+  unitedStates: "unitedStates",
+  unitedKingdom: "United Kingdom",
   france: "France",
-  germany: "Allemagne",
-  japan: "Japon",
+  germany: "Germany",
+  japan: "Japan",
   sriLanka: "Sri Lanka",
   languageSelector: "Choisir la langue",
 
@@ -138,7 +138,7 @@ export const frTranslations = {
   commercialMixedUtilities: 'Commercial & Utilités Mixtes',
   commercialMixedUtilitiesDesc: 'Création d\'espaces efficaces qui stimulent la croissance et l\'innovation.',
 
-  sportsSector: 'Secteur Sportif',
+  sportsSector: "Secteur Sportif",
   sportsSectorDesc: 'Améliorer la performance et la passion à travers chaque match.',
   privateProperties: 'Propriétés Privées',
   privatePropertiesDesc: 'Espaces exclusifs conçus pour le confort et le luxe.',
@@ -206,6 +206,8 @@ export const frTranslations = {
   phoneMinLength: 'Le numéro doit comporter au moins 10 chiffres',
   messageRequired: 'Le message est requis',
   messageMinLength: 'Le message doit contenir au moins 10 caractères',
+  hotlineNumber: "Notre numéro d'assistance téléphonique",
+    whatsappNumber: "Notre numéro WhatsApp",
 
   // Soumission du formulaire
   formSubmissionSuccess: 'Formulaire envoyé avec succès !',
@@ -564,6 +566,7 @@ export const frTranslations = {
   commercialProperty: 'Local commercial',
   governmentOffice: 'Bureau gouvernemental',
   publicOffice: 'Bureau public',
+  elderCareCleaning: 'Nettoyage des soins aux personnes âgées',
   privateOffice: 'Bureau privé',
   daycareCentre: 'Crèche',
   shoppingMall: 'Centre commercial',
@@ -1584,13 +1587,80 @@ export const frTranslations = {
   download: "Télécharger",
 
 
+  // Login Page translations ===============================================
+  username: 'Nom d’utilisateur',  
+  rememberMe: 'Se souvenir de moi',  
+  forgotPassword: 'Mot de passe oublié',  
+  noAccount: "Vous n’avez pas de compte ?",  
+  signUp: 'S’inscrire',  
+  invalidEmailFormat: 'Format d’e-mail invalide',  
+  passwordMinLength: 'Le mot de passe doit contenir au moins 6 caractères',  
+  loginSuccessful: 'Connexion réussie !',  
+  loginFailed: 'Échec de la connexion. Vérifiez vos identifiants.',  
+  validEmailRequired: 'Veuillez entrer une adresse e-mail valide',  
+  otpSent: 'Un code OTP a été envoyé à votre e-mail !',  
+  otpSendFailed: 'Échec de l’envoi du code OTP. Veuillez réessayer.',  
+  enterOtp: 'Veuillez entrer le code OTP',  
+  bothPasswordsRequired: 'Les deux champs de mot de passe sont requis',  
+  passwordsDontMatch: 'Les mots de passe ne correspondent pas',  
+  passwordResetSuccess: 'Réinitialisation du mot de passe réussie ! Connectez-vous avec votre nouveau mot de passe.',  
+  passwordResetFailed: 'Échec de la réinitialisation du mot de passe. Veuillez réessayer.',  
+  enterEmailForOtp: 'Entrez votre adresse e-mail pour recevoir un code OTP.',  
+  enterEmailAddress: 'Entrez votre adresse e-mail',  
+  sendOtp: 'Envoyer le code OTP',  
+  enterOtpTitle: 'Entrez le code OTP',  
+  otpSentToEmail: 'Veuillez entrer le code OTP envoyé à votre e-mail.',  
+  verifyOtp: 'Vérifier le code OTP',  
+  resetPassword: 'Réinitialiser le mot de passe',  
+  enterNewPassword: 'Entrez votre nouveau mot de passe.',  
+  newPassword: 'Nouveau mot de passe',  
+  togglePasswordVisibility: 'Afficher/masquer le mot de passe',  
+  toggleNewPasswordVisibility: 'Afficher/masquer le nouveau mot de passe',  
+  toggleConfirmPasswordVisibility: 'Afficher/masquer la confirmation du mot de passe'  ,
+
+
+
+  // SignUp Page translations ===============================================
+  signup: 'Inscription',
+  contactNumberRequired: 'Le numéro de téléphone est requis',
+  invalidContactNumber: 'Numéro de téléphone invalide',
+  signupSuccessful: 'Inscription réussie !',
+  signupFailed: 'Échec de l\'inscription. Veuillez réessayer.',
+  signupError: 'Une erreur s\'est produite. Veuillez réessayer.',
+  enterContactNumber: 'Entrez votre numéro de téléphone',
+  enterEmail: 'Entrez votre e-mail',
+  alreadyHaveAccount: 'Vous avez déjà un compte ?',
+  signupImageAlt: 'Image de la page d\'inscription',
+  message: 'Message',
+  close: 'Fermer',
+
+
+
+  //customer Dashboard translations ===============================================
+  contactNo: 'N° de contact',
+  serviceType: 'Type de service',
+  date: 'Date',
+  time: 'Heure',
+  action: 'Action',
+  viewDetails: 'Voir les détails',
+
+
+  // MainLayout translations
+  settings: 'Paramètres',
+  help: 'Aide',
+  logout: 'Déconnexion',
+
+  // DateRangePicker translations
+  from: 'De',
+  to: 'À',
+  selectFromDate: 'Sélectionner la date de début',
+  selectToDate: 'Sélectionner la date de fin',
+
+
 
   // Customer Dashboard translations
-  settings: "Paramètres",
-  help: "Aide",
   myBookings: "Mes réservations",
   profile: "Profil",
-  logout: "Déconnexion",
 
   // Checkout Page
   payment: "Paiement",
@@ -1602,4 +1672,13 @@ export const frTranslations = {
   viewDetails: "Voir les détails",
   submit: "Soumettre",
   next: "Suivant",
+  selectOption: "Sélectionner une option",
+  option1: "Option 1", 
+  option2: "Option 2",
+  middleNamePlaceholder:"deuxième prénom",
+
+  mr: 'M.',
+  ms: 'Mme',
+  mrs: 'Mme', 
+  dr: 'Dr.',
 };

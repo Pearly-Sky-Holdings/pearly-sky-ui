@@ -110,7 +110,7 @@ export const enTranslations = {
      commercialMixedUtilities: 'Commercial & Mixed Utilities',
      commercialMixedUtilitiesDesc: 'Building efficient spaces that power growth and innovation.',
      
-     sportsSector: 'Sports',
+     sportsSector: "Sports",
      sportsSectorDesc: 'Elevating performance and passion through every game.',
      privateProperties: 'Private Properties',
      privatePropertiesDesc: 'Exclusive spaces tailored for comfort and luxury.',
@@ -178,6 +178,8 @@ export const enTranslations = {
     messageMinLength: 'Message must be at least 10 characters',
     // Form Submission
     formSubmissionSuccess: 'Form submitted successfully!',
+    hotlineNumber: "Our Hotline Number",
+    whatsappNumber: "Our WhatsApp Number",
 
     // Footer Translations ===============================================
     companyLogoAlt: 'Pearly Sky Logo',
@@ -535,6 +537,7 @@ export const enTranslations = {
     commercialProperty: 'Commercial property',
     governmentOffice: 'Government office',
     publicOffice: 'Public office',
+    elderCareCleaning: 'Elder care cleaning',
     privateOffice: 'Private office',
     daycareCentre: 'Daycare centre',
     shoppingMall: 'Shopping mall',
@@ -1572,13 +1575,83 @@ export const enTranslations = {
      download: "Download",
 
 
+     
+    // Login Page translations ===============================================
+    username: 'Username',
+    rememberMe: 'Remember me',
+    forgotPassword: 'Forgot Password',
+    noAccount: "Don't have an account?",
+    signUp: 'Sign Up',
+    invalidEmailFormat: 'Invalid email format',
+    passwordMinLength: 'Password must be at least 6 characters',
+    loginSuccessful: 'Login successful!',
+    loginFailed: 'Login failed. Please check your credentials.',
+    validEmailRequired: 'Please enter a valid email address',
+    otpSent: 'OTP has been sent to your email!',
+    otpSendFailed: 'Failed to send OTP. Please try again.',
+    enterOtp: 'Please enter the OTP',
+    bothPasswordsRequired: 'Both password fields are required',
+    passwordsDontMatch: 'Passwords do not match',
+    passwordResetSuccess: 'Password reset successful! Please login with your new password.',
+    passwordResetFailed: 'Failed to reset password. Please try again.',
+    enterEmailForOtp: 'Enter your email address to receive an OTP.',
+    enterEmailAddress: 'Enter Your Email Address',
+    sendOtp: 'Send OTP',
+    enterOtpTitle: 'Enter OTP',
+    otpSentToEmail: 'Please enter the OTP sent to your email.',
+    verifyOtp: 'Verify OTP',
+    resetPassword: 'Reset Password',
+    enterNewPassword: 'Enter your new password.',
+    newPassword: 'New Password',
+    togglePasswordVisibility: 'toggle password visibility',
+    toggleNewPasswordVisibility: 'toggle new password visibility',
+    toggleConfirmPasswordVisibility: 'toggle confirm password visibility',
 
-    // Customer Dashboard translations
+
+
+     // SignUp Page translations ===============================================
+     signup: 'Signup',
+     contactNumberRequired: 'Contact Number is required',
+     invalidContactNumber: 'Invalid Contact Number',
+     signupSuccessful: 'Signup successful!',
+     signupFailed: 'Signup failed. Please try again.',
+     signupError: 'An error occurred. Please try again.',
+     enterContactNumber: 'Enter your contact number',
+     enterEmail: 'Enter your email',
+     alreadyHaveAccount: 'Already have an account?',
+     signupImageAlt: 'Signup page image',
+     message: 'Message',
+     close: 'Close',
+
+
+
+    //customer Dashboard translations ===============================================
+    contactNo: 'Contact No',
+    serviceType: 'Service Type',
+    date: 'Date',
+    time: 'Time',
+    action: 'Action',
+    viewDetails: 'View Details',
+
+    // MainLayout translations
+    dashboard: 'Dashboard',
     settings: 'Settings',
     help: 'Help',
+    logout: 'Logout',
+
+    // DateRangePicker translations
+    from: 'From',
+    to: 'To',
+    selectFromDate: 'Select from date',
+    selectToDate: 'Select to date',
+    
+
+
+
+
+    // Customer Dashboard translations
     myBookings: 'My Bookings',
     profile: 'Profile',
-    logout: 'Logout',
     
     // Checkout Page
     payment: 'Payment',
@@ -1587,7 +1660,17 @@ export const enTranslations = {
     
     // Common UI elements
     loading: 'Loading...',
-    viewDetails: 'View Details',
     submit: 'Submit',
     next: 'Next',
+    selectOption: "Select an option",
+    option1: "Option 1",
+    option2: "Option 2",
+    middleNamePlaceholder:"middle name",
+
+    mr: 'Mr.',
+    ms: 'Ms.',
+    mrs: 'Mrs.', 
+    dr: 'Dr.',
+
+
   };

@@ -183,7 +183,7 @@ function SpecialEventCleaning() {
       });
       
       if (response.ok) {
-        const result = await response.json();     
+        await response.json();     
         navigate("/quotation", { state: { data } });
       } else {      
         alert(translate('submitFailedAlert'));

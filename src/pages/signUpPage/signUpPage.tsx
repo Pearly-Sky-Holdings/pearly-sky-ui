@@ -25,7 +25,8 @@ import {
   Visibility,
   VisibilityOff,
 } from "@mui/icons-material";
-import instance from "../../services/AxiosOrder"; 
+import instance from "../../services/AxiosOrder";
+import { useLanguage } from "../../context/LanguageContext";
 
 // Define form data
 interface FormData {
@@ -62,36 +63,37 @@ const SignUp = () => {
     confirmPassword: "",
   });
 
-  const [showPassword, setShowPassword] = useState(false); 
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false); 
-  const [dialogOpen, setDialogOpen] = useState(false); // State to control dialog visibility
-  const [dialogMessage, setDialogMessage] = useState(""); // State to store dialog message
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState("");
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { translate } = useLanguage();
 
   // Validate individual fields
   const validateField = (name: keyof FormData, value: string): string => {
     let error = "";
     switch (name) {
       case "name":
-        if (!value) error = "Name is required";
+        if (!value) error = translate('nameRequired');
         break;
       case "contactNumber":
-        if (!value) error = "Contact Number is required";
-        else if (!/^\d{10}$/.test(value)) error = "Invalid Contact Number";
+        if (!value) error = translate('contactNumberRequired');
+        else if (!/^\d{10}$/.test(value)) error = translate('invalidContactNumber');
         break;
       case "email":
-        if (!value) error = "Email is required";
-        else if (!/\S+@\S+\.\S+/.test(value)) error = "Invalid Email";
+        if (!value) error = translate('emailRequired');
+        else if (!/\S+@\S+\.\S+/.test(value)) error = translate('invalidEmailFormat');
         break;
       case "password":
-        if (!value) error = "Password is required";
-        else if (value.length < 8) error = "Password must be at least 8 characters";
+        if (!value) error = translate('passwordRequired');
+        else if (value.length < 8) error = translate('passwordMinLength');
         break;
       case "confirmPassword":
-        if (!value) error = "Please confirm your password";
-        else if (value !== formData.password) error = "Passwords do not match";
+        if (!value) error = translate('confirmPasswordRequired');
+        else if (value !== formData.password) error = translate('passwordsDontMatch');
         break;
       default:
         break;
@@ -124,36 +126,29 @@ const SignUp = () => {
 
     if (formIsValid) {
       try {
-        // Prepare the data for the API call
         const payload = {
-          first_name: formData.name.split(" ")[0], 
-          last_name: formData.name.split(" ")[1] || "", 
-          company: " ", 
-          country: " ", 
+          first_name: formData.name.split(" ")[0],
+          last_name: formData.name.split(" ")[1] || "",
+          company: " ",
+          country: " ",
           contact: formData.contactNumber,
           email: formData.email,
           password: formData.password,
         };
 
-        // Make the API call
         const response = await instance.post("saveCustomer", payload);
 
         if (response.data) {
-          console.log("API Response:", response.data);
-          setDialogMessage("Signup successful!"); // Set success message
-          setDialogOpen(true); // Open the dialog
+          setDialogMessage(translate('signupSuccessful'));
+          setDialogOpen(true);
         } else {
-          console.error("API Error:", response.statusText);
-          setDialogMessage("Signup failed. Please try again."); // Set error message
-          setDialogOpen(true); // Open the dialog
+          setDialogMessage(translate('signupFailed'));
+          setDialogOpen(true);
         }
       } catch (error) {
-        console.error("Error submitting form:", error);
-        setDialogMessage("An error occurred. Please try again."); // Set error message
-        setDialogOpen(true); // Open the dialog
+        setDialogMessage(translate('signupError'));
+        setDialogOpen(true);
       }
-    } else {
-      console.log("Form has errors. Please fix them.");
     }
   };
 
@@ -168,7 +163,7 @@ const SignUp = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ mt: 10, mb: 10, borderRadius: 5 }}>
+    <Container maxWidth="md" sx={{ mt: 5, mb: 1, borderRadius: 5 }}>
       <Grid container spacing={0} sx={{ backgroundColor: "#002F6D", borderRadius: 5 }}>
         {/* Image */}
         <Grid item xs={12} md={6}>
@@ -181,8 +176,8 @@ const SignUp = () => {
               objectFit: "cover",
               borderRadius: 2,
             }}
-            alt="Signup"
-            src={loginPageImage} 
+            alt={translate('signupImageAlt')}
+            src={loginPageImage}
           />
         </Grid>
 
@@ -222,7 +217,7 @@ const SignUp = () => {
               color="white"
               gutterBottom
             >
-              Signup
+              {translate('signup')}
             </Typography>
 
             {/* Form */}
@@ -234,7 +229,7 @@ const SignUp = () => {
                 fullWidth
                 id="name"
                 name="name"
-                placeholder="Enter your name"
+                placeholder={translate('enterName')}
                 autoComplete="name"
                 autoFocus
                 value={formData.name}
@@ -265,7 +260,7 @@ const SignUp = () => {
                 fullWidth
                 id="contactNumber"
                 name="contactNumber"
-                placeholder="Enter your contact number"
+                placeholder={translate('enterContactNumber')}
                 autoComplete="tel"
                 value={formData.contactNumber}
                 onChange={handleChange}
@@ -295,7 +290,7 @@ const SignUp = () => {
                 fullWidth
                 id="email"
                 name="email"
-                placeholder="Enter your email"
+                placeholder={translate('enterEmail')}
                 autoComplete="email"
                 value={formData.email}
                 onChange={handleChange}
@@ -324,8 +319,8 @@ const SignUp = () => {
                 required
                 fullWidth
                 name="password"
-                placeholder="Enter your password"
-                type={showPassword ? "text" : "password"} 
+                placeholder={translate('enterPassword')}
+                type={showPassword ? "text" : "password"}
                 id="password"
                 autoComplete="new-password"
                 value={formData.password}
@@ -344,6 +339,7 @@ const SignUp = () => {
                         onClick={handleClickShowPassword}
                         edge="end"
                         sx={{ color: "gray", mr: 1 }}
+                        aria-label={translate('togglePasswordVisibility')}
                       >
                         {showPassword ? <Visibility /> : <VisibilityOff />}
                       </IconButton>
@@ -366,8 +362,8 @@ const SignUp = () => {
                 required
                 fullWidth
                 name="confirmPassword"
-                placeholder="Confirm your password"
-                type={showConfirmPassword ? "text" : "password"} 
+                placeholder={translate('confirmPassword')}
+                type={showConfirmPassword ? "text" : "password"}
                 id="confirmPassword"
                 autoComplete="new-password"
                 value={formData.confirmPassword}
@@ -386,6 +382,7 @@ const SignUp = () => {
                         onClick={handleClickShowConfirmPassword}
                         edge="end"
                         sx={{ color: "gray", mr: 1 }}
+                        aria-label={translate('toggleConfirmPasswordVisibility')}
                       >
                         {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
                       </IconButton>
@@ -409,13 +406,14 @@ const SignUp = () => {
                 variant="contained"
                 sx={{ mt: 1, mb: 1, borderRadius: "10px", backgroundColor: "white", color: "#002F6D", fontWeight: "bold" }}
               >
-                Signup
+                {translate('signup')}
               </Button>
             </Box>
 
             {/* Login Link */}
             <Typography variant="body2" sx={{ mt: 1, color: "white" }}>
-              Already have an account? <a href="/login" style={{ textDecoration: "underline" }}>Login</a>
+              {translate('alreadyHaveAccount')}{" "}
+              <a href="/login" style={{ textDecoration: "underline" }}>{translate('login')}</a>
             </Typography>
           </Box>
         </Grid>
@@ -425,21 +423,25 @@ const SignUp = () => {
       <Dialog
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}
-        maxWidth="xs" 
-        fullWidth 
+        maxWidth="xs"
+        fullWidth
         sx={{
           "& .MuiDialog-paper": {
-            borderRadius: "12px", 
+            borderRadius: "12px",
           },
         }}
       >
-        <DialogTitle sx={{ background: "#0D90C8", color: "white" ,textAlign:"center"}}>Message</DialogTitle>
+        <DialogTitle sx={{ background: "#0D90C8", color: "white", textAlign: "center" }}>
+          {translate('message')}
+        </DialogTitle>
         <DialogContent>
-        <DialogContentText sx={{mt:3 ,textAlign:"center"}}>{dialogMessage}</DialogContentText>
+          <DialogContentText sx={{ mt: 3, textAlign: "center" }}>
+            {dialogMessage}
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDialogOpen(false)} color="primary">
-            Close
+            {translate('close')}
           </Button>
         </DialogActions>
       </Dialog>
