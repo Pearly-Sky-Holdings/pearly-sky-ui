@@ -1,8 +1,10 @@
 import { Box, Typography, Grid, useTheme, useMediaQuery } from "@mui/material";
+import { useLanguage } from "../../context/LanguageContext";
 
 const OurServiceProvider = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const { translate } = useLanguage();
 
   return (
     <Box sx={{ 
@@ -17,7 +19,7 @@ const OurServiceProvider = () => {
         mb={{ xs: 2, sm: 3, md: 4 }} 
         sx={{ color: "#002F6D" }}
       >
-        Our Service Provider
+        {translate('serviceprovider')}
       </Typography>
 
       {/* Images Grid */}

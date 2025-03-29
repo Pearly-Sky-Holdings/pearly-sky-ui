@@ -8,7 +8,8 @@ import {
   Container,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { SteamCleaning1,SteamCleaning2,SteamCleaning3,SteamCleaning4} from "../../config/images";
+import { SteamCleaning1, SteamCleaning2, SteamCleaning3, SteamCleaning4 } from "../../config/images";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface CardData {
   image: string;
@@ -16,28 +17,7 @@ interface CardData {
   description: string;
 }
 
-const data: CardData[] = [
-  {
-    image: SteamCleaning1,
-    title: "Steam Cleaning Process",
-    description: "Steam cleaning uses heat and pressure to lift dirt, oil, and grease from surfaces. It involves the application of low-pressure steam or hot water mixed with detergent to dissolve and remove contaminants.",
-  },
-  {
-    image: SteamCleaning2,
-    title: "Effectiveness",
-    description: "The process effectively removes pollutants like dirt and grease, leaving surfaces clean and prepped for further treatment, such as painting or coating.",
-  },
-  {
-    image: SteamCleaning3,
-    title: "Surface Preparation",
-    description: "Steam cleaning prepares surfaces by removing oils, grease, and other residues, ensuring a clean foundation for coatings or paints to adhere properly.",
-  },
-  {
-    image: SteamCleaning4,
-    title: "Environmental Benefits",
-    description: "Steam cleaning is an eco-friendly method, using minimal chemicals and reducing environmental impact while still providing effective cleaning results.",
-  },
-];
+
 
 const CardContainer = styled(Card)(() => ({
   position: "relative",
@@ -67,6 +47,32 @@ const OverlayContent = styled(CardContent)(() => ({
 }));
 
 const ImageGallery: React.FC = () => {
+
+  const { translate } = useLanguage();
+
+  const data: CardData[] = [
+    {
+      image: SteamCleaning1,
+        title: translate('steamCleaningProcess'),
+        description: translate('imagesteamCleaningDescription1'),
+    },
+    {
+      image: SteamCleaning2,
+        title: translate('effectiveness'),
+        description: translate('imagesteamCleaningDescription2'),
+    },
+    {
+      image: SteamCleaning3,
+        title: translate('surfacePreparation'),
+        description: translate('steamCleaningDescription3'),
+    },
+    {
+      image: SteamCleaning4,
+        title: translate('environmentalBenefits'),
+        description: translate('steamCleaningDescription4'),
+    },
+  ];
+  
   return (
     <Container maxWidth="lg" style={{ marginTop: "2rem" }}>
       <Grid container spacing={3}>

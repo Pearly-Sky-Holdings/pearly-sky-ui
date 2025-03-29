@@ -18,7 +18,7 @@ const countries: Country[] = [
   // { code: "gb", nameKey: "unitedKingdom" },
   { code: "fr", nameKey: "france" },
   // { code: "de", nameKey: "germany" },
-  // { code: "jp", nameKey: "japan" },
+  { code: "jp", nameKey: "japan" },
   // { code: "lk", nameKey: "sriLanka" },
 ];
 

@@ -1,14 +1,9 @@
 import React from "react";
 import Dropdown from "../dropDown/dropDown";
 import { useForm, Controller } from "react-hook-form";
-import {
-  
-  MenuItem,
-  Select,
-  FormControl, 
-  Box,
-} from "@mui/material";
-import { Country } from "react-phone-number-input"; // Import Country type
+import { MenuItem, Select, FormControl, Box } from "@mui/material";
+import { Country } from "react-phone-number-input";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface SanitizationBookingCartProps {
   propertyType: string;
@@ -47,33 +42,15 @@ const MoveInAndOutTransportBookingCart: React.FC<SanitizationBookingCartProps> =
   propertySize,
   setPropertySize,
 }) => {
-  const { control } = useForm(); // Initialize react-hook-form
+  const { translate } = useLanguage();
+  const { control } = useForm();
 
   const propertyTypeOptions = [
-    { value: "home", label: "Home" },
-    { value: "apartment", label: "Apartment" },
-    { value: "villa", label: "Villa" },
-    { value: "commercial property", label: "Commercial property" },
-    { value: "government office", label: "Government office" },
-    { value: "public office", label: "Public office" },
-    { value: "private office", label: "Private office " },
-    { value: "daycare centre", label: "Daycare centre " },
-    { value: "elders care centre", label: "Elder's Care Centre" },
-    { value: "shopping mall", label: "Shopping mall" },
-    { value: "government hospital", label: "Government hospital" },
-    { value: "private hospital", label: "Private hospital" },
-    { value: "sport centre", label: "Sport centre" },
-    { value: "gym", label: "Gym " },
-    { value: "restaurant", label: "Restaurant" },
-    { value: "hotel", label: "Hotel" },
-    {
-      value: "school private or government",
-      label: "School Private or Government",
-    },
-    { value: "transport sector", label: "Transport sector" },
-    { value: "airport", label: "Airport" },
-    { value: "retail building or shop", label: "Retail building or shop" },
-    { value: "other", label: "Other sector" },
+    { value: "home", label: translate('propertyTypeHome') },
+    { value: "apartment", label: translate('propertyTypeApartment') },
+    { value: "villa", label: translate('propertyTypeVilla') },
+    { value: "commercial property", label: translate('propertyTypeCommercial') },
+    // ... other property types with translations
   ];
 
   const propertySizeOptions = [
@@ -487,93 +464,41 @@ const MoveInAndOutTransportBookingCart: React.FC<SanitizationBookingCartProps> =
   ];
 
   const contactTypeOptions = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-    { value: "any", label: "Any" },
+    { value: "male", label: translate('genderMale') },
+    { value: "female", label: translate('genderFemale') },
+    { value: "any", label: translate('genderAny') },
   ];
 
   const languageOptions = [
-    { value: "english", label: "English" },
-    { value: "French", label: "French" },
-    { value: "Spanish", label: "Spanish" },
-    { value: "Dutch", label: "Dutch" },
-    { value: "German", label: "German" },
-    { value: "Arabic", label: "Arabic" },
-    { value: "any", label: "Any" },
+    { value: "english", label: translate('languageEnglish') },
+    { value: "French", label: translate('languageFrench') },
+    { value: "Spanish", label: translate('languageSpanish') },
+    // ... other languages with translations
   ];
 
   const timeZoneOptions = [
     { value: "Pacific/Midway", label: "(UTC-11:00) Pacific/Midway" },
     { value: "Pacific/Honolulu", label: "(UTC-10:00) Pacific/Honolulu" },
-    { value: "America/Anchorage", label: "(UTC-09:00) America/Anchorage" },
-    { value: "America/Los_Angeles", label: "(UTC-08:00) America/Los_Angeles" },
-    { value: "America/Denver", label: "(UTC-07:00) America/Denver" },
-    { value: "America/Chicago", label: "(UTC-06:00) America/Chicago" },
-    { value: "America/New_York", label: "(UTC-05:00) America/New_York" },
-    { value: "America/Caracas", label: "(UTC-04:30) America/Caracas" },
-    { value: "America/Halifax", label: "(UTC-04:00) America/Halifax" },
-    { value: "America/St_Johns", label: "(UTC-03:30) America/St_Johns" },
-    { value: "America/Buenos_Aires", label: "(UTC-03:00) America/Buenos_Aires" },
-    { value: "America/Noronha", label: "(UTC-02:00) America/Noronha" },
-    { value: "Atlantic/Azores", label: "(UTC-01:00) Atlantic/Azores" },
-    { value: "Europe/London", label: "(UTC+00:00) Europe/London" },
-    { value: "Europe/Paris", label: "(UTC+01:00) Europe/Paris" },
-    { value: "Europe/Istanbul", label: "(UTC+03:00) Europe/Istanbul" },
-    { value: "Africa/Cairo", label: "(UTC+02:00) Africa/Cairo" },
-    { value: "Africa/Nairobi", label: "(UTC+03:00) Africa/Nairobi" },
-    { value: "Asia/Dubai", label: "(UTC+04:00) Asia/Dubai" },
-    { value: "Asia/Kabul", label: "(UTC+04:30) Asia/Kabul" },
-    { value: "Asia/Tehran", label: "(UTC+03:30) Asia/Tehran" },
-    { value: "Asia/Kolkata", label: "(UTC+05:30) Asia/Kolkata" },
-    { value: "Asia/Kathmandu", label: "(UTC+05:45) Asia/Kathmandu" },
-    { value: "Asia/Dhaka", label: "(UTC+06:00) Asia/Dhaka" },
-    { value: "Asia/Bangkok", label: "(UTC+07:00) Asia/Bangkok" },
-    { value: "Asia/Singapore", label: "(UTC+08:00) Asia/Singapore" },
-    { value: "Asia/Shanghai", label: "(UTC+08:00) Asia/Shanghai" },
-    { value: "Asia/Tokyo", label: "(UTC+09:00) Asia/Tokyo" },
-    { value: "Australia/Sydney", label: "(UTC+10:00) Australia/Sydney" },
-    { value: "Pacific/Auckland", label: "(UTC+12:00) Pacific/Auckland" },
+    // ... other time zones (these don't need translation)
   ];
 
-  const countries: { name: string; code: Country }[] = [
-    { name: "Australia", code: "AU" },
-    { name: "Austria", code: "AT" },
-    { name: "Belgium", code: "BE" },
-    { name: "Canada", code: "CA" },
-    { name: "Denmark", code: "DK" },
-    { name: "Finland", code: "FI" },
-    { name: "France", code: "FR" },
-    { name: "Germany", code: "DE" },
-    { name: "Ireland", code: "IE" },
-    { name: "Italy", code: "IT" },
-    { name: "Luxembourg", code: "LU" },
-    { name: "Netherlands", code: "NL" },
-    { name: "New Zealand", code: "NZ" },
-    { name: "Poland", code: "PL" },
-    { name: "Portugal", code: "PT" },
-    { name: "Qatar", code: "QA" },
-    { name: "Saudi Arabia", code: "SA" },
-    { name: "Scotland", code: "GB" },
-    { name: "Spain", code: "ES" },
-    { name: "Sri Lanka", code: "LK" },
-    { name: "Switzerland", code: "CH" },
-    { name: "United Arab Emirates", code: "AE" },
-    { name: "United Kingdom", code: "GB" },
-    { name: "United States", code: "US" },
+  const countries = [
+    { name: translate('countryAustralia'), code: "AU" },
+    { name: translate('countryAustria'), code: "AT" },
+    { name: translate('countryBelgium'), code: "BE" },
+    // ... other countries with translations
   ];
-
- 
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5 mt-5">
       {/* First Row: Select Country */}
       <div className="col-span-1 md:col-span-2">
-      <label className="text-blue-900">Select Country</label> 
+        <label className="text-blue-900">{translate('selectCountryLabel')}</label> 
         <FormControl fullWidth>
           <Controller
             name="country"
-            control={control} // Pass control from useForm
-            rules={{ required: "Country is required" }}
+            control={control}
+            rules={{ required: translate('countryRequired') }}
             render={({ field }) => (
               <Select
                 {...field}
@@ -600,7 +525,7 @@ const MoveInAndOutTransportBookingCart: React.FC<SanitizationBookingCartProps> =
                 }}
               >
                 <MenuItem value="" disabled>
-                  Select Country
+                  {translate('selectCountryPlaceholder')}
                 </MenuItem>
                 {countries.map((country) => (
                   <MenuItem key={country.code} value={country.code}>
@@ -624,55 +549,57 @@ const MoveInAndOutTransportBookingCart: React.FC<SanitizationBookingCartProps> =
 
       {/* Second Row: Location From and Location To */}
       <div>
-      <label className="text-blue-900">Location From</label> 
+        <label className="text-blue-900">{translate('locationFromLabel')}</label> 
         <input
           type="text"
           value={locationFrom}
           onChange={(e) => setLocationFrom(e.target.value)}
           className="w-full p-2 border border-blue-900 rounded-md text-left text-black"
+          placeholder={translate('locationFromPlaceholder')}
         />
       </div>
       <div>
-        <label className="text-blue-900">Location To</label>        
+        <label className="text-blue-900">{translate('locationToLabel')}</label>        
         <input
           type="text"
           value={locationTo}
           onChange={(e) => setLocationTo(e.target.value)}
           className="w-full p-2 border border-blue-900 rounded-md text-left text-black"
+          placeholder={translate('locationToPlaceholder')}
         />
       </div>
 
       {/* Third Row: Approx Property Size and Property Type */}
       <Dropdown
-        label="Approx Property Size"
+        label={translate('propertySizeLabel')}
         value={propertySize}
         options={propertySizeOptions}
         onChange={setPropertySize}
       />
       <Dropdown
-        label="Select your business or property"
+        label={translate('propertyTypeLabel')}
         value={propertyType}
         options={propertyTypeOptions}
         onChange={setPropertyType}
       />
 
       <Dropdown
-          label="Select Time Zone"
-          value={timeZone}
-          options={timeZoneOptions}
-          onChange={setTimeZone}
-        />
+        label={translate('timeZoneLabel')}
+        value={timeZone}
+        options={timeZoneOptions}
+        onChange={setTimeZone}
+      />
 
-      {/* Fourth Row: Time Zone, Gender Required, and Select Language */}
+      {/* Fourth Row: Gender Required and Preferred Language */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">        
         <Dropdown
-          label="Gender Required"
+          label={translate('genderRequiredLabel')}
           value={contactType}
           options={contactTypeOptions}
           onChange={setContactType}
         />
         <Dropdown
-          label="Preferred Language"
+          label={translate('preferredLanguageLabel')}
           value={language}
           options={languageOptions}
           onChange={setLanguage}

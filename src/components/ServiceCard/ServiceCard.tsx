@@ -1,5 +1,12 @@
-import { Card, CardContent, CardMedia, Typography, Button, Box } from "@mui/material";
-import { Link } from 'react-router-dom';
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Button,
+  Box,
+} from "@mui/material";
+import { Link } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 
 interface Service {
@@ -9,7 +16,9 @@ interface Service {
   link: string;
 }
 
-export default function ServiceCard({ service }: Readonly<{ service: Service }>) {
+export default function ServiceCard({
+  service,
+}: Readonly<{ service: Service }>) {
   const { translate } = useLanguage();
 
   return (
@@ -24,28 +33,42 @@ export default function ServiceCard({ service }: Readonly<{ service: Service }>)
         "&:hover": { transform: "scale(1.05)" },
       }}
     >
-      <Box sx={{ 
-        height: "250px", 
-        overflow: "hidden",
-        position: "relative"
-      }}>
-        <CardMedia 
-          component="img" 
-          image={service.image} 
+      <Box
+        sx={{
+          height: "250px",
+          overflow: "hidden",
+          position: "relative",
+        }}
+      >
+        <CardMedia
+          component="img"
+          image={service.image}
           alt={service.title}
           sx={{
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            objectPosition: "center"
-          }} 
+            objectPosition: "center",
+          }}
         />
       </Box>
       <CardContent sx={{ flexGrow: 1 }}>
-        <Typography variant="h6" fontWeight="bold">
+        <Typography
+          variant="h6"
+          fontWeight="bold"
+          sx={{
+            background: "linear-gradient(90deg, #002F6D, #0D90C8)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
           {service.title}
         </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 1, mb: 2 }}>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ mt: 1, mb: 2 }}
+        >
           {service.description}
         </Typography>
       </CardContent>
@@ -61,7 +84,7 @@ export default function ServiceCard({ service }: Readonly<{ service: Service }>)
             "&:hover": { backgroundColor: "#008CDA" },
           }}
         >
-          {translate('bookNow')}
+          {translate("bookNow")}
         </Button>
       </Box>
     </Card>

@@ -1,5 +1,5 @@
-
 import Dropdown from "../dropDown/dropDown";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface SanitizationBookingCartProps { 
   propertyType: string;
@@ -26,136 +26,134 @@ const SanitizationBookingCart: React.FC<SanitizationBookingCartProps> = ({
   timeZone,
   setTimeZone,
 }) => {
-  
+  const { translate } = useLanguage();
 
   const propertyTypeOptions = [
-    { value: "home", label: "Home" },
-    { value: "apartment", label: "Apartment" },
-    { value: "villa", label: "Villa" },
-    { value: "commercial property", label: "Commercial property" },
-    { value: "government office", label: "Government office" },
-    { value: "public office", label: "Public office" },
-    { value: "private office", label: "Private office " },
-    { value: "daycare centre", label: "Daycare centre " },
-    { value: "elders care centre", label: "Elder's Care Centre" },
-    { value: "shopping mall", label: "Shopping mall" },
-    { value: "government hospital", label: "Government hospital" },
-    { value: "private hospital", label: "Private hospital" },
-    { value: "sport centre", label: "Sport centre" },
-    { value: "gym", label: "Gym " },
-    { value: "restaurant", label: "Restaurant" },
-    { value: "hotel", label: "Hotel" },
+    { value: "home", label: translate('home') },
+    { value: "apartment", label: translate('apartment') },
+    { value: "villa", label: translate('villa') },
+    { value: "commercial property", label: translate('commercialProperty') },
+    { value: "government office", label: translate('governmentOffice') },
+    { value: "public office", label: translate('publicOffice') },
+    { value: "private office", label: translate('privateOffice') },
+    { value: "daycare centre", label: translate('daycareCentre') },
+    { value: "elders care centre", label: translate('eldersCareCentre') },
+    { value: "shopping mall", label: translate('shoppingMall') },
+    { value: "government hospital", label: translate('governmentHospital') },
+    { value: "private hospital", label: translate('privateHospital') },
+    { value: "sport centre", label: translate('sportCentre') },
+    { value: "gym", label: translate('gym') },
+    { value: "restaurant", label: translate('restaurant') },
+    { value: "hotel", label: translate('hotel') },
     {
       value: "school private or government",
-      label: "School Private or Government",
+      label: translate('schoolPrivateOrGovernment')
     },
-    { value: "transport sector", label: "Transport sector" },
-    { value: "airport", label: "Airport" },
-    { value: "retail building or shop", label: "Retail building or shop" },
-    { value: "other sector", label: "Other sector" },
+    { value: "transport sector", label: translate('transportSector') },
+    { value: "airport", label: translate('airport') },
+    { value: "retail building or shop", label: translate('retailBuildingOrShop') },
+    { value: "other sector", label: translate('otherSector') },
   ];
+
   const frequencyOptions = [
-    { value: "One-time", label: "One-time" },
-    { value: "weekly", label: "Weekly" },
-    { value: "every two weeks", label: "every two weeks" },
-    { value: "every three weeks", label: "every three weeks" },
-    { value: "monthly", label: "monthly" },
-    { value: "other", label: "other" },
+    { value: "One-time", label: translate('oneTime') },
+    { value: "weekly", label: translate('weekly') },
+    { value: "every two weeks", label: translate('everyTwoWeeks') },
+    { value: "every three weeks", label: translate('everyThreeWeeks') },
+    { value: "monthly", label: translate('monthly') },
+    { value: "other", label: translate('other') },
   ];
 
   const contactTypeOptions = [
-    { value: "male", label: "male" },
-    { value: "female", label: "female" },
-    { value: "any", label: "any" },
+    { value: "male", label: translate('male') },
+    { value: "female", label: translate('female') },
+    { value: "any", label: translate('any') },
   ];
 
   const languageOptions = [
-    { value: "english", label: "English" },
-    { value: "french", label: "French" },
-    { value: "spanish", label: "Spanish" },
-    { value: "Dutch", label: "Dutch" },
-    { value: "German", label: "German" },
-    { value: "Arabic", label: "Arabic" },
-    { value: "any", label: "any" },
+    { value: "english", label: translate('english') },
+    { value: "french", label: translate('french') },
+    { value: "spanish", label: translate('spanish') },
+    { value: "dutch", label: translate('dutch') },
+    { value: "german", label: translate('german') },
+    { value: "arabic", label: translate('arabic') },
+    { value: "any", label: translate('any') },
   ];
 
   const timeZoneOptions = [
-    { value: "Pacific/Midway", label: "(UTC-11:00) Pacific/Midway" },
-      { value: "Pacific/Honolulu", label: "(UTC-10:00) Pacific/Honolulu" },
-      { value: "America/Anchorage", label: "(UTC-09:00) America/Anchorage" },
-      { value: "America/Los_Angeles", label: "(UTC-08:00) America/Los_Angeles" },
-      { value: "America/Denver", label: "(UTC-07:00) America/Denver" },
-      { value: "America/Chicago", label: "(UTC-06:00) America/Chicago" },
-      { value: "America/New_York", label: "(UTC-05:00) America/New_York" },
-      { value: "America/Caracas", label: "(UTC-04:30) America/Caracas" },
-      { value: "America/Halifax", label: "(UTC-04:00) America/Halifax" },
-      { value: "America/St_Johns", label: "(UTC-03:30) America/St_Johns" },
-      { value: "America/Buenos_Aires", label: "(UTC-03:00) America/Buenos_Aires" },
-      { value: "America/Noronha", label: "(UTC-02:00) America/Noronha" },
-      { value: "Atlantic/Azores", label: "(UTC-01:00) Atlantic/Azores" },
-      { value: "Europe/London", label: "(UTC+00:00) Europe/London" },
-      { value: "Europe/Paris", label: "(UTC+01:00) Europe/Paris" },
-      { value: "Europe/Istanbul", label: "(UTC+03:00) Europe/Istanbul" },
-      { value: "Africa/Cairo", label: "(UTC+02:00) Africa/Cairo" },
-      { value: "Africa/Nairobi", label: "(UTC+03:00) Africa/Nairobi" },
-      { value: "Asia/Dubai", label: "(UTC+04:00) Asia/Dubai" },
-      { value: "Asia/Kabul", label: "(UTC+04:30) Asia/Kabul" },
-      { value: "Asia/Tehran", label: "(UTC+03:30) Asia/Tehran" },
-      { value: "Asia/Kolkata", label: "(UTC+05:30) Asia/Kolkata" },
-      { value: "Asia/Kathmandu", label: "(UTC+05:45) Asia/Kathmandu" },
-      { value: "Asia/Dhaka", label: "(UTC+06:00) Asia/Dhaka" },
-      { value: "Asia/Bangkok", label: "(UTC+07:00) Asia/Bangkok" },
-      { value: "Asia/Singapore", label: "(UTC+08:00) Asia/Singapore" },
-      { value: "Asia/Shanghai", label: "(UTC+08:00) Asia/Shanghai" },
-      { value: "Asia/Tokyo", label: "(UTC+09:00) Asia/Tokyo" },
-      { value: "Australia/Sydney", label: "(UTC+10:00) Australia/Sydney" },
-      { value: "Pacific/Auckland", label: "(UTC+12:00) Pacific/Auckland" },  
-
+    { value: "Pacific/Midway", label: `(UTC-11:00) ${translate('pacificMidway')}` },
+    { value: "Pacific/Honolulu", label: `(UTC-10:00) ${translate('pacificHonolulu')}` },
+    { value: "America/Anchorage", label: `(UTC-09:00) ${translate('americaAnchorage')}` },
+    { value: "America/Los_Angeles", label: `(UTC-08:00) ${translate('americaLosAngeles')}` },
+    { value: "America/Denver", label: `(UTC-07:00) ${translate('americaDenver')}` },
+    { value: "America/Chicago", label: `(UTC-06:00) ${translate('americaChicago')}` },
+    { value: "America/New_York", label: `(UTC-05:00) ${translate('americaNewYork')}` },
+    { value: "America/Caracas", label: `(UTC-04:30) ${translate('americaCaracas')}` },
+    { value: "America/Halifax", label: `(UTC-04:00) ${translate('americaHalifax')}` },
+    { value: "America/St_Johns", label: `(UTC-03:30) ${translate('americaStJohns')}` },
+    { value: "America/Buenos_Aires", label: `(UTC-03:00) ${translate('americaBuenosAires')}` },
+    { value: "America/Noronha", label: `(UTC-02:00) ${translate('americaNoronha')}` },
+    { value: "Atlantic/Azores", label: `(UTC-01:00) ${translate('atlanticAzores')}` },
+    { value: "Europe/London", label: `(UTC+00:00) ${translate('europeLondon')}` },
+    { value: "Europe/Paris", label: `(UTC+01:00) ${translate('europeParis')}` },
+    { value: "Europe/Istanbul", label: `(UTC+03:00) ${translate('europeIstanbul')}` },
+    { value: "Africa/Cairo", label: `(UTC+02:00) ${translate('africaCairo')}` },
+    { value: "Africa/Nairobi", label: `(UTC+03:00) ${translate('africaNairobi')}` },
+    { value: "Asia/Dubai", label: `(UTC+04:00) ${translate('asiaDubai')}` },
+    { value: "Asia/Kabul", label: `(UTC+04:30) ${translate('asiaKabul')}` },
+    { value: "Asia/Tehran", label: `(UTC+03:30) ${translate('asiaTehran')}` },
+    { value: "Asia/Kolkata", label: `(UTC+05:30) ${translate('asiaKolkata')}` },
+    { value: "Asia/Kathmandu", label: `(UTC+05:45) ${translate('asiaKathmandu')}` },
+    { value: "Asia/Dhaka", label: `(UTC+06:00) ${translate('asiaDhaka')}` },
+    { value: "Asia/Bangkok", label: `(UTC+07:00) ${translate('asiaBangkok')}` },
+    { value: "Asia/Singapore", label: `(UTC+08:00) ${translate('asiaSingapore')}` },
+    { value: "Asia/Shanghai", label: `(UTC+08:00) ${translate('asiaShanghai')}` },
+    { value: "Asia/Tokyo", label: `(UTC+09:00) ${translate('asiaTokyo')}` },
+    { value: "Australia/Sydney", label: `(UTC+10:00) ${translate('australiaSydney')}` },
+    { value: "Pacific/Auckland", label: `(UTC+12:00) ${translate('pacificAuckland')}` },  
   ];  
 
-return (
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5 mt-5">
-    <Dropdown
-        label="Select your business or property"
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5 mt-5">
+      <Dropdown
+        label={translate('selectBusinessProperty')}
         value={propertyType}
         options={propertyTypeOptions}
         onChange={setPropertyType}
       />
      
-     <div>
-     <Dropdown
-        label="Choose Frequency"
-        value={frequency}
-        options={frequencyOptions}
-        onChange={setFrequency}
-      /> 
-     
+      <div>
+        <Dropdown
+          label={translate('chooseFrequency')}
+          value={frequency}
+          options={frequencyOptions}
+          onChange={setFrequency}
+        /> 
       </div>
 
       <Dropdown
-            label="Select Time Zone"
-            value={timeZone}
-            options={timeZoneOptions}
-            onChange={setTimeZone}
+        label={translate('selectTimeZone')}
+        value={timeZone}
+        options={timeZoneOptions}
+        onChange={setTimeZone}
       />
+      
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <Dropdown
-        label="Gender Required"
-        value={contactType}
-        options={contactTypeOptions}
-        onChange={setContactType}
-      />
-      <Dropdown
-        label="Preferred Language"
-        value={language}
-        options={languageOptions}
-        onChange={setLanguage}
-      />
+        <Dropdown
+          label={translate('genderRequired')}
+          value={contactType}
+          options={contactTypeOptions}
+          onChange={setContactType}
+        />
+        <Dropdown
+          label={translate('droppreferredLanguage')}
+          value={language}
+          options={languageOptions}
+          onChange={setLanguage}
+        />
+      </div>
     </div>
-  </div>
-);
+  );
 };
-
-
 
 export default SanitizationBookingCart;

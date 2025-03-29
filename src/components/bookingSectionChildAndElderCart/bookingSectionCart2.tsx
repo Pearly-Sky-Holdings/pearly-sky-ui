@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Dropdown from "../dropDown/dropDown";
 import { Info as InfoIcon } from "@mui/icons-material";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface ChildInfo {
   age: string;
@@ -53,45 +54,46 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
   childInfo,
   setChildInfo,
 }) => {
+  const { translate } = useLanguage();
   const [isOtherSelected, setIsOtherSelected] = useState(false);
 
   const durationOptions = [
-    { value: "2", label: "2 hours" },
-    { value: "2.5", label: "2.5 hours" },
-    { value: "3", label: "3 hours" },
-    { value: "3.5", label: "3.5 hours" },
-    { value: "4", label: "4 hours" },
-    { value: "4.5", label: "4.5 hours" },
-    { value: "5", label: "5 hours" },
-    { value: "5.5", label: "5.5 hours" },
-    { value: "6", label: "6 hours" },
-    { value: "6.5", label: "6.5 hours" },
-    { value: "7", label: "7 hours" },
-    { value: "7.5", label: "7.5 hours" },
-    { value: "8", label: "8 hours" },
-    { value: "8.5", label: "8.5 hours" },
-    { value: "9", label: "9 hours" },
-    { value: "9.5", label: "9.5 hours" },
-    { value: "10", label: "10 hours" },
-    { value: "10.5", label: "10.5 hours" },
-    { value: "11", label: "11 hours" },
-    { value: "11.5", label: "11.5 hours" },
-    { value: "12", label: "12 hours" },
+    { value: "2", label: translate('twoHours') },
+    { value: "2.5", label: translate('twoHalfHours') },
+    { value: "3", label: translate('threeHours') },
+    { value: "3.5", label: translate('threeHalfHours') },
+    { value: "4", label: translate('fourHours') },
+    { value: "4.5", label: translate('fourHalfHours') },
+    { value: "5", label: translate('fiveHours') },
+    { value: "5.5", label: translate('fiveHalfHours') },
+    { value: "6", label: translate('sixHours') },
+    { value: "6.5", label: translate('sixHalfHours') },
+    { value: "7", label: translate('sevenHours') },
+    { value: "7.5", label: translate('sevenHalfHours') },
+    { value: "8", label: translate('eightHours') },
+    { value: "8.5", label: translate('eightHalfHours') },
+    { value: "9", label: translate('nineHours') },
+    { value: "9.5", label: translate('nineHalfHours') },
+    { value: "10", label: translate('tenHours') },
+    { value: "10.5", label: translate('tenHalfHours') },
+    { value: "11", label: translate('elevenHours') },
+    { value: "11.5", label: translate('elevenHalfHours') },
+    { value: "12", label: translate('twelveHours') },
   ];
 
   const numchildOptions = [
-    { value: "1", label: "1 " },
-    { value: "2", label: "2 " },
-    { value: "3", label: "3 " },
+    { value: "1", label: "1" },
+    { value: "2", label: "2" },
+    { value: "3", label: "3" },
     { value: "4", label: "4" },
     { value: "5", label: "5" },
-    { value: "other", label: "Other" },
+    { value: "other", label: translate('other') },
   ];
 
   const numCareProfession = [
-    { value: "1", label: "1 " },
-    { value: "2", label: "2 " },
-    { value: "3", label: "3 " },
+    { value: "1", label: "1" },
+    { value: "2", label: "2" },
+    { value: "3", label: "3" },
     { value: "4", label: "4" },
     { value: "5", label: "5" },
     { value: "6", label: "6" },
@@ -102,43 +104,43 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
   ];
 
   const frequencyOptions = [
-    { value: "once", label: "One-time" },
-    { value: "weekly", label: "Weekly" },
-    { value: "every2weeks", label: "Every 02 weeks" },
-    { value: "every3weeks", label: "Every 03 weeks" },
-    { value: "monthly", label: "Monthly" },
-    { value: "other", label: "Other" },
+    { value: "once", label: translate('oneTime') },
+    { value: "weekly", label: translate('weekly') },
+    { value: "every2weeks", label: translate('everyTwoWeeks') },
+    { value: "every3weeks", label: translate('everyThreeWeeks') },
+    { value: "monthly", label: translate('monthly') },
+    { value: "other", label: translate('other') },
   ];
 
   const contactTypeOptions = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-    { value: "any", label: "Any" },
+    { value: "male", label: translate('male') },
+    { value: "female", label: translate('female') },
+    { value: "any", label: translate('any') },
   ];
 
   const languageOptions = [
-    { value: "english", label: "English" },
-    { value: "french", label: "French" },
-    { value: "spanish", label: "Spanish" },
-    { value: "Dutch", label: "Dutch" },
-    { value: "German", label: "German" },
-    { value: "Arabic", label: "Arabic" },
-    { value: "any", label: "Any" },
+    { value: "english", label: translate('english') },
+    { value: "french", label: translate('french') },
+    { value: "spanish", label: translate('spanish') },
+    { value: "dutch", label: translate('dutch') },
+    { value: "german", label: translate('german') },
+    { value: "arabic", label: translate('arabic') },
+    { value: "any", label: translate('any') },
   ];
 
   const childageOption = [
-    { value: "1 month", label: "1 Month" },
-    { value: "6 month", label: "6 Month" },
-    { value: "1 year", label: "1 Year" },
-    { value: "2 years", label: "2 Years" },
-    { value: "3 years", label: "3 Years" },
-    { value: "4 years", label: "4 Years" },
-    { value: "5 years", label: "5 Years" },
-    { value: "6 years", label: "6 Years" },
-    { value: "7 years", label: "7 Years" },
-    { value: "8 years", label: "8 Years" },
-    { value: "9 years", label: "9 Years" },
-    { value: "10 years", label: "10 Years" },
+    { value: "1 month", label: translate('oneMonth') },
+    { value: "6 month", label: translate('sixMonths') },
+    { value: "1 year", label: translate('oneYear') },
+    { value: "2 years", label: translate('twoYears') },
+    { value: "3 years", label: translate('threeYears') },
+    { value: "4 years", label: translate('fourYears') },
+    { value: "5 years", label: translate('fiveYears') },
+    { value: "6 years", label: translate('sixYears') },
+    { value: "7 years", label: translate('sevenYears') },
+    { value: "8 years", label: translate('eightYears') },
+    { value: "9 years", label: translate('nineYears') },
+    { value: "10 years", label: translate('tenYears') },
   ];
 
   const elderageOption = [
@@ -154,25 +156,25 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
   ];
 
   const specialRequestOptions = [
-    { value: "disable", label: "Disable" },
-    { value: "non-disable", label: "Non-Disable" },
+    { value: "disable", label: translate('disabled') },
+    { value: "non-disable", label: translate('nonDisabled') },
   ];
 
   const propertyTypeOptions = [
-    { value: "home", label: "Home" },
-    { value: "apartment", label: "Apartment" },
-    { value: "villa", label: "Villa" },
-    { value: "child care center", label: "Child Care Center " },
-    { value: "elders care centre", label: "Elder's Care Centre" },
-    { value: "government hospital", label: "Government hospital" },
-    { value: "private hospital", label: "Private hospital" },
-    { value: "other", label: "Other" },
+    { value: "home", label: translate('home') },
+    { value: "apartment", label: translate('apartment') },
+    { value: "villa", label: translate('villa') },
+    { value: "child care center", label: translate('childCareCenter') },
+    { value: "elders care centre", label: translate('eldersCareCenter') },
+    { value: "government hospital", label: translate('governmentHospital') },
+    { value: "private hospital", label: translate('privateHospital') },
+    { value: "other", label: translate('other') },
   ];
 
   const genderOptions = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-    { value: "other", label: "Other" },
+    { value: "male", label: translate('male') },
+    { value: "female", label: translate('female') },
+    { value: "other", label: translate('other') },
   ];
 
   const handleDurationChange = (value: string) => {
@@ -208,7 +210,7 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
       <Dropdown
-        label="Duration (in hours)"
+        label={translate('durationHours')}
         value={duration}
         options={durationOptions}
         onChange={handleDurationChange}
@@ -216,7 +218,7 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
 
       <div>
         <Dropdown
-          label="Request Care Professionals"
+          label={translate('requestCareProfessionals')}
           value={numProfession}
           options={numCareProfession}
           onChange={(value) => setNumProfession(value)}
@@ -224,32 +226,32 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
         {parseFloat(duration) > 8 && (
           <div className="text-sm text-blue-500 px-1">
             <InfoIcon sx={{ color: "black", mx: 1 }} />
-            If you need more than 8 hours, please select additional care professionals.
+            {translate('durationWarning')}
           </div>
         )}
       </div>
 
       <Dropdown
-        label="Select Frequency"
+        label={translate('selectFrequency')}
         value={frequency}
         options={frequencyOptions}
         onChange={(value) => setFrequency(value)}
       />
       <Dropdown
-        label="Preferred Language to Contact"
+        label={translate('preferredLanguage')}
         value={language}
         options={languageOptions}
         onChange={(value) => setLanguage(value)}
       />
       <Dropdown
-        label="Care Professional Gender"
+        label={translate('careProfessionalGender')}
         value={contactType}
         options={contactTypeOptions}
         onChange={(value) => setContactType(value)}
       />
       <div>
         <Dropdown
-          label={pageType === "child" ? "Number of Children" : "Number of Elders"}
+          label={pageType === "child" ? translate('numberOfChildren') : translate('numberOfElders')}
           value={numChild}
           options={numchildOptions}
           onChange={handleNumChildChange}
@@ -257,7 +259,7 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
         {isOtherSelected && (
           <div className="text-md text-blue-500 px-1">
             <InfoIcon sx={{ color: "black", mx: 1 }} />
-            Kindly specify the number of elders and their ages in the additional notes section.
+            {translate('otherNumberWarning')}
           </div>
         )}
       </div>
@@ -268,9 +270,9 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
             key={index}
             className="flex flex-col sm:flex-row sm:space-x-2 space-y-4 sm:space-y-0"
           >
-            <div className="w-full sm:w-1/3">
+            <div className="w-full sm:w-2/4">
               <Dropdown
-                label={`Child ${index + 1} Age`}
+                label={`${pageType === "child" ? translate('child') : translate('elder')} ${index + 1} ${translate('age')}`}
                 value={childInfo[index]?.age || ""}
                 options={pageType === "child" ? childageOption : elderageOption}
                 onChange={(value) => handleChildInfoChange(index, "age", value)}
@@ -278,7 +280,7 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
             </div>
             <div className="w-full sm:w-1/3">
               <Dropdown
-                label={`Gender`}
+                label={translate('gender')}
                 value={childInfo[index]?.gender || ""}
                 options={genderOptions}
                 onChange={(value) => handleChildInfoChange(index, "gender", value)}
@@ -286,12 +288,12 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
             </div>
             <div className="w-full sm:w-1/3">
               <label className="text-sm font-medium text-blue-900">
-                Name
+                {translate('name')}
               </label>
               <input
                 type="text"
                 className="w-full border mt-2 border-blue-900 rounded p-2 text-black placeholder-gray-400 hover:border-[#002F6D] focus:border-[#002F6D] outline-none"
-                placeholder="Enter Name"
+                placeholder={translate('enterName')}
                 value={childInfo[index]?.name || ""}
                 onChange={(e) => handleChildInfoChange(index, "name", e.target.value)}
               />
@@ -300,13 +302,13 @@ const BookingSectionCart2: React.FC<BookingSectionCartProps> = ({
         ))}
 
       <Dropdown
-        label="Special Request"
+        label={translate('specialRequest')}
         value={specialRequest}
         options={specialRequestOptions}
         onChange={(value) => setSpecialRequest(value)}
       />
       <Dropdown
-        label="Service Providing Place"
+        label={translate('serviceProvidingPlace')}
         value={propertyType}
         options={propertyTypeOptions}
         onChange={(value) => setPropertyType(value)}

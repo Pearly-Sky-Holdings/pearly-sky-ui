@@ -1,47 +1,65 @@
 import React, { useState } from 'react';
 import { Box, Typography, Grid, Checkbox } from '@mui/material';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface EstimateListProps {
   onSelectionChange: (selectedItems: string[]) => void;
 }
 
-const EstimateList: React.FC<EstimateListProps> = ({ onSelectionChange }) => {
-  const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>({
-    'Carpet Cleaning': false,
-    'Rug Cleaning': false,
-    'Upholstery Cleaning': false,
-    'Mattress Cleaning': false,
-    'Curtain Cleaning': false,
-    'Sofa Cleaning': false,
-    'Stain Removal': false,
-    'Scotchgard Protector': false,
-    'Other': false,
-  });
+// Internal constant keys that don't change with language
+const CLEANING_ITEM_KEYS = {
+  CARPET: 'carpetCleaning',
+  RUG: 'rugCleaning',
+  UPHOLSTERY: 'upholsteryCleaning',
+  MATTRESS: 'mattressCleaning',
+  CURTAIN: 'curtainCleaning',
+  SOFA: 'sofaCleaning',
+  STAIN_REMOVAL: 'stainRemoval',
+  SCOTCHGARD: 'scotchgardProtector',
+  OTHER: 'otherCleaning'
+};
 
-  const handleCheckboxChange = (item: string) => {
+const EstimateList: React.FC<EstimateListProps> = ({ onSelectionChange }) => {
+  const { translate } = useLanguage();
+  
+  // Initialize state with internal keys
+  const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>(
+    Object.values(CLEANING_ITEM_KEYS).reduce((acc, key) => {
+      acc[key] = false;
+      return acc;
+    }, {} as Record<string, boolean>)
+  );
+
+  const handleCheckboxChange = (itemKey: string) => {
     const updatedSelection = {
       ...selectedItems,
-      [item]: !selectedItems[item],
+      [itemKey]: !selectedItems[itemKey],
     };
     setSelectedItems(updatedSelection);
 
-    const selectedData = Object.keys(updatedSelection).filter((key) => updatedSelection[key]);
-    onSelectionChange(selectedData); // Pass the selected items to the parent component
+    // Translate the selected items when sending to parent
+    const selectedData = Object.keys(updatedSelection)
+      .filter((key) => updatedSelection[key])
+      .map(key => translate(key));
+    onSelectionChange(selectedData);
   };
 
   return (
     <Box sx={{ padding: 1, maxWidth: 1200, margin: '1' }}>
       <Typography variant="body1" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'start', mb: 1, color: 'black' }}>
-        Things to Clean
+        {translate('thingsToCleanLabel')}
       </Typography>
 
-      <Grid container >
-        {Object.keys(selectedItems).map((item, index) => (
+      <Grid container>
+        {Object.keys(selectedItems).map((itemKey, index) => (
           <Grid item xs={12} md={4} key={index} sx={{ padding: 0 }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Checkbox checked={selectedItems[item]} onChange={() => handleCheckboxChange(item)} />
+              <Checkbox 
+                checked={selectedItems[itemKey]} 
+                onChange={() => handleCheckboxChange(itemKey)} 
+              />
               <Typography variant="body1" sx={{ fontWeight: 'semibold', color: 'black' }}>
-                {item}
+                {translate(itemKey)}
               </Typography>              
             </Box>
           </Grid>

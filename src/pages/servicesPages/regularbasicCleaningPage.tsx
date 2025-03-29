@@ -14,12 +14,12 @@ import PaymentSupportSection from "../../components/paymentSupportSection/paymen
 import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
 import { getPackege, getServices } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
-
 import { regularService1 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
 import QuantityControl from "../../components/QuantityControl/quantityControl";
 import Dropdown from "../../components/dropDown/dropDown";
+import { useLanguage } from "../../context/LanguageContext";
 
 function RegularBasicCleaningPage() {
   type selectService = {
@@ -35,6 +35,7 @@ function RegularBasicCleaningPage() {
     name?: string;
   };
 
+  const { translate } = useLanguage();
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const packages = useSelector((state: any) => state.packagesSlice.package);
@@ -60,7 +61,7 @@ function RegularBasicCleaningPage() {
   const [selectedEquipments, setSelectedEquipments] = useState<Equipment[]>([]);
   const [checkedList, setCheckedList] = useState<String[]>([]);
 
-  // Currency state - Changed default from EUR to USD
+  // Currency state
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const [currencySymbol, setCurrencySymbol] = useState("$");
   const [conversionRate, setConversionRate] = useState(1);
@@ -77,6 +78,14 @@ function RegularBasicCleaningPage() {
     totalPrice: 25,
     basePrice: 25,
   });
+
+  const frequencyOptions = [
+    { value: "daily", label: translate('frequencyDaily') },
+    { value: "weekly", label: translate('frequencyWeekly') },
+    { value: "every 2 weeks", label: translate('frequencyBiWeekly') },
+    { value: "every 3 weeks", label: translate('frequencyTriWeekly') },
+    { value: "every month", label: translate('frequencyMonthly') },
+  ];
 
   // Handler for currency changes from CurrencyConverter component
   const handleCurrencyUpdate = (
@@ -108,23 +117,20 @@ function RegularBasicCleaningPage() {
   }, []);
 
   const calculateTotalPrice = () => {
-    const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
-    const basePrice = hourlyRate * maxTime; // Base price in USD
+    const hourlyRate = parseInt(services.data.price, 10);
+    const basePrice = hourlyRate * maxTime;
 
     let serviceCosts = 0;
     let equipmentCosts = 0;
 
-    // Calculate service costs in USD
     selectedServices.forEach((service) => {
       serviceCosts += service.price * (service.qty || 1) * conversionRate;
     });
 
-    // Calculate equipment costs in USD
     selectedEquipments.forEach((equipment) => {
       equipmentCosts += equipment.price * conversionRate;
     });
 
-    // Calculate total price in the user's selected currency
     const totalPriceInSelectedCurrency =
       basePrice * conversionRate + equipmentCosts + serviceCosts;
 
@@ -132,8 +138,8 @@ function RegularBasicCleaningPage() {
       hourlyRate,
       serviceCosts,
       equipmentCosts,
-      totalPrice: totalPriceInSelectedCurrency, // Total price in the selected currency
-      basePrice: basePrice * conversionRate, // Base price in the selected currency
+      totalPrice: totalPriceInSelectedCurrency,
+      basePrice: basePrice * conversionRate,
     };
   };
 
@@ -175,7 +181,7 @@ function RegularBasicCleaningPage() {
       !acceptTerms1 ||
       !acceptTerms2
     ) {
-      alert("Please fill all required fields before proceeding to checkout.");
+      alert(translate('fillAllFieldsAlert'));
       return;
     }
 
@@ -205,11 +211,10 @@ function RegularBasicCleaningPage() {
       business_property: propertyType,
       cleaning_solvents: selectedSolvent,
       Equipment: selectedEquipments.map((e) => e.id).join(","),
-
       currency: "USD",
     };
     const data = {
-      serviceName: "Regular Basic",
+      serviceName: translate('regularBasicService'),
       details: serviceDetails,
       orderSummary: {
         selectedServices,
@@ -221,11 +226,9 @@ function RegularBasicCleaningPage() {
         conversionRate,
       },
     };
-    console.log("Service Details:", data);
     navigate("/checkout", { state: { data } });
   };
 
-  // Update service names when packages data is loaded
   useEffect(() => {
     if (packages.isSuccess && packages.data) {
       setSelectedServices((prevServices) =>
@@ -239,14 +242,6 @@ function RegularBasicCleaningPage() {
     }
   }, [packages.isSuccess, packages.data]);
 
-  const frequencyOptions = [
-    { value: "daily", label: "Daily" },
-    { value: "weekly", label: "Weekly" },
-    { value: "every 2 weeks", label: "Every 2 Weeks" },
-    { value: "every 3 weeks", label: "Every 3 Weeks" },
-    { value: "every month", label: "Every Month" },
-  ];
-
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6">
       {/* Header Section */}
@@ -254,7 +249,7 @@ function RegularBasicCleaningPage() {
         <div className="w-full lg:w-2/3">
           <img
             src={regularService1}
-            alt="Cleaning Service"
+            alt={translate('cleaningServiceAlt')}
             className="rounded-lg w-full h-auto"
           />
         </div>
@@ -264,7 +259,6 @@ function RegularBasicCleaningPage() {
               {services.data.name}
             </h1>
             <div className="mt-4 mb-4 ml-4">
-              {/* Using the CurrencyConverter component with USD as initial currency */}
               <CurrencyConverter
                 basePrice={parseFloat(services.data.price)}
                 onCurrencyChange={handleCurrencyUpdate}
@@ -273,27 +267,24 @@ function RegularBasicCleaningPage() {
             </div>
           </div>
           <p className="text-gray-600 mb-4 text-sm sm:text-base">
-            Regular basic cleaning consists of performing necessary tasks
-            regularly to maintain a clean and organized environment. Activities
-            like:
+            {translate('regularCleaningDescription1')}
           </p>
           <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
-            <li>Dusting</li>
-            <li>Wiping surfaces</li>
-            <li>Vacuuming or sweeping floors</li>
-            <li>Cleaning windows</li>
-            <li>Disinfecting high-touch areas include this</li>
+            <li>{translate('cleaningTaskDusting')}</li>
+            <li>{translate('cleaningTaskWiping')}</li>
+            <li>{translate('cleaningTaskVacuuming')}</li>
+            <li>{translate('cleaningTaskWindows')}</li>
+            <li>{translate('cleaningTaskDisinfecting')}</li>
           </ul>
           <p className="text-gray-600 text-sm sm:text-base">
-            Routine basic cleaning consists of performing necessary tasks
-            regularly to maintain a clean and well-preserved environment.
+            {translate('regularCleaningDescription2')}
           </p>
         </div>
       </div>
 
       <div>
         <h2 className="text-xl font-semibold mb-4 text-blue-900">
-          Package checklist
+          {translate('packageChecklistTitle')}
         </h2>
       </div>
 
@@ -305,10 +296,10 @@ function RegularBasicCleaningPage() {
       {/* Checklist Section */}
       <div className="bg-white rounded-lg p-4 sm:p-6 mb-8 shadow-lg">
         <h2 className="text-xl font-semibold mb-4 text-blue-900">
-          Select Additional Service Including to Your Package Checklist
+          {translate('additionalServicesTitle')}
         </h2>
         {packages.isLoading ? (
-          <div className="text-center py-4">Loading packages...</div>
+          <div className="text-center py-4">{translate('loadingPackages')}</div>
         ) : packages.isSuccess ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {packages.data.map((service: any) => (
@@ -330,9 +321,9 @@ function RegularBasicCleaningPage() {
                           price: parseInt(service.price),
                           name: service.name,
                           qty:
-                            service.name === "Oven Cleaning"
+                            service.name === translate('ovenCleaning')
                               ? Number(ovenQty) || 1
-                              : service.name === "Fridge Cleaning"
+                              : service.name === translate('fridgeCleaning')
                               ? Number(fridgeQty) || 1
                               : 1,
                         },
@@ -358,7 +349,6 @@ function RegularBasicCleaningPage() {
                   }}
                   disabled={service.status !== "active"}
                 />
-                {/* Custom checkbox */}
                 <div
                   className={`w-5 h-5 border-2 border-gray-400 rounded flex items-center justify-center transition-colors ${
                     checkedList.includes(service.package_id.toString())
@@ -366,7 +356,6 @@ function RegularBasicCleaningPage() {
                       : "bg-white border-gray-400"
                   } ${service.status !== "active" ? "opacity-50" : ""}`}
                 >
-                  {/* Checkmark icon */}
                   {checkedList.includes(service.package_id.toString()) && (
                     <svg
                       className="w-3 h-3 text-white"
@@ -394,20 +383,19 @@ function RegularBasicCleaningPage() {
                         {currencySymbol}
                         {(parseInt(service.price) * conversionRate).toFixed(2)}
                       </span>
-                      {(service.name === "Oven Cleaning" ||
-                        service.name === "Fridge Cleaning") &&
+                      {(service.name === translate('ovenCleaning') ||
+                        service.name === translate('fridgeCleaning')) &&
                         checkedList.includes(service.package_id.toString()) && (
                           <QuantityControl
                             quantity={
-                              service.name === "Oven Cleaning"
+                              service.name === translate('ovenCleaning')
                                 ? ovenQty
                                 : fridgeQty
                             }
                             onChange={(newQuantity) => {
                               setChangeValue(true);
-                              if (service.name === "Oven Cleaning") {
+                              if (service.name === translate('ovenCleaning')) {
                                 setOvenQty(newQuantity);
-                                // Update the quantity in selectedServices
                                 setSelectedServices((prev) =>
                                   prev.map((s) =>
                                     s.package_id === Number(service.package_id)
@@ -417,7 +405,6 @@ function RegularBasicCleaningPage() {
                                 );
                               } else {
                                 setFridgeQty(newQuantity);
-                                // Update the quantity in selectedServices
                                 setSelectedServices((prev) =>
                                   prev.map((s) =>
                                     s.package_id === Number(service.package_id)
@@ -460,7 +447,7 @@ function RegularBasicCleaningPage() {
       {/* Booking Section */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8">
         <h2 className="text-2xl font-bold text-blue-900 mb-6">
-          Select Suitable Date and Time to Complete Booking
+          {translate('bookingSectionTitle')}
         </h2>
 
         <div className="mb-6 shadow-lg p-4 sm:p-6 rounded-lg border border-blue-400">
@@ -468,7 +455,7 @@ function RegularBasicCleaningPage() {
             {/* Calendar Section */}
             <div className="flex flex-col">
               <label className="block mb-2 text-blue-900 font-semibold">
-                Select Date
+                {translate('selectDateLabel')}
               </label>
               <div className="calendar-container p-4 rounded-lg">
                 <Calendar
@@ -523,7 +510,7 @@ function RegularBasicCleaningPage() {
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Dropdown
-              label="Select Frequency"
+              label={translate('selectFrequencyLabel')}
               value={frequency}
               options={frequencyOptions}
               onChange={setFrequency}
@@ -535,7 +522,7 @@ function RegularBasicCleaningPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
             <label className="block mb-2 text-blue-900">
-              Upload Images or Documents
+              {translate('uploadFilesLabel')}
             </label>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center min-h-[150px] flex items-center justify-center">
               <div>
@@ -546,10 +533,10 @@ function RegularBasicCleaningPage() {
                 >
                   <div className="flex flex-col items-center space-y-2">
                     <span className="text-sm">
-                      Click to upload or drag and drop
+                      {translate('uploadFilesDescription')}
                     </span>
                     <span className="text-xs text-gray-500">
-                      Maximum file size: 10MB
+                      {translate('maxFileSize')}
                     </span>
                   </div>
                 </label>
@@ -558,10 +545,12 @@ function RegularBasicCleaningPage() {
           </div>
 
           <div>
-            <label className="block mb-2 text-blue-900">Additional Note</label>
+            <label className="block mb-2 text-blue-900">
+              {translate('additionalNoteLabel')}
+            </label>
             <textarea
               className="w-full min-h-[150px] border border-blue-900 rounded p-2 text-gray-700 resize-none"
-              placeholder="Type your note here..."
+              placeholder={translate('additionalNotePlaceholder')}
             ></textarea>
           </div>
 
@@ -578,7 +567,7 @@ function RegularBasicCleaningPage() {
                 }}
               />
               <span className="text-sm">
-                By selecting this I accept terms and conditions
+                {translate('acceptTermsLabel')}
               </span>
             </label>
           </div>
@@ -597,7 +586,7 @@ function RegularBasicCleaningPage() {
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              Base Cost{" "}
+              {translate('baseCostLabel')}{" "}
               <span className="text-gray-400">
                 ({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})
               </span>
@@ -612,9 +601,9 @@ function RegularBasicCleaningPage() {
           {selectedServices.length > 0 && (
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
               <span className="mb-2 md:mb-0">
-                Selected Services{" "}
+                {translate('selectedServicesLabel')}{" "}
                 <span className="text-gray-400">
-                  ({selectedServices.length} services)
+                  ({selectedServices.length} {translate('servicesLabel')})
                 </span>
               </span>
               <span>
@@ -628,9 +617,9 @@ function RegularBasicCleaningPage() {
           {selectedEquipments.length > 0 && (
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
               <span className="mb-2 md:mb-0">
-                Selected Equipment{" "}
+                {translate('selectedEquipmentLabel')}{" "}
                 <span className="text-gray-400">
-                  ({selectedEquipments.length} items)
+                  ({selectedEquipments.length} {translate('itemsLabel')})
                 </span>
               </span>
               <span>
@@ -642,7 +631,7 @@ function RegularBasicCleaningPage() {
 
           {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
-            <span>Total</span>
+            <span>{translate('totalLabel')}</span>
             <span>
               {currencySymbol}
               {priceBreakdown.totalPrice.toFixed(2)}
@@ -657,7 +646,7 @@ function RegularBasicCleaningPage() {
           style={{ backgroundColor: "#1c398e" }}
           onClick={handleBookNow}
         >
-          Book Now
+          {translate('bookNowButton')}
         </button>
       </div>
 

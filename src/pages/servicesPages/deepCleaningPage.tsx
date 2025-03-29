@@ -14,24 +14,27 @@ import PaymentSupportSection from "../../components/paymentSupportSection/paymen
 import { getPackege, getServices } from "../../services/CleaningServices/index";
 import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
 import dayjs from "dayjs";
-
 import { DeepService1 } from "../../config/images";
 import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
 import QuantityControl from "../../components/QuantityControl/quantityControl";
 import Dropdown from "../../components/dropDown/dropDown";
+import { useLanguage } from "../../context/LanguageContext";
 
 type Equipment = {
   id: string;
   price: number;
   name?: string;
 };
+
 function DeepCleaningPage() {
   type selectService = {
     package_id: number;
     price: number;
     qty: number;
   };
+  
+  const { translate } = useLanguage();
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const packages = useSelector((state: any) => state.packagesSlice.package);
@@ -102,24 +105,22 @@ function DeepCleaningPage() {
     dispatch(getPackege("4"));
     dispatch(getServices("4"));
   }, []);
+  
   const calculateTotalPrice = () => {
-    const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
-    const basePrice = hourlyRate * maxTime; // Base price in USD
+    const hourlyRate = parseInt(services.data.price, 10);
+    const basePrice = hourlyRate * maxTime;
 
     let serviceCosts = 0;
     let equipmentCosts = 0;
 
-    // Calculate service costs in USD
     selectedServices.forEach((service) => {
       serviceCosts += service.price * (service.qty || 1) * conversionRate;
     });
 
-    // Calculate equipment costs in USD
     selectedEquipments.forEach((equipment) => {
       equipmentCosts += equipment.price * conversionRate;
     });
 
-    // Calculate total price in the user's selected currency
     const totalPriceInSelectedCurrency =
       basePrice * conversionRate + equipmentCosts + serviceCosts;
 
@@ -127,14 +128,14 @@ function DeepCleaningPage() {
       hourlyRate,
       serviceCosts,
       equipmentCosts,
-      totalPrice: totalPriceInSelectedCurrency, // Total price in the selected currency
-      basePrice: basePrice * conversionRate, // Base price in the selected currency
+      totalPrice: totalPriceInSelectedCurrency,
+      basePrice: basePrice * conversionRate,
     };
   };
+  
   const handleEquipmentSelect = (equipment: Equipment, selected: boolean) => {
     setChangeValue(true);
     if (selected) {
-      // Check if the equipment is already in the array
       if (!selectedEquipments.some((e) => e.id === equipment.id)) {
         setSelectedEquipments((prev) => [
           ...prev,
@@ -142,12 +143,12 @@ function DeepCleaningPage() {
         ]);
       }
     } else {
-      // Remove the equipment if it exists
       setSelectedEquipments((prev) =>
         prev.filter((e) => e.id !== equipment.id)
       );
     }
   };
+  
   const handleSolventChange = (solvent: string) => {
     setSelectedSolvent(solvent);
   };
@@ -170,7 +171,7 @@ function DeepCleaningPage() {
       !acceptTerms1 ||
       !acceptTerms2
     ) {
-      alert("Please fill all required fields before proceeding to checkout.");
+      alert(translate('pleaseFillAllFields'));
       return;
     }
 
@@ -204,7 +205,7 @@ function DeepCleaningPage() {
       note: document.querySelector("textarea")?.value || "",
     };
     const data = {
-      serviceName: "Deep Cleaning",
+      serviceName: translate('deepCleaning'),
       details: serviceDetails,
       orderSummary: {
         selectedServices,
@@ -216,14 +217,14 @@ function DeepCleaningPage() {
         conversionRate,
       },
     };
-    console.log("Service Details:", serviceDetails);
     navigate("/checkout", { state: { data } });
   };
+  
   const frequencyOptions = [
-    { value: "weekly", label: "Weekly" },
-    { value: "every two weeks", label: "Every Two Weeks" },
-    { value: "monthly", label: "Monthly " },
-    { value: "other", label: "Other " },
+    { value: "weekly", label: translate('weekly') },
+    { value: "every two weeks", label: translate('everyTwoWeeks') },
+    { value: "monthly", label: translate('monthly') },
+    { value: "other", label: translate('other') },
   ];
 
   return (
@@ -233,7 +234,7 @@ function DeepCleaningPage() {
         <div className="w-full lg:w-4/3">
           <img
             src={DeepService1}
-            alt="Cleaning Service"
+            alt={translate('cleaningService')}
             className="rounded-lg w-full h-auto"
           />
         </div>
@@ -251,36 +252,29 @@ function DeepCleaningPage() {
             </div>
           </div>
           <p className="text-gray-600 mb-4 text-sm sm:text-base">
-            Deep cleaning, provided by professional cleaning services, is a
-            thorough and detailed cleaning solution that goes beyond routine
-            maintenance. This all-encompassing method includes careful attention
-            to detail and specifically focuses on areas often ignored in
-            standard cleaning protocols.
+            {translate('deepCleaningDescription1')}
           </p>
           <p className="text-gray-600 mb-2 text-sm sm:text-base">
-            The deep cleaning routine consists of necessary tasks like:
+            {translate('deepCleaningRoutine')}
           </p>
           <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
-            <li>Sanitizing high-touch surfaces</li>
-            <li>Meticulously scrubbing and disinfecting bathroom fixtures</li>
-            <li>Performing deep cleaning on carpets</li>
-            <li>Precise dusting and vent cleaning</li>
+            <li>{translate('sanitizingSurfaces')}</li>
+            <li>{translate('scrubbingFixtures')}</li>
+            <li>{translate('cleaningCarpets')}</li>
+            <li>{translate('dustingVents')}</li>
           </ul>
           <p className="text-gray-600 text-sm sm:text-base">
-            The main goal of this intensive process is the eradicate collected
-            dirt, grime, and allergens, promoting a healthier and more hygienic
-            living or working atmosphere. Generally, recommended semi-annually
-            or annually, deep cleaning is instrumental in upholding cleanliness
-            standards and preventing thebuildup of contaminants.
+            {translate('deepCleaningDescription2')}
           </p>
         </div>
       </div>
 
       <div>
         <h2 className="text-xl font-semibold mb-4 text-blue-900">
-          Package checklist
+          {translate('packageChecklist')}
         </h2>
       </div>
+      
       {/* Carousel Section */}
       <div>
         <Carousel />
@@ -289,10 +283,10 @@ function DeepCleaningPage() {
       {/* Checklist Section */}
       <div className="bg-white rounded-lg p-4 sm:p-6 mb-8 shadow-lg">
         <h2 className="text-xl font-semibold mb-4 text-blue-900">
-          Select Additional Service Including to Your Package Checklist
+          {translate('selectAdditionalServices')}
         </h2>
         {packages.isLoading ? (
-          <div className="text-center py-4">Loading packages...</div>
+          <div className="text-center py-4">{translate('loadingPackages')}</div>
         ) : packages.isSuccess ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {packages.data.map((service: any) => (
@@ -312,7 +306,6 @@ function DeepCleaningPage() {
                         {
                           package_id: Number(service.package_id),
                           price: parseInt(service.price),
-
                           qty:
                             service.name === "Oven Cleaning"
                               ? Number(ovenQty) || 1
@@ -342,7 +335,6 @@ function DeepCleaningPage() {
                   }}
                   disabled={service.status !== "active"}
                 />
-                {/* Custom checkbox */}
                 <div
                   className={`w-5 h-5 border-2 border-gray-400 rounded flex items-center justify-center transition-colors ${
                     checkedList.includes(service.package_id.toString())
@@ -350,7 +342,6 @@ function DeepCleaningPage() {
                       : "bg-white border-gray-400"
                   } ${service.status !== "active" ? "opacity-50" : ""}`}
                 >
-                  {/* Checkmark icon */}
                   {checkedList.includes(service.package_id.toString()) && (
                     <svg
                       className="w-3 h-3 text-white"
@@ -391,7 +382,6 @@ function DeepCleaningPage() {
                               setChangeValue(true);
                               if (service.name === "Oven Cleaning") {
                                 setOvenQty(newQuantity);
-                                // Update the quantity in selectedServices
                                 setSelectedServices((prev) =>
                                   prev.map((s) =>
                                     s.package_id === Number(service.package_id)
@@ -401,7 +391,6 @@ function DeepCleaningPage() {
                                 );
                               } else {
                                 setFridgeQty(newQuantity);
-                                // Update the quantity in selectedServices
                                 setSelectedServices((prev) =>
                                   prev.map((s) =>
                                     s.package_id === Number(service.package_id)
@@ -444,7 +433,7 @@ function DeepCleaningPage() {
       {/* Booking Section */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8">
         <h2 className="text-2xl font-bold text-blue-900 mb-6">
-          Select Suitable Date and Time to Complete Booking
+          {translate('selectDateTime')}
         </h2>
 
         <div className="mb-6 shadow-lg p-4 sm:p-6 rounded-lg border border-blue-400">
@@ -452,7 +441,7 @@ function DeepCleaningPage() {
             {/* Calendar Section */}
             <div className="flex flex-col">
               <label className="block mb-2 text-blue-900 font-semibold">
-                Select Date
+                {translate('selectDate')}
               </label>
               <div className="calendar-container p-4 rounded-lg">
                 <Calendar
@@ -507,7 +496,7 @@ function DeepCleaningPage() {
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Dropdown
-              label="Select Frequency"
+              label={translate('selectFrequency')}
               value={frequency}
               options={frequencyOptions}
               onChange={setFrequency}
@@ -519,7 +508,7 @@ function DeepCleaningPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
             <label className="block mb-2 text-black">
-              Upload Images or Documents
+              {translate('uploadFiles')}
             </label>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center min-h-[150px] flex items-center justify-center">
               <div>
@@ -530,10 +519,10 @@ function DeepCleaningPage() {
                 >
                   <div className="flex flex-col items-center space-y-2">
                     <span className="text-sm">
-                      Click to upload or drag and drop
+                      {translate('clickToUpload')}
                     </span>
                     <span className="text-xs text-gray-500">
-                      Maximum file size: 10MB
+                      {translate('maxFileSize')}
                     </span>
                   </div>
                 </label>
@@ -542,10 +531,12 @@ function DeepCleaningPage() {
           </div>
 
           <div>
-            <label className="block mb-2 text-black">Additional Note</label>
+            <label className="block mb-2 text-black">
+              {translate('additionalNote')}
+            </label>
             <textarea
               className="w-full min-h-[150px] border border-blue-900 rounded p-2 text-gray-700 resize-none"
-              placeholder="Type your note here..."
+              placeholder={translate('typeYourNote')}
             ></textarea>
           </div>
 
@@ -562,7 +553,7 @@ function DeepCleaningPage() {
                 }}
               />
               <span className="text-sm">
-                By selecting this I accept terms and conditions
+                {translate('acceptTerms')}
               </span>
             </label>
           </div>
@@ -581,7 +572,7 @@ function DeepCleaningPage() {
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              Base Cost{" "}
+              {translate('baseCost')}{" "}
               <span className="text-gray-400">
                 ({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})
               </span>
@@ -596,9 +587,9 @@ function DeepCleaningPage() {
           {selectedServices.length > 0 && (
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
               <span className="mb-2 md:mb-0">
-                Selected Services{" "}
+                {translate('selectedServices')}{" "}
                 <span className="text-gray-400">
-                  ({selectedServices.length} services)
+                  ({selectedServices.length} {translate('services')})
                 </span>
               </span>
               <span>
@@ -612,9 +603,9 @@ function DeepCleaningPage() {
           {selectedEquipments.length > 0 && (
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
               <span className="mb-2 md:mb-0">
-                Selected Equipment{" "}
+                {translate('selectedEquipment')}{" "}
                 <span className="text-gray-400">
-                  ({selectedEquipments.length} items)
+                  ({selectedEquipments.length} {translate('items')})
                 </span>
               </span>
               <span>
@@ -626,7 +617,7 @@ function DeepCleaningPage() {
 
           {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
-            <span>Total</span>
+            <span>{translate('total')}</span>
             <span>
               {currencySymbol}
               {priceBreakdown.totalPrice.toFixed(2)}
@@ -641,7 +632,7 @@ function DeepCleaningPage() {
           onClick={handleBookNow}
           style={{ backgroundColor: "#1c398e" }}
         >
-          Book Now
+          {translate('bookNow')}
         </button>
       </div>
 

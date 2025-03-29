@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFeedbackList } from "../../services/CleaningServices/index";
 import store from "../../store";
 import { google, facebook, trustpilot, yelp } from "../../config/images";
+import { useLanguage } from "../../context/LanguageContext";
 
 type Feedback = {
   id: number;
@@ -32,6 +33,8 @@ const CustomerFeedback: React.FC = () => {
     (state: any) => state.feedbaackSlice.feedback
   );
   const [feedback, setFeedback] = useState<Feedback[]>([]);
+
+  const { translate } = useLanguage();
 
   useEffect(() => {
     dispatch(getFeedbackList());
@@ -92,7 +95,7 @@ const CustomerFeedback: React.FC = () => {
         mt={10}
         sx={{ color: "#002F6D" }}
       >
-        Customer Feedback
+        {translate('customerfeedback')}
       </Typography>
 
       {/* Display Feedback */}

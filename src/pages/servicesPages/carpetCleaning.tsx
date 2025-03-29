@@ -17,10 +17,10 @@ import { CarpetCleaningService } from "../../config/images";
 import EstimateList from "../../components/CarpetAndUpholsteryCleaning/carpetPackageList";
 import PersonalInformationForm from "../../components/personalInformationForm/personalInformationForm";
 import LoadingOverlay from "../../components/welcomeAlert/LoadingOverlay";
-
-
+import { useLanguage } from "../../context/LanguageContext";
 
 function CarpetAndUpholsteryCleaning() {
+  const { translate } = useLanguage();
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   useSelector((state: any) => state.servicesSlice.service);
@@ -36,23 +36,14 @@ function CarpetAndUpholsteryCleaning() {
   const [selectedItems, setSelectedItems] = useState<string[]>([]); 
   const [isLoading, setIsLoading] = useState(false);
 
-   
-const handleSelectionChange = (selectedItems: string[]) => {
+  const handleSelectionChange = (selectedItems: string[]) => {
     console.log('Selected Items:', selectedItems);
     setSelectedItems(selectedItems);
   };
 
-  //Memoize the form change handler
-    const handleFormChange = useCallback((data: any) => {
-      setFormData(data);
-    }, []);
- 
-  // Memoize the form change handler
-  useCallback((data: any) => {
+  const handleFormChange = useCallback((data: any) => {
     setFormData(data);
   }, []);
-
-  // Fetch package and services data
 
   useEffect(() => {
     dispatch(getPackege("12"));
@@ -60,30 +51,27 @@ const handleSelectionChange = (selectedItems: string[]) => {
 
   useEffect(() => {
     dispatch(getServices("12"));
-
   }, [dispatch]);
   
-const [equipment, setEquipment] = useState({ customer: false, company: false });
-const [chemical, setChemical] = useState({ customer: false, company: false });
+  const [equipment, setEquipment] = useState({ customer: false, company: false });
+  const [chemical, setChemical] = useState({ customer: false, company: false });
 
-type Section = "equipment" | "chemical";
-type Option = "customer" | "company";
+  type Section = "equipment" | "chemical";
+  type Option = "customer" | "company";
 
-const handleCheckboxChange = (section: Section, option: Option) => {
-  if (section === "equipment") {
-    setEquipment({
-      customer: option === "customer",
-      company: option === "company",
-    });
-  } else if (section === "chemical") {
-    setChemical({
-      customer: option === "customer",
-      company: option === "company",
-    });
-  }
-};
-
-
+  const handleCheckboxChange = (section: Section, option: Option) => {
+    if (section === "equipment") {
+      setEquipment({
+        customer: option === "customer",
+        company: option === "company",
+      });
+    } else if (section === "chemical") {
+      setChemical({
+        customer: option === "customer",
+        company: option === "company",
+      });
+    }
+  };
 
   interface FormData {
     firstName: string;
@@ -114,19 +102,16 @@ const handleCheckboxChange = (section: Section, option: Option) => {
   });
 
   const handleBookNow = async () => {
-    // Validate Chemical
-  if (!chemical.customer && !chemical.company) {
-    alert("Chemical is required. Please select an option for Chemical.");
-    return; 
-  }
+    if (!chemical.customer && !chemical.company) {
+      alert(translate('chemicalRequiredAlert'));
+      return; 
+    }
 
-  // Validate Equipment
-  if (!equipment.customer && !equipment.company) {
-    alert("Equipment is required. Please select an option for Equipment.");
-    return; 
-  }
+    if (!equipment.customer && !equipment.company) {
+      alert(translate('equipmentRequiredAlert'));
+      return; 
+    }
 
-    // Validate required fields
     if (
       !frequency ||
       !propertyType ||
@@ -137,14 +122,12 @@ const handleCheckboxChange = (section: Section, option: Option) => {
       !selectedTime ||
       !acceptTerms2
     ) {
-      alert("Please fill all required fields before proceeding to checkout.");
+      alert(translate('fillAllFieldsAlert'));
       return;
     }
   
-    // selected date
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
   
-    // customer object
     const customer = {
       first_name: formData.firstName,
       last_name: formData.lastName,
@@ -157,18 +140,15 @@ const handleCheckboxChange = (section: Section, option: Option) => {
       postal_code: formData.zip,
       contact: formData.phone,
       email: formData.email,
-      password: " 1234", 
+      password: "1234", 
     };
   
-    // service details
     const serviceDetails = {
-      customer, // Include customer details
+      customer,
       service_id: "12", 
       price: "00.00", 
       date,
       time: selectedTime,
-      // property_size: "0 sqft", 
-      // duration: "0",      
       note: document.querySelector("textarea")?.value || "",
       request_gender: contactType, 
       request_language: language,
@@ -176,29 +156,24 @@ const handleCheckboxChange = (section: Section, option: Option) => {
       cleaning_solvents: "eco-friendly", 
       frequency, 
       time_zoon: timeZone,
-      Equipment: equipment.customer ? "Provided by customer" : "Provided by company",
-      chemical:chemical.customer ? "Provided by customer" : "Provided by company",
+      Equipment: equipment.customer ? translate('providedByCustomer') : translate('providedByCompany'),
+      chemical: chemical.customer ? translate('providedByCustomer') : translate('providedByCompany'),
       payment_method: "cash", 
       reStock_details: [],
-      things_to_clean:selectedItems.join(",")
+      things_to_clean: selectedItems.join(",")
     };
   
-    console.log("Data to be sent:", serviceDetails);
-
     const data = {
-      serviceName: " Carpet & Upholstery Cleaning",
+      serviceName: translate('carpetUpholsteryCleaning'),
       details: serviceDetails,
       personalInformation: formData,
       equipment,
       chemical,      
       selectedItems,
     };
-    console.log("Data:", data);
   
     try {
-
       setIsLoading(true);
-      //  API call
       const response = await fetch("https://back.pearlyskyplc.com/api/saveServiceDetails", {
         method: "POST",
         headers: {
@@ -207,24 +182,17 @@ const handleCheckboxChange = (section: Section, option: Option) => {
         body: JSON.stringify(serviceDetails),
       });
   
-      // Check if the request was successful
       if (response.ok) {
         const result = await response.json();
-        console.log("API Response:", result);
-  
-        // Navigate to the quotation page
         navigate("/quotation", { state: { data } });
       } else {
-        // Handle errors
         console.error("API Error:", response.statusText);
-        alert("Failed to submit the quotation request. Please try again.");
+        alert(translate('submitFailedAlert'));
       }
     } catch (error) {
-      // Handle network errors
       console.error("Network Error:", error);
-      alert("An error occurred while submitting the request. Please check your connection and try again.");
+      alert(translate('networkErrorAlert'));
     } finally {
-      // Hide loading overlay
       setIsLoading(false);
     }
   };
@@ -236,30 +204,22 @@ const handleCheckboxChange = (section: Section, option: Option) => {
         <div className="w-full lg:w-3/2">
           <img
             src={CarpetCleaningService}
-            alt="Cleaning Service"
+            alt={translate('cleaningServiceAlt')}
             className="rounded-2xl w-full h-full object-cover"
           />
         </div>
         <div className="w-fulllg:w-2/3 gap-1">
           <div>
             <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
-            Carpet & Upholstery Cleaning
+              {translate('carpetUpholsteryCleaning')}
             </h1>
           </div>
           <div className="flex-grow">
             <p className="text-gray-600 mb-4 text-sm sm:text-base">
-            Carpet and upholstery cleaning is a cleaning process designed to remove dirt and stains on rugs, 
-            carpeting, and the interior of motor vehicles and/or on household furniture or objects upholstered 
-            or covered with fabrics such as wool, cotton, nylon or other synthetic fabrics. Carpet and 
-            Upholstery Cleaning does not include general-purpose cleaning, Spot Removal, vinyl or leather 
-            cleaning, dry cleaning, or cleanings designed exclusively for use at industrial facilities engaged 
-            in furniture or carpet manufacturing. 
+              {translate('carpetCleaningDescription1')}
             </p>
             <p className="text-gray-600 mb-4 text-sm sm:text-base">
-            Carpet & Upholstery Cleaning is a professional procedure designed specifically for cleaning 
-            automotive floors, floor mats, carpets, and upholstery with exceptional results. In the process
-             of carpet and Upholstery Cleaning, it cuts through embedded grime faster than other harsh and 
-             overly aggressive cleanings.
+              {translate('carpetCleaningDescription2')}
             </p>
           </div>
         </div>
@@ -272,13 +232,17 @@ const handleCheckboxChange = (section: Section, option: Option) => {
 
       {/* Booking Section */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8">
-        <h2 className="text-2xl font-bold text-blue-900 mb-6">Select Your Job to Get Your Quotation</h2>
+        <h2 className="text-2xl font-bold text-blue-900 mb-6">
+          {translate('selectJobForQuotation')}
+        </h2>
 
         <div className="mb-6 shadow-lg p-4 sm:p-6 rounded-lg border border-blue-400">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
             {/* Calendar Section */}
             <div className="flex flex-col">
-              <label className="block mb-2 text-blue-900 font-semibold">Select Date</label>
+              <label className="block mb-2 text-blue-900 font-semibold">
+                {translate('selectDate')}
+              </label>
               <div className="calendar-container p-4 rounded-lg">
                 <Calendar
                   onChange={(date) => setSelectedDate(date as Date)}
@@ -314,7 +278,6 @@ const handleCheckboxChange = (section: Section, option: Option) => {
 
         {/* Booking Details */}
         <div className="mt-10">
-
           <SanitizationBookingCart          
             propertyType={propertyType}
             setPropertyType={setPropertyType}
@@ -332,14 +295,16 @@ const handleCheckboxChange = (section: Section, option: Option) => {
         {/* File Upload and Additional Note */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
-            <label className="block mb-2 text-black">Upload Images or Documents</label>
+            <label className="block mb-2 text-black">
+              {translate('uploadFilesLabel')}
+            </label>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center min-h-[150px] flex items-center justify-center">
               <div>
                 <input type="file" className="hidden" id="file-upload" />
                 <label htmlFor="file-upload" className="cursor-pointer text-blue-600 hover:text-blue-800">
                   <div className="flex flex-col items-center space-y-2">
-                    <span className="text-sm">Click to upload or drag and drop</span>
-                    <span className="text-xs text-gray-500">Maximum file size: 10MB</span>
+                    <span className="text-sm">{translate('clickToUpload')}</span>
+                    <span className="text-xs text-gray-500">{translate('maxFileSize')}</span>
                   </div>
                 </label>
               </div>
@@ -347,10 +312,12 @@ const handleCheckboxChange = (section: Section, option: Option) => {
           </div>
 
           <div>
-            <label className="block mb-2 text-black">Additional Note</label>
+            <label className="block mb-2 text-black">
+              {translate('additionalNoteLabel')}
+            </label>
             <textarea
               className="w-full min-h-[150px] border border-blue-900 rounded p-2 text-gray-700 resize-none"
-              placeholder="Type your note here..."
+              placeholder={translate('typeNoteHere')}
             ></textarea>
           </div>          
         </div>        
@@ -358,7 +325,9 @@ const handleCheckboxChange = (section: Section, option: Option) => {
         <div className="flex flex-col md:flex-row md:gap-10 p-4 mb-6">
           {/* Equipment Section */}
           <div className="w-full mb-4 md:mb-0">
-            <h2 className="text-lg text-black font-bold mb-2">Equipment</h2>
+            <h2 className="text-lg text-black font-bold mb-2">
+              {translate('equipmentLabel')}
+            </h2>
             <div className="text-black">
               <label className="flex items-center space-x-2 mb-1">
                 <input
@@ -367,7 +336,7 @@ const handleCheckboxChange = (section: Section, option: Option) => {
                   checked={equipment.customer}
                   onChange={() => handleCheckboxChange("equipment", "customer")}
                 />
-                <span>Provide by customer</span>
+                <span>{translate('provideByCustomer')}</span>
               </label>
               <label className="flex items-center space-x-2">
                 <input
@@ -376,14 +345,16 @@ const handleCheckboxChange = (section: Section, option: Option) => {
                   checked={equipment.company}
                   onChange={() => handleCheckboxChange("equipment", "company")}
                 />
-                <span>Provide by company</span>
+                <span>{translate('provideByCompany')}</span>
               </label>
             </div>
           </div>
 
           {/* Chemical Section */}
           <div className="w-full">
-            <h2 className="text-lg text-black font-bold mb-2">Chemical</h2>
+            <h2 className="text-lg text-black font-bold mb-2">
+              {translate('chemicalLabel')}
+            </h2>
             <div className="text-black">
               <label className="flex items-center space-x-2 mb-1">
                 <input
@@ -392,7 +363,7 @@ const handleCheckboxChange = (section: Section, option: Option) => {
                   checked={chemical.customer}
                   onChange={() => handleCheckboxChange("chemical", "customer")}
                 />
-                <span>Provide by customer</span>
+                <span>{translate('provideByCustomer')}</span>
               </label>
               <label className="flex items-center space-x-2">
                 <input
@@ -401,7 +372,7 @@ const handleCheckboxChange = (section: Section, option: Option) => {
                   checked={chemical.company}
                   onChange={() => handleCheckboxChange("chemical", "company")}
                 />
-                <span>Provide by company</span>
+                <span>{translate('provideByCompany')}</span>
               </label>
             </div>
           </div>
@@ -409,14 +380,6 @@ const handleCheckboxChange = (section: Section, option: Option) => {
 
         <div>
           <PersonalInformationForm onChangeCallback={handleFormChange} />          
-          {/* <div style={{ marginTop: "20px" }}>
-            <h2>Live Form Data:</h2>
-            <pre>{JSON.stringify(formData, null, 2)}</pre>
-            <pre>{JSON.stringify(equipment, null, 2)}</pre>
-            <pre>{JSON.stringify(chemical, null, 2)}</pre>
-            <pre>{JSON.stringify(propertyType, null, 2)}</pre>
-            <pre>{JSON.stringify(selectedItems, null, 2)}</pre>
-          </div>  */}
         </div>
 
         {/* Terms Checkbox */}
@@ -429,7 +392,7 @@ const handleCheckboxChange = (section: Section, option: Option) => {
               onChange={(e) => setAcceptTerms2(e.target.checked)}
             />
             <span className="text-sm">
-              By Booking or Requesting a quotation, you agree with our terms and conditions and privacy policy.
+              {translate('termsAgreement')}
             </span>
           </label>
         </div>
@@ -440,15 +403,15 @@ const handleCheckboxChange = (section: Section, option: Option) => {
           onClick={handleBookNow}
           style={{ background: "#0D90C8", fontSize: "15px", color: "white" }}
         >
-          Request Quotation
+          {translate('requestQuotationButton')}
         </button>
       </div>
 
-      {/* Using the new LoadingOverlay component */}
+      {/* Loading Overlay */}
       <LoadingOverlay 
         open={isLoading} 
-        message="Processing your order..."
-        subMessage="Please wait while we confirm your booking"
+        message={translate('processingOrder')}
+        subMessage={translate('pleaseWaitWhileProcessing')}
       />
 
       {/* Payment Support Section */}

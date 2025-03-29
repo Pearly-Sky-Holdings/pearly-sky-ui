@@ -11,7 +11,6 @@ import Carousel2 from "../../components/carouselSection2/carousel2";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
 import { getServices } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
-
 import {
   childCareImage1,
   childCareVideo,
@@ -21,13 +20,16 @@ import store from "../../store";
 import BookingSectionCart2 from "../../components/bookingSectionChildAndElderCart/bookingSectionCart2";
 import TermsAndConditionsChild from "../../components/termsAndConditions/termAndConditionsChild";
 import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface ChildInfo {
   age: string;
   gender: string;
   name: string;
 }
+
 function ChildCareCleaningPage() {
+  const { translate } = useLanguage();
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const services = useSelector((state: any) => state.servicesSlice.service);
@@ -75,17 +77,16 @@ function ChildCareCleaningPage() {
   };
 
   const calculateTotalPrice = () => {
-    const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
+    const hourlyRate = parseInt(services.data.price, 10);
     const basePrice =
-      hourlyRate * parseFloat(duration) * (parseInt(numProfession) || 1); // Base price in USD
+      hourlyRate * parseFloat(duration) * (parseInt(numProfession) || 1);
 
-    // Calculate total price in the user's selected currency
     const totalPriceInSelectedCurrency = basePrice * conversionRate;
 
     return {
       hourlyRate,
-      totalPrice: totalPriceInSelectedCurrency, // Total price in the selected currency
-      basePrice: basePrice * conversionRate, // Base price in the selected currency
+      totalPrice: totalPriceInSelectedCurrency,
+      basePrice: basePrice * conversionRate,
     };
   };
 
@@ -94,7 +95,7 @@ function ChildCareCleaningPage() {
       setChangeValue(false);
       setPriceBreakdown(calculateTotalPrice());
     }
-  }, [conversionRate, duration, numProfession]); // Add numProfession as a dependency
+  }, [conversionRate, duration, numProfession]);
 
   useEffect(() => {
     dispatch(getServices("8"));
@@ -112,14 +113,14 @@ function ChildCareCleaningPage() {
       !numChild ||
       !specialRequest
     ) {
-      alert("Please fill all required fields before proceeding to checkout.");
+      alert(translate('pleaseFillAllFields'));
       return;
     }
     const incompleteChildInfo = childInfo.some(
       (child) => !child.age || !child.gender || !child.name
     );
     if (parseInt(numChild) > 0 && incompleteChildInfo) {
-      alert("Please fill in all child information (age, gender, name) for each child.");
+      alert(translate('fillChildInfo'));
       return;
     }
 
@@ -141,7 +142,7 @@ function ChildCareCleaningPage() {
       note: document.querySelector("textarea")?.value || "",
     };
     const data = {
-      serviceName: "Child Care",
+      serviceName: translate('childCare'),
       details: serviceDetails,
       orderSummary: {
         basePrice: priceBreakdown.basePrice,
@@ -151,7 +152,6 @@ function ChildCareCleaningPage() {
         conversionRate,
       },
     };
-    console.log("Service data:", data);
     navigate("/checkout", { state: { data } });
   };
 
@@ -162,7 +162,7 @@ function ChildCareCleaningPage() {
         <div className="w-full lg:w-5/3">
           <img
             src={childCareImage1}
-            alt="Cleaning Service"
+            alt={translate('childCareService')}
             className="rounded-lg w-full h-auto "
           />
         </div>
@@ -180,32 +180,17 @@ function ChildCareCleaningPage() {
             </div>
           </div>
           <p className="text-gray-600 mb-4 text-sm sm:text-base">
-            Child Care Services provide a safe, nurturing, and enriching
-            environment for children, ensuring their well-being and development.
-            Whether at home or on the go, caregivers offer personalized support
-            to meet each child’s needs with care and attention.
+            {translate('childCareDescription1')}
           </p>
           <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
-            <li>
-              Supervising and engaging children in educational and recreational
-              activities
-            </li>
-            <li>
-              Assisting with homework while fostering creativity and learning
-            </li>
-            <li>
-              Preparing nutritious meals and ensuring hygiene through bathing,
-              dressing, and diaper changes
-            </li>
-            <li>Light housekeeping and maintaining a clean, organized space</li>
-            <li>
-              Providing transportation for school, appointments, and outings
-            </li>
+            <li>{translate('supervisingActivities')}</li>
+            <li>{translate('assistingHomework')}</li>
+            <li>{translate('preparingMeals')}</li>
+            <li>{translate('lightHousekeeping')}</li>
+            <li>{translate('providingTransportation')}</li>
           </ul>
           <p className="text-gray-600 text-sm sm:text-base">
-            By combining attentive care with structured routines, these services
-            promote a balanced, stimulating, and supportive atmosphere where
-            children can thrive emotionally, socially, and academically.
+            {translate('childCareDescription2')}
           </p>
         </div>
       </div>
@@ -227,7 +212,7 @@ function ChildCareCleaningPage() {
       {/* Booking Section */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8">
         <h2 className="text-2xl font-bold text-blue-900 mb-6">
-          Select Suitable Date and Time to Complete Booking
+          {translate('selectDateTime')}
         </h2>
 
         <div className="mb-6 shadow-lg p-4 sm:p-6 rounded-lg border border-blue-400">
@@ -235,7 +220,7 @@ function ChildCareCleaningPage() {
             {/* Calendar Section */}
             <div className="flex flex-col">
               <label className="block mb-2 text-blue-900 font-semibold">
-                Select Date
+                {translate('selectDate')}
               </label>
               <div className="calendar-container p-4 rounded-lg">
                 <Calendar
@@ -303,7 +288,7 @@ function ChildCareCleaningPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
             <label className="block mb-2 text-black">
-              Upload Images or Documents
+              {translate('uploadFiles')}
             </label>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center min-h-[150px] flex items-center justify-center">
               <div>
@@ -314,10 +299,10 @@ function ChildCareCleaningPage() {
                 >
                   <div className="flex flex-col items-center space-y-2">
                     <span className="text-sm">
-                      Click to upload or drag and drop
+                      {translate('clickToUpload')}
                     </span>
                     <span className="text-xs text-gray-500">
-                      Maximum file size: 10MB
+                      {translate('maxFileSize')}
                     </span>
                   </div>
                 </label>
@@ -326,10 +311,12 @@ function ChildCareCleaningPage() {
           </div>
 
           <div>
-            <label className="block mb-2 text-black">Additional Note</label>
+            <label className="block mb-2 text-black">
+              {translate('additionalNote')}
+            </label>
             <textarea
               className="w-full min-h-[150px] border border-blue-900 rounded p-2 text-gray-700 resize-none"
-              placeholder="Type your note here..."
+              placeholder={translate('typeYourNote')}
             ></textarea>
           </div>
 
@@ -346,7 +333,7 @@ function ChildCareCleaningPage() {
                 }}
               />
               <span className="text-sm">
-                By selecting this I accept terms and conditions
+                {translate('acceptTerms')}
               </span>
             </label>
           </div>
@@ -365,7 +352,7 @@ function ChildCareCleaningPage() {
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              Base Cost{" "}
+              {translate('baseCost')}{" "}
               <span className="text-gray-400">
                 ({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})
               </span>
@@ -378,7 +365,7 @@ function ChildCareCleaningPage() {
 
           {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
-            <span>Total</span>
+            <span>{translate('total')}</span>
             <span>
               {currencySymbol}
               {priceBreakdown.totalPrice.toFixed(2)}
@@ -393,7 +380,7 @@ function ChildCareCleaningPage() {
           onClick={handleBookNow}
           style={{ backgroundColor: "#1c398e" }}
         >
-          Book Now
+          {translate('bookNow')}
         </button>
       </div>
 
