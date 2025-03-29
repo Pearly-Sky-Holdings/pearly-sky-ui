@@ -4,7 +4,9 @@ import {
   SupportedLanguage, 
   enTranslations, 
   frTranslations, 
-  deTranslations
+  deTranslations,
+  jpTranslations,
+  zhTranslations
 } from './language';
 
 // Map country codes to language codes
@@ -13,6 +15,8 @@ export const countryToLanguage: Record<string, SupportedLanguage> = {
   'gb': 'en',
   'fr': 'fr',
   'de': 'de',
+  'jp': 'jp',
+  'zh': 'zh',
 };
 
 // Reverse mapping for convenience
@@ -20,6 +24,8 @@ export const languageToCountry: Record<SupportedLanguage, string> = {
   'en': 'us',
   'fr': 'fr',
   'de': 'de',
+  'jp': 'jp',
+  'zh': 'zh',
 };
 
 // Define the translations dictionary
@@ -27,6 +33,8 @@ const translations: Record<SupportedLanguage, Record<string, string>> = {
   'en': enTranslations,
   'fr': frTranslations,
   'de': deTranslations,
+  'jp': jpTranslations,
+  'zh': jpTranslations,
 };
 
 // Define the context type
@@ -34,6 +42,7 @@ type LanguageContextType = {
   language: SupportedLanguage;
   setLanguage: (language: SupportedLanguage) => void;
   translate: (key: string) => string;
+  currentLanguage?: string;
 };
 
 // Create the context with default values
@@ -79,6 +88,10 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const translate = (key: string): string => {
     // Return the translation or the key if translation doesn't exist
+    if (key === 'commercialMixedUtilities' || key === 'teamOfExpertsTitle') {
+      console.log('log____________', language, key);
+      
+    }
     return translations[language]?.[key] || key;
   };
 

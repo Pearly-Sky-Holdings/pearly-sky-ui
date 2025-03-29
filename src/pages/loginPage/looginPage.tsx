@@ -27,12 +27,14 @@ import { loginPageImage } from "../../config/images.ts";
 import { useDispatch } from "react-redux";
 import { getAuth, getOtp, getForgotPassword } from "../../services/Auth/auth.tsx";
 import store from "../../store/index.tsx";
+import { useLanguage } from "../../context/LanguageContext";
 
 const LoginPage = () => {
   const dispatch = useDispatch<typeof store.dispatch>();
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { translate } = useLanguage();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -87,18 +89,18 @@ const LoginPage = () => {
     let newErrors = { email: "", password: "" };
 
     if (!formData.email) {
-      newErrors.email = "Email is required";
+      newErrors.email = translate('emailRequired');
       valid = false;
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Invalid email format";
+      newErrors.email = translate('invalidEmailFormat');
       valid = false;
     }
 
     if (!formData.password) {
-      newErrors.password = "Password is required";
+      newErrors.password = translate('passwordRequired');
       valid = false;
     } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
+      newErrors.password = translate('passwordMinLength');
       valid = false;
     }
 
@@ -114,7 +116,7 @@ const LoginPage = () => {
           localStorage.setItem("token", result.payload.token);
           const tokenExpiryTime = new Date().getTime() + 3600 * 1000;
           localStorage.setItem("tokenExpiry", tokenExpiryTime.toString());
-          setSnackbarMessage("Login successful!");
+          setSnackbarMessage(translate('loginSuccessful'));
           setSnackbarSeverity("success");
           setSnackbarOpen(true);
 
@@ -122,13 +124,13 @@ const LoginPage = () => {
             navigate(`/customer-dashboard/${result.payload.user.customer_id}`);
           }, 2000);
         } else if (getAuth.rejected.match(result)) {
-          setSnackbarMessage("Login failed. Please check your credentials.");
+          setSnackbarMessage(translate('loginFailed'));
           setSnackbarSeverity("error");
           setSnackbarOpen(true);
         }
       } catch (error: any) {
         setSnackbarMessage(
-          error.payload || "Login failed. Please check your credentials."
+          error.payload || translate('loginFailed')
         );
         setSnackbarSeverity("error");
         setSnackbarOpen(true);
@@ -162,7 +164,7 @@ const LoginPage = () => {
 
   const handleForgotPasswordSubmit = async () => {
     if (!forgotPasswordEmail || !/\S+@\S+\.\S+/.test(forgotPasswordEmail)) {
-      setSnackbarMessage("Please enter a valid email address");
+      setSnackbarMessage(translate('validEmailRequired'));
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
       return;
@@ -174,16 +176,16 @@ const LoginPage = () => {
       if (getOtp.fulfilled.match(result)) {
         setOpenForgotPassword(false);
         setOpenOtpVerification(true);
-        setSnackbarMessage("OTP has been sent to your email!");
+        setSnackbarMessage(translate('otpSent'));
         setSnackbarSeverity("success");
         setSnackbarOpen(true);
       } else {
-        setSnackbarMessage("Failed to send OTP. Please try again.");
+        setSnackbarMessage(translate('otpSendFailed'));
         setSnackbarSeverity("error");
         setSnackbarOpen(true);
       }
     } catch (error: any) {
-      setSnackbarMessage(error.payload || "Failed to send OTP");
+      setSnackbarMessage(error.payload || translate('otpSendFailed'));
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
     } finally {
@@ -193,7 +195,7 @@ const LoginPage = () => {
 
   const handleOtpSubmit = () => {
     if (!otp) {
-      setSnackbarMessage("Please enter the OTP");
+      setSnackbarMessage(translate('enterOtp'));
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
       return;
@@ -205,17 +207,17 @@ const LoginPage = () => {
 
   const handlePasswordReset = async () => {
     if (!newPassword || !confirmPassword) {
-      setPasswordError("Both password fields are required");
+      setPasswordError(translate('bothPasswordsRequired'));
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      setPasswordError("Passwords do not match");
+      setPasswordError(translate('passwordsDontMatch'));
       return;
     }
 
     if (newPassword.length < 6) {
-      setPasswordError("Password must be at least 6 characters");
+      setPasswordError(translate('passwordMinLength'));
       return;
     }
 
@@ -231,7 +233,7 @@ const LoginPage = () => {
 
       if (getForgotPassword.fulfilled.match(result)) {
         setOpenNewPassword(false);
-        setSnackbarMessage("Password reset successful! Please login with your new password.");
+        setSnackbarMessage(translate('passwordResetSuccess'));
         setSnackbarSeverity("success");
         setSnackbarOpen(true);
 
@@ -247,12 +249,12 @@ const LoginPage = () => {
           navigate("/login");
         }, 2000);
       } else {
-        setSnackbarMessage("Failed to reset password. Please try again.");
+        setSnackbarMessage(translate('passwordResetFailed'));
         setSnackbarSeverity("error");
         setSnackbarOpen(true);
       }
     } catch (error: any) {
-      setSnackbarMessage(error.payload || "Failed to reset password");
+      setSnackbarMessage(error.payload || translate('passwordResetFailed'));
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
     } finally {
@@ -335,14 +337,14 @@ const LoginPage = () => {
                   color="white"
                   gutterBottom
                 >
-                  Login
+                  {translate('login')}
                 </Typography>
 
                 <form onSubmit={handleSubmit} style={{ width: "100%" }}>
                   {/* Email Field */}
                   <TextField
                     fullWidth
-                    placeholder="Username"
+                    placeholder={translate('username')}
                     variant="outlined"
                     margin="normal"
                     name="email"
@@ -374,7 +376,7 @@ const LoginPage = () => {
                   {/* Password Field */}
                   <TextField
                     fullWidth
-                    placeholder="Password"
+                    placeholder={translate('password')}
                     variant="outlined"
                     type={showPassword ? "text" : "password"}
                     margin="normal"
@@ -392,7 +394,7 @@ const LoginPage = () => {
                       endAdornment: (
                         <InputAdornment position="end">
                           <IconButton
-                            aria-label="toggle password visibility"
+                            aria-label={translate('togglePasswordVisibility')}
                             onClick={handleClickShowPassword}
                             edge="end"
                           >
@@ -439,7 +441,7 @@ const LoginPage = () => {
                           }}
                         />
                       }
-                      label="Remember me"
+                      label={translate('rememberMe')}
                       sx={{
                         whiteSpace: "nowrap",
                         flexShrink: 0,
@@ -462,7 +464,7 @@ const LoginPage = () => {
                       }}
                       onClick={handleForgotPasswordClick}
                     >
-                      Forgot Password?
+                      {translate('forgotPassword')}?
                     </Typography>
                   </Box>
 
@@ -486,7 +488,7 @@ const LoginPage = () => {
                     {isLoading ? (
                       <CircularProgress size={24} color="inherit" />
                     ) : (
-                      "Login"
+                      translate('login')
                     )}
                   </Button>
 
@@ -500,7 +502,7 @@ const LoginPage = () => {
                       fontSize: { xs: "0.75rem", sm: "0.875rem" },
                     }}
                   >
-                    Don't have an account?{" "}
+                    {translate('noAccount')}{" "}
                     <Typography
                       component="span"
                       color="white"
@@ -510,7 +512,7 @@ const LoginPage = () => {
                         color: "#008CDA",
                       }}
                     >
-                      <a href="/signup" style={{ textDecoration: "underline" }}>SignUp</a>
+                      <a href="/signup" style={{ textDecoration: "underline" }}>{translate('signUp')}</a>
                     </Typography>
                   </Typography>
                 </form>
@@ -543,7 +545,7 @@ const LoginPage = () => {
             mb: 2,
           }}
         >
-          Forgot Password
+          {translate('forgotPassword')}
         </DialogTitle>
         <DialogContent sx={{ padding: 0 }}>
           <Typography
@@ -554,11 +556,11 @@ const LoginPage = () => {
               mb: 3,
             }}
           >
-            Enter your email address to receive an OTP.
+            {translate('enterEmailForOtp')}
           </Typography>
           <TextField
             fullWidth
-            placeholder="Enter Your Email Address"
+            placeholder={translate('enterEmailAddress')}
             variant="outlined"
             type="email"
             value={forgotPasswordEmail}
@@ -590,7 +592,7 @@ const LoginPage = () => {
             {isLoading ? (
               <CircularProgress size={24} color="inherit" />
             ) : (
-              "Send OTP"
+              translate('sendOtp')
             )}
           </Button>
         </DialogActions>
@@ -619,7 +621,7 @@ const LoginPage = () => {
             mb: 2,
           }}
         >
-          Enter OTP
+          {translate('enterOtpTitle')}
         </DialogTitle>
         <DialogContent sx={{ padding: 0 }}>
           <Typography
@@ -630,11 +632,11 @@ const LoginPage = () => {
               mb: 3,
             }}
           >
-            Please enter the OTP sent to your email.
+            {translate('otpSentToEmail')}
           </Typography>
           <TextField
             fullWidth
-            placeholder="Enter OTP"
+            placeholder={translate('enterOtp')}
             variant="outlined"
             value={otp}
             onChange={(e) => setOtp(e.target.value)}
@@ -665,7 +667,7 @@ const LoginPage = () => {
             {isLoading ? (
               <CircularProgress size={24} color="inherit" />
             ) : (
-              "Verify OTP"
+              translate('verifyOtp')
             )}
           </Button>
         </DialogActions>
@@ -694,7 +696,7 @@ const LoginPage = () => {
             mb: 2,
           }}
         >
-          Reset Password
+          {translate('resetPassword')}
         </DialogTitle>
         <DialogContent sx={{ padding: 0 }}>
           <Typography
@@ -705,11 +707,11 @@ const LoginPage = () => {
               mb: 3,
             }}
           >
-            Enter your new password.
+            {translate('enterNewPassword')}
           </Typography>
           <TextField
             fullWidth
-            placeholder="New Password"
+            placeholder={translate('newPassword')}
             variant="outlined"
             type={showNewPassword ? "text" : "password"}
             value={newPassword}
@@ -725,7 +727,7 @@ const LoginPage = () => {
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
-                    aria-label="toggle new password visibility"
+                    aria-label={translate('toggleNewPasswordVisibility')}
                     onClick={handleClickShowNewPassword}
                     edge="end"
                   >
@@ -737,7 +739,7 @@ const LoginPage = () => {
           />
           <TextField
             fullWidth
-            placeholder="Confirm Password"
+            placeholder={translate('confirmPassword')}
             variant="outlined"
             type={showConfirmPassword ? "text" : "password"}
             value={confirmPassword}
@@ -753,7 +755,7 @@ const LoginPage = () => {
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
-                    aria-label="toggle confirm password visibility"
+                    aria-label={translate('toggleConfirmPasswordVisibility')}
                     onClick={handleClickShowConfirmPassword}
                     edge="end"
                   >
@@ -787,7 +789,7 @@ const LoginPage = () => {
             {isLoading ? (
               <CircularProgress size={24} color="inherit" />
             ) : (
-              "Reset Password"
+              translate('resetPassword')
             )}
           </Button>
         </DialogActions>

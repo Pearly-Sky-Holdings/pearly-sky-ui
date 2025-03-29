@@ -3,31 +3,33 @@ import { Outlet, useLocation } from 'react-router-dom';
 import Sidebar from '../components/customerDashboardCarts/Sidebar';
 import { Home, Settings, HelpCircle, LogOut } from 'lucide-react';
 import { NavItem } from '../type';
+import { useLanguage } from '../context/LanguageContext';
 
 const MainLayout: React.FC = () => {
   const location = useLocation();
+  const { translate } = useLanguage();
   
   const navItems: NavItem[] = [
     {
-      name: 'Dashboard',
+      name: translate('dashboard'),
       path: '/customer-dashboard/:customerId',
       icon: <Home size={20} />,
       active: location.pathname === '/customer-dashboard' || location.pathname === '/'
     },
+    // {
+    //   name: translate('settings'),
+    //   path: '/settings',
+    //   icon: <Settings size={20} />,
+    //   active: location.pathname === '/settings'
+    // },
+    // {
+    //   name: translate('help'),
+    //   path: '/help',
+    //   icon: <HelpCircle size={20} />,
+    //   active: location.pathname === '/help'
+    // },
     {
-      name: 'Settings',
-      path: '/settings',
-      icon: <Settings size={20} />,
-      active: location.pathname === '/settings'
-    },
-    {
-      name: 'Help',
-      path: '/help',
-      icon: <HelpCircle size={20} />,
-      active: location.pathname === '/help'
-    },
-    {
-      name: 'Logout',
+      name: translate('logout'),
       path: '/login',
       icon: <LogOut size={20} />,
       active: location.pathname === '/login'

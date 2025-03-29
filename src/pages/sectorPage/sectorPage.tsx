@@ -15,89 +15,124 @@ import {
 } from "../../config/images";
 import { useLanguage } from "../../context/LanguageContext";
 
+interface Sector {
+  titleKey: string;
+  descriptionKey: string;
+  image: string;
+  id: string; // Added unique ID
+}
+
 const OurSector = () => {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  // const scrollRef = useRef<HTMLDivElement>(null);
+  // const containerRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const { translate } = useLanguage();
 
-  const sectors = [
+  const sectors: Sector[] = [
     {
+      id: "1",
       titleKey: "commercialMixedUtilities",
       descriptionKey: "commercialMixedUtilitiesDesc",
       image: sectorImage2,
     },
     {
+      id: "2",
       titleKey: "sportsSector",
       descriptionKey: "sportsSectorDesc",
       image: sports,
     },
     {
+      id: "3",
       titleKey: "privateProperties",
       descriptionKey: "privatePropertiesDesc",
       image: privateProperties,
     },
     {
+      id: "4",
       titleKey: "residentialSector",
       descriptionKey: "residentialSectorDesc",
       image: residential,
     },
     {
+      id: "5",
       titleKey: "hotelsRestaurants",
       descriptionKey: "hotelsRestaurantsDesc",
       image: sectorImage3,
     },
     {
+      id: "6",
       titleKey: "educationSector",
       descriptionKey: "educationSectorDesc",
       image: sectorImage4,
     },
     {
+      id: "7",
       titleKey: "healthcareSector",
       descriptionKey: "healthcareSectorDesc",
       image: healthcare,
     },
     {
+      id: "8",
       titleKey: "financeSector",
       descriptionKey: "financeSectorDesc",
       image: finance,
     },
     {
+      id: "9",
       titleKey: "leisureHospitality",
       descriptionKey: "leisureHospitalityDesc",
       image: sectorImage5,
     },
     {
+      id: "10",
       titleKey: "eldersHomeCare",
       descriptionKey: "eldersHomeCareDesc",
       image: sectorImage1,
     },
     {
+      id: "11",
       titleKey: "retailSector",
       descriptionKey: "retailSectorDesc",
       image: retail,
     },
   ];
 
+
+  console.log('log__________', sectors);
+  
   useEffect(() => {
-    const scrollContainer = scrollRef.current;
     const container = containerRef.current;
+    if (!container || sectors.length < 2) return; // Need at least 2 items
 
-    if (scrollContainer && container) {
-      const content = container.innerHTML;
-      container.innerHTML = content + content;
+    // Apply animation styles
+    container.style.animation = 'scroll 30s linear infinite';
 
-      const scroll = () => {
-        if (scrollContainer.scrollLeft >= container.scrollWidth / 2) {
-          scrollContainer.scrollLeft = 0;
-        } else {
-          scrollContainer.scrollLeft += 1;
-        }
-      };
+    return () => {
+      // Cleanup animation when component unmounts
+      container.style.animation = '';
+    };
+  }, [sectors.length]);
 
-      const scrollInterval = setInterval(scroll, 30);
-      return () => clearInterval(scrollInterval);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const scrollContainer = scrollRef.current;
+  //   const container = containerRef.current;
+
+  //   if (scrollContainer && container) {
+  //     const content = container.innerHTML;
+  //     container.innerHTML = content + content;
+
+  //     const scroll = () => {
+  //       if (scrollContainer.scrollLeft >= container.scrollWidth / 2) {
+  //         scrollContainer.scrollLeft = 0;
+  //       } else {
+  //         scrollContainer.scrollLeft += 1;
+  //       }
+  //     };
+
+  //     const scrollInterval = setInterval(scroll, 30);
+  //     return () => clearInterval(scrollInterval);
+  //   }
+  // }, []);
 
   return (
     <Box sx={{ textAlign: "center", overflow: "hidden" }}>
@@ -114,7 +149,6 @@ const OurSector = () => {
         {translate('ourSectorTitle')}
       </Typography>
       <Box
-        ref={scrollRef}
         sx={{
           display: "flex",
           overflowX: "hidden",
@@ -136,10 +170,10 @@ const OurSector = () => {
             flexWrap: "nowrap",
           }}
         >
-          {sectors.map((sector, index) => (
+          {[...sectors, ...sectors].map((sector, index) => (
             <Card
-              key={index}
-              sx={{
+            key={`${sector.id}-${index}`} // Better key
+            sx={{
                 minWidth: 200,
                 maxWidth: 250,
                 borderRadius: 6,
@@ -205,6 +239,12 @@ const OurSector = () => {
           ))}
         </Box>
       </Box>
+      <style>{`
+        @keyframes scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
     </Box>
   );
 };
