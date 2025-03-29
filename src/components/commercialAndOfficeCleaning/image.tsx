@@ -6,72 +6,72 @@ import {
   postConstructorImage4,
   postConstructorImage5,
   postConstructorImage6,
-  
 } from "../../config/images";
+import { useLanguage } from "../../context/LanguageContext";
 
 const ImageComponent = () => {
+  const { translate } = useLanguage();
+  
   // Data for the cards
   const cleaningPackages = [
     {
-      icon: postConstructorImage1, // Replace with your image URL
-      items: 
-      ["Mop hard floors",
-       "Cleaning bathrooms", 
-       "Vacuum hard floor surfaces",
-       "Clean glass partitions and doors"
-    ],
+      icon: postConstructorImage1,
+      items: [
+        translate('mopHardFloors'),
+        translate('cleaningBathrooms'), 
+        translate('vacuumHardFloor'),
+        translate('cleanGlassPartitions')
+      ],
     },
     {
-      icon: postConstructorImage2, // Replace with your image URL
-      items: 
-      ["Dust and clean furniture", 
-        "Trash bags and liners", 
-        "Vacuum carpet",
-        "Emptying the bin"
-    ],
+      icon: postConstructorImage2,
+      items: [
+        translate('dustCleanFurniture'), 
+        translate('trashBagsLiners'), 
+        translate('vacuumCarpet'),
+        translate('emptyBins')
+      ],
     },
     {
-      icon: postConstructorImage3, // Replace with your image URL
-      items: 
-      ["Remove cobwebs", 
-        "Disinfecting", 
-        "Dusting high surfaces",
-        "Glass Cleaner"
-    ],
+      icon: postConstructorImage3,
+      items: [
+        translate('removeCobwebs'), 
+        translate('disinfecting'), 
+        translate('dustingHighSurfaces'),
+        translate('glassCleaner')
+      ],
     },
     {
-        icon: postConstructorImage4, // Replace with your image URL
-        items:
-         ["Vacuum and clean upholstery", 
-            "Baseboards dusted", 
-            "Cleaning windows and blinds",
-            "Deep carpet cleaning"
-        ],
-      },
-      {
-        icon: postConstructorImage5, // Replace with your image URL
-        items: ["Disinfect door handles", 
-            "Dust computers, screens,keyboards & seats", 
-            "Vacuuming",
-            "Wipe and disinfect all partitions"
-        ],
-      },
-      {
-        icon: postConstructorImage6, // Replace with your image URL
-        items: 
-        ["Air vents dusted", 
-            "Clean dishware and utensils", 
-            "Dust the light fixtures",
-        "Cleaning all office equipment"],
-      },
+      icon: postConstructorImage4,
+      items: [
+        translate('vacuumCleanUpholstery'), 
+        translate('baseboardsDusted'), 
+        translate('cleanWindowsBlinds'),
+        translate('deepCarpetCleaning')
+      ],
+    },
+    {
+      icon: postConstructorImage5,
+      items: [
+        translate('disinfectDoorHandles'), 
+        translate('dustElectronics'), 
+        translate('vacuuming'),
+        translate('wipeDisinfectPartitions')
+      ],
+    },
+    {
+      icon: postConstructorImage6,
+      items: [
+        translate('airVentsDusted'), 
+        translate('cleanDishware'), 
+        translate('dustLightFixtures'),
+        translate('cleanOfficeEquipment')
+      ],
+    },
   ];
 
   return (
-    <div
-      className="rounded-lg shadow-lg p-4 sm:p-6 "
-     
-    >    
-
+    <div className="rounded-lg shadow-lg p-4 sm:p-6">
       <Grid container spacing={3}>
         {cleaningPackages.map((pkg, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
@@ -90,8 +90,8 @@ const ImageComponent = () => {
                 backgroundRepeat: "no-repeat",
                 overflow: "visible",
                 "&:hover": {
-                  transform: "scale(1.05)", // Zoom effect
-                  boxShadow: "0px 4px 20px rgba(0,0,0,0.5)", // Enhanced shadow on hover
+                  transform: "scale(1.05)",
+                  boxShadow: "0px 4px 20px rgba(0,0,0,0.5)",
                 },
               }}
             >

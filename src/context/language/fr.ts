@@ -131,42 +131,33 @@ export const frTranslations = {
   projectCompletion: "Achèvement du projet",
 
 
-  // Page Notre Secteur ===============================================
-  ourSectorTitle: 'Nos Secteurs d\'Activité',
-
-  // Titres et Descriptions des Secteurs ===============================================
-  commercialMixedUtilities: 'Secteur Commercial & Utilities Mixtes',
+  // Our Sector Page ===============================================
+  ourSectorTitle: 'Nos Secteurs',
+      
+  // Sector Titles and Descriptions ===============================================
+  commercialMixedUtilities: 'Commercial & Utilités Mixtes',
   commercialMixedUtilitiesDesc: 'Création d\'espaces efficaces qui stimulent la croissance et l\'innovation.',
 
   sportsSector: 'Secteur Sportif',
   sportsSectorDesc: 'Améliorer la performance et la passion à travers chaque match.',
-
   privateProperties: 'Propriétés Privées',
   privatePropertiesDesc: 'Espaces exclusifs conçus pour le confort et le luxe.',
-
-  residentialSector: 'Secteur Résidentiel',
+  residentialSector: 'Résidentiel',
   residentialSectorDesc: 'Création de communautés accueillantes et dynamiques.',
-
   hotelsRestaurants: 'Hôtels & Restaurants',
   hotelsRestaurantsDesc: 'Des séjours et expériences culinaires inoubliables vous attendent.',
-
-  educationSector: 'Secteur Éducatif',
-  educationSectorDesc: 'Libérer le potentiel des esprits grâce au savoir et à l\'innovation.',
-
-  healthcareSector: 'Secteur Médical',
+  educationSector: 'Éducation',
+  educationSectorDesc: 'Éveiller les esprits par le savoir et l\'innovation.',
+  healthcareSector: 'Santé',
   healthcareSectorDesc: 'Transformer les soins de santé pour un avenir plus sain.',
-
-  financeSector: 'Secteur Financier',
+  financeSector: 'Finance',
   financeSectorDesc: 'Débloquer la croissance et la sécurité financières.',
-
   leisureHospitality: 'Loisirs & Hôtellerie',
-  leisureHospitalityDesc: 'Amélioration des expériences dans les loisirs et l\'hôtellerie.',
-
-  eldersHomeCare: 'Maisons de Retraite - EHPAD',
+  leisureHospitalityDesc: 'Améliorer les expériences dans les loisirs et l\'hôtellerie.',
+  eldersHomeCare: 'Maison de Retraite - EHPAD',
   eldersHomeCareDesc: 'Offrir des soins bienveillants et un environnement familial à nos aînés.',
-
-  retailSector: 'Secteur du Commerce',
-  retailSectorDesc: 'Redéfinition de l\'expérience d\'achat avec innovation et commodité.',
+  retailSector: 'Commerce de Détail',
+  retailSectorDesc: 'Redéfinir l\'expérience d\'achat avec innovation et commodité.',
 
 
   // Page Équipe d'Experts ===============================================
@@ -967,6 +958,238 @@ export const frTranslations = {
   cancellationItem2: "Si les procédures ci-dessus ne sont pas respectées, aucun remboursement ne pourra être garanti",
   cookiesPolicyTitle: "Accepter la politique de cookies de l'entreprise",
   acceptTermsCheckboxLabel: "J'ai lu et j'accepte les conditions générales ci-dessus",
+
+
+  // New translations for sanitization page
+  sanitizationDisinfection: 'Assainissement & Désinfection',
+  disinfectingDescription: 'La désinfection est une méthode de nettoyage qui utilise des désinfectants (produits chimiques) pour éliminer les germes sur les objets et surfaces. Les désinfectants couramment utilisés sont l\'eau de javel et les solutions alcoolisées. Généralement, il faut laisser agir le produit sur les surfaces pendant un temps spécifique pour éliminer les germes. Cela ne nettoie pas les surfaces sales ni n\'élimine définitivement tous les germes.',
+  sanitizingDescription: 'L\'assainissement peut être réalisé par nettoyage, désinfection ou les deux. Il permet de réduire le nombre de germes à un niveau sûr, défini par les normes de santé publique ou les besoins spécifiques d\'un lieu (travail, école...). Par exemple, les restaurants ont des procédures spécifiques pour l\'assainissement. Les méthodes varient selon vos besoins : serpillère avec produit, lave-vaisselle, ou lingette antibactérienne pour une télécommande.',
+  selectJobForQuotation: 'Sélectionnez votre besoin pour obtenir un devis',
+  chemical: 'Produit chimique',
+  providedByCompany: 'Fourni par l\'entreprise',
+  termsAgreement: 'En réservant ou demandant un devis, vous acceptez nos conditions générales et politique de confidentialité.',
+  requestQuotation: 'Demander un devis',
+  processingOrder: 'Traitement de votre demande...',
+  pleaseWait: 'Veuillez patienter pendant que nous confirmons votre réservation',
+  validationError: 'Erreur de validation',
+  ok: 'OK',
+
+  // Validation messages
+  chemicalRequired: 'Produit requis. Veuillez sélectionner une option.',
+  equipmentRequired: 'Équipement requis. Veuillez sélectionner une option.',
+  firstNameRequired: 'Prénom requis.',
+  lastNameRequired: 'Nom de famille requis.',
+  countryRequired: 'Pays requis.',
+  addressRequired: 'Adresse requise.',
+  cityRequired: 'Ville requise.',
+  stateRequired: 'Région requise.',
+  zipRequired: 'Code postal requis.',
+  passwordRequired: 'Mot de passe requis.',
+  passwordLength: 'Le mot de passe doit contenir au moins 8 caractères.',
+  confirmPasswordRequired: 'Confirmation du mot de passe requise.',
+  frequencyRequired: 'Fréquence requise.',
+  propertyTypeRequired: 'Type de propriété requis.',
+  contactTypeRequired: 'Type de contact requis.',
+  timeZoneRequired: 'Fuseau horaire requis.',
+  dateRequired: 'Date requise.',
+  timeRequired: 'Heure requise.',
+  termsRequired: 'Vous devez accepter les conditions générales.',
+  networkError: 'Erreur réseau. Veuillez vérifier votre connexion.',
+   
+  // Personal Information Form translations
+  personalInformation: 'Informations personnelles',
+  prefix: 'Civilité',
+  middleName: 'Deuxième prénom',
+  country: 'Pays',
+  emailAddress: 'Adresse email',
+  address: 'Adresse',
+  apartmentSuite: 'Appartement, suite, etc',
+  city: 'Ville',
+  stateProvince: 'Région/Province',
+  zipPostalCode: 'Code postal',
+  
+  // Placeholders
+  selectPrefix: 'Choisir une civilité',
+  passwordPlaceholder: 'Saisissez votre mot de passe',
+  confirmPasswordPlaceholder: 'Confirmez votre mot de passe',
+  prefixRequired: 'Civilité requise',
+
+  // Sanitization Page translations
+  sanisanitizingDescription: 'L\'assainissement peut être réalisé par nettoyage, désinfection ou les deux...',
+
+  // EstimateList translations
+  freeEstimate: 'Obtenir un devis gratuit',
+  bathroom: 'Salle de bain',
+  bedroom: 'Chambre',
+  livingRoom: 'Salon',
+  houseAppliances: 'Appareils ménagers',
+  
+  // Bathroom items
+  bathroomItem1: 'Savon liquide',
+  bathroomItem2: 'Papier toilette',
+  bathroomItem3: '4 grandes serviettes',
+  bathroomItem4: '2 gants de toilette, 1 lingette démaquillante noire',
+  bathroomItem5: 'Rideau de douche, doublure et crochets',
+  
+  // Bedroom items
+  bedroomItem1: 'Matelas',
+  bedroomItem2: 'Cintres',
+  bedroomItem3: 'Drap plat',
+  bedroomItem4: 'Housse de couette et taies',
+  bedroomItem5: '4 taies d\'oreiller par lit',
+  
+  // Kitchen items
+  kitchenItem1: 'Dosettes de café',
+  kitchenItem2: 'Sac poubelle',
+  kitchenItem3: 'Planche à découper',
+  kitchenItem4: 'Brosse/Éponge à vaisselle',
+  kitchenItem5: 'Liquide vaisselle & pastilles lave-vaisselle',
+  
+  // Living Room items
+  livingRoomItem1: 'Meuble TV',
+  livingRoomItem2: 'Table basse',
+  livingRoomItem3: 'Canapé/Fauteuil',
+  livingRoomItem4: 'Rideaux/Stores',
+  livingRoomItem5: 'Appareil de streaming',
+  
+  // Appliance items
+  applianceItem1: 'Four',
+  applianceItem2: 'Réfrigérateur',
+  applianceItem3: 'Fer à repasser',
+  applianceItem4: 'Lave-linge',
+  applianceItem5: 'Aspirateur',
+  
+  // Other items
+  otherItem: 'autre',
+
+
+
+  // Commercial Office Cleaning translations ===============================================
+  commercialOfficeCleaning: 'Nettoyage Commercial et de Bureaux',
+  commercialDescription1: 'Nos services de nettoyage pour bureaux et espaces commerciaux garantissent un environnement de travail impeccable, hygiénique et bien entretenu, favorisant un cadre professionnel et productif. Avec un accent sur le nettoyage approfondi et la désinfection, ces services couvrent toutes les tâches essentielles avec une attention aux détails.',
+  commercialDescription2: 'Conçus pour maintenir les normes de propreté et d\'hygiène, ces services contribuent à un espace de travail plus sain et accueillant tout en prolongeant la durée de vie du mobilier et des équipements de bureau.',
+  commercialListItem1: 'Aspiration des moquettes et sols durs, élimination de la poussière et des débris',
+  commercialListItem2: 'Désinfection des surfaces fréquemment touchées (poignées de porte, équipements de bureau)',
+  commercialListItem3: 'Nettoyage des cloisons vitrées, fenêtres et stores pour une apparence soignée',
+  commercialListItem4: 'Assainissement des sanitaires et réapprovisionnement des fournitures essentielles',
+  commercialListItem5: 'Vidage des poubelles et maintien d\'un espace organisé et sans encombrement',
+
+  // Timezone options (kept in English as these are standard timezone identifiers)
+  pacificMidway: 'Pacific/Midway',
+  pacificHonolulu: 'Pacific/Honolulu',
+  americaAnchorage: 'America/Anchorage',
+  americaLosAngeles: 'America/Los_Angeles',
+  americaDenver: 'America/Denver',
+  americaChicago: 'America/Chicago',
+  americaNewYork: 'America/New_York',
+  americaCaracas: 'America/Caracas',
+  americaHalifax: 'America/Halifax',
+  americaStJohns: 'America/St_Johns',
+  americaBuenosAires: 'America/Buenos_Aires',
+  americaNoronha: 'America/Noronha',
+  atlanticAzores: 'Atlantic/Azores',
+  europeLondon: 'Europe/London',
+  europeParis: 'Europe/Paris',
+  europeIstanbul: 'Europe/Istanbul',
+  africaCairo: 'Africa/Cairo',
+  africaNairobi: 'Africa/Nairobi',
+  asiaDubai: 'Asia/Dubai',
+  asiaKabul: 'Asia/Kabul',
+  asiaTehran: 'Asia/Tehran',
+  asiaKolkata: 'Asia/Kolkata',
+  asiaKathmandu: 'Asia/Kathmandu',
+  asiaDhaka: 'Asia/Dhaka',
+  asiaBangkok: 'Asia/Bangkok',
+  asiaSingapore: 'Asia/Singapore',
+  asiaShanghai: 'Asia/Shanghai',
+  asiaTokyo: 'Asia/Tokyo',
+  australiaSydney: 'Australia/Sydney',
+  pacificAuckland: 'Pacific/Auckland',
+
+  // Dropdown labels
+  selectBusinessProperty: 'Sélectionnez votre entreprise ou propriété',
+  chooseFrequency: 'Choisissez la fréquence',
+  selectTimeZone: 'Sélectionnez le fuseau horaire',
+  droppreferredLanguage: 'Langue préférée',
+
+
+  // Image Gallery translations
+  highTempSteaming: "Nettoyage à Vapeur Haute Température",
+  highTempSteamingDesc: "Élimination des virus par vapeur à 150°C (300°F)",
+  uvLightSanitization: "Désinfection par UV",
+  uvLightSanitizationDesc: "Élimination des germes sur surfaces sensibles aux liquides",
+  h2o2Disinfection: "Désinfection H₂O₂",
+  h2o2DisinfectionDesc: "Assainissement de l'air par peroxyde d'hydrogène",
+  deepCleaningServices: "Services de Nettoyage Profond",
+  deepCleaningServicesDesc: "Élimination des déclencheurs d'asthme et allergies en entreprise",
+
+  // New cleaning service item translations
+  mopHardFloors: 'Laver les sols durs',
+  cleaningBathrooms: 'Nettoyage des sanitaires',
+  vacuumHardFloor: 'Aspirer les sols durs',
+  cleanGlassPartitions: 'Nettoyer les cloisons vitrées et portes',
+  dustCleanFurniture: 'Dépoussiérer et nettoyer le mobilier',
+  trashBagsLiners: 'Sacs poubelle et doublures',
+  vacuumCarpet: 'Aspirer les moquettes',
+  emptyBins: 'Vider les corbeilles',
+  removeCobwebs: 'Éliminer les toiles d\'araignée',
+  disinfecting: 'Désinfection',
+  dustingHighSurfaces: 'Dépoussiérage des surfaces en hauteur',
+  glassCleaner: 'Nettoyant vitres',
+  vacuumCleanUpholstery: 'Aspirer et nettoyer les tissus d\'ameublement',
+  baseboardsDusted: 'Plinthes dépoussiérées',
+  cleanWindowsBlinds: 'Nettoyage des fenêtres et stores',
+  deepCarpetCleaning: 'Nettoyage profond des moquettes',
+  disinfectDoorHandles: 'Désinfection des poignées de porte',
+  dustElectronics: 'Dépoussiérage des écrans, claviers et sièges',
+  wipeDisinfectPartitions: 'Nettoyage et désinfection des cloisons',
+  airVentsDusted: 'Bouches d\'aération dépoussiérées',
+  cleanDishware: 'Nettoyage de la vaisselle et ustensiles',
+  dustLightFixtures: 'Dépoussiérage des luminaires',
+  cleanOfficeEquipment: 'Nettoyage du matériel de bureau',
+
+  // Property Types
+  propertyTypeHome: 'Maison',
+  propertyTypeApartment: 'Appartement',
+  propertyTypeVilla: 'Villa',
+  propertyTypeCommercial: 'Local commercial',
+  propertyTypeGovernmentOffice: 'Bureau gouvernemental',
+  propertyTypePublicOffice: 'Bureau public',
+  propertyTypePrivateOffice: 'Bureau privé',
+  propertyTypeDaycare: 'Crèche/Garderie',
+  propertyTypeEldersCare: 'EHPAD/Maison de retraite',
+  propertyTypeShoppingMall: 'Centre commercial',
+  propertyTypeGovernmentHospital: 'Hôpital public',
+  propertyTypePrivateHospital: 'Clinique privée',
+  propertyTypeSportCenter: 'Complexe sportif',
+  propertyTypeGym: 'Salle de sport',
+  propertyTypeRestaurant: 'Restaurant',
+  propertyTypeHotel: 'Hôtel',
+  propertyTypeSchool: 'École (publique ou privée)',
+  propertyTypeTransport: 'Secteur transport',
+  propertyTypeAirport: 'Aéroport',
+  propertyTypeRetail: 'Magasin/Commerce de détail',
+  propertyTypeOther: 'Autre secteur',
+
+  // Frequency Options
+  frequencyOneTime: 'ponctuel',
+  frequencyOther: 'autre',
+
+  // Gender Options
+  genderMale: 'homme',
+  genderFemale: 'femme',
+  genderAny: 'peu importe',
+
+  // Language Options
+  languageEnglish: 'Anglais',
+  languageFrench: 'Français',
+  languageSpanish: 'Espagnol',
+  languageDutch: 'Néerlandais',
+  languageGerman: 'Allemand',
+  languageArabic: 'Arabe',
+  languageAny: 'peu importe',
+
+
 
 
 

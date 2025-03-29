@@ -1,51 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Typography, Grid, Checkbox } from '@mui/material';
+import { useLanguage } from "../../context/LanguageContext";
 
 interface EstimateListProps {
   onSelectionChange: (selectedItems: string[]) => void;
 }
 
-const EstimateList: React.FC<EstimateListProps> = ({ onSelectionChange }) => {
-  const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>({
-    'Kiddie Pool': false,
-    'Above-Ground Swimming Pool': false,
-    'Lap Pool': false,
-    'In-Ground Family Swimming Pool': false,
-    'Indoor Pool': false,
-    'Olympic-Size': false,
-    'Architectural Pool': false,
-    'Infinity Pool': false,
-    'Natural Pool': false,
-    'Spool': false,
-    'Saltwater Pool': false,
-    'Plunge Pool': false,
-    
-  });
+// Define the pool types with their original keys
+const POOL_TYPES = {
+  kiddiePool: 'Kiddie Pool',
+  aboveGroundPool: 'Above-Ground Swimming Pool',
+  lapPool: 'Lap Pool',
+  inGroundPool: 'In-Ground Family Swimming Pool',
+  indoorPool: 'Indoor Pool',
+  olympicPool: 'Olympic-Size',
+  architecturalPool: 'Architectural Pool',
+  infinityPool: 'Infinity Pool',
+  naturalPool: 'Natural Pool',
+  spool: 'Spool',
+  saltwaterPool: 'Saltwater Pool',
+  plungePool: 'Plunge Pool',
+};
 
-  const handleCheckboxChange = (item: string) => {
+const EstimateList: React.FC<EstimateListProps> = ({ onSelectionChange }) => {
+  const { translate } = useLanguage();
+  const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>(
+    Object.keys(POOL_TYPES).reduce((acc, key) => {
+      acc[key] = false;
+      return acc;
+    }, {} as Record<string, boolean>)
+  );
+
+  // Update translations when language changes
+  const [translatedPoolTypes, setTranslatedPoolTypes] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    const translated = Object.keys(POOL_TYPES).reduce((acc, key) => {
+      acc[key] = translate(key);
+      return acc;
+    }, {} as Record<string, string>);
+    setTranslatedPoolTypes(translated);
+  }, [translate]);
+
+  const handleCheckboxChange = (key: string) => {
     const updatedSelection = {
       ...selectedItems,
-      [item]: !selectedItems[item],
+      [key]: !selectedItems[key],
     };
     setSelectedItems(updatedSelection);
 
-    const selectedData = Object.keys(updatedSelection).filter((key) => updatedSelection[key]);
-    onSelectionChange(selectedData); // Pass the selected items to the parent component
+    const selectedData = Object.keys(updatedSelection)
+      .filter((k) => updatedSelection[k])
+      .map(k => translatedPoolTypes[k]);
+    onSelectionChange(selectedData);
   };
 
   return (
     <Box sx={{ padding: 1, maxWidth: 1200, margin: '1' }}>
       <Typography variant="body1" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'start', mb: 1, color: 'black' }}>
-        Pool Type
+        {translate('poolType')}
       </Typography>
 
-      <Grid container >
-        {Object.keys(selectedItems).map((item, index) => (
+      <Grid container>
+        {Object.keys(POOL_TYPES).map((key, index) => (
           <Grid item xs={12} md={4} key={index} sx={{ padding: 0 }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Checkbox checked={selectedItems[item]} onChange={() => handleCheckboxChange(item)} />
+              <Checkbox 
+                checked={selectedItems[key]} 
+                onChange={() => handleCheckboxChange(key)} 
+              />
               <Typography variant="body1" sx={{ fontWeight: 'semibold', color: 'black' }}>
-                {item}
+                {translatedPoolTypes[key]}
               </Typography>              
             </Box>
           </Grid>

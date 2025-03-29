@@ -937,7 +937,239 @@ export const enTranslations = {
      cookiesPolicyTitle: "Accept company cookies policy",
      acceptTermsCheckboxLabel: "I have read and accept the above terms and considerations",
 
+
+    // New translations for sanitization page
+    sanitizationDisinfection: 'Sanitization & Disinfection',
+    disinfectingDescription: 'Disinfecting is a cleaning method that uses disinfectants known as chemicals to kill germs on objects and surfaces. Some basic disinfectants used for this method are bleach and alcohol solutions. Generally, we need to keep the disinfectant on the surfaces and objects for a particular time to kill the germs. It does not clean dirty surfaces or remove germs definitely.',
+    sanitizingDescription: 'Sanitizing can be completed by cleaning, disinfecting, or both. It takes part in decreasing the number of germs to a safe level. What is defined by a safe level depends on public health standards or basic needs at a workplace, school, etc. For example, there are certain procedures for sanitizing in restaurants and other facilities that are used to prepare food. Methods we use to sanitize can be varied, depending on your requirements. They can be Mopping a floor using a mop, a chemical, and water, using a dishwasher to sanitize the dishes or using an antibacterial wipe on a TV remote.',
+    selectJobForQuotation: 'Select Your Job to Get Your Quotation',
+    chemical: 'Chemical',
+    providedByCompany: 'Provided by company',
+    termsAgreement: 'By Booking or Requesting a quotation, you agree with our terms and conditions and privacy policy.',
+    requestQuotation: 'Request Quotation',
+    processingOrder: 'Processing your order...',
+    pleaseWait: 'Please wait while we confirm your booking',
+    validationError: 'Validation Error',
+    ok: 'OK',
+
+    // Validation messages
+    chemicalRequired: 'Chemical is required. Please select an option for Chemical.',
+    equipmentRequired: 'Equipment is required. Please select an option for Equipment.',
+    firstNameRequired: 'First Name is required. Please enter your first name.',
+    lastNameRequired: 'Last Name is required. Please enter your last name.',
+    countryRequired: 'Country is required. Please select your country.',
+    addressRequired: 'Address is required. Please enter your address.',
+    cityRequired: 'City is required. Please enter your city.',
+    stateRequired: 'State is required. Please enter your state.',
+    zipRequired: 'ZIP Code is required. Please enter your ZIP code.',
+    passwordRequired: 'Password is required. Please enter your password.',
+    passwordLength: 'Password must be at least 8 characters long.',
+    confirmPasswordRequired: 'Confirm Password is required. Please confirm your password.',
+    frequencyRequired: 'Frequency is required. Please select a frequency.',
+    propertyTypeRequired: 'Property Type is required. Please select a property type.',
+    contactTypeRequired: 'Contact Type is required. Please select a contact type.',
+    timeZoneRequired: 'Time Zone is required. Please select a time zone.',
+    dateRequired: 'Date is required. Please select a date.',
+    timeRequired: 'Time is required. Please select a time.',
+    termsRequired: 'You must accept the terms and conditions to proceed.',
+    networkError: 'An error occurred while submitting the request. Please check your connection and try again.',
+     
+
+    // Personal Information Form translations
+    personalInformation: 'Personal Information',
+    prefix: 'Prefix',
+    middleName: 'Middle Name',
+    country: 'Country',
+    emailAddress: 'Email Address',
+    address: 'Address',
+    apartmentSuite: 'Apartment, suite, etc',
+    city: 'City',
+    stateProvince: 'State/Province',
+    zipPostalCode: 'ZIP / Postal Code',
     
+    // Placeholders
+    selectPrefix: 'Select Prefix',
+    passwordPlaceholder: 'Enter your password',
+    confirmPasswordPlaceholder: 'Confirm your password',
+    prefixRequired: 'Prefix is required',
+
+    // Sanitization Page translations ===============================================
+    sanisanitizingDescription: 'Sanitizing can be completed by cleaning, disinfecting, or both...',
+
+    // EstimateList translations
+    freeEstimate: 'Get a Free Estimate',
+    bathroom: 'Bathroom',
+    bedroom: 'Bedroom',
+    livingRoom: 'Living Room',
+    houseAppliances: 'House Appliances',
+    
+    // Bathroom items
+    bathroomItem1: 'Hand Soap',
+    bathroomItem2: 'Toilet Paper',
+    bathroomItem3: '4 Large Towels',
+    bathroomItem4: '2 Wash Rags, 1 Black Makeup Cloth',
+    bathroomItem5: 'Shower curtain, liner, and curtain hooks',
+    
+    // Bedroom items
+    bedroomItem1: 'Mattress',
+    bedroomItem2: 'Hangers',
+    bedroomItem3: 'Top Sheet',
+    bedroomItem4: 'Duvet Cover & Shams',
+    bedroomItem5: '4 Pillowcases Per Bed',
+    
+    // Kitchen items
+    kitchenItem1: 'Coffee Pods',
+    kitchenItem2: 'Trash Bag',
+    kitchenItem3: 'Cutting board',
+    kitchenItem4: 'Dish Brush / Sponge',
+    kitchenItem5: 'Dish Soap & Dishwasher Pods',
+    
+    // Living Room items
+    livingRoomItem1: 'TV Stand',
+    livingRoomItem2: 'Coffee Table',
+    livingRoomItem3: 'Couch/Chair',
+    livingRoomItem4: 'Curtains/Shades',
+    livingRoomItem5: 'Streaming device',
+    
+    // Appliance items
+    applianceItem1: 'Oven',
+    applianceItem2: 'Fridge',
+    applianceItem3: 'Iron',
+    applianceItem4: 'Washing Machine',
+    applianceItem5: 'Vacuum Cleaner',
+    
+    // Other items
+    otherItem: 'other',
+
+
+    // Commercial Office Cleaning translations ===============================================
+    commercialOfficeCleaning: 'Commercial and Office Cleaning',
+    commercialDescription1: 'Office and Commercial Cleaning services ensure a pristine, hygienic, and well-maintained workspace, fostering a productive and professional environment. With a focus on thorough cleaning and sanitization, these services cover essential maintenance tasks with attention to detail.',
+    commercialDescription2: 'Designed to uphold cleanliness and hygiene standards, these services contribute to a healthier, more welcoming workplace while extending the longevity of office furnishings and equipment.',
+    commercialListItem1: 'Vacuuming carpets and hard floors, removing dust and debris',
+    commercialListItem2: 'Disinfecting high-touch surfaces, including door handles and office equipment',
+    commercialListItem3: 'Cleaning glass partitions, windows, and blinds for a polished appearance',
+    commercialListItem4: 'Sanitizing restrooms and replenishing essential supplies',
+    commercialListItem5: 'Emptying trash bins and maintaining an organized, clutter-free space',
+
+
+    // Timezone options
+    pacificMidway: 'Pacific/Midway',
+    pacificHonolulu: 'Pacific/Honolulu',
+    americaAnchorage: 'America/Anchorage',
+    americaLosAngeles: 'America/Los_Angeles',
+    americaDenver: 'America/Denver',
+    americaChicago: 'America/Chicago',
+    americaNewYork: 'America/New_York',
+    americaCaracas: 'America/Caracas',
+    americaHalifax: 'America/Halifax',
+    americaStJohns: 'America/St_Johns',
+    americaBuenosAires: 'America/Buenos_Aires',
+    americaNoronha: 'America/Noronha',
+    atlanticAzores: 'Atlantic/Azores',
+    europeLondon: 'Europe/London',
+    europeParis: 'Europe/Paris',
+    europeIstanbul: 'Europe/Istanbul',
+    africaCairo: 'Africa/Cairo',
+    africaNairobi: 'Africa/Nairobi',
+    asiaDubai: 'Asia/Dubai',
+    asiaKabul: 'Asia/Kabul',
+    asiaTehran: 'Asia/Tehran',
+    asiaKolkata: 'Asia/Kolkata',
+    asiaKathmandu: 'Asia/Kathmandu',
+    asiaDhaka: 'Asia/Dhaka',
+    asiaBangkok: 'Asia/Bangkok',
+    asiaSingapore: 'Asia/Singapore',
+    asiaShanghai: 'Asia/Shanghai',
+    asiaTokyo: 'Asia/Tokyo',
+    australiaSydney: 'Australia/Sydney',
+    pacificAuckland: 'Pacific/Auckland',
+
+    // Dropdown labels
+    selectBusinessProperty: 'Select your business or property',
+    chooseFrequency: 'Choose Frequency',
+    selectTimeZone: 'Select Time Zone',
+    droppreferredLanguage: 'Preferred Language',
+
+
+    // Image Gallery translations
+    highTempSteaming: "High-Temperature Steaming",
+    highTempSteamingDesc: "Eradicate viruses using steam at 150°C (300°F)",
+    uvLightSanitization: "UV Light Sanitization",
+    uvLightSanitizationDesc: "Kill germs on surfaces where liquids may not be used",
+    h2o2Disinfection: "H₂O₂ Disinfection",
+    h2o2DisinfectionDesc: "Air disinfection using airborne hydrogen peroxide",
+    deepCleaningServices: "Deep Cleaning Services",
+    deepCleaningServicesDesc: "Remove asthma & allergy triggers at your workplace",
+
+    // New cleaning service item translations
+    mopHardFloors: 'Mop hard floors',
+    cleaningBathrooms: 'Cleaning bathrooms',
+    vacuumHardFloor: 'Vacuum hard floor surfaces',
+    cleanGlassPartitions: 'Clean glass partitions and doors',
+    dustCleanFurniture: 'Dust and clean furniture',
+    trashBagsLiners: 'Trash bags and liners',
+    vacuumCarpet: 'Vacuum carpet',
+    emptyBins: 'Emptying the bin',
+    removeCobwebs: 'Remove cobwebs',
+    disinfecting: 'Disinfecting',
+    dustingHighSurfaces: 'Dusting high surfaces',
+    glassCleaner: 'Glass Cleaner',
+    vacuumCleanUpholstery: 'Vacuum and clean upholstery',
+    baseboardsDusted: 'Baseboards dusted',
+    cleanWindowsBlinds: 'Cleaning windows and blinds',
+    deepCarpetCleaning: 'Deep carpet cleaning',
+    disinfectDoorHandles: 'Disinfect door handles',
+    dustElectronics: 'Dust computers, screens, keyboards & seats',
+    wipeDisinfectPartitions: 'Wipe and disinfect all partitions',
+    airVentsDusted: 'Air vents dusted',
+    cleanDishware: 'Clean dishware and utensils',
+    dustLightFixtures: 'Dust the light fixtures',
+    cleanOfficeEquipment: 'Cleaning all office equipment',
+
+
+    // Property Types
+    propertyTypeHome: 'Home',
+    propertyTypeApartment: 'Apartment',
+    propertyTypeVilla: 'Villa',
+    propertyTypeCommercial: 'Commercial property',
+    propertyTypeGovernmentOffice: 'Government office',
+    propertyTypePublicOffice: 'Public office',
+    propertyTypePrivateOffice: 'Private office',
+    propertyTypeDaycare: 'Daycare centre',
+    propertyTypeEldersCare: 'Elder\'s Care Centre',
+    propertyTypeShoppingMall: 'Shopping mall',
+    propertyTypeGovernmentHospital: 'Government hospital',
+    propertyTypePrivateHospital: 'Private hospital',
+    propertyTypeSportCenter: 'Sport centre',
+    propertyTypeGym: 'Gym',
+    propertyTypeRestaurant: 'Restaurant',
+    propertyTypeHotel: 'Hotel',
+    propertyTypeSchool: 'School Private or Government',
+    propertyTypeTransport: 'Transport sector',
+    propertyTypeAirport: 'Airport',
+    propertyTypeRetail: 'Retail building or shop',
+    propertyTypeOther: 'Other sector',
+
+    // Frequency Options
+    frequencyOneTime: 'one-time',
+    frequencyOther: 'other',
+
+    // Gender Options
+    genderMale: 'male',
+    genderFemale: 'female',
+    genderAny: 'any',
+
+    // Language Options
+    languageEnglish: 'English',
+    languageFrench: 'French',
+    languageSpanish: 'Spanish',
+    languageDutch: 'Dutch',
+    languageGerman: 'German',
+    languageArabic: 'Arabic',
+    languageAny: 'any',
+
+
 
     
     // Customer Dashboard translations

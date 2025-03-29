@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-// import zIndex from "@mui/material/styles/zIndex";
+import { useLanguage } from "../../context/LanguageContext";
 
 const StyledTextField = styled(TextField)({
   "& .MuiOutlinedInput-root": {
@@ -78,6 +78,7 @@ type FormValues = {
 };
 
 const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data: FormValues) => void }) => {
+  const { translate } = useLanguage();
   const {
     control,
     watch,
@@ -100,7 +101,7 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
       password: "",
       confirmPassword: "",
     },
-    mode: "onChange", // Enable real-time validation
+    mode: "onChange",
   });
 
   const formValues = watch();
@@ -128,29 +129,28 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
 
   const renderLabel = (label: string, required = false) => (
     <Typography variant="subtitle2" gutterBottom>
-      {label} {required && <span style={{ color: "red" }}>*</span>}
+      {translate(label)} {required && <span style={{ color: "red" }}>*</span>}
     </Typography>
   );
 
   return (
     <form style={{ color: "black" }}>
       <Typography variant="h5" gutterBottom sx={{ mb: 5, textDecoration: "underline" }}>
-        Personal Information
+        {translate('personalInformation')}
       </Typography>
       <Grid container spacing={3}>
         {/* Prefix */}
         <Grid item xs={12} sm={2}>
-          {renderLabel("Prefix", true)}
+          {renderLabel("prefix", true)}
           <FormControl fullWidth>
             <Controller
               name="prefix"
               control={control}
-              rules={{ required: "Prefix is required" }}
-              render={({ field }) => (
-                <Select {...field} displayEmpty sx={selectStyles} 
-                >
-                  <MenuItem value="" disabled > 
-                    Select Prefix
+              rules={{ required: translate('prefixRequired') }}
+              render={({ field, fieldState: { error } }) => (
+                <Select {...field} displayEmpty sx={selectStyles} error={!!error}>
+                  <MenuItem value="" disabled>
+                    {translate('selectPrefix')}
                   </MenuItem>
                   {prefixes.map((prefix) => (
                     <MenuItem key={prefix} value={prefix}>
@@ -165,15 +165,15 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
 
         {/* First Name */}
         <Grid item xs={12} sm={4}>
-          {renderLabel("First Name", true)}
+          {renderLabel("firstName", true)}
           <Controller
             name="firstName"
             control={control}
-            rules={{ required: "First Name is required" }}
+            rules={{ required: translate('firstNameRequired') }}
             render={({ field, fieldState: { error } }) => (
               <StyledTextField
                 {...field}
-                placeholder="Ex: John"
+                placeholder={translate('firstNamePlaceholder')}
                 fullWidth
                 error={!!error}
                 helperText={error ? error.message : null}
@@ -184,25 +184,31 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
 
         {/* Middle Name */}
         <Grid item xs={12} sm={3}>
-          {renderLabel("Middle Name")}
+          {renderLabel("middleName")}
           <Controller
             name="middleName"
             control={control}
-            render={({ field }) => <StyledTextField {...field} placeholder="Ex: Michael" fullWidth />}
+            render={({ field }) => (
+              <StyledTextField
+                {...field}
+                placeholder={translate('middleNamePlaceholder')}
+                fullWidth
+              />
+            )}
           />
         </Grid>
 
         {/* Last Name */}
         <Grid item xs={12} sm={3}>
-          {renderLabel("Last Name", true)}
+          {renderLabel("lastName", true)}
           <Controller
             name="lastName"
             control={control}
-            rules={{ required: "Last Name is required" }}
+            rules={{ required: translate('lastNameRequired') }}
             render={({ field, fieldState: { error } }) => (
               <StyledTextField
                 {...field}
-                placeholder="Ex: Doe"
+                placeholder={translate('lastNamePlaceholder')}
                 fullWidth
                 error={!!error}
                 helperText={error ? error.message : null}
@@ -213,22 +219,22 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
 
         {/* Country */}
         <Grid item xs={12} sm={6}>
-          {renderLabel("Country", true)}
+          {renderLabel("country", true)}
           <FormControl fullWidth>
             <Controller
               name="country"
               control={control}
-              rules={{ required: "Country is required" }}
+              rules={{ required: translate('countryRequired') }}
               render={({ field, fieldState: { error } }) => (
                 <Select
                   {...field}
                   displayEmpty
                   sx={selectStyles}
                   error={!!error}
-                  renderValue={(value) => (value ? value : "Select Country")}
+                  renderValue={(value) => (value ? value : translate('selectCountry'))}
                 >
                   <MenuItem value="" disabled>
-                    Select Country
+                    {translate('selectCountry')}
                   </MenuItem>
                   {countries.map((country) => (
                     <MenuItem key={country.code} value={country.name}>
@@ -243,18 +249,18 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
 
         {/* Phone */}
         <Grid item xs={12} sm={6}>
-          {renderLabel("Phone Number", true)}
+          {renderLabel("phoneNumber", true)}
           <FormControl fullWidth size="small">
             <Controller
               name="phone"
               control={control}
-              rules={{ required: "Phone Number is required" }}
+              rules={{ required: translate('phoneRequired') }}
               render={({ field, fieldState: { error } }) => (
                 <PhoneInput
                   {...field}
                   international
                   defaultCountry="US"
-                  placeholder="Phone number"
+                  placeholder={translate('phonePlaceholder')}
                   style={phoneInputStyles}
                   error={!!error}
                   helperText={error ? error.message : null}
@@ -266,21 +272,21 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
 
         {/* Email */}
         <Grid item xs={12}>
-          {renderLabel("Email Address", true)}
+          {renderLabel("emailAddress", true)}
           <Controller
             name="email"
             control={control}
             rules={{
-              required: "Email is required",
+              required: translate('emailRequired'),
               pattern: {
                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                message: "Invalid email address",
+                message: translate('invalidEmail'),
               },
             }}
             render={({ field, fieldState: { error } }) => (
               <StyledTextField
                 {...field}
-                placeholder="Ex: john@gmail.com"
+                placeholder={translate('emailPlaceholder')}
                 fullWidth
                 error={!!error}
                 helperText={error ? error.message : null}
@@ -291,15 +297,15 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
 
         {/* Address */}
         <Grid item xs={12}>
-          {renderLabel("Address", true)}
+          {renderLabel("address", true)}
           <Controller
             name="address"
             control={control}
-            rules={{ required: "Address is required" }}
+            rules={{ required: translate('addressRequired') }}
             render={({ field, fieldState: { error } }) => (
               <StyledTextField
                 {...field}
-                placeholder="Ex: Wallaby Way"
+                placeholder={translate('addressPlaceholder')}
                 fullWidth
                 error={!!error}
                 helperText={error ? error.message : null}
@@ -310,25 +316,31 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
 
         {/* Apartment */}
         <Grid item xs={12}>
-          {renderLabel("Apartment, suite, etc")}
+          {renderLabel("apartmentSuite")}
           <Controller
             name="apartment"
             control={control}
-            render={({ field }) => <StyledTextField {...field} placeholder="Ex: Apt 101" fullWidth />}
+            render={({ field }) => (
+              <StyledTextField
+                {...field}
+                placeholder={translate('apartmentPlaceholder')}
+                fullWidth
+              />
+            )}
           />
         </Grid>
 
         {/* City */}
         <Grid item xs={12} sm={6}>
-          {renderLabel("City", true)}
+          {renderLabel("city", true)}
           <Controller
             name="city"
             control={control}
-            rules={{ required: "City is required" }}
+            rules={{ required: translate('cityRequired') }}
             render={({ field, fieldState: { error } }) => (
               <StyledTextField
                 {...field}
-                placeholder="Ex: Sydney"
+                placeholder={translate('cityPlaceholder')}
                 fullWidth
                 error={!!error}
                 helperText={error ? error.message : null}
@@ -339,15 +351,15 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
 
         {/* State */}
         <Grid item xs={12} sm={3}>
-          {renderLabel("State/Province", true)}
+          {renderLabel("stateProvince", true)}
           <Controller
             name="state"
             control={control}
-            rules={{ required: "State is required" }}
+            rules={{ required: translate('stateRequired') }}
             render={({ field, fieldState: { error } }) => (
               <StyledTextField
                 {...field}
-                placeholder="Ex: New South Wales"
+                placeholder={translate('statePlaceholder')}
                 fullWidth
                 error={!!error}
                 helperText={error ? error.message : null}
@@ -358,21 +370,21 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
 
         {/* ZIP Code */}
         <Grid item xs={12} sm={3}>
-          {renderLabel("ZIP / Postal Code", true)}
+          {renderLabel("zipPostalCode", true)}
           <Controller
             name="zip"
             control={control}
             rules={{
-              required: "ZIP Code is required",
+              required: translate('zipRequired'),
               pattern: {
                 value: /^[0-9]{4,6}$/,
-                message: "Invalid ZIP Code",
+                message: translate('invalidZip'),
               },
             }}
             render={({ field, fieldState: { error } }) => (
               <StyledTextField
                 {...field}
-                placeholder="Ex: 2000"
+                placeholder={translate('zipPlaceholder')}
                 fullWidth
                 error={!!error}
                 helperText={error ? error.message : null}
@@ -383,21 +395,21 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
 
         {/* Password Field */}
         <Grid item xs={12} sm={6}>
-          {renderLabel("Password", true)}
+          {renderLabel("password", true)}
           <Controller
             name="password"
             control={control}
             rules={{
-              required: "Password is required",
+              required: translate('passwordRequired'),
               minLength: {
                 value: 8,
-                message: "Password must be at least 8 characters",
+                message: translate('passwordLength'),
               },
             }}
             render={({ field, fieldState: { error } }) => (
               <StyledTextField
                 {...field}
-                placeholder="Enter your password"
+                placeholder={translate('passwordPlaceholder')}
                 type={showPassword ? "text" : "password"}
                 fullWidth
                 error={!!error}
@@ -419,18 +431,19 @@ const PersonalInformationForm = ({ onChangeCallback }: { onChangeCallback: (data
 
         {/* Confirm Password Field */}
         <Grid item xs={12} sm={6}>
-          {renderLabel("Confirm Password", true)}
+          {renderLabel("confirmPassword", true)}
           <Controller
             name="confirmPassword"
             control={control}
             rules={{
-              required: "Please confirm your password",
-              validate: (value) => value === formValues.password || "Passwords do not match",
+              required: translate('confirmPasswordRequired'),
+              validate: (value) => 
+                value === formValues.password || translate('passwordMismatch'),
             }}
             render={({ field, fieldState: { error } }) => (
               <StyledTextField
                 {...field}
-                placeholder="Confirm your password"
+                placeholder={translate('confirmPasswordPlaceholder')}
                 type={showConfirmPassword ? "text" : "password"}
                 fullWidth
                 error={!!error}
@@ -465,8 +478,7 @@ const selectStyles = {
   "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
     borderColor: "blue",
   },
-  zIndex:1,
-  
+  zIndex: 1,
 };
 
 const phoneInputStyles = {

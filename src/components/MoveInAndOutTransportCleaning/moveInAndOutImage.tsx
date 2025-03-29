@@ -8,36 +8,14 @@ import {
   Container,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { MoveInAndOutTransport1,MoveInAndOutTransport2,MoveInAndOutTransport3,MoveInAndOutTransport4 } from "../../config/images";
+import { MoveInAndOutTransport1, MoveInAndOutTransport2, MoveInAndOutTransport3, MoveInAndOutTransport4 } from "../../config/images";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface CardData {
   image: string;
   title: string;
   description: string;
 }
-
-const data: CardData[] = [
-  {
-    image: MoveInAndOutTransport1,
-    title: "Packing Goods",
-    description: "Fragile items are wrapped and packed securely in appropriate containers, with clear labeling for contents and destination to ensure safe handling.",
-  },
-  {
-    image: MoveInAndOutTransport2,
-    title: "Moving Goods",
-    description: "Goods are carefully loaded and fastened on transport vehicles to prevent shifting, and unloaded efficiently at the destination.",
-  },
-  {
-    image: MoveInAndOutTransport3,
-    title: "Transporting Goods",
-    description: "Goods are securely loaded with proper weight distribution, and all safety protocols and traffic regulations are followed during transit.",
-  },
-  {
-    image: MoveInAndOutTransport4,
-    title: "Commercial/Office",
-    description: "Office equipment is packed securely, labeled clearly, and efficiently transported to the new location to minimize disruption.",
-  },
-];
 
 const CardContainer = styled(Card)(() => ({
   position: "relative",
@@ -67,18 +45,45 @@ const OverlayContent = styled(CardContent)(() => ({
 }));
 
 const ImageGallery: React.FC = () => {
+  const { translate } = useLanguage();
+
+  const data: CardData[] = [
+    {
+      image: MoveInAndOutTransport1,
+      title: translate('packingGoodsTitle'),
+      description: translate('packingGoodsDescription'),
+    },
+    {
+      image: MoveInAndOutTransport2,
+      title: translate('movingGoodsTitle'),
+      description: translate('movingGoodsDescription'),
+    },
+    {
+      image: MoveInAndOutTransport3,
+      title: translate('transportingGoodsTitle'),
+      description: translate('transportingGoodsDescription'),
+    },
+    {
+      image: MoveInAndOutTransport4,
+      title: translate('commercialOfficeTitle'),
+      description: translate('commercialOfficeDescription'),
+    },
+  ];
+
   return (
     <Container maxWidth="lg" style={{ marginTop: "2rem" }}>
       <Grid container spacing={3}>
         {data.map((item, index) => (
           <Grid item xs={12} sm={6} key={index}>
-            <CardContainer style={{textAlign:"center" }}>
+            <CardContainer style={{textAlign:"center"}}>
               <ImageBackground image={item.image} />
               <OverlayContent>
-                <Typography variant="h6" fontWeight="bold" >
+                <Typography variant="h6" fontWeight="bold">
                   {item.title}
                 </Typography>
-                <Typography variant="body2" style={{ marginTop: "2rem" }}>{item.description}</Typography>
+                <Typography variant="body2" style={{ marginTop: "2rem" }}>
+                  {item.description}
+                </Typography>
               </OverlayContent>
             </CardContainer>
           </Grid>
