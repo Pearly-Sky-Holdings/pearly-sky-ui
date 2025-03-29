@@ -17,6 +17,9 @@ import PersonalInformationForm from "../../components/personalInformationForm/pe
 import { SanitizationService } from "../../config/images";
 import EstimateList from "../../components/sanitizationPage/estimateList";
 import LoadingOverlay from "../../components/welcomeAlert/LoadingOverlay";
+import { parsePhoneNumber } from 'libphonenumber-js';
+import instance from "../../services/AxiosOrder"; 
+
 import {
   Button,
   Dialog,
@@ -92,7 +95,35 @@ const handleCheckboxChange = (section: Section, option: Option) => {
     });
   }
 };
+// validatePhoneNumber 
+const validatePhoneNumber = (phone: string): { isValid: boolean; message?: string } => {
+  if (!phone) {
+    return { isValid: false, message: "Phone number is required" };
+  }
 
+  try {
+    const phoneNumber = parsePhoneNumber(phone);
+    
+    if (!phoneNumber) {
+      return { isValid: false, message: "Invalid phone number format" };
+    }
+
+    if (!phoneNumber.isValid()) {
+      const countryName = formData.country || "selected country";
+      return { 
+        isValid: false, 
+        message: `Please enter a valid ${countryName} phone number`
+      };
+    }
+
+    return { isValid: true };
+  } catch (error) {
+    return { 
+      isValid: false, 
+      message: "Invalid phone number. Please use international format (+country code)"
+    };
+  }
+};
   interface FormData {
     firstName: string;
     lastName: string;
@@ -190,9 +221,10 @@ const handleCheckboxChange = (section: Section, option: Option) => {
     return;
   }
 
-  // Validate Phone
-  if (!formData.phone) {
-    setDialogMessage("Phone is required. Please enter your phone number.");
+  // Replace your phone validation in handleBookNow with:
+  const phoneValidation = validatePhoneNumber(formData.phone);
+  if (!phoneValidation.isValid) {
+    setDialogMessage(phoneValidation.message || "Invalid phone number");
     setOpenDialog(true);
     return;
   }
@@ -202,7 +234,7 @@ const handleCheckboxChange = (section: Section, option: Option) => {
     setDialogMessage("Email is required. Please enter your email address.");
     setOpenDialog(true);
     return;
-  } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(formData.email)) {
+  } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|net|org|edu|gov|co\.uk|in|au|ca|io|me|us)$/i.test(formData.email)) {
     setDialogMessage("Invalid email address. Please enter a valid email.");
     setOpenDialog(true);
     return;
@@ -348,36 +380,27 @@ const handleCheckboxChange = (section: Section, option: Option) => {
     console.log("Data:", data);
   
     try {
-      // Show loading overlay
       setIsLoading(true);
       
-      // Make the API call
-      const response = await fetch("https://back.pearlyskyplc.com/api/saveServiceDetails", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(serviceDetails),
-      });
-  
-      // Check if the request was successful
-      if (response.ok) {
-        const result = await response.json();
-        console.log("API Response:", result);
-  
-        // Navigate to the quotation page
-        navigate("/quotation", { state: { data } });
-      } else {
-        // Handle errors
-        console.error("API Error:", response.statusText);
-        alert("Failed to submit the quotation request. Please try again.");
-      }
-    } catch (error) {
-      // Handle network errors
-      console.error("Network Error:", error);
-      alert("An error occurred while submitting the request. Please check your connection and try again.");
+      // Using Axios instance
+      const response = await instance.post("saveServiceDetails", serviceDetails);
+      
+      console.log("API Response:", response.data);
+    
+      // Navigate to the quotation page
+      navigate("/quotation", { state: { data } });
+      
+    } catch (error: any) {
+      // Handle errors
+      console.error("API Error:", error.response?.data || error.message);
+      
+      setDialogMessage(
+        error.response?.data?.message || 
+        "Failed to submit the quotation request. Please try again."
+      );
+      setOpenDialog(true);
+      
     } finally {
-      // Hide loading overlay
       setIsLoading(false);
     }
   };
