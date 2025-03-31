@@ -5,89 +5,90 @@ import {
     regularService2, regularService3, regularService4, regularService5, 
     BalconyCleaning, LimescaleService, FridgeCleaning, OvenCleaning
 } from "../../config/images";
-
-// Flatten the imagePairs array to show all service details at once
-const allServices = [
-      {
-        img: regularService2,
-        title: "Bedroom Cleaning",
-        features: [
-          "Dust all cleanable surfaces",
-          "Make the bed",
-          "Clean floor surfaces",
-        ],
-      },
-      {
-        img: regularService3,
-        title: "Kitchen Cleaning",
-        features: [
-          "Dust all available surfaces.",
-          "Wipe down the exterior of appliances and cabinets.",
-          "Clean floor surfaces."
-        ],
-      },
-      {
-        img: regularService4,
-        title: "Living Room Cleaning",
-        features: [
-          "Dust all accessible surfaces.",
-          "Clean the exterior of cabinets.",
-          "Clean floor surfaces."
-        ],
-      },
-      {
-        img: regularService5,
-        title: "Bathroom Cleaning",
-        features: [
-          "Wash & sanitize the toilet, shower, tub, and sink.",
-          "Wipe down mirrors and glass surfaces.",
-          "Clean floor surfaces."
-        ],
-      },
-      {
-        img: LimescaleService,
-        title: "Limescale Removal",
-        features: [
-          "Clean the balcony/terrace floor.",
-          "De-limescale & polish the shower cabin.",
-          "De-limescale & polish the sink area.",
-          "Remove limescale from other surfaces in the bathroom."
-        ],
-      },
-      {
-        img: FridgeCleaning,
-        title: "Fridge Cleaning",
-        features: [
-          "Clean the fridge door and handle with a damp cloth and mild soap.",
-          "Dust the back of the fridge and vacuum the condenser coils.",
-          "Check and clean the drip pan."
-        ],
-      },
-      {
-        img: BalconyCleaning,
-        title: "Balcony Cleaning",
-        features: [
-          "Clean the balcony/terrace floor.",
-          "Clean railings.",
-          "Dust and wipe down outdoor furniture and fixtures."
-        ],
-      },
-      {
-        img: OvenCleaning,
-        title: "Oven Cleaning",
-        features: [
-          "Cleaning the Oven Interior.",
-          "Cleaning Oven Racks and Trays.",
-          "Cleaning the Oven Door."
-        ],
-      },
-    
-];
+import { useLanguage } from "../../context/LanguageContext";
 
 const ServicesCarousel = ({ index = 0 }) => {
+  const { translate } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(index);
   const [slidesToShow, setSlidesToShow] = useState(1);
   const carouselRef = useRef(null);
+
+  // Flatten the imagePairs array to show all service details at once
+  const allServices = [
+    {
+      img: regularService2,
+      title: translate('bedroomCleaning'),
+      features: [
+        translate('dustSurfaces'),
+        translate('makeBed'),
+        translate('cleanFloors'),
+      ],
+    },
+    {
+      img: regularService3,
+      title: translate('kitchenCleaning'),
+      features: [
+        translate('dustSurfaces'),
+        translate('wipeAppliances'),
+        translate('cleanFloors')
+      ],
+    },
+    {
+      img: regularService4,
+      title: translate('livingRoomCleaning'),
+      features: [
+        translate('dustSurfaces'),
+        translate('wipeCabinets'),
+        translate('cleanFloors')
+      ],
+    },
+    {
+      img: regularService5,
+      title: translate('bathroomCleaning'),
+      features: [
+        translate('sanitizeFixtures'),
+        translate('wipeMirrors'),
+        translate('cleanFloors')
+      ],
+    },
+    {
+      img: LimescaleService,
+      title: translate('limescaleRemoval'),
+      features: [
+        translate('cleanBalconyFloor'),
+        translate('delimescaleShower'),
+        translate('delimescaleSink'),
+        translate('removeLimescale')
+      ],
+    },
+    {
+      img: FridgeCleaning,
+      title: translate('fridgeCleaning'),
+      features: [
+        translate('cleanFridgeDoor'),
+        translate('dustFridgeBack'),
+        translate('cleanDripPan')
+      ],
+    },
+    {
+      img: BalconyCleaning,
+      title: translate('balconyCleaning'),
+      features: [
+        translate('cleanBalconyFloor'),
+        translate('cleanRailings'),
+        translate('dustFurniture')
+      ],
+    },
+    {
+      img: OvenCleaning,
+      title: translate('ovenCleaning'),
+      features: [
+        translate('cleanOvenInterior'),
+        translate('cleanOvenRacks'),
+        translate('cleanOvenDoor')
+      ],
+    },
+  ];
 
   useEffect(() => {
     const handleResize = () => {
@@ -139,8 +140,8 @@ const ServicesCarousel = ({ index = 0 }) => {
                 {item.title}
               </h3>
               <ul className="list-disc pl-5 text-xs sm:text-sm">
-                {item.features.map((feature) => (
-                  <li key={feature}>{feature}</li>
+                {item.features.map((feature, idx) => (
+                  <li key={`${item.title}-feature-${idx}`}>{feature}</li>
                 ))}
               </ul>
             </div>

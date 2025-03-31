@@ -11,6 +11,7 @@ import {
   MenuItem,
   Button,
 } from "@mui/material";
+import { useLanguage } from "../../context/LanguageContext";
 
 // Define the form data type
 interface FormData {
@@ -26,34 +27,8 @@ interface FormData {
   resume: File | null;
 }
 
-const countries = [
-  { name: "France", code: "FR" },
-  { name: "United Kingdom", code: "GB" },
-  { name: "Sri Lanka", code: "LK" },
-  { name: "Scotland", code: "GB-SCT" },
-  { name: "Germany", code: "DE" },
-  { name: "Australia", code: "AU" },
-  { name: "United Arab Emirates", code: "AE" },
-  { name: "Canada", code: "CA" },
-  { name: "Finland", code: "FI" },
-  { name: "Saudi Arabia", code: "SA" },
-  { name: "Italy", code: "IT" },
-  { name: "United States", code: "US" },
-  { name: "Ireland", code: "IE" },
-  { name: "Austria", code: "AT" },
-  { name: "Netherlands", code: "NL" },
-  { name: "Switzerland", code: "CH" },
-  { name: "Qatar", code: "QA" },
-  { name: "Denmark", code: "DK" },
-  { name: "New Zealand", code: "NZ" },
-  { name: "Poland", code: "PL" },
-  { name: "Portugal", code: "PT" },
-  { name: "Spain", code: "ES" },
-  { name: "Belgium", code: "BE" },
-];
-
 const JobApplyForm: React.FC = () => {
-  // Initialize form state
+  const { translate } = useLanguage();
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -67,7 +42,32 @@ const JobApplyForm: React.FC = () => {
     resume: null,
   });
 
-  // Handle input changes for text fields
+  const countries = [
+    { name: translate('france'), code: "FR" },
+    { name: translate('unitedKingdom'), code: "GB" },
+    { name: translate('sriLanka'), code: "LK" },
+    { name: "Scotland", code: "GB-SCT" },
+    { name: translate('germany'), code: "DE" },
+    { name: "Australia", code: "AU" },
+    { name: "United Arab Emirates", code: "AE" },
+    { name: "Canada", code: "CA" },
+    { name: "Finland", code: "FI" },
+    { name: "Saudi Arabia", code: "SA" },
+    { name: "Italy", code: "IT" },
+    { name: translate('unitedStates'), code: "US" },
+    { name: "Ireland", code: "IE" },
+    { name: "Austria", code: "AT" },
+    { name: "Netherlands", code: "NL" },
+    { name: "Switzerland", code: "CH" },
+    { name: "Qatar", code: "QA" },
+    { name: "Denmark", code: "DK" },
+    { name: "New Zealand", code: "NZ" },
+    { name: "Poland", code: "PL" },
+    { name: "Portugal", code: "PT" },
+    { name: "Spain", code: "ES" },
+    { name: "Belgium", code: "BE" },
+  ];
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -78,7 +78,6 @@ const JobApplyForm: React.FC = () => {
     }));
   };
 
-  // Handle file input change
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     setFormData((prev) => ({
@@ -125,7 +124,7 @@ const JobApplyForm: React.FC = () => {
           resume: null,
         });
   
-        alert("Application submitted successfully!");
+        alert(translate('applicationSuccess'));
       } else {
         throw new Error(`Unexpected status code: ${response.status}`);
       }
@@ -134,26 +133,27 @@ const JobApplyForm: React.FC = () => {
   
       if (error?.response) {
         const status = error.response.status;
-        let errorMessage = "Failed to submit application. Please try again.";
+        let errorMessage = translate('submitError');
   
         if (status === 400) {
-          errorMessage = "Invalid data. Please check your inputs and try again.";
+          errorMessage = translate('invalidDataError');
         } else if (status === 401 || status === 403) {
-          errorMessage = "You are not authorized to perform this action.";
+          errorMessage = translate('unauthorizedError');
         } else if (status === 404) {
-          errorMessage = "The requested resource was not found.";
+          errorMessage = translate('resourceNotFoundError');
         } else if (status === 500) {
-          errorMessage = "A server error occurred. Please try again later.";
+          errorMessage = translate('serverError');
         }
   
         alert(errorMessage);
       } else if (error?.request) {
-        alert("No response from the server. Please check your connection.");
+        alert(translate('noServerResponse'));
       } else {
-        alert("An unexpected error occurred. Please try again.");
+        alert(translate('unexpectedError'));
       }
     }
   };
+
   return (
     <Paper sx={{ p: 3, borderRadius: 2 }}>
       <Typography
@@ -161,7 +161,7 @@ const JobApplyForm: React.FC = () => {
         fontWeight="bold"
         sx={{ mb: 2, color: "#003370" }}
       >
-        Cleaner ( Male / Female) – Residential and Commercial Properties
+        {translate('cleanerJobTitle')}
       </Typography>
 
       <form onSubmit={handleSubmit}>
@@ -169,10 +169,10 @@ const JobApplyForm: React.FC = () => {
           {/* First Name & Last Name */}
           <Grid item xs={12} md={6}>
             <FormControl fullWidth size="small">
-              <FormLabel>First Name*</FormLabel>
+              <FormLabel>{translate('firstNameLabel')}*</FormLabel>
               <TextField
                 fullWidth
-                placeholder="First Name"
+                placeholder={translate('firstNamePlaceholder')}
                 variant="outlined"
                 size="small"
                 name="firstName"
@@ -187,10 +187,10 @@ const JobApplyForm: React.FC = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <FormControl fullWidth size="small">
-              <FormLabel>Last Name*</FormLabel>
+              <FormLabel>{translate('lastNameLabel')}*</FormLabel>
               <TextField
                 fullWidth
-                placeholder="Last Name"
+                placeholder={translate('lastNamePlaceholder')}
                 variant="outlined"
                 size="small"
                 name="lastName"
@@ -207,10 +207,10 @@ const JobApplyForm: React.FC = () => {
           {/* Email & Phone */}
           <Grid item xs={12} md={6}>
             <FormControl fullWidth size="small">
-              <FormLabel>Email*</FormLabel>
+              <FormLabel>{translate('emailLabel')}*</FormLabel>
               <TextField
                 fullWidth
-                placeholder="Email"
+                placeholder={translate('emailPlaceholder')}
                 variant="outlined"
                 size="small"
                 type="email"
@@ -226,10 +226,10 @@ const JobApplyForm: React.FC = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <FormControl fullWidth size="small">
-              <FormLabel>Phone*</FormLabel>
+              <FormLabel>{translate('phoneLabel')}*</FormLabel>
               <TextField
                 fullWidth
-                placeholder="Phone"
+                placeholder={translate('phonePlaceholder')}
                 variant="outlined"
                 size="small"
                 type="tel"
@@ -247,10 +247,10 @@ const JobApplyForm: React.FC = () => {
           {/* Address */}
           <Grid item xs={12}>
             <FormControl fullWidth size="small">
-              <FormLabel>Address*</FormLabel>
+              <FormLabel>{translate('addressLabel')}*</FormLabel>
               <TextField
                 fullWidth
-                placeholder="Address"
+                placeholder={translate('addressPlaceholder')}
                 variant="outlined"
                 size="small"
                 name="address"
@@ -265,10 +265,10 @@ const JobApplyForm: React.FC = () => {
           </Grid>
           <Grid item xs={12}>
             <FormControl fullWidth size="small">
-              <FormLabel>Apartment, suite etc.</FormLabel>
+              <FormLabel>{translate('apartmentLabel')}</FormLabel>
               <TextField
                 fullWidth
-                placeholder="Apartment, suite, unit, etc."
+                placeholder={translate('apartmentPlaceholder')}
                 variant="outlined"
                 size="small"
                 name="address"
@@ -285,10 +285,10 @@ const JobApplyForm: React.FC = () => {
           {/* City & State/Province */}
           <Grid item xs={12} md={6}>
             <FormControl fullWidth size="small">
-              <FormLabel>City*</FormLabel>
+              <FormLabel>{translate('cityLabel')}*</FormLabel>
               <TextField
                 fullWidth
-                placeholder="City"
+                placeholder={translate('cityPlaceholder')}
                 variant="outlined"
                 size="small"
                 name="city"
@@ -303,10 +303,10 @@ const JobApplyForm: React.FC = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <FormControl fullWidth size="small">
-              <FormLabel>State/Province*</FormLabel>
+              <FormLabel>{translate('stateLabel')}*</FormLabel>
               <TextField
                 fullWidth
-                placeholder="State/Province"
+                placeholder={translate('statePlaceholder')}
                 variant="outlined"
                 size="small"
                 name="stateProvince"
@@ -323,10 +323,10 @@ const JobApplyForm: React.FC = () => {
           {/* Zip/Postal Code & Country */}
           <Grid item xs={12} md={6}>
             <FormControl fullWidth size="small">
-              <FormLabel>Zip/Postal Code*</FormLabel>
+              <FormLabel>{translate('zipLabel')}*</FormLabel>
               <TextField
                 fullWidth
-                placeholder="Zip/Postal Code"
+                placeholder={translate('zipPlaceholder')}
                 variant="outlined"
                 size="small"
                 name="zipPostal"
@@ -341,7 +341,7 @@ const JobApplyForm: React.FC = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <FormControl fullWidth size="small">
-              <FormLabel>Country*</FormLabel>
+              <FormLabel>{translate('countryLabel')}*</FormLabel>
               <Select
                 sx={{ borderRadius: "12px", border: "1px solid #0D90C8" }}
                 displayEmpty
@@ -354,10 +354,10 @@ const JobApplyForm: React.FC = () => {
                   }))
                 }
                 required
-                inputProps={{ "aria-label": "Select Country" }}
+                inputProps={{ "aria-label": translate('selectCountryLabel') }}
               >
                 <MenuItem value="" disabled>
-                  Select Country
+                  {translate('selectCountryPlaceholder')}
                 </MenuItem>
                 {countries.map((country) => (
                   <MenuItem key={country.code} value={country.code}>
@@ -371,7 +371,7 @@ const JobApplyForm: React.FC = () => {
           {/* Resume Upload */}
           <Grid item xs={12}>
             <FormControl fullWidth size="small">
-              <FormLabel>Resume*</FormLabel>
+              <FormLabel>{translate('resumeLabel')}*</FormLabel>
               <input
                 type="file"
                 id="resume"
@@ -392,10 +392,10 @@ const JobApplyForm: React.FC = () => {
                     textTransform: "none",
                   }}
                 >
-                  Upload Resume
+                  {translate('uploadResumeButton')}
                 </Button>
                 <Typography variant="body2" sx={{ mt: 1 }}>
-                  {formData.resume ? formData.resume.name : "No file selected"}
+                  {formData.resume ? formData.resume.name : translate('noFileSelected')}
                 </Typography>
               </label>
             </FormControl>
@@ -413,7 +413,7 @@ const JobApplyForm: React.FC = () => {
                 "&:hover": { backgroundColor: "#0A72A3" },
               }}
             >
-              Submit Application
+              {translate('submitApplicationButton')}
             </Button>
           </Grid>
         </Grid>

@@ -28,9 +28,10 @@ import {
   DialogContentText,
   DialogActions,
 } from "@mui/material";
-
+import { useLanguage } from "../../context/LanguageContext";
 
 function Poolcleaning() {
+  const { translate } = useLanguage();
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   useSelector((state: any) => state.servicesSlice.service);
@@ -43,25 +44,24 @@ function Poolcleaning() {
   const [timeZone, setTimeZone] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [contactType, setContactType] = useState("");
-  const [numCleaners, setNumCleaners ] = useState(""); 
+  const [numCleaners, setNumCleaners] = useState(""); 
   const [selectedItems, setSelectedItems] = useState<string[]>([]); 
   const [isLoading, setIsLoading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
     const [dialogMessage, setDialogMessage] = useState("");
 
   const handleSelectionChange = (selectedItems: string[]) => {
-    console.log('Selected Items:', selectedItems);
     setSelectedItems(selectedItems);
   };
+
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
   // Memoize the form change handler
+
   const handleFormChange = useCallback((data: any) => {
     setFormData(data);
   }, []);
-
-  // Fetch package and services data
 
   useEffect(() => {
     dispatch(getPackege("17"));
@@ -69,7 +69,6 @@ function Poolcleaning() {
 
   useEffect(() => {
     dispatch(getServices("17"));
-
   }, [dispatch]);
 
   const [equipment, setEquipment] = useState({ customer: false, company: false });
@@ -348,45 +347,62 @@ const handleBookNow = async () => {
     contact: formData.phone,
     email: formData.email,
     password: formData.password,  
-  };
-
-  //  service details
-  const serviceDetails = {
-    customer,
-    service_id: "17",
-    price: "00.00",
-    date,
-    time: selectedTime,
-    // property_size: "0 sqft",
-    // duration: "0",
-    number_of_cleaners: numCleaners,
-    note: document.querySelector("textarea")?.value || "",
-    request_gender: contactType,
-    request_language: language,
-    business_property: propertyType,
-    cleaning_solvents: " ",
-    frequency,
-    time_zoon: timeZone,
-    Equipment: equipment.customer ? "Provided by customer" : "Provided by company",
-    chemical:chemical.customer ? "Provided by customer" : "Provided by company",
-    payment_method: "cash",    
-    reStock_details: [],
-    pool_type:selectedItems.join(",")
 
   };
 
-  console.log("Data to be sent:", serviceDetails);
+  interface FormData {
+    firstName: string;
+    lastName: string;
+    company?: string;
+    country: string;
+    address: string;
+    apartment?: string;
+    city: string;
+    state: string;
+    zip: string;
+    phone: string;
+    email: string;
+  }
 
-  const data = {
-    serviceName: "Pool cleaning",
-    details: serviceDetails,
-    personalInformation: formData,
-    equipment,
-    chemical,
-    selectedItems
-  };
+  const [formData, setFormData] = useState<FormData>({
+    firstName: "",
+    lastName: "",
+    company: "",
+    country: "",
+    address: "",
+    apartment: "",
+    city: "",
+    state: "",
+    zip: "",
+    phone: "",
+    email: "",
+  });
 
-  console.log("Data:", data);
+  const handleBookNow = async () => { 
+    if (!chemical.customer && !chemical.company) {
+      alert(translate('chemicalRequiredAlert'));
+      return; 
+    }
+
+    if (!equipment.customer && !equipment.company) {
+      alert(translate('equipmentRequiredAlert'));
+      return; 
+    }
+
+    if (
+      !frequency ||
+      !propertyType ||
+      !contactType ||
+      !language ||
+      !numCleaners ||
+      !timeZone ||
+      !selectedDate ||
+      !selectedTime ||
+      !acceptTerms2
+    ) {
+      alert(translate('fillAllFieldsAlert'));
+      return;
+    }
 
   try {
     setIsLoading(true);
@@ -415,6 +431,7 @@ const handleBookNow = async () => {
 };
 
 
+
   return (
     <div className="max-w-7xl mx-auto p-4 mt-6 sm:p-2">
       {/* Header Section */}
@@ -422,33 +439,29 @@ const handleBookNow = async () => {
         <div className="w-full lg:w-3/3">
           <img
             src={poolService}
-            alt="Cleaning Service"
+            alt={translate('cleaningServiceAlt')}
             className="rounded-2xl w-full h-full object-cover"
           />
         </div>
         <div className="w-fulllg:w-2/3 gap-1">
           <div>
             <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
-            Pool cleaning
+              {translate('poolCleaning')}
             </h1>
           </div>
           <div className="flex-grow">
             <p className="text-gray-600 mb-4 text-sm sm:text-base">
-            Special event cleaning services are designed to ensure your event space is spotless and ready, 
-            allowing you to focus on enjoying the occasion. From preparation to post-event, professionals handle 
-            every detail to create a clean and welcoming environment for guests.
+              {translate('poolCleaningDescription1')}
             </p>        
             <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
-            <li>Decluttering and organizing spaces </li>
-            <li>Thoroughly cleaning floors, windows, and high-touch surfaces</li>
-            <li>Ensuring restrooms are clean, well-stocked, and fresh</li>
-            <li>Spot cleaning during the event for spills and messes</li>
-            <li>Post-event cleaning, including waste disposal and equipment storage</li>
+              <li>{translate('poolCleaningListItem1')}</li>
+              <li>{translate('poolCleaningListItem2')}</li>
+              <li>{translate('poolCleaningListItem3')}</li>
+              <li>{translate('poolCleaningListItem4')}</li>
+              <li>{translate('poolCleaningListItem5')}</li>
             </ul>
             <p className="text-gray-600 mb-4 text-sm sm:text-base">
-            This comprehensive service guarantees a well-maintained, hygienic space, enhancing the atmosphere and 
-            leaving a lasting positive impression on guests. By handling all aspects of cleaning, it ensures your 
-            venue remains spotless, creating an unforgettable experience and saving you time and effort.
+              {translate('poolCleaningDescription2')}
             </p>
           </div>
         </div>
@@ -461,13 +474,17 @@ const handleBookNow = async () => {
 
       {/* Booking Section */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8">
-        <h2 className="text-2xl font-bold text-blue-900 mb-6">Select Your Job to Get Your Quotation</h2>
+        <h2 className="text-2xl font-bold text-blue-900 mb-6">
+          {translate('selectJobForQuotation')}
+        </h2>
 
         <div className="mb-6 shadow-lg p-4 sm:p-6 rounded-lg border border-blue-400">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
             {/* Calendar Section */}
             <div className="flex flex-col">
-              <label className="block mb-2 text-blue-900 font-semibold">Select Date</label>
+              <label className="block mb-2 text-blue-900 font-semibold">
+                {translate('selectDate')}
+              </label>
               <div className="calendar-container p-4 rounded-lg">
                 <Calendar
                   onChange={(date) => setSelectedDate(date as Date)}
@@ -498,12 +515,11 @@ const handleBookNow = async () => {
         </div>
 
         <div>
-        <PoolType onSelectionChange={handleSelectionChange} />
+          <PoolType onSelectionChange={handleSelectionChange} />
         </div>
         
         {/* Booking Details */}
         <div className="mt-10">
-
           <CommercialBookingCart          
             propertyType={propertyType}
             setPropertyType={setPropertyType}
@@ -517,21 +533,22 @@ const handleBookNow = async () => {
             setLanguage={setLanguage}
             timeZone={timeZone}
             setTimeZone={setTimeZone}
-
           />
         </div>
 
         {/* File Upload and Additional Note */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
-            <label className="block mb-2 text-black">Upload Images or Documents</label>
+            <label className="block mb-2 text-black">
+              {translate('uploadFilesLabel')}
+            </label>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center min-h-[150px] flex items-center justify-center">
               <div>
                 <input type="file" className="hidden" id="file-upload" />
                 <label htmlFor="file-upload" className="cursor-pointer text-blue-600 hover:text-blue-800">
                   <div className="flex flex-col items-center space-y-2">
-                    <span className="text-sm">Click to upload or drag and drop</span>
-                    <span className="text-xs text-gray-500">Maximum file size: 10MB</span>
+                    <span className="text-sm">{translate('uploadInstructions')}</span>
+                    <span className="text-xs text-gray-500">{translate('maxFileSize')}</span>
                   </div>
                 </label>
               </div>
@@ -539,19 +556,22 @@ const handleBookNow = async () => {
           </div>
 
           <div>
-            <label className="block mb-2 text-black">Additional Note</label>
+            <label className="block mb-2 text-black">
+              {translate('additionalNoteLabel')}
+            </label>
             <textarea
               className="w-full min-h-[150px] border border-blue-900 rounded p-2 text-gray-700 resize-none"
-              placeholder="Type your note here..."
+              placeholder={translate('additionalNotePlaceholder')}
             ></textarea>
           </div>          
         </div>        
 
-
         <div className="flex flex-col md:flex-row md:gap-10 p-4 mb-6">
           {/* Equipment Section */}
           <div className="w-full mb-4 md:mb-0">
-            <h2 className="text-lg text-black font-bold mb-2">Equipment</h2>
+            <h2 className="text-lg text-black font-bold mb-2">
+              {translate('equipment')}
+            </h2>
             <div className="text-black">
               <label className="flex items-center space-x-2 mb-1">
                 <input
@@ -560,7 +580,7 @@ const handleBookNow = async () => {
                   checked={equipment.customer}
                   onChange={() => handleCheckboxChange("equipment", "customer")}
                 />
-                <span>Provide by customer</span>
+                <span>{translate('providedByCustomer')}</span>
               </label>
               <label className="flex items-center space-x-2">
                 <input
@@ -569,14 +589,16 @@ const handleBookNow = async () => {
                   checked={equipment.company}
                   onChange={() => handleCheckboxChange("equipment", "company")}
                 />
-                <span>Provide by company</span>
+                <span>{translate('providedByCompany')}</span>
               </label>
             </div>
           </div>
 
           {/* Chemical Section */}
           <div className="w-full">
-            <h2 className="text-lg text-black font-bold mb-2">Chemical</h2>
+            <h2 className="text-lg text-black font-bold mb-2">
+              {translate('chemical')}
+            </h2>
             <div className="text-black">
               <label className="flex items-center space-x-2 mb-1">
                 <input
@@ -585,7 +607,7 @@ const handleBookNow = async () => {
                   checked={chemical.customer}
                   onChange={() => handleCheckboxChange("chemical", "customer")}
                 />
-                <span>Provide by customer</span>
+                <span>{translate('providedByCustomer')}</span>
               </label>
               <label className="flex items-center space-x-2">
                 <input
@@ -594,7 +616,7 @@ const handleBookNow = async () => {
                   checked={chemical.company}
                   onChange={() => handleCheckboxChange("chemical", "company")}
                 />
-                <span>Provide by company</span>
+                <span>{translate('providedByCompany')}</span>
               </label>
             </div>
           </div>
@@ -602,16 +624,6 @@ const handleBookNow = async () => {
 
         <div>
           <PersonalInformationForm onChangeCallback={handleFormChange} />
-          {/* Display form data in another section */}
-          {/* <div style={{ marginTop: "20px" }}>
-            <h2>Live Form Data:</h2>
-            <pre>{JSON.stringify(formData, null, 2)}</pre>
-            <pre>{JSON.stringify(equipment, null, 2)}</pre>
-            <pre>{JSON.stringify(chemical, null, 2)}</pre>
-            <pre>{JSON.stringify(propertyType, null, 2)}</pre>
-            <pre>{JSON.stringify(numCleaners, null, 2)}</pre>
-            <pre>{JSON.stringify(selectedItems, null, 2)}</pre>
-          </div> */}
         </div>
 
         {/* Terms Checkbox */}
@@ -624,7 +636,7 @@ const handleBookNow = async () => {
               onChange={(e) => setAcceptTerms2(e.target.checked)}
             />
             <span className="text-sm">
-              By Booking or Requesting a quotation, you agree with our terms and conditions and privacy policy.
+              {translate('termsAgreement')}
             </span>
           </label>
         </div>
@@ -635,15 +647,14 @@ const handleBookNow = async () => {
           onClick={handleBookNow}
           style={{ background: "#0D90C8", fontSize: "15px", color: "white" }}
         >
-          Request Quotation
+          {translate('requestQuotation')}
         </button>
       </div>
 
-      {/* Using the new LoadingOverlay component */}
       <LoadingOverlay 
         open={isLoading} 
-        message="Processing your order..."
-        subMessage="Please wait while we confirm your booking"
+        message={translate('processingOrder')}
+        subMessage={translate('pleaseWaitMessage')}
       />
 
       {/* Payment Support Section */}

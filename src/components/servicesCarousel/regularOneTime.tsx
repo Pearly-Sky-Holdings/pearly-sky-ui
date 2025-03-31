@@ -4,51 +4,54 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {
   regularService2, regularService3, regularService4, regularService5,
 } from "../../config/images";
+import { useLanguage } from "../../context/LanguageContext";
 
 // Flatten the imagePairs array to show all service details at once
-const allServices = [
+const allServices = ({ translate }: { translate: (key: string) => string }) => [
   {
     img: regularService2,
-    title: "Bedroom Cleaning",
+    title: translate('bedroomCleaning'),
     features: [
-      "Dust all cleanable surfaces",
-      "Make the bed",
-      "Clean floor surfaces",
+      translate('dustAllSurfaces'),
+      translate('makeTheBed'),
+      translate('cleanFloorSurfaces'),
     ],
   },
   {
     img: regularService3,
-    title: "Kitchen Cleaning",
+    title: translate('kitchenCleaning'),
     features: [
-      "Dust all available surfaces.",
-      "Wipe down the exterior of appliances and cabinets.",
-      "Clean floor surfaces.",
+      translate('dustAllSurfaces'),
+      translate('wipeAppliancesCabinets'),
+      translate('cleanFloorSurfaces'),
     ],
   },
   {
     img: regularService4,
-    title: "Living Room Cleaning",
+    title: translate('livingRoomCleaning'),
     features: [
-      "Dust all accessible surfaces.",
-      "Clean the exterior of cabinets.",
-      "Clean floor surfaces.",
+      translate('dustAllAccessibleSurfaces'),
+      translate('cleanCabinetExteriors'),
+      translate('cleanFloorSurfaces'),
     ],
   },
   {
     img: regularService5,
-    title: "Bathroom Cleaning",
+    title: translate('bathroomCleaning'),
     features: [
-      "Wash & sanitize the toilet, shower, tub, and sink.",
-      "Wipe down mirrors and glass surfaces.",
-      "Clean floor surfaces.",
+      translate('sanitizeFixtures'),
+      translate('wipeMirrorsGlass'),
+      translate('cleanFloorSurfaces'),
     ],
   },
 ];
 
 const ServicesCarousel = ({ index = 0 }) => {
+  const { translate } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(index);
   const [slidesToShow, setSlidesToShow] = useState(1);
   const carouselRef = useRef(null);
+  const services = allServices({ translate });
 
   useEffect(() => {
     const handleResize = () => {
@@ -66,26 +69,26 @@ const ServicesCarousel = ({ index = 0 }) => {
   }, []);
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : allServices.length - slidesToShow));
+    setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : services.length - slidesToShow));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex < allServices.length - slidesToShow ? prevIndex + 1 : 0));
+    setCurrentIndex((prevIndex) => (prevIndex < services.length - slidesToShow ? prevIndex + 1 : 0));
   };
 
   // Auto-rotation effect
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % (allServices.length - slidesToShow + 1));
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % (services.length - slidesToShow + 1));
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [slidesToShow]);
+  }, [slidesToShow, services.length]);
 
   return (
     <div className="relative mb-8">
       <div className="flex overflow-hidden" ref={carouselRef}>
-        {allServices.slice(currentIndex, currentIndex + slidesToShow).map((item) => (
+        {services.slice(currentIndex, currentIndex + slidesToShow).map((item) => (
           <div
             key={item.title}
             className="w-full sm:w-1/2 relative flex-shrink-0"

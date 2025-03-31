@@ -7,6 +7,7 @@ import {
   Paper,
   Divider,
 } from "@mui/material";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface OrderSummaryProps {
   selectedServices: Array<{
@@ -22,7 +23,7 @@ interface OrderSummaryProps {
   conversionRate: number;
   serviceName: string;
   totalPrice: number;
-  advancePaymentPercentage?: number; // Added new prop
+  advancePaymentPercentage?: number;
 }
 
 const OrderSummary: React.FC<OrderSummaryProps> = ({
@@ -33,8 +34,9 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
   conversionRate = 1,
   serviceName = "Base Service",
   totalPrice = 0.0,
-  advancePaymentPercentage = 30, // Default to 50% advance payment
+  advancePaymentPercentage = 30,
 }) => {
+  const { translate } = useLanguage();
   const [coupon, setCoupon] = React.useState("");
   const [discount, setDiscount] = React.useState(0);
   const [customAdvanceAmount, setCustomAdvanceAmount] = React.useState<number | null>(null);
@@ -44,13 +46,12 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
       setDiscount(10);
     } else {
       setDiscount(0);
-      alert("Invalid coupon code!");
+      alert(translate('invalidCoupon'));
     }
   };
 
   const total = totalPrice - discount;
   
-  // Calculate advance payment and remaining payment
   const advancePayment = customAdvanceAmount !== null ? 
     customAdvanceAmount : 
     parseFloat((30).toFixed(2));
@@ -69,7 +70,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
   return (
     <Paper sx={{ padding: "24px", borderRadius: "12px", backgroundColor: "#F7F8FC" }}>
       <Typography variant="h6" fontWeight="bold" sx={{ color: "#002F6D", marginBottom: "16px" }}>
-        Your Order
+        {translate('yourOrder')}
       </Typography>
 
       {/* Base Service */}
@@ -103,7 +104,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
           }}
         >
           <Typography>
-            {service.name || `Service #${service.package_id}`} {service.qty > 1 ? `× ${service.qty}` : ''}
+            {service.name || `${translate('service')} #${service.package_id}`} {service.qty > 1 ? `× ${service.qty}` : ''}
           </Typography>
           <Typography>{currencySymbol} {(service.price * (service.qty || 1) * conversionRate).toFixed(2)}</Typography>
         </Box>
@@ -123,22 +124,22 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
             marginBottom: "8px",
           }}
         >
-          <Typography>{equipment.name || `Equipment #${equipment.id}`}</Typography>
+          <Typography>{equipment.name || `${translate('equipment')} #${equipment.id}`}</Typography>
           <Typography>{currencySymbol} {(equipment.price * conversionRate).toFixed(2)}</Typography>
         </Box>
       ))}
 
       <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: "16px", marginBottom: "8px" }}>
-        <Typography color="gray">Subtotal:</Typography>
+        <Typography color="gray">{translate('subtotal')}:</Typography>
         <Typography fontWeight="bold">{currencySymbol} {totalPrice.toFixed(2)}</Typography>
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
-        <Typography color="gray">Apply Coupon Code</Typography>
+        <Typography color="gray">{translate('applyCoupon')}</Typography>
         <TextField
           variant="outlined"
           size="small"
-          placeholder="Coupon Code"
+          placeholder={translate('couponCode')}
           value={coupon}
           onChange={(e) => setCoupon(e.target.value)}
           sx={{ backgroundColor: "#fff", borderRadius: "12px" }}
@@ -148,19 +149,19 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
           onClick={handleApplyCoupon}
           sx={{ backgroundColor: "#002F6D", "&:hover": { backgroundColor: "#001F4D" }, marginLeft: "8px" }}
         >
-          Apply
+          {translate('apply')}
         </Button>
       </Box>
 
       {discount > 0 && (
         <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
-          <Typography color="gray">Discount:</Typography>
+          <Typography color="gray">{translate('discount')}:</Typography>
           <Typography fontWeight="bold" color="green">-{currencySymbol} {discount.toFixed(2)}</Typography>
         </Box>
       )}
 
       <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: "16px", marginBottom: "16px" }}>
-        <Typography fontWeight="bold">Final Total:</Typography>
+        <Typography fontWeight="bold">{translate('finalTotal')}:</Typography>
         <Typography fontWeight="bold">{currencySymbol} {total.toFixed(2)}</Typography>
       </Box>
       
@@ -168,17 +169,17 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
       
       {/* Payment Schedule Section */}
       <Typography variant="subtitle1" fontWeight="bold" sx={{ color: "#002F6D", marginBottom: "12px" }}>
-        Payment Schedule
+        {translate('paymentSchedule')}
       </Typography>
       
       {/* Custom Advance Payment Input */}
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
-        <Typography color="gray">Advance Payment Amount</Typography>
+        <Typography color="gray">{translate('advancePaymentAmount')}</Typography>
         <TextField
           variant="outlined"
           size="small"
           type="number"
-          placeholder={`Default: ${currencySymbol} ${(total * advancePaymentPercentage / 100).toFixed(2)}`}
+          placeholder={`${translate('default')}: ${currencySymbol} ${(total * advancePaymentPercentage / 100).toFixed(2)}`}
           value={customAdvanceAmount !== null ? customAdvanceAmount : ''}
           onChange={handleAdvanceAmountChange}
           sx={{ backgroundColor: "#fff", borderRadius: "12px", width: "150px" }}
@@ -200,7 +201,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
           marginBottom: "8px",
         }}
       >
-        <Typography fontWeight="bold">Advance Payment:</Typography>
+        <Typography fontWeight="bold">{translate('advancePayment')}:</Typography>
         <Typography fontWeight="bold">{currencySymbol} {advancePayment.toFixed(2)}</Typography>
       </Box>
       
@@ -216,7 +217,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
           marginBottom: "8px",
         }}
       >
-        <Typography fontWeight="bold">Remaining Payment:</Typography>
+        <Typography fontWeight="bold">{translate('remainingPayment')}:</Typography>
         <Typography fontWeight="bold">{currencySymbol} {remainingPayment.toFixed(2)}</Typography>
       </Box>
     </Paper>

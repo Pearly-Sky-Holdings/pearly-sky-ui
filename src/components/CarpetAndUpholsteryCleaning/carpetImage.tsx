@@ -7,56 +7,47 @@ import {
     carpetimg5,
     carpetimg6
  } from "../../config/images";
+import { useLanguage } from "../../context/LanguageContext";
 
 const ImageComponent = () => {
+  const { translate } = useLanguage();
+
   // Data for the cards
   const cleaningPackages = [
     {
       icon: carpetimg1, 
-      title: "Carpet Cleaning",
-      items: 
-      ["Removes dirt, stains, and allergens using steam or dry extraction, restoring freshness and extending carpet lifespan. Regular cleaning enhances indoor air quality."
-      ],
+      title: translate('carpetCleaningTitle'),
+      items: [translate('carpetCleaningDescription')],
     },
     {
       icon: carpetimg2, 
-      title: "Rug Cleaning",
-      items: 
-      ["Gentle hand washing and steam cleaning preserve colors while eliminating dust, pet dander, and odors. This keeps rugs vibrant and hygienic."
-      ],
+      title: translate('rugCleaningTitle'),
+      items: [translate('rugCleaningDescription')],
     },
     {
       icon: carpetimg3, 
-      title: "Upholstery Cleaning",
-      items: 
-      ["Deep cleaning lifts stains, allergens, and bacteria, restoring fabric softness and extending furniture life. It also removes trapped odors for a fresher feel."
-      ],
+      title: translate('upholsteryCleaningTitle'),
+      items: [translate('upholsteryCleaningDescription')],
     },
     {
         icon: carpetimg4, 
-        title: "Sofa Cleaning",
-        items:
-         ["Steam or dry cleaning removes stains, dust mites, and odors, ensuring a refreshed and sanitized sofa. This helps maintain fabric durability and comfort."
-        ],
+        title: translate('sofaCleaningTitle'),
+        items: [translate('sofaCleaningDescription')],
       },
       {
         icon: carpetimg5, 
-        title: "Mattress Clowing",
-        items: ["Steam and UV sanitation eliminate allergens, bacteria, and odors, promoting better sleep and hygiene. Regular cleaning prevents respiratory issues."
-        ],
+        title: translate('mattressCleaningTitle'),
+        items: [translate('mattressCleaningDescription')],
       },
       {
         icon: carpetimg6, 
-        title: "Curtain Cleaning.",
-        items: 
-        ["Dry or steam cleaning removes dust and stains, maintaining freshness, air quality, and fabric integrity. This helps prevent allergens and fading."],
+        title: translate('curtainCleaningTitle'),
+        items: [translate('curtainCleaningDescription')],
       },
   ];
 
   return (
-    <div
-      className="rounded-lg shadow-lg p-4 sm:p-6 "
-    >    
+    <div className="rounded-lg shadow-lg p-4 sm:p-6">
       <Grid container spacing={3}>
         {cleaningPackages.map((pkg, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
@@ -81,7 +72,6 @@ const ImageComponent = () => {
               }}
             >
               <CardContent sx={{ flexGrow: 1, pt: 2, mt: 1 }}>
-                {/* Display the title */}
                 <Typography variant="h6" sx={{ color: "white", textAlign: "center", mb: 2 }}>
                   {pkg.title}
                 </Typography>

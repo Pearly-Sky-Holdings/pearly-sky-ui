@@ -28,10 +28,12 @@ import {
   DialogContentText,
   DialogActions,
 } from "@mui/material";
+import { useLanguage } from "../../context/LanguageContext";
 
 function SanitizationAndDisinfection() {
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
+  const { translate } = useLanguage();
   useSelector((state: any) => state.servicesSlice.service);
   const [_selectedServices, _setSelectedServices] = useState<object[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -49,33 +51,27 @@ function SanitizationAndDisinfection() {
    
   const [selectedData, setSelectedData] = useState<{ category: string; items: string[] }[]>([]);
 
-  // Memoize the callback function to prevent unnecessary re-renders
   const handleSelectionChange = useCallback((data: { category: string; items: string[] }[]) => {
     setSelectedData(data);
-    console.log("Selected Data:", data);
   }, []);
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
 
- 
-  // Memoize the form change handler
   const handleFormChange = useCallback((data: any) => {
     setFormData(data);
   }, []);
-
-  // Fetch package and services data
-
+  
   useEffect(() => {
     dispatch(getPackege("10"));
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(getServices("10"));
-
   }, [dispatch]);
   
+
 const [equipment, setEquipment] = useState({ customer: false, company: false });
 const [chemical, setChemical] = useState({ customer: false, company: false });
 
@@ -157,69 +153,53 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
   });
 
   const handleBookNow = async () => {
-   // Validate Chemical
-   if (!chemical.customer && !chemical.company) {
-    setDialogMessage("Chemical is required. Please select an option for Chemical.");
-    setOpenDialog(true);
-    return;
-  }
+    if (!chemical.customer && !chemical.company) {
+      setDialogMessage(translate('chemicalRequired'));
+      setOpenDialog(true);
+      return;
+    }
 
-  // Validate Equipment
-  if (!equipment.customer && !equipment.company) {
-    setDialogMessage("Equipment is required. Please select an option for Equipment.");
-    setOpenDialog(true);
-    return;
-  }
+    if (!equipment.customer && !equipment.company) {
+      setDialogMessage(translate('equipmentRequired'));
+      setOpenDialog(true);
+      return;
+    }
 
-  // Validate First Name
-  if (!formData.firstName) {
-    setDialogMessage("First Name is required. Please enter your first name.");
-    setOpenDialog(true);
-    return;
-  }
+    if (!formData.firstName) {
+      setDialogMessage(translate('firstNameRequired'));
+      setOpenDialog(true);
+      return;
+    }
 
-  // Validate Last Name
-  if (!formData.lastName) {
-    setDialogMessage("Last Name is required. Please enter your last name.");
-    setOpenDialog(true);
-    return;
-  }
-
+    if (!formData.lastName) {
+      setDialogMessage(translate('lastNameRequired'));
+      setOpenDialog(true);
+      return;
+    }
   
-  // Validate Country
-  if (!formData.country) {
-    setDialogMessage("Country is required. Please select your country.");
-    setOpenDialog(true);
-    return;
-  }
+    if (!formData.country) {
+      setDialogMessage(translate('countryRequired'));
+      setOpenDialog(true);
+      return;
+    }
 
-  // Validate Address
-  if (!formData.address) {
-    setDialogMessage("Address is required. Please enter your address.");
-    setOpenDialog(true);
-    return;
-  }
+    if (!formData.address) {
+      setDialogMessage(translate('addressRequired'));
+      setOpenDialog(true);
+      return;
+    }
 
-  // Validate City
-  if (!formData.city) {
-    setDialogMessage("City is required. Please enter your city.");
-    setOpenDialog(true);
-    return;
-  }
+    if (!formData.city) {
+      setDialogMessage(translate('cityRequired'));
+      setOpenDialog(true);
+      return;
+    }
 
-  // Validate State
-  if (!formData.state) {
-    setDialogMessage("State is required. Please enter your state.");
-    setOpenDialog(true);
-    return;
-  }
-
-  // Validate ZIP Code
-  if (!formData.zip) {
-    setDialogMessage("ZIP Code is required. Please enter your ZIP code.");
-    setOpenDialog(true);
-    return;
-  }
+    if (!formData.state) {
+      setDialogMessage(translate('stateRequired'));
+      setOpenDialog(true);
+      return;
+    }
 
   // Replace your phone validation in handleBookNow with:
   const phoneValidation = validatePhoneNumber(formData.phone);
@@ -239,98 +219,98 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
     setOpenDialog(true);
     return;
   }
+    if (!formData.zip) {
+      setDialogMessage(translate('zipRequired'));
+      setOpenDialog(true);
+      return;
+    }
 
-  // Validate Password
-  if (!formData.password) {
-    setDialogMessage("Password is required. Please enter your password.");
-    setOpenDialog(true);
-    return;
-  } else if (formData.password.length < 8) {
-    setDialogMessage("Password must be at least 8 characters long.");
-    setOpenDialog(true);
-    return;
-  }
+    if (!formData.phone) {
+      setDialogMessage(translate('phoneRequired'));
+      setOpenDialog(true);
+      return;
+    }
 
-  // Validate Confirm Password
-  if (!formData.confirmPassword) {
-    setDialogMessage("Confirm Password is required. Please confirm your password.");
-    setOpenDialog(true);
-    return;
-  } else if (formData.password !== formData.confirmPassword) {
-    setDialogMessage("Passwords do not match. Please check your password and confirm password.");
-    setOpenDialog(true);
-    return;
-  }
+    if (!formData.email) {
+      setDialogMessage(translate('emailRequired'));
+      setOpenDialog(true);
+      return;
+    } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(formData.email)) {
+      setDialogMessage(translate('invalidEmail'));
+      setOpenDialog(true);
+      return;
+    }
 
-  // Validate Password Match
-  if (formData.password !== formData.confirmPassword) {
-    setDialogMessage("Passwords do not match. Please check your password and confirm password.");
-    setOpenDialog(true);
-    return;
-  }
+    if (!formData.password) {
+      setDialogMessage(translate('passwordRequired'));
+      setOpenDialog(true);
+      return;
+    } else if (formData.password.length < 8) {
+      setDialogMessage(translate('passwordLength'));
+      setOpenDialog(true);
+      return;
+    }
 
-  // Validate Frequency
-  if (!frequency) {
-    setDialogMessage("Frequency is required. Please select a frequency.");
-    setOpenDialog(true);
-    return;
-  }
+    if (!formData.confirmPassword) {
+      setDialogMessage(translate('confirmPasswordRequired'));
+      setOpenDialog(true);
+      return;
+    } else if (formData.password !== formData.confirmPassword) {
+      setDialogMessage(translate('passwordMismatch'));
+      setOpenDialog(true);
+      return;
+    }
 
-  // Validate Property Type
-  if (!propertyType) {
-    setDialogMessage("Property Type is required. Please select a property type.");
-    setOpenDialog(true);
-    return;
-  }
+    if (!frequency) {
+      setDialogMessage(translate('frequencyRequired'));
+      setOpenDialog(true);
+      return;
+    }
 
-  // Validate Contact Type
-  if (!contactType) {
-    setDialogMessage("Contact Type is required. Please select a contact type.");
-    setOpenDialog(true);
-    return;
-  }
+    if (!propertyType) {
+      setDialogMessage(translate('propertyTypeRequired'));
+      setOpenDialog(true);
+      return;
+    }
 
-  // Validate Language
-  if (!language) {
-    setDialogMessage("Language is required. Please select a language.");
-    setOpenDialog(true);
-    return;
-  }
+    if (!contactType) {
+      setDialogMessage(translate('contactTypeRequired'));
+      setOpenDialog(true);
+      return;
+    }
 
-  // Validate Time Zone
-  if (!timeZone) {
-    setDialogMessage("Time Zone is required. Please select a time zone.");
-    setOpenDialog(true);
-    return;
-  }
+    if (!language) {
+      setDialogMessage(translate('languageRequired'));
+      setOpenDialog(true);
+      return;
+    }
 
-  // Validate Selected Date
-  if (!selectedDate) {
-    setDialogMessage("Date is required. Please select a date.");
-    setOpenDialog(true);
-    return;
-  }
+    if (!timeZone) {
+      setDialogMessage(translate('timeZoneRequired'));
+      setOpenDialog(true);
+      return;
+    }
 
-  // Validate Selected Time
-  if (!selectedTime) {
-    setDialogMessage("Time is required. Please select a time.");
-    setOpenDialog(true);
-    return;
-  }
+    if (!selectedDate) {
+      setDialogMessage(translate('dateRequired'));
+      setOpenDialog(true);
+      return;
+    }
 
-  // Validate Terms and Conditions
-  if (!acceptTerms2) {
-    setDialogMessage("You must accept the terms and conditions to proceed.");
-    setOpenDialog(true);
-    return;
-  }
+    if (!selectedTime) {
+      setDialogMessage(translate('timeRequired'));
+      setOpenDialog(true);
+      return;
+    }
 
-  console.log("All fields are valid. Proceeding to checkout...");
-  
-    // selected date
+    if (!acceptTerms2) {
+      setDialogMessage(translate('termsRequired'));
+      setOpenDialog(true);
+      return;
+    }
+
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
   
-    // customer object
     const customer = {
       first_name: formData.firstName,
       last_name: formData.lastName,
@@ -346,7 +326,6 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
       password: formData.password, 
     };
   
-    // service details
     const serviceDetails = {
       customer, 
       service_id: "10", 
@@ -360,28 +339,25 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
       cleaning_solvents: " ", 
       frequency,
       time_zoon: timeZone,
-      Equipment: equipment.customer ? "Provided by customer" : "Provided by company",
-      chemical:chemical.customer ? "Provided by customer" : "Provided by company",
+      Equipment: equipment.customer ? translate('providedByCustomer') : translate('providedByCompany'),
+      chemical: chemical.customer ? translate('providedByCustomer') : translate('providedByCompany'),
       payment_method: "cash", 
       reStock_details: [],
-      free_estimate:selectedData
+      free_estimate: selectedData
     };
-  
-    console.log("Data to be sent:", serviceDetails);
 
     const data = {
-      serviceName: " Sanitization & Disinfection",
+      serviceName: translate('sanitizationDisinfection'),
       details: serviceDetails,
       personalInformation: formData,
       equipment,
       chemical,
       selectedCategories: selectedData,
     };
-    console.log("Data:", data);
   
     try {
       setIsLoading(true);
-      
+
       // Using Axios instance
       const response = await instance.post("saveServiceDetails", serviceDetails);
       
@@ -396,10 +372,11 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
       
       setDialogMessage(
         error.response?.data?.message || 
-        "Failed to submit the quotation request. Please try again."
+        alert(translate('submitFailedAlert'));
       );
       setOpenDialog(true);
       
+
     } finally {
       setIsLoading(false);
     }
@@ -412,30 +389,22 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
         <div className="w-full lg:w-3/2">
           <img
             src={SanitizationService}
-            alt="Cleaning Service"
+            alt={translate('sanitizationDisinfection')}
             className="rounded-2xl w-full h-full object-cover"
           />
         </div>
         <div className="w-fulllg:w-2/3 gap-1">
           <div>
             <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-[#002F6D] to-[#0D90C8] text-transparent bg-clip-text p-2">
-              Sanitization & Disinfection
+              {translate('sanitizationDisinfection')}
             </h1>
           </div>
           <div className="flex-grow">
             <p className="text-gray-600 mb-4 text-sm sm:text-base">
-              Disinfecting is a cleaning method that uses disinfectants known as chemicals to kill germs on objects and
-              surfaces. Some basic disinfectants used for this method are bleach and alcohol solutions. Generally, we need
-              to keep the disinfectant on the surfaces and objects for a particular time to kill the germs. It does not
-              clean dirty surfaces or remove germs definitely.
+              {translate('disinfectingDescription')}
             </p>
             <p className="text-gray-600 mb-4 text-sm sm:text-base">
-              Sanitizing can be completed by cleaning, disinfecting, or both. It takes part in decreasing the number of
-              germs to a safe level. What is defined by a safe level depends on public health standards or basic needs at
-              a workplace, school, etc. For example, there are certain procedures for sanitizing in restaurants and other
-              facilities that are used to prepare food. Methods we use to sanitize can be varied, depending on your
-              requirements. They can be Mopping a floor using a mop, a chemical, and water, using a dishwasher to
-              sanitize the dishes or using an antibacterial wipe on a TV remote.
+              {translate('sanisanitizingDescription')}
             </p>
           </div>
         </div>
@@ -448,13 +417,13 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
 
       {/* Booking Section */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8">
-        <h2 className="text-2xl font-bold text-blue-900 mb-6">Select Your Job to Get Your Quotation</h2>
+        <h2 className="text-2xl font-bold text-blue-900 mb-6">{translate('selectJobForQuotation')}</h2>
 
         <div className="mb-6 shadow-lg p-4 sm:p-6 rounded-lg border border-blue-400">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
             {/* Calendar Section */}
             <div className="flex flex-col">
-              <label className="block mb-2 text-blue-900 font-semibold">Select Date</label>
+              <label className="block mb-2 text-blue-900 font-semibold">{translate('selectDate')}</label>
               <div className="calendar-container p-4 rounded-lg">
                 <Calendar
                   onChange={(date) => setSelectedDate(date as Date)}
@@ -507,14 +476,14 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
         {/* File Upload and Additional Note */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
-            <label className="block mb-2 text-black">Upload Images or Documents</label>
+            <label className="block mb-2 text-black">{translate('uploadFiles')}</label>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center min-h-[150px] flex items-center justify-center">
               <div>
                 <input type="file" className="hidden" id="file-upload" />
                 <label htmlFor="file-upload" className="cursor-pointer text-blue-600 hover:text-blue-800">
                   <div className="flex flex-col items-center space-y-2">
-                    <span className="text-sm">Click to upload or drag and drop</span>
-                    <span className="text-xs text-gray-500">Maximum file size: 10MB</span>
+                    <span className="text-sm">{translate('clickToUpload')}</span>
+                    <span className="text-xs text-gray-500">{translate('maxFileSize')}</span>
                   </div>
                 </label>
               </div>
@@ -522,10 +491,10 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
           </div>
 
           <div>
-            <label className="block mb-2 text-black">Additional Note</label>
+            <label className="block mb-2 text-black">{translate('additionalNote')}</label>
             <textarea
               className="w-full min-h-[150px] border border-blue-900 rounded p-2 text-gray-700 resize-none"
-              placeholder="Type your note here..."
+              placeholder={translate('typeNoteHere')}
             ></textarea>
           </div>          
         </div>        
@@ -533,7 +502,7 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
         <div className="flex flex-col md:flex-row md:gap-10 p-4 mb-6">
           {/* Equipment Section */}
           <div className="w-full mb-14 md:mb-0">
-            <h2 className="text-lg text-black font-bold mb-2">Equipment</h2>
+            <h2 className="text-lg text-black font-bold mb-2">{translate('equipment')}</h2>
             <div className="text-black">
               <label className="flex items-center space-x-2 mb-1">
                 <input
@@ -542,7 +511,7 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
                   checked={equipment.customer}
                   onChange={() => handleCheckboxChange("equipment", "customer")}
                 />
-                <span>Provide by customer</span>
+                <span>{translate('providedByCustomer')}</span>
               </label>
               <label className="flex items-center space-x-2">
                 <input
@@ -551,14 +520,14 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
                   checked={equipment.company}
                   onChange={() => handleCheckboxChange("equipment", "company")}
                 />
-                <span>Provide by company</span>
+                <span>{translate('providedByCompany')}</span>
               </label>
             </div>
           </div>
 
           {/* Chemical Section */}
           <div className="w-full">
-            <h2 className="text-lg text-black font-bold mb-2">Chemical</h2>
+            <h2 className="text-lg text-black font-bold mb-2">{translate('chemical')}</h2>
             <div className="text-black">
               <label className="flex items-center space-x-2 mb-1">
                 <input
@@ -567,7 +536,7 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
                   checked={chemical.customer}
                   onChange={() => handleCheckboxChange("chemical", "customer")}
                 />
-                <span>Provide by customer</span>
+                <span>{translate('providedByCustomer')}</span>
               </label>
               <label className="flex items-center space-x-2">
                 <input
@@ -576,7 +545,7 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
                   checked={chemical.company}
                   onChange={() => handleCheckboxChange("chemical", "company")}
                 />
-                <span>Provide by company</span>
+                <span>{translate('providedByCompany')}</span>
               </label>
             </div>
           </div>
@@ -584,15 +553,6 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
 
         <div>
           <PersonalInformationForm onChangeCallback={handleFormChange} />
-          {/* Display form data in another section */}
-          {/* <div style={{ marginTop: "20px" }}>
-            <h2>Live Form Data:</h2>
-            <pre>{JSON.stringify(formData, null, 2)}</pre>
-            <pre>{JSON.stringify(equipment, null, 2)}</pre>
-            <pre>{JSON.stringify(chemical, null, 2)}</pre>
-            <pre>{JSON.stringify(propertyType, null, 2)}</pre>
-            <pre>{JSON.stringify(selectedData, null, 2)}</pre>
-          </div> */}
         </div>
 
         {/* Terms Checkbox */}
@@ -605,7 +565,7 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
               onChange={(e) => setAcceptTerms2(e.target.checked)}
             />
             <span className="text-sm">
-              By Booking or Requesting a quotation, you agree with our terms and conditions and privacy policy.
+              {translate('termsAgreement')}
             </span>
           </label>
         </div>
@@ -616,31 +576,32 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
           onClick={handleBookNow}
           style={{ background: "#0D90C8", fontSize: "15px", color: "white" }}
         >
-          Request Quotation
+          {translate('requestQuotation')}
         </button>
       </div>
 
-      {/* Using the new LoadingOverlay component */}
       <LoadingOverlay 
         open={isLoading} 
-        message="Processing your order..."
-        subMessage="Please wait while we confirm your booking"
+        message={translate('processingOrder')}
+        subMessage={translate('pleaseWait')}
       />
 
-      {/* Payment Support Section */}
       <div>
         <PaymentSupportSection />
       </div>
 
-      {/* Dialog for displaying validation messages */}
       <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle sx={{ background: "#800000", color: "white" ,textAlign:"center"}}>Validation Error</DialogTitle>
-        <DialogContent >
-          <DialogContentText sx={{mt:3 ,textAlign:"center",color:"#800000"}}>{dialogMessage}</DialogContentText>
+        <DialogTitle sx={{ background: "#800000", color: "white" ,textAlign:"center"}}>
+          {translate('validationError')}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText sx={{mt:3 ,textAlign:"center",color:"#800000"}}>
+            {dialogMessage}
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog} color="primary" sx={{background: "#800000", color: "white" ,textAlign:"center"}}>
-            OK
+            {translate('ok')}
           </Button>
         </DialogActions>
       </Dialog>

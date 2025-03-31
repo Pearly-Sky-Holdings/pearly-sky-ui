@@ -29,19 +29,19 @@ import { useLocation, useNavigate } from "react-router-dom";
 import OrderSummary from "../../components/checkoutSection/OrderSummary";
 import PaymentMethod from "../../components/checkoutSection/PaymentMethod";
 import LoadingOverlay from "../../components/welcomeAlert/LoadingOverlay";
-import CloseIcon from "@mui/icons-material/Close"; // For the "Cut" button icon
-import {
-  successImage
-} from "../../config/images";
+import CloseIcon from "@mui/icons-material/Close";
+import { successImage } from "../../config/images";
+import { useLanguage } from "../../context/LanguageContext";
 
 const CheckoutPage = () => {
+  const { translate } = useLanguage();
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
-  const [showThankYouModal, setShowThankYouModal] = useState(false); // State for showing the Thank You image
+  const [showThankYouModal, setShowThankYouModal] = useState(false);
   const saveServiceData = useSelector(
     (state: any) => state.serviceDetailsSlice.service
   );
@@ -83,6 +83,7 @@ const CheckoutPage = () => {
       };
     }
   };
+
   const location = useLocation();
   const { data } = location.state || {};
 
@@ -200,8 +201,6 @@ const CheckoutPage = () => {
 
       setSaveLoader(true);
       dispatch(saveServices(ServiceData));
-      console.log("Data", ServiceData);
-      console.log("Data", _handlePlaceOrder);
     } else if (
       data.serviceName == "Child Care" ||
       data.serviceName == "Elder Care"
@@ -217,7 +216,7 @@ const CheckoutPage = () => {
         note: data.details.note,
         request_language: data.details.language,
         number_of_count: data.details.numChild,
-        request_gender : data.details.contactType,
+        request_gender: data.details.contactType,
         request_care_professional: data.details.request_care_professional,
         service_providing_place: data.details.service_providing_place,
         special_request: data.details.special_request,
@@ -226,11 +225,9 @@ const CheckoutPage = () => {
       };
       setSaveLoader(true);
       dispatch(saveServices(childCareServiceData));
-      console.log("Data", data);
     }
   };
 
-  // Function to handle navigation after the timer or "Cut" button
   const navigateToRoute = () => {
     if (data.serviceName == "Regular Basic") {
       navigate("/regular-basic-cleaning", {
@@ -256,13 +253,11 @@ const CheckoutPage = () => {
       navigate("/post_constructor_cleaning", {
         state: { showSuccessPopup: true },
       });
-    } else if (
-      data.serviceName == "Airbnb And Short Term Rental Cleaning"
-    ) {
+    } else if (data.serviceName == "Airbnb And Short Term Rental Cleaning") {
       navigate("/airbnb_and_short_service", {
         state: { showSuccessPopup: true },
       });
-    }else if (data.serviceName == "Child Care") {
+    } else if (data.serviceName == "Child Care") {
       navigate("/child_care_cleaning", {
         state: { showSuccessPopup: true },
       });
@@ -273,7 +268,6 @@ const CheckoutPage = () => {
     }
   };
 
-  // Save Regular Service
   useEffect(() => {
     if (saveLoader) {
       if (saveServiceData.isSuccess && !saveServiceData.isLoading) {
@@ -282,15 +276,13 @@ const CheckoutPage = () => {
         }
         if (saveServiceData.data.status === "success") {
           setShowSuccess(true);
-          setShowThankYouModal(true); // Show the Thank You image modal
+          setShowThankYouModal(true);
 
-          // Set a 10-second timer to navigate to the route
           const timer = setTimeout(() => {
             setShowThankYouModal(false);
             navigateToRoute();
-          }, 5000); // 10 seconds
+          }, 5000);
 
-          // Clean up the timer on component unmount or if the user clicks "Cut"
           return () => clearTimeout(timer);
         } else if (saveServiceData.data.status === "error") {
           setErrorMessage(saveServiceData.data.message);
@@ -303,7 +295,6 @@ const CheckoutPage = () => {
     }
   }, [saveServiceData.data, saveServiceData.errorMessage]);
 
-  // Handle the "Cut" button click
   const handleCutButtonClick = () => {
     setShowThankYouModal(false);
     navigateToRoute();
@@ -316,7 +307,7 @@ const CheckoutPage = () => {
         fontWeight="bold"
         sx={{ mb: 3, mt: 5, color: "#002F6D" }}
       >
-        Checkout
+        {translate('checkout')}
       </Typography>
 
       <Grid container spacing={2}>
@@ -325,10 +316,9 @@ const CheckoutPage = () => {
         </Grid>
 
         <Grid item xs={12} md={5}>
-          {/* Order Summary */}
           <div className="mb-6">
             <h2 className="text-xl font-semibold mb-4 text-blue-900">
-              Order Summary
+              {translate('orderSummary')}
             </h2>
             <OrderSummary
               selectedServices={data?.orderSummary?.selectedServices || []}
@@ -337,18 +327,16 @@ const CheckoutPage = () => {
               currencySymbol={data?.orderSummary?.currencySymbol || "$"}
               selectedCurrency={data?.orderSummary?.selectedCurrency || "USD"}
               conversionRate={data?.orderSummary?.conversionRate || 1}
-              serviceName={data?.serviceName || "Base Service"}
+              serviceName={data?.serviceName || translate('baseService')}
               totalPrice={data?.orderSummary?.totalPrice || 0}
             />
           </div>
           <PaymentMethod onPaymentMethodChange={setSelectedPaymentMethod} />
 
           <Typography sx={{ color: "#737375", fontSize: "12px" }}>
-            Your personal data will be used to process your order, support your
-            experience throughout this website, and for other purposes described
-            in our{" "}
+            {translate('privacyNotice1')}{" "}
             <Typography sx={{ color: "#0D90C8", fontSize: "12px" }}>
-              privacy policy.
+              {translate('privacyPolicy')}.
             </Typography>
           </Typography>
 
@@ -369,30 +357,26 @@ const CheckoutPage = () => {
             onClick={_handlePlaceOrder}
           >
             {saveLoader ? (
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "8px" }}
-              >
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                 <CircularProgress size={20} color="inherit" />
-                <span>Processing...</span>
+                <span>{translate('processing')}...</span>
               </div>
             ) : (
-              "Place Order"
+              translate('placeOrder')
             )}
           </Button>
         </Grid>
       </Grid>
 
-      {/* Using the new LoadingOverlay component */}
       <LoadingOverlay
         open={saveLoader}
-        message="Processing your order..."
-        subMessage="Please wait while we confirm your booking"
+        message={translate('processingYourOrder')}
+        subMessage={translate('pleaseWaitWhileProcessing')}
       />
 
-      {/* Modal for Thank You Image */}
       <Modal
         open={showThankYouModal}
-        onClose={() => {}} // Prevent closing by clicking outside
+        onClose={() => {}}
         aria-labelledby="thank-you-modal"
         aria-describedby="thank-you-image-display"
       >
@@ -410,14 +394,12 @@ const CheckoutPage = () => {
             maxWidth: "90%",
           }}
         >
-          {/* Thank You Image */}
           <img
-            src={successImage}// Replace with the actual path to your image
-            alt="Thank You for Your Booking"
+            src={successImage}
+            alt={translate('thankYouForBooking')}
             style={{ maxWidth: "100%", height: "auto" }}
           />
 
-          {/* Cut Button */}
           <IconButton
             onClick={handleCutButtonClick}
             sx={{ position: "absolute", top: 10, right: 10 }}
@@ -446,7 +428,7 @@ const CheckoutPage = () => {
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Alert severity="success" onClose={() => setShowSuccess(false)}>
-          Order placed successfully!
+          {translate('orderPlacedSuccessfully')}
         </Alert>
       </Snackbar>
 

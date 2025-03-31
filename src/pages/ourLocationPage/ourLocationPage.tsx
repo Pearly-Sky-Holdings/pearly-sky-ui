@@ -1,6 +1,6 @@
 import { useState } from "react";
+import { useLanguage } from "../../context/LanguageContext";
 import LocationCard from "../../components/Locations/LocationCart";
-
 import {
   flagAustralia,
   flagCanada,
@@ -46,12 +46,13 @@ type Location = {
 };
 
 function OurLocations() {
+  const { translate } = useLanguage();
   const [expandedLocations, setExpandedLocations] = useState<string[]>([]);
 
   const locations: Location[] = [
     {
       id: "france",
-      name: "France",
+      name: translate('france'),
       flag: flagFrance,
       email1: "Info@Pearlyskyplc.com",
       email2: "support@pearlyskyplc.com",
@@ -87,14 +88,13 @@ function OurLocations() {
     },
     {
       id: "uk",
-      name: "United Kingdom",
+      name: translate('unitedKingdom'),
       flag: flagUk,
       email1: "Info@Pearlyskyplc.com",
       email2: "support@pearlyskyplc.com",
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
-      address:
-        "3rd Floor, 45 Albemarle Street, London, England , W1s 4JL United Kingdom",
+      address: "3rd Floor, 45 Albemarle Street, London, England , W1s 4JL United Kingdom",
       Company_number: "15307255",
       serviceCities: [
         "London",
@@ -133,7 +133,7 @@ function OurLocations() {
     },
     {
       id: "sl",
-      name: "Sri Lanka",
+      name: translate('sriLanka'),
       flag: flagSrilanka,
       email1: "Info@Pearlyskyplc.com",
       email2: "support@pearlyskyplc.com",
@@ -165,7 +165,7 @@ function OurLocations() {
     },
     {
       id: "germany",
-      name: "Germany",
+      name: translate('germany'),
       flag: flagGermany,
       email1: "Info@Pearlyskyplc.com",
       email2: "support@pearlyskyplc.com",
@@ -197,13 +197,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Sydney",
-        " Melbourne",
-        " Brisbane",
-        "Perth",
-        " Adelaide",
-      ],
+      serviceCities: ["Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide"],
     },
     {
       id: "uae",
@@ -215,13 +209,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Dubai Abu",
-        "Dhabi",
-        "Sharjah",
-        "Ras Alkhaimah",
-        "Jebel Ali",
-      ],
+      serviceCities: ["Dubai Abu", "Dhabi", "Sharjah", "Ras Alkhaimah", "Jebel Ali"],
     },
     {
       id: "canada",
@@ -233,13 +221,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Toronto",
-        "Montreal",
-        "Ottawa",
-        "Vancouver",
-        "Jebel Ali",
-      ],
+      serviceCities: ["Toronto", "Montreal", "Ottawa", "Vancouver", "Jebel Ali"],
     },
     {
       id: "finland",
@@ -291,7 +273,7 @@ function OurLocations() {
     },
     {
       id: "us",
-      name: "United States",
+      name: translate('unitedStates'),
       flag: flagUs,
       email1: "Info@Pearlyskyplc.com",
       email2: "support@pearlyskyplc.com",
@@ -299,7 +281,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: ["New York", " Los Angeles", " Philadelphia", "Houston"],
+      serviceCities: ["New York", "Los Angeles", "Philadelphia", "Houston"],
     },
     {
       id: "ireland",
@@ -323,7 +305,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: ["Vienna", "Villach ", "Innsbruck", "Graz", "Bregenz"],
+      serviceCities: ["Vienna", "Villach", "Innsbruck", "Graz", "Bregenz"],
     },
     {
       id: "netherlands",
@@ -335,13 +317,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
-      serviceCities: [
-        "Amsterdam",
-        "Utrecht",
-        "Rotterdam",
-        "Groningen",
-        "The Hague",
-      ],
+      serviceCities: ["Amsterdam", "Utrecht", "Rotterdam", "Groningen", "The Hague"],
     },
     {
       id: "switzerland",
@@ -415,7 +391,6 @@ function OurLocations() {
       address: "Update soon",
       serviceCities: ["Luxembourg City"],
     },
-
     {
       id: "spain",
       name: "Spain",
@@ -430,15 +405,7 @@ function OurLocations() {
     },
   ];
 
-  locations.sort((a, b) => {
-    if (a.name < b.name) {
-      return -1;
-    }
-    if (a.name > b.name) {
-      return 1;
-    }
-    return 0;
-  });
+  locations.sort((a, b) => a.name.localeCompare(b.name));
 
   // Split locations into two halves
   const half = Math.ceil(locations.length / 2);
@@ -456,11 +423,8 @@ function OurLocations() {
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-6xl mx-auto">
-        <h1
-          className="text-3xl font-bold text-center mb-8"
-          style={{ color: "#002F6B" }}
-        >
-          Our Locations
+        <h1 className="text-3xl font-bold text-center mb-8" style={{ color: "#002F6B" }}>
+          {translate('ourLocationsTitle')}
         </h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

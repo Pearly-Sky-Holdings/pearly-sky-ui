@@ -11,6 +11,7 @@ import {
   supportPayment10,
 } from "../../config/images";
 import { Box } from '@mui/material';
+import { useLanguage } from "../../context/LanguageContext";
 
 const paymentMethods = [
   { icon: supportPayment1, alt: "Visa" },
@@ -26,6 +27,7 @@ const paymentMethods = [
 ];
 
 const PaymentSupportSection = () => {
+  const { translate } = useLanguage();
   return (
     <Box
       sx={{
@@ -34,7 +36,7 @@ const PaymentSupportSection = () => {
         width: "100%",
       }}
     >
-      <h2 className="text-xl font-semibold mb-4 text-blue-900 text-center">{"We Support"}</h2>
+      <h2 className="text-xl font-semibold mb-4 text-blue-900 text-center">{translate('wesupport')}</h2>
       <Box
         sx={{
           display: "flex",

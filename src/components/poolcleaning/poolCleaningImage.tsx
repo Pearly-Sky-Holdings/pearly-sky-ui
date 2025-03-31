@@ -1,47 +1,57 @@
 import { Grid, Card, CardContent, List, ListItem, ListItemText } from "@mui/material";
-import {
-    PoolCleaning1,PoolCleaning2  
-} from "../../config/images";
+import { PoolCleaning1, PoolCleaning2 } from "../../config/images";
+import { useLanguage } from "../../context/LanguageContext";
+
+// Internal constant keys for pool cleaning items
+const POOL_CLEANING_ITEMS = {
+  CHECK_WATER_LEVEL: 'checkWaterLevel',
+  CHECK_WATER_CHEMISTRY: 'checkWaterChemistry',
+  REMOVE_DEBRIS: 'removeFloatingDebris',
+  CLEAN_DECK: 'cleanPoolDeck',
+  CLEAN_TILES: 'cleanPoolTiles',
+  BRUSH_WALLS_FLOOR: 'brushPoolWallsAndFloor',
+  INSPECT_EQUIPMENT: 'inspectPoolEquipment',
+  CHECK_FILTER: 'checkFilterPressure',
+  VACUUM_POOL: 'vacuumPool',
+  BRUSH_ENTIRE_POOL: 'brushEntirePool',
+  CLEAN_SKIMMER: 'cleanSkimmerAndPumpBaskets',
+  STORE_EQUIPMENT: 'storeEquipmentSafely'
+};
 
 const ImageComponent = () => {
-  // Data for the cards
+  const { translate } = useLanguage();
+
+  // Data for the cards using translation keys
   const cleaningPackages = [
     {
       icon: PoolCleaning1,      
-      items: 
-      [
-        "Check Water Level",
-        "Check Water Chemistry",
-        "Remove Floating Debris",
-       " Clean the Pool Deck",
-       " Clean Pool Tiles ",
-       " Brush the Pool Walls and Floor"
-
-],
+      items: [
+        POOL_CLEANING_ITEMS.CHECK_WATER_LEVEL,
+        POOL_CLEANING_ITEMS.CHECK_WATER_CHEMISTRY,
+        POOL_CLEANING_ITEMS.REMOVE_DEBRIS,
+        POOL_CLEANING_ITEMS.CLEAN_DECK,
+        POOL_CLEANING_ITEMS.CLEAN_TILES,
+        POOL_CLEANING_ITEMS.BRUSH_WALLS_FLOOR
+      ]
     },
     {
       icon: PoolCleaning2,       
-      items: 
-      [
-        "Inspect Pool Equipment",
-        "Check Filter Pressure",
-       " Vacuum the Pool",
-       " Brush the Entire Pool",
-        "Clean Skimmer and Pump Baskets",
-        "Store Equipment and Chemicals Safely"
-        
-        ],
-    },
-    
+      items: [
+        POOL_CLEANING_ITEMS.INSPECT_EQUIPMENT,
+        POOL_CLEANING_ITEMS.CHECK_FILTER,
+        POOL_CLEANING_ITEMS.VACUUM_POOL,
+        POOL_CLEANING_ITEMS.BRUSH_ENTIRE_POOL,
+        POOL_CLEANING_ITEMS.CLEAN_SKIMMER,
+        POOL_CLEANING_ITEMS.STORE_EQUIPMENT
+      ]
+    }
   ];
 
   return (
-    <div
-      className="rounded-lg shadow-lg p-4 sm:p-6 "     
-    >  
+    <div className="rounded-lg shadow-lg p-4 sm:p-6">  
       <Grid container spacing={3}>
         {cleaningPackages.map((pkg, index) => (
-          <Grid item xs={12} sm={6}  key={index}>
+          <Grid item xs={12} sm={6} key={index}>
             <Card
               elevation={3}
               sx={{
@@ -62,12 +72,12 @@ const ImageComponent = () => {
                 },
               }}
             >
-              <CardContent sx={{ flexGrow: 1, pt: 1, mt: 1,color:"white" }}>                
+              <CardContent sx={{ flexGrow: 1, pt: 1, mt: 1, color: "white" }}>                
                 <List dense>
-                  {pkg.items.map((item, idx) => (
+                  {pkg.items.map((itemKey, idx) => (
                     <ListItem key={idx} disableGutters>
                       <ListItemText
-                        primary={item}
+                        primary={translate(itemKey)}
                         sx={{
                           "& .MuiTypography-root": {
                             fontSize: "0.95rem",

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"; // Add useRef
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +19,7 @@ import store from "../../store";
 import BookingSectionCart from "../../components/bookingSectionCarts/bookingSectionCart";
 import QuantityControl from "../../components/QuantityControl/quantityControl";
 import Dropdown from "../../components/dropDown/dropDown";
+import { useLanguage } from "../../context/LanguageContext";
 
 function OneTimeCleaningPage() {
   type selectService = {
@@ -31,6 +32,8 @@ function OneTimeCleaningPage() {
     price: number;
     name?: string;
   };
+  
+  const { translate } = useLanguage();
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const packages = useSelector((state: any) => state.packagesSlice.package);
@@ -52,11 +55,8 @@ function OneTimeCleaningPage() {
   const [contactType, setContactType] = useState("");
   const [selectedSolvent, setSelectedSolvent] = useState("");
   const [selectedEquipmentOption, setSelectedEquipmentOption] = useState("");
-  const [selectedEquipments, setSelectedEquipments] = useState<
-    Array<{ id: string; price: number }>
-  >([]);
+  const [selectedEquipments, setSelectedEquipments] = useState<Array<{ id: string; price: number }>>([]);
   const [checkedList, setCheckedList] = useState<string[]>([]);
-
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
   const [currencySymbol, setCurrencySymbol] = useState("$");
   const [conversionRate, setConversionRate] = useState(1);
@@ -102,23 +102,20 @@ function OneTimeCleaningPage() {
   }, []);
 
   const calculateTotalPrice = () => {
-    const hourlyRate = parseInt(services.data.price, 10); // Hourly rate in USD
-    const basePrice = hourlyRate * maxTime; // Base price in USD
+    const hourlyRate = parseInt(services.data.price, 10);
+    const basePrice = hourlyRate * maxTime;
 
     let serviceCosts = 0;
     let equipmentCosts = 0;
 
-    // Calculate service costs in USD
     selectedServices.forEach((service) => {
       serviceCosts += service.price * (service.qty || 1) * conversionRate;
     });
 
-    // Calculate equipment costs in USD
     selectedEquipments.forEach((equipment) => {
       equipmentCosts += equipment.price * conversionRate;
     });
 
-    // Calculate total price in the user's selected currency
     const totalPriceInSelectedCurrency =
       basePrice * conversionRate + equipmentCosts + serviceCosts;
 
@@ -126,15 +123,14 @@ function OneTimeCleaningPage() {
       hourlyRate,
       serviceCosts,
       equipmentCosts,
-      totalPrice: totalPriceInSelectedCurrency, // Total price in the selected currency
-      basePrice: basePrice * conversionRate, // Base price in the selected currency
+      totalPrice: totalPriceInSelectedCurrency,
+      basePrice: basePrice * conversionRate,
     };
   };
 
   const handleEquipmentSelect = (equipment: Equipment, selected: boolean) => {
     setChangeValue(true);
     if (selected) {
-      // Check if the equipment is already in the array
       if (!selectedEquipments.some((e) => e.id === equipment.id)) {
         setSelectedEquipments((prev) => [
           ...prev,
@@ -142,7 +138,6 @@ function OneTimeCleaningPage() {
         ]);
       }
     } else {
-      // Remove the equipment if it exists
       setSelectedEquipments((prev) =>
         prev.filter((e) => e.id !== equipment.id)
       );
@@ -171,7 +166,7 @@ function OneTimeCleaningPage() {
       !acceptTerms1 ||
       !acceptTerms2
     ) {
-      alert("Please fill all required fields before proceeding to checkout.");
+      alert(translate('fillAllFields'));
       return;
     }
 
@@ -205,7 +200,7 @@ function OneTimeCleaningPage() {
       note: document.querySelector("textarea")?.value || "",
     };
     const data = {
-      serviceName: "One Time Cleaning",
+      serviceName: translate('oneTimeCleaning'),
       details: serviceDetails,
       orderSummary: {
         selectedServices,
@@ -218,13 +213,12 @@ function OneTimeCleaningPage() {
       },
     };
 
-    console.log("data:", data);
     navigate("/checkout", { state: { data } });
   };
 
   const frequencyOptions = [
-    { value: "one time", label: "One Time" },
-    { value: "other", label: "Other" },
+    { value: "one time", label: translate('oneTime') },
+    { value: "other", label: translate('other') },
   ];
 
   return (
@@ -234,7 +228,7 @@ function OneTimeCleaningPage() {
         <div className="w-full lg:w-4/3">
           <img
             src={OneTimeService1}
-            alt="Cleaning Service"
+            alt={translate('cleaningService')}
             className="rounded-lg w-full h-auto"
           />
         </div>
@@ -252,28 +246,22 @@ function OneTimeCleaningPage() {
             </div>
           </div>
           <p className="text-gray-600 mb-4 text-sm sm:text-base">
-            One-time basic cleaning typically involves a thorough, general
-            cleaning of a space to make it fresh and presentable. This service
-            includes tasks such as,
+            {translate('oneTimeCleaningDescription')}
           </p>
           <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
-            <li>Dusting surfaces </li>
-            <li>Wiping down countertops </li>
-            <li>Cleaning floors (sweeping, mopping, or vacuuming)</li>
-            <li>Sanitizing high-traffic areas like kitchens and bathrooms</li>
+            <li>{translate('dustingSurfaces')}</li>
+            <li>{translate('wipingCountertops')}</li>
+            <li>{translate('cleaningFloors')}</li>
+            <li>{translate('sanitizingAreas')}</li>
           </ul>
           <p className="text-gray-600 text-sm sm:text-base">
-            Basic cleaning also covers light organization, trash removal, and
-            disinfecting common touch points such as door handles and light
-            switches. This service is ideal for people who need a quick refresh
-            of their space or want it cleaned for an event or after a period of
-            inactivity.
+            {translate('basicCleaningDescription')}
           </p>
         </div>
       </div>
       <div>
         <h2 className="text-xl font-semibold mb-4 text-blue-900">
-          Package checklist
+          {translate('packageChecklist')}
         </h2>
       </div>
 
@@ -285,10 +273,10 @@ function OneTimeCleaningPage() {
       {/* Checklist Section */}
       <div className="bg-white rounded-lg p-4 sm:p-6 mb-8 shadow-lg">
         <h2 className="text-xl font-semibold mb-4 text-blue-900">
-          Select Additional Service Including to Your Package Checklist
+          {translate('selectAdditionalServices')}
         </h2>
         {packages.isLoading ? (
-          <div className="text-center py-4">Loading packages...</div>
+          <div className="text-center py-4">{translate('loadingPackages')}</div>
         ) : packages.isSuccess ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {packages.data.map((service: any) => (
@@ -308,7 +296,6 @@ function OneTimeCleaningPage() {
                         {
                           package_id: Number(service.package_id),
                           price: parseInt(service.price),
-
                           qty:
                             service.name === "Oven Cleaning"
                               ? Number(ovenQty) || 1
@@ -338,7 +325,6 @@ function OneTimeCleaningPage() {
                   }}
                   disabled={service.status !== "active"}
                 />
-                {/* Custom checkbox */}
                 <div
                   className={`w-5 h-5 border-2 border-gray-400 rounded flex items-center justify-center transition-colors ${
                     checkedList.includes(service.package_id.toString())
@@ -346,7 +332,6 @@ function OneTimeCleaningPage() {
                       : "bg-white border-gray-400"
                   } ${service.status !== "active" ? "opacity-50" : ""}`}
                 >
-                  {/* Checkmark icon */}
                   {checkedList.includes(service.package_id.toString()) && (
                     <svg
                       className="w-3 h-3 text-white"
@@ -387,7 +372,6 @@ function OneTimeCleaningPage() {
                               setChangeValue(true);
                               if (service.name === "Oven Cleaning") {
                                 setOvenQty(newQuantity);
-                                // Update the quantity in selectedServices
                                 setSelectedServices((prev) =>
                                   prev.map((s) =>
                                     s.package_id === Number(service.package_id)
@@ -397,7 +381,6 @@ function OneTimeCleaningPage() {
                                 );
                               } else {
                                 setFridgeQty(newQuantity);
-                                // Update the quantity in selectedServices
                                 setSelectedServices((prev) =>
                                   prev.map((s) =>
                                     s.package_id === Number(service.package_id)
@@ -440,7 +423,7 @@ function OneTimeCleaningPage() {
       {/* Booking Section */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8">
         <h2 className="text-2xl font-bold text-blue-900 mb-6">
-          Select Suitable Date and Time to Complete Booking
+          {translate('selectDateTime')}
         </h2>
 
         <div className="mb-6 shadow-lg p-4 sm:p-6 rounded-lg border border-blue-400">
@@ -448,7 +431,7 @@ function OneTimeCleaningPage() {
             {/* Calendar Section */}
             <div className="flex flex-col">
               <label className="block mb-2 text-blue-900 font-semibold">
-                Select Date
+                {translate('selectDate')}
               </label>
               <div className="calendar-container p-4 rounded-lg">
                 <Calendar
@@ -503,7 +486,7 @@ function OneTimeCleaningPage() {
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Dropdown
-              label="Select Frequency"
+              label={translate('selectFrequency')}
               value={frequency}
               options={frequencyOptions}
               onChange={setFrequency}
@@ -515,7 +498,7 @@ function OneTimeCleaningPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
             <label className="block mb-2 text-black">
-              Upload Images or Documents
+              {translate('uploadFiles')}
             </label>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center min-h-[150px] flex items-center justify-center">
               <div>
@@ -526,10 +509,10 @@ function OneTimeCleaningPage() {
                 >
                   <div className="flex flex-col items-center space-y-2">
                     <span className="text-sm">
-                      Click to upload or drag and drop
+                      {translate('clickToUpload')}
                     </span>
                     <span className="text-xs text-gray-500">
-                      Maximum file size: 10MB
+                      {translate('maxFileSize')}
                     </span>
                   </div>
                 </label>
@@ -538,10 +521,12 @@ function OneTimeCleaningPage() {
           </div>
 
           <div>
-            <label className="block mb-2 text-black">Additional Note</label>
+            <label className="block mb-2 text-black">
+              {translate('additionalNote')}
+            </label>
             <textarea
               className="w-full min-h-[150px] border border-blue-900 rounded p-2 text-gray-700 resize-none"
-              placeholder="Type your note here..."
+              placeholder={translate('typeNoteHere')}
             ></textarea>
           </div>
 
@@ -558,7 +543,7 @@ function OneTimeCleaningPage() {
                 }}
               />
               <span className="text-sm">
-                By selecting this I accept terms and conditions
+                {translate('acceptTermsCondition')}
               </span>
             </label>
           </div>
@@ -577,7 +562,7 @@ function OneTimeCleaningPage() {
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              Base Cost{" "}
+              {translate('baseCost')}{" "}
               <span className="text-gray-400">
                 ({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})
               </span>
@@ -592,9 +577,9 @@ function OneTimeCleaningPage() {
           {selectedServices.length > 0 && (
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
               <span className="mb-2 md:mb-0">
-                Selected Services{" "}
+                {translate('selectedServices')}{" "}
                 <span className="text-gray-400">
-                  ({selectedServices.length} services)
+                  ({selectedServices.length} {translate('services')})
                 </span>
               </span>
               <span>
@@ -608,9 +593,9 @@ function OneTimeCleaningPage() {
           {selectedEquipments.length > 0 && (
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
               <span className="mb-2 md:mb-0">
-                Selected Equipment{" "}
+                {translate('selectedEquipment')}{" "}
                 <span className="text-gray-400">
-                  ({selectedEquipments.length} items)
+                  ({selectedEquipments.length} {translate('items')})
                 </span>
               </span>
               <span>
@@ -622,7 +607,7 @@ function OneTimeCleaningPage() {
 
           {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
-            <span>Total</span>
+            <span>{translate('total')}</span>
             <span>
               {currencySymbol}
               {priceBreakdown.totalPrice.toFixed(2)}
@@ -637,7 +622,7 @@ function OneTimeCleaningPage() {
           onClick={handleBookNow}
           style={{ backgroundColor: "#1c398e" }}
         >
-          Book Now
+          {translate('bookNow')}
         </button>
       </div>
 

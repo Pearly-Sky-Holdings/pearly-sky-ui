@@ -10,10 +10,7 @@ import "./CustomCalendar.css";
 import EquipmentSection from "../../components/equipmentSection/equipmentSection";
 import TermsAndConditions from "../../components/termsAndConditions/termsAndConditions";
 import PaymentSupportSection from "../../components/paymentSupportSection/paymentSupportSection";
-import {
-  getRestockList,
-  getServices,
-} from "../../services/CleaningServices/index";
+import { getRestockList, getServices } from "../../services/CleaningServices/index";
 import dayjs from "dayjs";
 import { airbnbAndShortService } from "../../config/images";
 import store from "../../store";
@@ -21,10 +18,8 @@ import BookingSectionCart from "../../components/bookingSectionCarts/bookingSect
 import CurrencyConverter from "../../components/currencyConverter/CurrencyConverter";
 import Dropdown from "../../components/dropDown/dropDown";
 import Carousel2 from "../../components/carouselSection2/carousel2";
-import {
-  airbnbVideo2,
-  airbnbVideo3,
-} from "../../config/images";
+import { airbnbVideo2, airbnbVideo3 } from "../../config/images";
+import { useLanguage } from "../../context/LanguageContext";
 
 type Equipment = {
   id: string;
@@ -33,6 +28,7 @@ type Equipment = {
 };
 
 function AirbnbAndShortService() {
+  const { translate } = useLanguage();
   const navigate = useNavigate();
   const dispatch = useDispatch<typeof store.dispatch>();
   const services = useSelector((state: any) => state.servicesSlice.service);
@@ -106,15 +102,13 @@ function AirbnbAndShortService() {
   const calculateTotalPrice = () => {
     const hourlyRate = parseInt(services.data.price, 10);
     const basePrice = hourlyRate * maxTime;
-    let serviceCosts = 0;
     let equipmentCosts = 0;
 
     selectedEquipments.forEach((equipment) => {
       equipmentCosts += equipment.price * conversionRate;
     });
 
-    const totalPriceInSelectedCurrency =
-      basePrice * conversionRate + equipmentCosts + serviceCosts;
+    const totalPriceInSelectedCurrency = basePrice * conversionRate + equipmentCosts;
 
     return {
       hourlyRate,
@@ -175,7 +169,7 @@ function AirbnbAndShortService() {
       !selectedSolvent ||
       checkedList.length === 0
     ) {
-      alert("Please fill all the fields");
+      alert(translate('pleaseFillAllFields'));
       return;
     }
 
@@ -200,7 +194,7 @@ function AirbnbAndShortService() {
       })),
     };
     const data = {
-      serviceName: "Airbnb And Short Term Rental Cleaning",
+      serviceName: translate('airbnbShortTerm'),
       details: serviceDetails,
       orderSummary: {
         selectedEquipments,
@@ -211,7 +205,6 @@ function AirbnbAndShortService() {
         conversionRate,
       },
     };
-    console.log("Service Details:", serviceDetails);
     navigate("/checkout", { state: { data } });
   };
 
@@ -229,8 +222,8 @@ function AirbnbAndShortService() {
   };
 
   const frequencyOptions = [
-    { value: "every check in check out", label: "Every check in check out" },
-    { value: "other", label: "Other " },
+    { value: "every check in check out", label: translate('everyCheckInOut') },
+    { value: "other", label: translate('other') },
   ];
 
   return (
@@ -241,7 +234,7 @@ function AirbnbAndShortService() {
         <div className="w-full lg:w-4/3 ">
           <img
             src={airbnbAndShortService}
-            alt="Cleaning Service"
+            alt={translate('cleaningService')}
             className="rounded-lg w-full h-auto object-cover"
           />
         </div>
@@ -261,63 +254,49 @@ function AirbnbAndShortService() {
             </div>
           </div>
           <p className="text-gray-600 mb-4 text-sm sm:text-base">
-            Move-in/out cleaning is a specialized service offered by cleaning
-            companies and is prepared for individuals transitioning into or out
-            of a property. This subtle cleaning procedure is specially made to
-            prepare a space for new occupants or ensure the departure leaves the
-            premises in impeccable condition.
+            {translate('airbnbDescription1')}
           </p>
           <ul className="list-disc pl-5 mb-4 text-gray-600 text-sm sm:text-base">
-            <li>
-              Deep cleaning and sanitization of kitchens, bathrooms, and living
-              spaces
-            </li>
-            <li>Vacuuming and stain removal for carpets and upholstery</li>
-            <li>
-              Dusting and disinfecting high-touch surfaces and hard-to-reach
-              spots
-            </li>
-            <li>Scrubbing and polishing floors, fixtures, and appliances</li>
+            <li>{translate('deepCleaningSanitization')}</li>
+            <li>{translate('vacuumingStainRemoval')}</li>
+            <li>{translate('dustingDisinfecting')}</li>
+            <li>{translate('scrubbingPolishing')}</li>
           </ul>
           <p className="text-gray-600 text-sm sm:text-base">
-            This detailed process eliminates dirt, grime, and allergens,
-            fostering a healthier and more inviting space. It enhances overall
-            cleanliness, prolongs the life of furniture and appliances, and
-            ensures a comfortable environment for every guest, improving their
-            stay and boosting positive reviews.
+            {translate('airbnbDescription2')}
           </p>
         </div>
       </div>
 
       {/* Carousel Section */}
-            <div>
-              <Carousel2
-                videoItems={[
-                  {
-                    video: airbnbVideo3,
-                  },
-                  {
-                    video: airbnbVideo2,
-                  },
-                ]}
-              />
-            </div>
+      <div>
+        <Carousel2
+          videoItems={[
+            {
+              video: airbnbVideo3,
+            },
+            {
+              video: airbnbVideo2,
+            },
+          ]}
+        />
+      </div>
 
       {/* Checklist Section */}
       <div className="bg-white rounded-lg p-4 sm:p-6 mb-8 shadow-lg">
         <h2 className="text-xl font-semibold mb-4 text-blue-900">
-          Re-stocking CheckList
+          {translate('restockingChecklist')}
         </h2>
 
         <div>
           {items?.isLoading ? (
-            <div className="text-center py-4">Loading items...</div>
+            <div className="text-center py-4">{translate('loadingItems')}</div>
           ) : items?.isSuccess && items?.data ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
               {/* Bathrooms Column */}
               <div>
                 <h3 className="text-lg font-semibold text-blue-900">
-                  Bathrooms
+                  {translate('bathrooms')}
                 </h3>
                 <div className="flex flex-col text-blue-900 gap-5 mt-2">
                   {groupedItems.Bathrooms?.map((item: any) => (
@@ -366,7 +345,9 @@ function AirbnbAndShortService() {
 
               {/* Kitchen Column */}
               <div>
-                <h3 className="text-lg font-semibold text-blue-900">Kitchen</h3>
+                <h3 className="text-lg font-semibold text-blue-900">
+                  {translate('kitchen')}
+                </h3>
                 <div className="flex flex-col text-blue-900 gap-5 mt-2">
                   {groupedItems.Kitchen?.map((item: any) => (
                     <label
@@ -410,13 +391,12 @@ function AirbnbAndShortService() {
                     </label>
                   ))}
                 </div>
-                
               </div>
 
               {/* Bedrooms Column */}
               <div>
                 <h3 className="text-lg font-semibold text-blue-900">
-                  BedRooms
+                  {translate('bedrooms')}
                 </h3>
                 <div className="flex text-blue-900 flex-col gap-5 mt-2">
                   {groupedItems.BedRooms?.map((item: any) => (
@@ -466,7 +446,7 @@ function AirbnbAndShortService() {
               {/* Miscellaneous Column */}
               <div>
                 <h3 className="text-lg font-semibold text-blue-900">
-                  Miscellaneous
+                  {translate('miscellaneous')}
                 </h3>
                 <div className="flex flex-col text-blue-900 gap-5 mt-2">
                   {groupedItems.Miscellaneous?.map((item: any) => (
@@ -515,12 +495,12 @@ function AirbnbAndShortService() {
             </div>
           ) : (
             <div className="text-center py-4 text-red-500">
-              {items?.errorMessage || "Failed to load items."}
+              {items?.errorMessage || translate('failedLoadItems')}
             </div>
           )}
         </div>
         <div className="mt-9 text-blue-950">
-        <h1>Refill costs will be added up in the final payment</h1>
+          <h1>{translate('refillCostsNotice')}</h1>
         </div>
       </div>
 
@@ -542,7 +522,7 @@ function AirbnbAndShortService() {
       {/* Booking Section */}
       <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-8">
         <h2 className="text-2xl font-bold text-blue-900 mb-6">
-          Select Suitable Date and Time to Complete Booking
+          {translate('selectDateTime')}
         </h2>
 
         <div className="mb-6 shadow-lg p-4 sm:p-6 rounded-lg border border-blue-400">
@@ -550,7 +530,7 @@ function AirbnbAndShortService() {
             {/* Calendar Section */}
             <div className="flex flex-col">
               <label className="block mb-2 text-blue-900 font-semibold">
-                Select Date
+                {translate('selectDate')}
               </label>
               <div className="calendar-container p-4 rounded-lg">
                 <Calendar
@@ -605,7 +585,7 @@ function AirbnbAndShortService() {
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Dropdown
-              label="Select Frequency"
+              label={translate('selectFrequency')}
               value={frequency}
               options={frequencyOptions}
               onChange={setFrequency}
@@ -617,7 +597,7 @@ function AirbnbAndShortService() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
             <label className="block mb-2 text-black">
-              Upload Images or Documents
+              {translate('uploadFiles')}
             </label>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center min-h-[150px] flex items-center justify-center">
               <div>
@@ -628,10 +608,10 @@ function AirbnbAndShortService() {
                 >
                   <div className="flex flex-col items-center space-y-2">
                     <span className="text-sm">
-                      Click to upload or drag and drop
+                      {translate('clickToUpload')}
                     </span>
                     <span className="text-xs text-gray-500">
-                      Maximum file size: 10MB
+                      {translate('maxFileSize')}
                     </span>
                   </div>
                 </label>
@@ -640,10 +620,12 @@ function AirbnbAndShortService() {
           </div>
 
           <div>
-            <label className="block mb-2 text-black">Additional Note</label>
+            <label className="block mb-2 text-black">
+              {translate('additionalNote')}
+            </label>
             <textarea
               className="w-full min-h-[150px] border border-blue-900 rounded p-2 text-gray-700 resize-none"
-              placeholder="Type your note here..."
+              placeholder={translate('typeYourNote')}
             ></textarea>
           </div>
 
@@ -660,7 +642,7 @@ function AirbnbAndShortService() {
                 }}
               />
               <span className="text-sm">
-                By selecting this I accept terms and conditions
+                {translate('acceptTerms')}
               </span>
             </label>
           </div>
@@ -679,7 +661,7 @@ function AirbnbAndShortService() {
           {/* Base Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
             <span className="mb-2 md:mb-0">
-              Base Cost{" "}
+              {translate('baseCost')}{" "}
               <span className="text-gray-400">
                 ({currencySymbol} {priceBreakdown.basePrice.toFixed(2)})
               </span>
@@ -694,9 +676,9 @@ function AirbnbAndShortService() {
           {checkedList.length > 0 && (
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
               <span className="mb-2 md:mb-0">
-                Selected Re-Stocking Items{""}
+                {translate('selectedRestockingItems')}{" "}
                 <span className="text-gray-400">
-                  ({checkedList.length} items)
+                  ({checkedList.length} {translate('items')})
                 </span>
               </span>
               <span>
@@ -710,9 +692,9 @@ function AirbnbAndShortService() {
           {selectedEquipments.length > 0 && (
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-black">
               <span className="mb-2 md:mb-0">
-                Selected Equipment{" "}
+                {translate('selectedEquipment')}{" "}
                 <span className="text-gray-400">
-                  ({selectedEquipments.length} items)
+                  ({selectedEquipments.length} {translate('items')})
                 </span>
               </span>
               <span>
@@ -724,7 +706,7 @@ function AirbnbAndShortService() {
 
           {/* Total Price */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-2 text-black font-semibold">
-            <span>Total</span>
+            <span>{translate('total')}</span>
             <span>
               {currencySymbol}
               {priceBreakdown.totalPrice.toFixed(2)}
@@ -738,7 +720,7 @@ function AirbnbAndShortService() {
           disabled={!acceptTerms1 || !acceptTerms2}
           onClick={handleBookNow}
         >
-          Book Now
+          {translate('bookNow')}
         </button>
       </div>
 
