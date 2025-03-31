@@ -955,29 +955,32 @@ export const enTranslations = {
     validationError: 'Validation Error',
     ok: 'OK',
 
-    // Validation messages
-    chemicalRequired: 'Chemical is required. Please select an option for Chemical.',
-    equipmentRequired: 'Equipment is required. Please select an option for Equipment.',
-    firstNameRequired: 'First Name is required. Please enter your first name.',
-    lastNameRequired: 'Last Name is required. Please enter your last name.',
-    countryRequired: 'Country is required. Please select your country.',
-    addressRequired: 'Address is required. Please enter your address.',
-    cityRequired: 'City is required. Please enter your city.',
-    stateRequired: 'State is required. Please enter your state.',
-    zipRequired: 'ZIP Code is required. Please enter your ZIP code.',
-    passwordRequired: 'Password is required. Please enter your password.',
-    passwordLength: 'Password must be at least 8 characters long.',
-    confirmPasswordRequired: 'Confirm Password is required. Please confirm your password.',
-    frequencyRequired: 'Frequency is required. Please select a frequency.',
-    propertyTypeRequired: 'Property Type is required. Please select a property type.',
-    contactTypeRequired: 'Contact Type is required. Please select a contact type.',
-    timeZoneRequired: 'Time Zone is required. Please select a time zone.',
-    dateRequired: 'Date is required. Please select a date.',
-    timeRequired: 'Time is required. Please select a time.',
-    termsRequired: 'You must accept the terms and conditions to proceed.',
-    networkError: 'An error occurred while submitting the request. Please check your connection and try again.',
-     
-
+    // Validation messages quotation pages
+    QchemicalRequired: 'Chemical is required. Please select an option for Chemical.',
+    QequipmentRequired: 'Equipment is required. Please select an option for Equipment.',
+    QfirstNameRequired: 'First Name is required. Please enter your first name.',
+    QlastNameRequired: 'Last Name is required. Please enter your last name.',
+    QcountryRequired: 'Country is required. Please select your country.',
+    QaddressRequired: 'Address is required. Please enter your address.',
+    QcityRequired: 'City is required. Please enter your city.',
+    QstateRequired: 'State is required. Please enter your state.',
+    QzipRequired: 'ZIP Code is required. Please enter your ZIP code.',
+    QpasswordRequired: 'Password is required. Please enter your password.',
+    QpasswordLength: 'Password must be at least 8 characters long.',
+    QconfirmPasswordRequired: 'Confirm Password is required. Please confirm your password.',
+    QfrequencyRequired: 'Frequency is required. Please select a frequency.',
+    QpropertyTypeRequired: 'Property Type is required. Please select a property type.',
+    QcontactTypeRequired: 'Contact Type is required. Please select a contact type.',
+    QtimeZoneRequired: 'Time Zone is required. Please select a time zone.',
+    QdateRequired: 'Date is required. Please select a date.',
+    QtimeRequired: 'Time is required. Please select a time.',
+    QtermsRequired: 'You must accept the terms and conditions to proceed.',
+    QnetworkError: 'An error occurred while submitting the request. Please check your connection and try again.',
+    QemailRequired:'Email is required. Please enter your email address.',
+    QinvalidEmail:'Invalid email address. Please enter a valid email.',
+    QnumCleaneRsRequired:'NUmber of cleaners Feild  is required.', 
+    QlanguageRequired:'Language is required. Please select a language.',
+    
     // Personal Information Form translations
     personalInformation: 'Personal Information',
     prefix: 'Prefix',
@@ -1673,5 +1676,6 @@ export const enTranslations = {
     mrs: 'Mrs.', 
     dr: 'Dr.',
 
+    //
 
   };
