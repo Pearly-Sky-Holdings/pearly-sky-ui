@@ -16,6 +16,7 @@ type Location = {
   Company_number?: string;
   siren?: string;
   register_number?: string;
+  companyName?: string;
   
 
 };
@@ -97,6 +98,12 @@ function LocationCard({
             <div className="flex items-center space-x-2 text-gray-500">
               <Mail size={24} />
               <span>{location.email5}</span>
+            </div>
+          )}
+          {location. companyName && (
+            <div className="flex items-center space-x-2 text-gray-500">
+              <Building2 size={24} />
+              <span>{location.companyName}</span>
             </div>
           )}
           {location.address && (

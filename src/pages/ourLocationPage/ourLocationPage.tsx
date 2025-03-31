@@ -43,6 +43,7 @@ type Location = {
   Company_number?: string;
   siren?: string;
   register_number?: string;
+  companyName?: string;
 };
 
 function OurLocations() {
@@ -60,6 +61,7 @@ function OurLocations() {
       email5: "Helpdesk@pearlyskyplc.com",
       address: "15 Rue Des Halles, 75001 Paris.",
       siren: "930 651 625",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: [
         "Paris",
         "Nice",
@@ -96,6 +98,7 @@ function OurLocations() {
       email5: "Helpdesk@pearlyskyplc.com",
       address: "3rd Floor, 45 Albemarle Street, London, England , W1s 4JL United Kingdom",
       Company_number: "15307255",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: [
         "London",
         "Yake",
@@ -141,6 +144,7 @@ function OurLocations() {
       email5: "Helpdesk@pearlyskyplc.com",
       address: "No - 188/2 Kandy Road , Pahala Imbulgoda, Imbulgoda, Sri Lanka",
       register_number: "PV 00295748",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Colombo", "Kandy", "Negombo", "Nuwara Eliya"],
     },
     {
@@ -153,6 +157,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: [
         "Edinburgh",
         "Aberdeen",
@@ -173,6 +178,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Berlin", "Hamburg", "Munich", "Cologne", "Frankfurt"],
     },
     {
@@ -185,6 +191,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Bruseels"],
     },
     {
@@ -197,6 +204,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide"],
     },
     {
@@ -209,6 +217,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Dubai Abu", "Dhabi", "Sharjah", "Ras Alkhaimah", "Jebel Ali"],
     },
     {
@@ -221,6 +230,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Toronto", "Montreal", "Ottawa", "Vancouver", "Jebel Ali"],
     },
     {
@@ -233,6 +243,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Helsinki", "Oulu", "Turku", "Tampere"],
     },
     {
@@ -245,6 +256,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Riyadh Jeddah"],
     },
     {
@@ -257,6 +269,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Rome", "Venice", "Florence", "Milan", "Naples"],
     },
     {
@@ -269,6 +282,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Lisbon"],
     },
     {
@@ -281,6 +295,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["New York", "Los Angeles", "Philadelphia", "Houston"],
     },
     {
@@ -293,6 +308,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Dublin", "Belfast", "Cork", "Limerick", "Galway"],
     },
     {
@@ -305,6 +321,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Vienna", "Villach", "Innsbruck", "Graz", "Bregenz"],
     },
     {
@@ -317,6 +334,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Amsterdam", "Utrecht", "Rotterdam", "Groningen", "The Hague"],
     },
     {
@@ -329,6 +347,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Zurich", "Geneva Basel", "Bern Lausanne"],
     },
     {
@@ -341,6 +360,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Al Wakrah", "Doha", "Al Rayyan", "Dukhan"],
     },
     {
@@ -353,6 +373,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Helsinki", "Oulu", "Turku", "Tampere"],
     },
     {
@@ -365,6 +386,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Auckland", "Hamilton", "Wellington", "Christchurch"],
     },
     {
@@ -377,6 +399,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Warsaw"],
     },
     {
@@ -389,6 +412,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Luxembourg City"],
     },
     {
@@ -401,6 +425,7 @@ function OurLocations() {
       email4: "Sales@pearlyskyplc.com",
       email5: "Helpdesk@pearlyskyplc.com",
       address: "Update soon",
+      companyName: "pearly Sky company private Ltd",
       serviceCities: ["Barcelona", "Madrid", "Palma", "Granada"],
     },
   ];

@@ -158,13 +158,13 @@ const handleBookNow = async () => {
 
   // Validate Chemical
   if (!chemical.customer && !chemical.company) {
-    alert("Chemical is required. Please select an option for Chemical.");
+    alert(translate('chemicalRequired'));
     return; 
   }
 
   // Validate Equipment
   if (!equipment.customer && !equipment.company) {
-    alert("Equipment is required. Please select an option for Equipment.");
+    alert(translate('equipmentRequired'));
     return; 
   }
 
