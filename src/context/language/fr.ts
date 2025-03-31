@@ -1306,9 +1306,9 @@ export const frTranslations = {
   countryUS: "États-Unis",
 
   // Libellés de Formulaire
-  locationFromLabel: "Lieu de Départ",
+  locationFromLabel: "Adresse de départ",
   locationFromPlaceholder: "Saisissez le lieu de départ",
-  locationToLabel: "Lieu de Destination",
+  locationToLabel: "Adresse de Destination",
   locationToPlaceholder: "Saisissez la destination",
   propertySizeLabel: "Superficie Approximative",
   propertyTypeLabel: "Type de propriété ou entreprise",
