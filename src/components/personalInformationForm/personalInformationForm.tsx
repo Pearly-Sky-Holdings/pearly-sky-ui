@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDebounce } from "use-debounce";
-import PhoneInput, { getCountryCallingCode, Country } from "react-phone-number-input";
+import PhoneInput, { getCountryCallingCode, Country, } from "react-phone-number-input";
+import  { isValidPhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
+import { parsePhoneNumber } from 'libphonenumber-js';
 import {
   TextField,
   MenuItem,
@@ -167,6 +169,54 @@ const PersonalInformationForm = ({
     }
   }, [formValues.country, setValue]);
 
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [currentCountry, setCurrentCountry] = useState<Country | undefined>(undefined);
+
+
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
+
+  useEffect(() => {
+    if (formValues.country) {
+      const selectedCountry = countries.find((c) => c.name === formValues.country);
+      if (selectedCountry) {
+        const countryCode = getCountryCallingCode(selectedCountry.code);
+        if (!formValues.phone?.startsWith(`+${countryCode}`)) {
+          setValue("phone", `+${countryCode}`);
+        }
+      }
+    }
+  }, [formValues.country, setValue, formValues.phone]);
+
+  useEffect(() => {
+    if (formValues.phone) {
+      const countryCode = getCountryCodeFromPhoneNumber(formValues.phone);
+      if (countryCode) {
+        const country = countries.find(c => c.code === countryCode);
+        if (country && formValues.country !== country.name) {
+          setValue('country', country.name);
+        }
+      }
+    }
+  }, [formValues.phone, setValue]);
+
+  const getCountryCodeFromPhoneNumber = (phoneNumber: string): Country | undefined => {
+    try {
+      const phoneData = parsePhoneNumber(phoneNumber);
+      return phoneData?.country as Country;
+    } catch {
+      return undefined;
+    }
+  };
+
+  const getCountryName = (countryCode: Country): string => {
+    const country = countries.find(c => c.code === countryCode);
+    return country ? country.name : '';
+  };
+
+
   const renderLabel = (label: string, required = false) => (
     <Typography variant="subtitle2" gutterBottom>
       {translate(label)} {required && <span style={{ color: "red" }}>*</span>}
@@ -299,19 +349,73 @@ const PersonalInformationForm = ({
             <Controller
               name="phone"
               control={control}
-              rules={{ required: translate("phoneRequired") }}
-              render={({ field, fieldState: { error } }) => (
-                <PhoneInput
-                  {...field}
-                  international
-                  defaultCountry="US"
-                  placeholder={translate("phonePlaceholder")}
-                  style={{
-                    ...phoneInputStyles,
-                    borderColor: error ? "red" : "blue",
-                  }}
-                />
-              )}
+              rules={{
+                 rules={{ required: translate("phoneRequired") }}
+                validate: (value) => {
+                  if (!value) return "Phone number is required";
+                  
+                  if (!value.startsWith("+")) {
+                    return "Please select a country code";
+                  }
+                  
+                  if (!isValidPhoneNumber(value)) {
+                    const country = getCountryCodeFromPhoneNumber(value);
+                    
+                    if (country) {
+                      return `Please enter a valid ${getCountryName(country)} phone number`;
+                    }
+                    return "Please enter a valid phone number";
+                  }
+                  
+                  return true;
+                },
+              }}
+              render={({ field, fieldState: { error } }) => {
+                const handlePhoneChange = (value: string | undefined) => {
+                  field.onChange(value || '');
+                  if (value) {
+                    try {
+                      const phoneNumber = parsePhoneNumber(value);
+                      setCurrentCountry(phoneNumber?.country);
+                    } catch {
+                      setCurrentCountry(undefined);
+                    }
+                  } else {
+                    setCurrentCountry(undefined);
+                  }
+                };
+
+                return (
+                  <>
+                    <PhoneInput
+                      {...field}
+                      international
+                      defaultCountry="US"
+                      placeholder={translate("phonePlaceholder")}
+                      style={{
+                        ...phoneInputStyles,
+                        borderColor: error ? 'red' : 'blue',
+                      }}
+                      onChange={handlePhoneChange}
+                      country={currentCountry}
+                      onCountryChange={(newCountry: Country) => {
+                        setCurrentCountry(newCountry);
+                        if (newCountry && field.value) {
+                          const nationalNumber = field.value.replace(/^\+\d+/, '');
+                          const countryCode = getCountryCallingCode(newCountry);
+                          field.onChange(`+${countryCode}${nationalNumber}`);
+                        }
+                      }}
+                    />
+                    {error && (
+                      <Typography variant="caption" color="error" sx={{ mt: 1, display: 'block' }}>
+                        {error.message}
+                      </Typography>
+                    )}
+                  </>
+                );
+              }}
+
             />
           </FormControl>
         </Grid>
@@ -325,8 +429,9 @@ const PersonalInformationForm = ({
             rules={{
               required: translate("emailRequired"),
               pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|net|org|edu|gov|co\.uk|in|au|ca|io|me|us)$/i,
                 message: translate("invalidEmail"),
+
               },
             }}
             render={({ field, fieldState: { error } }) => (

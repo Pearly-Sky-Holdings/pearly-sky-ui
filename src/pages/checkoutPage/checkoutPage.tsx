@@ -10,6 +10,16 @@ import {
   Box,
   IconButton,
 } from "@mui/material";
+import { parsePhoneNumber } from 'libphonenumber-js';
+
+import {
+  
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from "@mui/material";
 import store from "../../store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,6 +47,43 @@ const CheckoutPage = () => {
   );
 
   const [saveLoader, setSaveLoader] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState("");
+  
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  // validatePhoneNumber 
+  const validatePhoneNumber = (phone: string): { isValid: boolean; message?: string } => {
+    if (!phone) {
+      return { isValid: false, message: "Phone number is required" };
+    }
+  
+    try {
+      const phoneNumber = parsePhoneNumber(phone);
+      
+      if (!phoneNumber) {
+        return { isValid: false, message: "Invalid phone number format" };
+      }
+  
+      if (!phoneNumber.isValid()) {
+        const countryName = formData.country || "selected country";
+        return { 
+          isValid: false, 
+          message: `Please enter a valid ${countryName} phone number`
+        };
+      }
+  
+      return { isValid: true };
+    } catch (error) {
+      return { 
+        isValid: false, 
+        message: "Invalid phone number. Please use international format (+country code)"
+      };
+    }
+  };
+
   const location = useLocation();
   const { data } = location.state || {};
 
@@ -53,9 +100,75 @@ const CheckoutPage = () => {
     contact: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const _handlePlaceOrder = async () => {
+  
+  // Validate First Name
+  if (!formData.first_name) {
+    setDialogMessage("First Name is required. Please enter your first name.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Last Name
+  if (!formData.last_name) {
+    setDialogMessage("Last Name is required. Please enter your last name.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Country
+  if (!formData.country) {
+    setDialogMessage("Country is required. Please select your country.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Password
+  if (!formData.password) {
+    setDialogMessage("Password is required. Please enter your password.");
+    setOpenDialog(true);
+    return;
+  } else if (formData.password.length < 8) {
+    setDialogMessage("Password must be at least 8 characters long.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Confirm Password
+  if (!formData.confirmPassword) {
+    setDialogMessage("Confirm Password is required. Please confirm your password.");
+    setOpenDialog(true);
+    return;
+  } else if (formData.password !== formData.confirmPassword) {
+    setDialogMessage("Passwords do not match. Please check your password and confirm password.");
+    setOpenDialog(true);
+    return;
+  }
+
+
+
+    // Validate Email
+  if (!formData.email) {
+    setDialogMessage("Email is required. Please enter your email address.");
+    setOpenDialog(true);
+    return;
+  } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|net|org|edu|gov|co\.uk|in|au|ca|io|me|us)$/i.test(formData.email)) {
+    setDialogMessage("Invalid email address. Please enter a valid email.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // phone validation 
+  const phoneValidation = validatePhoneNumber(formData.contact);
+  if (!phoneValidation.isValid) {
+    setDialogMessage(phoneValidation.message || "Invalid phone number");
+    setOpenDialog(true);
+    return;
+  }
+
     if (
       data.serviceName == "Regular Basic" ||
       data.serviceName == "Deep Cleaning" ||
@@ -295,6 +408,18 @@ const CheckoutPage = () => {
           </IconButton>
         </Box>
       </Modal>
+       {/* Dialog for displaying validation messages */}
+            <Dialog open={openDialog} onClose={handleCloseDialog}>
+              <DialogTitle sx={{ background: "#800000", color: "white" ,textAlign:"center"}}>Validation Error</DialogTitle>
+              <DialogContent >
+                <DialogContentText sx={{mt:3 ,textAlign:"center",color:"#800000"}}>{dialogMessage}</DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseDialog} color="primary" sx={{background: "#800000", color: "white" ,textAlign:"center"}}>
+                  OK
+                </Button>
+              </DialogActions>
+            </Dialog>
 
       <Snackbar
         open={showSuccess}

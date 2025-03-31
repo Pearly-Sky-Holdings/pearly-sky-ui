@@ -17,6 +17,9 @@ import PersonalInformationForm from "../../components/personalInformationForm/pe
 import { SanitizationService } from "../../config/images";
 import EstimateList from "../../components/sanitizationPage/estimateList";
 import LoadingOverlay from "../../components/welcomeAlert/LoadingOverlay";
+import { parsePhoneNumber } from 'libphonenumber-js';
+import instance from "../../services/AxiosOrder"; 
+
 import {
   Button,
   Dialog,
@@ -68,26 +71,55 @@ function SanitizationAndDisinfection() {
     dispatch(getServices("10"));
   }, [dispatch]);
   
-  const [equipment, setEquipment] = useState({ customer: false, company: false });
-  const [chemical, setChemical] = useState({ customer: false, company: false });
 
-  type Section = "equipment" | "chemical";
-  type Option = "customer" | "company";
+const [equipment, setEquipment] = useState({ customer: false, company: false });
+const [chemical, setChemical] = useState({ customer: false, company: false });
 
-  const handleCheckboxChange = (section: Section, option: Option) => {
-    if (section === "equipment") {
-      setEquipment({
-        customer: option === "customer",
-        company: option === "company",
-      });
-    } else if (section === "chemical") {
-      setChemical({
-        customer: option === "customer",
-        company: option === "company",
-      });
+type Section = "equipment" | "chemical";
+type Option = "customer" | "company";
+
+const handleCheckboxChange = (section: Section, option: Option) => {
+  if (section === "equipment") {
+    setEquipment({
+      customer: option === "customer",
+      company: option === "company",
+    });
+  } else if (section === "chemical") {
+    setChemical({
+      customer: option === "customer",
+      company: option === "company",
+    });
+  }
+};
+// validatePhoneNumber 
+const validatePhoneNumber = (phone: string): { isValid: boolean; message?: string } => {
+  if (!phone) {
+    return { isValid: false, message: "Phone number is required" };
+  }
+
+  try {
+    const phoneNumber = parsePhoneNumber(phone);
+    
+    if (!phoneNumber) {
+      return { isValid: false, message: "Invalid phone number format" };
     }
-  };
 
+    if (!phoneNumber.isValid()) {
+      const countryName = formData.country || "selected country";
+      return { 
+        isValid: false, 
+        message: `Please enter a valid ${countryName} phone number`
+      };
+    }
+
+    return { isValid: true };
+  } catch (error) {
+    return { 
+      isValid: false, 
+      message: "Invalid phone number. Please use international format (+country code)"
+    };
+  }
+};
   interface FormData {
     firstName: string;
     lastName: string;
@@ -169,6 +201,24 @@ function SanitizationAndDisinfection() {
       return;
     }
 
+  // Replace your phone validation in handleBookNow with:
+  const phoneValidation = validatePhoneNumber(formData.phone);
+  if (!phoneValidation.isValid) {
+    setDialogMessage(phoneValidation.message || "Invalid phone number");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Email
+  if (!formData.email) {
+    setDialogMessage("Email is required. Please enter your email address.");
+    setOpenDialog(true);
+    return;
+  } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|net|org|edu|gov|co\.uk|in|au|ca|io|me|us)$/i.test(formData.email)) {
+    setDialogMessage("Invalid email address. Please enter a valid email.");
+    setOpenDialog(true);
+    return;
+  }
     if (!formData.zip) {
       setDialogMessage(translate('zipRequired'));
       setOpenDialog(true);
@@ -307,23 +357,26 @@ function SanitizationAndDisinfection() {
   
     try {
       setIsLoading(true);
+
+      // Using Axios instance
+      const response = await instance.post("saveServiceDetails", serviceDetails);
       
-      const response = await fetch("https://back.pearlyskyplc.com/api/saveServiceDetails", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(serviceDetails),
-      });
-  
-      if (response.ok) {
-        await response.json();
-        navigate("/quotation", { state: { data } });
-      } else {
-        alert(translate('submitError'));
-      }
-    } catch (error) {
-      alert(translate('networkError'));
+      console.log("API Response:", response.data);
+    
+      // Navigate to the quotation page
+      navigate("/quotation", { state: { data } });
+      
+    } catch (error: any) {
+      // Handle errors
+      console.error("API Error:", error.response?.data || error.message);
+      
+      setDialogMessage(
+        error.response?.data?.message || 
+        alert(translate('submitFailedAlert'));
+      );
+      setOpenDialog(true);
+      
+
     } finally {
       setIsLoading(false);
     }

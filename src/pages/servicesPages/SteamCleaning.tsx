@@ -17,7 +17,18 @@ import PersonalInformationForm from "../../components/personalInformationForm/pe
 import { steamService } from "../../config/images";
 import SteamCleaningOptionType from "../../components/SteamCleaning/steamCleaningOptionType";
 import LoadingOverlay from "../../components/welcomeAlert/LoadingOverlay";
+import { parsePhoneNumber } from 'libphonenumber-js';
+import instance from "../../services/AxiosOrder"; 
+import {
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from "@mui/material";
 import { useLanguage } from "../../context/LanguageContext";
+
 
 function SteamCleaning() {
   const { translate } = useLanguage();
@@ -36,11 +47,25 @@ function SteamCleaning() {
   const [selectedItems, setSelectedItems] = useState<string[]>([]); 
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSelectionChange = (selectedItems: string[]) => {
+
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState("");
+     
+  
+// Memoize the callback function to prevent unnecessary re-renders
+const handleSelectionChange = (selectedItems: string[]) => {
     console.log('Selected Items:', selectedItems);
     setSelectedItems(selectedItems);
   };
  
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+ 
+
+  // Memoize the form change handler
+
   const handleFormChange = useCallback((data: any) => {
     setFormData(data);
   }, []);
@@ -59,19 +84,50 @@ function SteamCleaning() {
   type Section = "equipment" | "chemical";
   type Option = "customer" | "company";
 
-  const handleCheckboxChange = (section: Section, option: Option) => {
-    if (section === "equipment") {
-      setEquipment({
-        customer: option === "customer",
-        company: option === "company",
-      });
-    } else if (section === "chemical") {
-      setChemical({
-        customer: option === "customer",
-        company: option === "company",
-      });
+
+const handleCheckboxChange = (section: Section, option: Option) => {
+  if (section === "equipment") {
+    setEquipment({
+      customer: option === "customer",
+      company: option === "company",
+    });
+  } else if (section === "chemical") {
+    setChemical({
+      customer: option === "customer",
+      company: option === "company",
+    });
+  }
+};
+// Replace your current validatePhoneNumber function with this:
+const validatePhoneNumber = (phone: string): { isValid: boolean; message?: string } => {
+  if (!phone) {
+    return { isValid: false, message: "Phone number is required" };
+  }
+
+  try {
+    const phoneNumber = parsePhoneNumber(phone);
+    
+    if (!phoneNumber) {
+      return { isValid: false, message: "Invalid phone number format" };
     }
-  };
+
+    if (!phoneNumber.isValid()) {
+      const countryName = formData.country || "selected country";
+      return { 
+        isValid: false, 
+        message: `Please enter a valid ${countryName} phone number`
+      };
+    }
+
+    return { isValid: true };
+  } catch (error) {
+    return { 
+      isValid: false, 
+      message: "Invalid phone number. Please use international format (+country code)"
+    };
+  }
+};
+
 
   interface FormData {
     firstName: string;
@@ -85,6 +141,8 @@ function SteamCleaning() {
     zip: string;
     phone: string;
     email: string;
+    password: string;
+    confirmPassword: string;
   }
 
   const [formData, setFormData] = useState<FormData>({
@@ -99,6 +157,8 @@ function SteamCleaning() {
     zip: "",
     phone: "",
     email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const handleBookNow = async () => {
@@ -112,19 +172,165 @@ function SteamCleaning() {
       return; 
     }
 
-    if (
-      !frequency ||
-      !propertyType ||
-      !contactType ||
-      !language ||
-      !timeZone ||
-      !selectedDate ||
-      !selectedTime ||
-      !acceptTerms2
-    ) {
-      alert(translate('fillAllFieldsAlert'));
-      return;
-    }
+
+   // Validate Equipment
+   if (!equipment.customer && !equipment.company) {
+    alert("Equipment is required. Please select an option for Equipment.");
+    return; 
+  }
+    // Validate First Name
+  if (!formData.firstName) {
+    setDialogMessage("First Name is required. Please enter your first name.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Last Name
+  if (!formData.lastName) {
+    setDialogMessage("Last Name is required. Please enter your last name.");
+    setOpenDialog(true);
+    return;
+  }
+
+  
+  // Validate Country
+  if (!formData.country) {
+    setDialogMessage("Country is required. Please select your country.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Address
+  if (!formData.address) {
+    setDialogMessage("Address is required. Please enter your address.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate City
+  if (!formData.city) {
+    setDialogMessage("City is required. Please enter your city.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate State
+  if (!formData.state) {
+    setDialogMessage("State is required. Please enter your state.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate ZIP Code
+  if (!formData.zip) {
+    setDialogMessage("ZIP Code is required. Please enter your ZIP code.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Replace your phone validation in handleBookNow with:
+  const phoneValidation = validatePhoneNumber(formData.phone);
+  if (!phoneValidation.isValid) {
+    setDialogMessage(phoneValidation.message || "Invalid phone number");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Email
+  if (!formData.email) {
+    setDialogMessage("Email is required. Please enter your email address.");
+    setOpenDialog(true);
+    return;
+  } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|net|org|edu|gov|co\.uk|in|au|ca|io|me|us)$/i.test(formData.email)) {
+    setDialogMessage("Invalid email address. Please enter a valid email.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Password
+  if (!formData.password) {
+    setDialogMessage("Password is required. Please enter your password.");
+    setOpenDialog(true);
+    return;
+  } else if (formData.password.length < 8) {
+    setDialogMessage("Password must be at least 8 characters long.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Confirm Password
+  if (!formData.confirmPassword) {
+    setDialogMessage("Confirm Password is required. Please confirm your password.");
+    setOpenDialog(true);
+    return;
+  } else if (formData.password !== formData.confirmPassword) {
+    setDialogMessage("Passwords do not match. Please check your password and confirm password.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Password Match
+  if (formData.password !== formData.confirmPassword) {
+    setDialogMessage("Passwords do not match. Please check your password and confirm password.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Frequency
+  if (!frequency) {
+    setDialogMessage("Frequency is required. Please select a frequency.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Property Type
+  if (!propertyType) {
+    setDialogMessage("Property Type is required. Please select a property type.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Contact Type
+  if (!contactType) {
+    setDialogMessage("Contact Type is required. Please select a contact type.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Language
+  if (!language) {
+    setDialogMessage("Language is required. Please select a language.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Time Zone
+  if (!timeZone) {
+    setDialogMessage("Time Zone is required. Please select a time zone.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Selected Date
+  if (!selectedDate) {
+    setDialogMessage("Date is required. Please select a date.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Selected Time
+  if (!selectedTime) {
+    setDialogMessage("Time is required. Please select a time.");
+    setOpenDialog(true);
+    return;
+  }
+
+  // Validate Terms and Conditions
+  if (!acceptTerms2) {
+    setDialogMessage("You must accept the terms and conditions to proceed.");
+    setOpenDialog(true);
+    return;
+  }
   
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
   
@@ -140,7 +346,8 @@ function SteamCleaning() {
       postal_code: formData.zip,
       contact: formData.phone,
       email: formData.email,
-      password: "1234", 
+      password: formData.password, 
+
     };
   
     const serviceDetails = {
@@ -174,24 +381,24 @@ function SteamCleaning() {
   
     try {
       setIsLoading(true);
-      const response = await fetch("https://back.pearlyskyplc.com/api/saveServiceDetails", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(serviceDetails),
-      });
-  
-      if (response.ok) {
-        await response.json();
-        navigate("/quotation", { state: { data } });
-      } else {
-        console.error("API Error:", response.statusText);
+      
+      // Using Axios instance
+      const response = await instance.post("saveServiceDetails", serviceDetails);
+      
+      console.log("API Response:", response.data);
+    
+      // Navigate to the quotation page
+      navigate("/quotation", { state: { data } });
+      
+    } catch (error: any) {
+      // Handle errors
+      console.error("API Error:", error.response?.data || error.message);
+      
+      setDialogMessage(
+        error.response?.data?.message || 
         alert(translate('submitFailedAlert'));
-      }
-    } catch (error) {
-      console.error("Network Error:", error);
-      alert(translate('networkErrorAlert'));
+      );
+      setOpenDialog(true);
     } finally {
       setIsLoading(false);
     }
@@ -418,6 +625,19 @@ function SteamCleaning() {
       <div>
         <PaymentSupportSection />
       </div>
+
+      {/* Dialog for displaying validation messages */}
+            <Dialog open={openDialog} onClose={handleCloseDialog}>
+              <DialogTitle sx={{ background: "#800000", color: "white" ,textAlign:"center"}}>Validation Error</DialogTitle>
+              <DialogContent >
+                <DialogContentText sx={{mt:3 ,textAlign:"center",color:"#800000"}}>{dialogMessage}</DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseDialog} color="primary" sx={{background: "#800000", color: "white" ,textAlign:"center"}}>
+                  OK
+                </Button>
+              </DialogActions>
+            </Dialog>
     </div>
   );
 }
