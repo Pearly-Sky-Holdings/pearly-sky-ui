@@ -1669,7 +1669,6 @@ export const frTranslations = {
 
   // Common UI elements
   loading: "Chargement...",
-  viewDetails: "Voir les détails",
   submit: "Soumettre",
   next: "Suivant",
   selectOption: "Sélectionner une option",

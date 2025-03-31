@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Sidebar from '../components/customerDashboardCarts/Sidebar';
-import { Home, Settings, HelpCircle, LogOut } from 'lucide-react';
+import { Home, LogOut } from 'lucide-react';
 import { NavItem } from '../type';
 import { useLanguage } from '../context/LanguageContext';
 
