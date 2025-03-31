@@ -151,98 +151,105 @@ const [formData, setFormData] = useState<FormData>({
 const handleBookNow = async () => { 
   // Validate Chemical
   if (!chemical.customer && !chemical.company) {
-    alert(translate('chemicalRequired'));
-    return; 
+    setDialogMessage(translate('chemicalRequired'));
+    setOpenDialog(true);
+    return;
   }
 
   // Validate Equipment
   if (!equipment.customer && !equipment.company) {
-    alert(translate('equipmentRequired'));
+    setDialogMessage(translate('QequipmentRequired'));
+    setOpenDialog(true);
     return; 
   }
    // Validate Num cleaners
    if (!numCleaners) {
-    setDialogMessage("NUmber of cleaners Feild  is required.");
+    setDialogMessage(translate('QnumCleaneRsRequired'));
     setOpenDialog(true);
     return;
   }
 
   // Validate First Name
   if (!formData.firstName) {
-    setDialogMessage("First Name is required. Please enter your first name.");
-    setOpenDialog(true);
-    return;
+    setDialogMessage(translate('QfirstNameRequired'));
+      setOpenDialog(true);
+      return;
   }
 
   // Validate Last Name
   if (!formData.lastName) {
-    setDialogMessage("Last Name is required. Please enter your last name.");
-    setOpenDialog(true);
-    return;
+    setDialogMessage(translate('QlastNameRequired'));
+      setOpenDialog(true);
+      return;
   }
 
   
   // Validate Country
   if (!formData.country) {
-    setDialogMessage("Country is required. Please select your country.");
-    setOpenDialog(true);
-    return;
+    setDialogMessage(translate('QcountryRequired'));
+      setOpenDialog(true);
+      return;
   }
 
   // Validate Address
   if (!formData.address) {
-    setDialogMessage("Address is required. Please enter your address.");
-    setOpenDialog(true);
-    return;
+    setDialogMessage(translate('QaddressRequired'));
+      setOpenDialog(true);
+      return;
   }
 
   // Validate City
   if (!formData.city) {
-    setDialogMessage("City is required. Please enter your city.");
-    setOpenDialog(true);
-    return;
+    setDialogMessage(translate('QcityRequired'));
+      setOpenDialog(true);
+      return;
   }
 
   // Validate State
   if (!formData.state) {
-    setDialogMessage("State is required. Please enter your state.");
-    setOpenDialog(true);
-    return;
+    setDialogMessage(translate('QstateRequired'));
+      setOpenDialog(true);
+      return;
   }
 
   // Validate ZIP Code
   if (!formData.zip) {
-    setDialogMessage("ZIP Code is required. Please enter your ZIP code.");
-    setOpenDialog(true);
-    return;
+    setDialogMessage(translate('QzipRequired'));
+      setOpenDialog(true);
+      return;
   }
 
-  // Replace your phone validation in handleBookNow with:
+  // phone validation
   const phoneValidation = validatePhoneNumber(formData.phone);
   if (!phoneValidation.isValid) {
     setDialogMessage(phoneValidation.message || "Invalid phone number");
     setOpenDialog(true);
     return;
   }
+  if (!formData.phone) {
+    setDialogMessage(translate('QphoneRequired'));
+    setOpenDialog(true);
+    return;
+  }
 
   // Validate Email
   if (!formData.email) {
-    setDialogMessage("Email is required. Please enter your email address.");
+    setDialogMessage(translate('QemailRequired'));
     setOpenDialog(true);
     return;
   } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|net|org|edu|gov|co\.uk|in|au|ca|io|me|us)$/i.test(formData.email)) {
-    setDialogMessage("Invalid email address. Please enter a valid email.");
+    setDialogMessage(translate('QinvalidEmail'));
     setOpenDialog(true);
     return;
   }
 
   // Validate Password
   if (!formData.password) {
-    setDialogMessage("Password is required. Please enter your password.");
+    setDialogMessage(translate('QpasswordRequired'));
     setOpenDialog(true);
     return;
   } else if (formData.password.length < 8) {
-    setDialogMessage("Password must be at least 8 characters long.");
+    setDialogMessage(translate('QpasswordLength'));
     setOpenDialog(true);
     return;
   }

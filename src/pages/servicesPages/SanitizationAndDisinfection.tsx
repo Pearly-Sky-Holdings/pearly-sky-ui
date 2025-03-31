@@ -154,54 +154,53 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
 
   const handleBookNow = async () => {
     if (!chemical.customer && !chemical.company) {
-      setDialogMessage(translate('chemicalRequired'));
+      setDialogMessage(translate('QchemicalRequired'));
       setOpenDialog(true);
       return;
     }
 
     if (!equipment.customer && !equipment.company) {
-      setDialogMessage(translate('equipmentRequired'));
+      setDialogMessage(translate('QequipmentRequired'));
       setOpenDialog(true);
       return;
     }
 
     if (!formData.firstName) {
-      setDialogMessage(translate('firstNameRequired'));
+      setDialogMessage(translate('QfirstNameRequired'));
       setOpenDialog(true);
       return;
     }
 
     if (!formData.lastName) {
-      setDialogMessage(translate('lastNameRequired'));
+      setDialogMessage(translate('QlastNameRequired'));
       setOpenDialog(true);
       return;
     }
   
     if (!formData.country) {
-      setDialogMessage(translate('countryRequired'));
+      setDialogMessage(translate('QcountryRequired'));
       setOpenDialog(true);
       return;
     }
 
     if (!formData.address) {
-      setDialogMessage(translate('addressRequired'));
+      setDialogMessage(translate('QaddressRequired'));
       setOpenDialog(true);
       return;
     }
 
     if (!formData.city) {
-      setDialogMessage(translate('cityRequired'));
+      setDialogMessage(translate('QcityRequired'));
       setOpenDialog(true);
       return;
     }
 
     if (!formData.state) {
-      setDialogMessage(translate('stateRequired'));
+      setDialogMessage(translate('QstateRequired'));
       setOpenDialog(true);
       return;
     }
 
-  // Replace your phone validation in handleBookNow with:
   const phoneValidation = validatePhoneNumber(formData.phone);
   if (!phoneValidation.isValid) {
     setDialogMessage(phoneValidation.message || "Invalid phone number");
@@ -211,100 +210,100 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
 
   // Validate Email
   if (!formData.email) {
-    setDialogMessage("Email is required. Please enter your email address.");
+    setDialogMessage(translate('QemailRequired'));
     setOpenDialog(true);
     return;
   } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|net|org|edu|gov|co\.uk|in|au|ca|io|me|us)$/i.test(formData.email)) {
-    setDialogMessage("Invalid email address. Please enter a valid email.");
+    setDialogMessage(translate('QinvalidEmail'));
     setOpenDialog(true);
     return;
   }
     if (!formData.zip) {
-      setDialogMessage(translate('zipRequired'));
+      setDialogMessage(translate('QzipRequired'));
       setOpenDialog(true);
       return;
     }
 
     if (!formData.phone) {
-      setDialogMessage(translate('phoneRequired'));
+      setDialogMessage(translate('QphoneRequired'));
       setOpenDialog(true);
       return;
     }
 
     if (!formData.email) {
-      setDialogMessage(translate('emailRequired'));
+      setDialogMessage(translate('QemailRequired'));
       setOpenDialog(true);
       return;
     } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(formData.email)) {
-      setDialogMessage(translate('invalidEmail'));
+      setDialogMessage(translate('QinvalidEmail'));
       setOpenDialog(true);
       return;
     }
 
     if (!formData.password) {
-      setDialogMessage(translate('passwordRequired'));
+      setDialogMessage(translate('QpasswordRequired'));
       setOpenDialog(true);
       return;
     } else if (formData.password.length < 8) {
-      setDialogMessage(translate('passwordLength'));
+      setDialogMessage(translate('QpasswordLength'));
       setOpenDialog(true);
       return;
     }
 
     if (!formData.confirmPassword) {
-      setDialogMessage(translate('confirmPasswordRequired'));
+      setDialogMessage(translate('QconfirmPasswordRequired'));
       setOpenDialog(true);
       return;
     } else if (formData.password !== formData.confirmPassword) {
-      setDialogMessage(translate('passwordMismatch'));
+      setDialogMessage(translate('QpasswordMismatch'));
       setOpenDialog(true);
       return;
     }
 
     if (!frequency) {
-      setDialogMessage(translate('frequencyRequired'));
+      setDialogMessage(translate('QfrequencyRequired'));
       setOpenDialog(true);
       return;
     }
 
     if (!propertyType) {
-      setDialogMessage(translate('propertyTypeRequired'));
+      setDialogMessage(translate('QpropertyTypeRequired'));
       setOpenDialog(true);
       return;
     }
 
     if (!contactType) {
-      setDialogMessage(translate('contactTypeRequired'));
+      setDialogMessage(translate('QcontactTypeRequired'));
       setOpenDialog(true);
       return;
     }
 
     if (!language) {
-      setDialogMessage(translate('languageRequired'));
+      setDialogMessage(translate('QlanguageRequired'));
       setOpenDialog(true);
       return;
     }
 
     if (!timeZone) {
-      setDialogMessage(translate('timeZoneRequired'));
+      setDialogMessage(translate('QtimeZoneRequired'));
       setOpenDialog(true);
       return;
     }
 
     if (!selectedDate) {
-      setDialogMessage(translate('dateRequired'));
+      setDialogMessage(translate('QdateRequired'));
       setOpenDialog(true);
       return;
     }
 
     if (!selectedTime) {
-      setDialogMessage(translate('timeRequired'));
+      setDialogMessage(translate('QtimeRequired'));
       setOpenDialog(true);
       return;
     }
 
     if (!acceptTerms2) {
-      setDialogMessage(translate('termsRequired'));
+      setDialogMessage(translate('QtermsRequired'));
       setOpenDialog(true);
       return;
     }
