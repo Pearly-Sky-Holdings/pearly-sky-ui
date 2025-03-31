@@ -1291,9 +1291,9 @@ export const enTranslations = {
     countryUS: "United States",
  
     // Form Labels
-    locationFromLabel: "Location From",
+    locationFromLabel: "Location From Address",
     locationFromPlaceholder: "Enter starting location",
-    locationToLabel: "Location To",
+    locationToLabel: "Location To Address",
     locationToPlaceholder: "Enter destination",
     propertySizeLabel: "Approx Property Size",
     propertyTypeLabel: "Select your business or property",
