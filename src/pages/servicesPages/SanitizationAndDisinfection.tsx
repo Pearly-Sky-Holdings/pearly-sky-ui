@@ -372,7 +372,7 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
       
       setDialogMessage(
         error.response?.data?.message || 
-        alert(translate('submitFailedAlert'));
+        alert(translate('submitFailedAlert'))
       );
       setOpenDialog(true);
       

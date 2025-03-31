@@ -44,26 +44,30 @@ function SpecialEventCleaning() {
   const [timeZone, setTimeZone] = useState("");
   const [eventType, setEventType] = useState("");
   const [contactType, setContactType] = useState("");
-  const [numCleaners, setNumCleaners] = useState(""); 
+  const [numCleaners, setNumCleaners ] = useState(""); 
   const [selectedItems, setSelectedItems] = useState<string[]>([]); 
   const [isLoading, setIsLoading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogMessage, setDialogMessage] = useState("");
    
 
+  // Memoize the callback function to prevent unnecessary re-renders
+   
   const handleSelectionChange = (selectedItems: string[]) => {
-    setSelectedItems(selectedItems);
-  };
+      console.log('Selected Items:', selectedItems);
+      setSelectedItems(selectedItems);
+    };
 
     const handleCloseDialog = () => {
       setOpenDialog(false);
     };
 
   // Memoize the form change handler
-
   const handleFormChange = useCallback((data: any) => {
     setFormData(data);
   }, []);
+
+  // Fetch package and services data
 
   useEffect(() => {
     dispatch(getPackege("16"));
@@ -71,6 +75,7 @@ function SpecialEventCleaning() {
 
   useEffect(() => {
     dispatch(getServices("16"));
+
   }, [dispatch]);
 
   const [equipment, setEquipment] = useState({ customer: false, company: false });
@@ -351,62 +356,45 @@ const handleBookNow = async () => {
     contact: formData.phone,
     email: formData.email,
     password: formData.password, 
-
   };
 
-  interface FormData {
-    firstName: string;
-    lastName: string;
-    company?: string;
-    country: string;
-    address: string;
-    apartment?: string;
-    city: string;
-    state: string;
-    zip: string;
-    phone: string;
-    email: string;
-  }
+  //  service details
+  const serviceDetails = {
+    customer,
+    service_id: "16",
+    price: "00.00",
+    date,
+    time: selectedTime,
+    // property_size: "0 sqft",
+    // duration: "0",
+    number_of_cleaners: numCleaners,
+    note: document.querySelector("textarea")?.value || "",
+    request_gender: contactType,
+    request_language: language,
+    business_property: eventType,
+    cleaning_solvents: "eco-friendly",
+    frequency,
+    time_zoon: timeZone,
+    Equipment: equipment.customer ? "Provided by customer" : "Provided by company",
+    chemical:chemical.customer ? "Provided by customer" : "Provided by company",
+    payment_method: "cash",
+    reStock_details: [],
+    event_type:selectedItems.join(",")
+  };
 
-  const [formData, setFormData] = useState<FormData>({
-    firstName: "",
-    lastName: "",
-    company: "",
-    country: "",
-    address: "",
-    apartment: "",
-    city: "",
-    state: "",
-    zip: "",
-    phone: "",
-    email: "",
-  });
+  console.log("Data to be sent:", serviceDetails);
 
-  const handleBookNow = async () => { 
-    if (!chemical.customer && !chemical.company) {
-      alert(translate('chemicalRequiredAlert'));
-      return; 
-    }
+  const data = {
+    serviceName: "Special Event Cleaning",
+    details: serviceDetails,
+    personalInformation: formData,
+    equipment,
+    chemical,
+    selectedItems,
+    eventType
+  };
 
-    if (!equipment.customer && !equipment.company) {
-      alert(translate('equipmentRequiredAlert'));
-      return; 
-    }
-
-    if (
-      !frequency ||
-      !eventType ||
-      !contactType ||
-      !language ||
-      !numCleaners ||
-      !timeZone ||
-      !selectedDate ||
-      !selectedTime ||
-      !acceptTerms2
-    ) {
-      alert(translate('fillAllFieldsAlert'));
-      return;
-    }
+  console.log("Data:", data);
 
   try {
     setIsLoading(true);
@@ -461,7 +449,7 @@ const handleBookNow = async () => {
               <li>{translate('specialEventListItem3')}</li>
               <li>{translate('specialEventListItem4')}</li>
               <li>{translate('specialEventListItem5')}</li>
-            </ul>            
+          </ul>            
             <p className="text-gray-600 mb-4 text-sm sm:text-base">
               {translate('specialEventDescription2')}
             </p>
@@ -517,11 +505,12 @@ const handleBookNow = async () => {
         </div>
 
         <div>
-          <SpecialEventCleaningType onSelectionChange={handleSelectionChange} />
+             <SpecialEventCleaningType onSelectionChange={handleSelectionChange} />
         </div>
         
         {/* Booking Details */}
         <div className="mt-10">
+
           <SpecialEventBookingCart          
             eventType={eventType}
             setEventType={setEventType}
@@ -535,6 +524,7 @@ const handleBookNow = async () => {
             setLanguage={setLanguage}
             timeZone={timeZone}
             setTimeZone={setTimeZone}
+
           />
         </div>
 
@@ -626,6 +616,16 @@ const handleBookNow = async () => {
         
         <div>
           <PersonalInformationForm onChangeCallback={handleFormChange} />
+          {/* Display form data in another section */}
+          {/* <div style={{ marginTop: "20px" }}>
+            <h2>Live Form Data:</h2>
+            <pre>{JSON.stringify(formData, null, 2)}</pre>
+            <pre>{JSON.stringify(equipment, null, 2)}</pre>
+            <pre>{JSON.stringify(chemical, null, 2)}</pre>
+            <pre>{JSON.stringify(eventType, null, 2)}</pre>
+            <pre>{JSON.stringify(numCleaners, null, 2)}</pre>
+            <pre>{JSON.stringify(selectedItems, null, 2)}</pre>
+          </div> */}
         </div>
 
         {/* Terms Checkbox */}
@@ -653,6 +653,7 @@ const handleBookNow = async () => {
         </button>
       </div>
 
+      {/* Using the new LoadingOverlay component */}
       <LoadingOverlay 
         open={isLoading} 
         message={translate('processingOrder')}

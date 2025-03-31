@@ -1184,6 +1184,7 @@ export const enTranslations = {
     provideByCompany: 'Provide by company',
     requestQuotationButton: 'Request Quotation',
     chemicalRequiredAlert: 'Chemical is required. Please select an option for Chemical.',
+    
     equipmentRequiredAlert: 'Equipment is required. Please select an option for Equipment.',
     submitFailedAlert: 'Failed to submit the quotation request. Please try again.',
     networkErrorAlert: 'An error occurred while submitting the request. Please check your connection and try again.',

@@ -123,23 +123,6 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
 };
 
 
-  type Section = "equipment" | "chemical";
-  type Option = "customer" | "company";
-
-  const handleCheckboxChange = (section: Section, option: Option) => {
-    if (section === "equipment") {
-      setEquipment({
-        customer: option === "customer",
-        company: option === "company",
-      });
-    } else if (section === "chemical") {
-      setChemical({
-        customer: option === "customer",
-        company: option === "company",
-      });
-    }
-  };
-
   interface FormData {
     firstName: string;
     lastName: string;

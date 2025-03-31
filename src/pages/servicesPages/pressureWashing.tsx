@@ -51,8 +51,8 @@ function PressureWashing() {
   const [selectedItems, setSelectedItems] = useState<string[]>([]); 
 
   const handleSelectionChange = (selectedItems: string[]) => {
-    setSelectedItems(selectedItems);
-  };
+      setSelectedItems(selectedItems);
+    };
 
     const handleCloseDialog = () => {
       setOpenDialog(false);
@@ -151,7 +151,7 @@ const [formData, setFormData] = useState<FormData>({
   phone: "",
   email: "",
   password: "",
-    confirmPassword: "",
+  confirmPassword: "",
 });
 
 const handleBookNow = async () => { 
@@ -373,47 +373,18 @@ const handleBookNow = async () => {
     payment_method: "cash",
     reStock_details: [],
     things_to_clean:selectedItems.join(",")
-
   };
 
-  interface FormData {
-    firstName: string;
-    lastName: string;
-    company?: string;
-    country: string;
-    address: string;
-    apartment?: string;
-    city: string;
-    state: string;
-    zip: string;
-    phone: string;
-    email: string;
-  }
 
-  const [formData, setFormData] = useState<FormData>({
-    firstName: "",
-    lastName: "",
-    company: "",
-    country: "",
-    address: "",
-    apartment: "",
-    city: "",
-    state: "",
-    zip: "",
-    phone: "",
-    email: "",
-  });
+  const data = {
+    serviceName: "Pressure Washing",
+    details: serviceDetails,
+    personalInformation: formData,
+    equipment,
+    chemical,
+    selectedItems,
+  };
 
-  const handleBookNow = async () => { 
-    if (!chemical.customer && !chemical.company) {
-      alert(translate('chemicalRequiredAlert'));
-      return; 
-    }
-
-    if (!equipment.customer && !equipment.company) {
-      alert(translate('equipmentRequiredAlert'));
-      return; 
-    }
 
 
   try {
@@ -519,11 +490,12 @@ const handleBookNow = async () => {
         </div>
 
         <div>
-          <PressureWashingType onSelectionChange={handleSelectionChange} />
+             <PressureWashingType onSelectionChange={handleSelectionChange} />
         </div>
         
         {/* Booking Details */}
         <div className="mt-10">
+
           <CommercialBookingCart          
             propertyType={propertyType}
             setPropertyType={setPropertyType}
@@ -537,6 +509,7 @@ const handleBookNow = async () => {
             setLanguage={setLanguage}
             timeZone={timeZone}
             setTimeZone={setTimeZone}
+
           />
         </div>
 
@@ -628,6 +601,16 @@ const handleBookNow = async () => {
         
         <div>
           <PersonalInformationForm onChangeCallback={handleFormChange} />
+          {/* Display form data in another section */}
+          <div style={{ marginTop: "20px" }}>
+            {/* <h2>Live Form Data:</h2>
+            <pre>{JSON.stringify(formData, null, 2)}</pre>
+            <pre>{JSON.stringify(equipment, null, 2)}</pre>
+            <pre>{JSON.stringify(chemical, null, 2)}</pre>
+            <pre>{JSON.stringify(propertyType, null, 2)}</pre>
+            <pre>{JSON.stringify(numCleaners, null, 2)}</pre>
+            <pre>{JSON.stringify(selectedItems, null, 2)}</pre> */}
+          </div>
         </div>
 
         {/* Terms Checkbox */}
@@ -655,6 +638,7 @@ const handleBookNow = async () => {
         </button>
       </div>
 
+      {/* Using the new LoadingOverlay component */}
       <LoadingOverlay 
         open={isLoading} 
         message={translate('processingOrder')}

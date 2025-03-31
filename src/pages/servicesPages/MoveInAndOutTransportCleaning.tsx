@@ -401,7 +401,7 @@ function MoveInAndOutTransportCleaning() {
       
       setDialogMessage(
         error.response?.data?.message || 
-       alert(translate('submitFailedAlert'));
+       alert(translate('submitFailedAlert'))
       );
       setOpenDialog(true);
     } finally {
@@ -653,5 +653,6 @@ function MoveInAndOutTransportCleaning() {
     </div>
   );
 }
+
 
 export default MoveInAndOutTransportCleaning;

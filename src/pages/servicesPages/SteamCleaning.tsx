@@ -47,7 +47,6 @@ function SteamCleaning() {
   const [selectedItems, setSelectedItems] = useState<string[]>([]); 
   const [isLoading, setIsLoading] = useState(false);
 
-
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogMessage, setDialogMessage] = useState("");
      
@@ -58,17 +57,17 @@ const handleSelectionChange = (selectedItems: string[]) => {
     setSelectedItems(selectedItems);
   };
  
-
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
  
 
   // Memoize the form change handler
-
   const handleFormChange = useCallback((data: any) => {
     setFormData(data);
   }, []);
+
+  // Fetch package and services data
 
   useEffect(() => {
     dispatch(getPackege("14"));
@@ -76,14 +75,14 @@ const handleSelectionChange = (selectedItems: string[]) => {
 
   useEffect(() => {
     dispatch(getServices("14"));
+
   }, [dispatch]);
   
-  const [equipment, setEquipment] = useState({ customer: false, company: false });
-  const [chemical, setChemical] = useState({ customer: false, company: false });
+const [equipment, setEquipment] = useState({ customer: false, company: false });
+const [chemical, setChemical] = useState({ customer: false, company: false });
 
-  type Section = "equipment" | "chemical";
-  type Option = "customer" | "company";
-
+type Section = "equipment" | "chemical";
+type Option = "customer" | "company";
 
 const handleCheckboxChange = (section: Section, option: Option) => {
   if (section === "equipment") {
@@ -128,7 +127,6 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
   }
 };
 
-
   interface FormData {
     firstName: string;
     lastName: string;
@@ -162,7 +160,9 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
   });
 
   const handleBookNow = async () => {
-    if (!chemical.customer && !chemical.company) {
+
+   // Validate Chemical
+  if (!chemical.customer && !chemical.company) {
       alert(translate('chemicalRequiredAlert'));
       return;
     }
@@ -170,8 +170,7 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
     if (!equipment.customer && !equipment.company) {
       alert(translate('equipmentRequiredAlert'));
       return; 
-    }
-
+  }
 
    // Validate Equipment
    if (!equipment.customer && !equipment.company) {
@@ -331,9 +330,13 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
     setOpenDialog(true);
     return;
   }
+
+  console.log("All fields are valid. Proceeding to checkout...");
   
+    // selected date
     const date = dayjs(selectedDate).format("YYYY-MM-DD").toString();
   
+    // customer object
     const customer = {
       first_name: formData.firstName,
       last_name: formData.lastName,
@@ -347,15 +350,17 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
       contact: formData.phone,
       email: formData.email,
       password: formData.password, 
-
     };
   
+    // service details
     const serviceDetails = {
-      customer,
+      customer, // Include customer details
       service_id: "14", 
       price: "00.00", 
       date,
       time: selectedTime,
+      // property_size: "0 sqft", 
+      // duration: "0",      
       note: document.querySelector("textarea")?.value || "",
       request_gender: contactType, 
       request_language: language,
@@ -370,6 +375,8 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
       things_to_clean: selectedItems.join(",")
     };
   
+    console.log("Data to be sent:", serviceDetails);
+
     const data = {
       serviceName: translate('steamCleaningService'),
       details: serviceDetails,
@@ -378,6 +385,7 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
       selectedItems,
       equipment
     };
+    console.log("Data:", data);
   
     try {
       setIsLoading(true);
@@ -396,9 +404,10 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
       
       setDialogMessage(
         error.response?.data?.message || 
-        alert(translate('submitFailedAlert'));
+        alert(translate('submitFailedAlert'))
       );
       setOpenDialog(true);
+      
     } finally {
       setIsLoading(false);
     }
@@ -485,6 +494,7 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
 
         {/* Booking Details */}
         <div className="mt-10">
+
           <SanitizationBookingCart          
             propertyType={propertyType}
             setPropertyType={setPropertyType}
@@ -585,8 +595,19 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
           </div>
         </div>
 
+
+
         <div>
           <PersonalInformationForm onChangeCallback={handleFormChange} />
+          {/* Display form data in another section */}
+          {/* <div style={{ marginTop: "20px" }}>
+            <h2>Live Form Data:</h2>
+            <pre>{JSON.stringify(formData, null, 2)}</pre>
+            <pre>{JSON.stringify(equipment, null, 2)}</pre>
+            <pre>{JSON.stringify(chemical, null, 2)}</pre>
+            <pre>{JSON.stringify(propertyType, null, 2)}</pre>
+            <pre>{JSON.stringify(selectedItems, null, 2)}</pre>
+          </div> */}
         </div>
 
         {/* Terms Checkbox */}
@@ -614,7 +635,7 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
         </button>
       </div>
 
-      {/* Loading Overlay */}
+      {/* Using the new LoadingOverlay component */}
       <LoadingOverlay 
         open={isLoading} 
         message={translate('processingOrder')}

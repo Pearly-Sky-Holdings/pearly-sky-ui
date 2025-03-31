@@ -347,62 +347,45 @@ const handleBookNow = async () => {
     contact: formData.phone,
     email: formData.email,
     password: formData.password,  
+  };
+
+  //  service details
+  const serviceDetails = {
+    customer,
+    service_id: "17",
+    price: "00.00",
+    date,
+    time: selectedTime,
+    // property_size: "0 sqft",
+    // duration: "0",
+    number_of_cleaners: numCleaners,
+    note: document.querySelector("textarea")?.value || "",
+    request_gender: contactType,
+    request_language: language,
+    business_property: propertyType,
+    cleaning_solvents: " ",
+    frequency,
+    time_zoon: timeZone,
+    Equipment: equipment.customer ? "Provided by customer" : "Provided by company",
+    chemical:chemical.customer ? "Provided by customer" : "Provided by company",
+    payment_method: "cash",    
+    reStock_details: [],
+    pool_type:selectedItems.join(",")
 
   };
 
-  interface FormData {
-    firstName: string;
-    lastName: string;
-    company?: string;
-    country: string;
-    address: string;
-    apartment?: string;
-    city: string;
-    state: string;
-    zip: string;
-    phone: string;
-    email: string;
-  }
+  console.log("Data to be sent:", serviceDetails);
 
-  const [formData, setFormData] = useState<FormData>({
-    firstName: "",
-    lastName: "",
-    company: "",
-    country: "",
-    address: "",
-    apartment: "",
-    city: "",
-    state: "",
-    zip: "",
-    phone: "",
-    email: "",
-  });
+  const data = {
+    serviceName: "Pool cleaning",
+    details: serviceDetails,
+    personalInformation: formData,
+    equipment,
+    chemical,
+    selectedItems
+  };
 
-  const handleBookNow = async () => { 
-    if (!chemical.customer && !chemical.company) {
-      alert(translate('chemicalRequiredAlert'));
-      return; 
-    }
-
-    if (!equipment.customer && !equipment.company) {
-      alert(translate('equipmentRequiredAlert'));
-      return; 
-    }
-
-    if (
-      !frequency ||
-      !propertyType ||
-      !contactType ||
-      !language ||
-      !numCleaners ||
-      !timeZone ||
-      !selectedDate ||
-      !selectedTime ||
-      !acceptTerms2
-    ) {
-      alert(translate('fillAllFieldsAlert'));
-      return;
-    }
+  console.log("Data:", data);
 
   try {
     setIsLoading(true);
@@ -515,11 +498,12 @@ const handleBookNow = async () => {
         </div>
 
         <div>
-          <PoolType onSelectionChange={handleSelectionChange} />
+        <PoolType onSelectionChange={handleSelectionChange} />
         </div>
         
         {/* Booking Details */}
         <div className="mt-10">
+
           <CommercialBookingCart          
             propertyType={propertyType}
             setPropertyType={setPropertyType}
@@ -533,6 +517,7 @@ const handleBookNow = async () => {
             setLanguage={setLanguage}
             timeZone={timeZone}
             setTimeZone={setTimeZone}
+
           />
         </div>
 
@@ -565,6 +550,7 @@ const handleBookNow = async () => {
             ></textarea>
           </div>          
         </div>        
+
 
         <div className="flex flex-col md:flex-row md:gap-10 p-4 mb-6">
           {/* Equipment Section */}
@@ -624,6 +610,16 @@ const handleBookNow = async () => {
 
         <div>
           <PersonalInformationForm onChangeCallback={handleFormChange} />
+          {/* Display form data in another section */}
+          {/* <div style={{ marginTop: "20px" }}>
+            <h2>Live Form Data:</h2>
+            <pre>{JSON.stringify(formData, null, 2)}</pre>
+            <pre>{JSON.stringify(equipment, null, 2)}</pre>
+            <pre>{JSON.stringify(chemical, null, 2)}</pre>
+            <pre>{JSON.stringify(propertyType, null, 2)}</pre>
+            <pre>{JSON.stringify(numCleaners, null, 2)}</pre>
+            <pre>{JSON.stringify(selectedItems, null, 2)}</pre>
+          </div> */}
         </div>
 
         {/* Terms Checkbox */}
@@ -651,6 +647,7 @@ const handleBookNow = async () => {
         </button>
       </div>
 
+      {/* Using the new LoadingOverlay component */}
       <LoadingOverlay 
         open={isLoading} 
         message={translate('processingOrder')}

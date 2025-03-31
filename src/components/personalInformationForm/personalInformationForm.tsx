@@ -170,13 +170,8 @@ const PersonalInformationForm = ({
   }, [formValues.country, setValue]);
 
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const [currentCountry, setCurrentCountry] = useState<Country | undefined>(undefined);
-
-
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
   useEffect(() => {
     if (formValues.country) {
@@ -343,14 +338,15 @@ const PersonalInformationForm = ({
         </Grid>
 
         {/* Phone */}
-        <Grid item xs={12} sm={6}>
-          {renderLabel("phoneNumber", true)}
+{/* Phone */}
+<Grid item xs={12} sm={6}>
+          {renderLabel("Phone Number", true)}
           <FormControl fullWidth size="small">
             <Controller
               name="phone"
               control={control}
               rules={{
-                 rules={{ required: translate("phoneRequired") }}
+                required: "Phone Number is required",
                 validate: (value) => {
                   if (!value) return "Phone number is required";
                   
