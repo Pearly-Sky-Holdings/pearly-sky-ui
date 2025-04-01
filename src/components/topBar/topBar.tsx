@@ -17,10 +17,12 @@ const countries: Country[] = [
   { code: "us", nameKey: "US" },
   { code: "fr", nameKey: "France" },
   { code: "nl", nameKey: "Dutch" },
-  // { code: "de", nameKey: "germany" },
+  { code: "de", nameKey: "Germany" },
   { code: "es", nameKey: "Spanish" },
+  { code: "se", nameKey: "Swedish" },
   { code: "jp", nameKey: "Japan" },
   { code: "cn", nameKey: "Chinese" },
+  { code: "ar", nameKey: "Arabic" },
  
   
 ];

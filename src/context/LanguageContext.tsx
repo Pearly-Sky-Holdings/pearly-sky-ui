@@ -8,7 +8,9 @@ import {
   jpTranslations,
   zhTranslations,
   spTranslations,
-  nlTranslations 
+  nlTranslations,
+  svTranslations,
+  arTranslations
 } from './language';
 
 // Map country codes to language codes
@@ -21,6 +23,8 @@ export const countryToLanguage: Record<string, SupportedLanguage> = {
   'cn': 'cn',
   'es': 'sp',
   'nl': 'nl',
+  'se': 'se',
+  'ar': 'ar',
 };
 
 // Reverse mapping for convenience
@@ -32,6 +36,8 @@ export const languageToCountry: Record<SupportedLanguage, string> = {
   'cn': 'cn',
   'sp': 'es',
   'nl': 'nl',
+  'se': 'se',
+  'ar': 'ar',
 };
 
 // Define the translations dictionary
@@ -43,6 +49,8 @@ const translations: Record<SupportedLanguage, Record<string, string>> = {
   'cn': zhTranslations,
   'sp': spTranslations,
   'nl': nlTranslations,
+  'se': svTranslations,
+  'ar': arTranslations,
 };
 
 // Define the context type
