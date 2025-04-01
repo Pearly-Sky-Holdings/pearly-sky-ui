@@ -14,12 +14,14 @@ interface Country {
 }
 
 const countries: Country[] = [
-  { code: "us", nameKey: "unitedStates" },
-  // { code: "gb", nameKey: "unitedKingdom" },
-  { code: "fr", nameKey: "france" },
+  { code: "us", nameKey: "US" },
+  { code: "fr", nameKey: "France" },
+  { code: "nl", nameKey: "Dutch" },
   // { code: "de", nameKey: "germany" },
-  { code: "zh", nameKey: "Chinese" },
-  { code: "jp", nameKey: "japan" },
+  { code: "es", nameKey: "Spanish" },
+  { code: "jp", nameKey: "Japan" },
+  { code: "cn", nameKey: "Chinese" },
+ 
   
 ];
 
@@ -106,7 +108,7 @@ export default function TopBar() {
             >
               {countries.map((country) => (
                 <MenuItem key={country.code} value={country.code}>
-                  {translate(country.nameKey)}
+                 {country.nameKey}
                 </MenuItem>
               ))}
             </Select>

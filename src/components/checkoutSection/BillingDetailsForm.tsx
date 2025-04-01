@@ -159,7 +159,7 @@ const BillingDetailsForm: React.FC<BillingDetailsFormProps> = ({
           setPhoneError(`Please enter a valid ${phoneNumber?.country} phone number`);
         }
       } catch (error) {
-        setPhoneError("Please enter a valid phone number");
+        setPhoneError(translate("valiedPhoneNumber"));
       }
     }
   };

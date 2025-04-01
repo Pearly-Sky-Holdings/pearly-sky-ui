@@ -1676,6 +1676,8 @@ export const enTranslations = {
     mrs: 'Mrs.', 
     dr: 'Dr.',
 
-    //
+
+    requrCountryCode:"Please select your country code",
+    valiedPhoneNumber:"Please enter a valid phone number",
 
   };

@@ -1680,4 +1680,7 @@ export const frTranslations = {
   ms: 'Mme',
   mrs: 'Mme', 
   dr: 'Dr.',
+
+  requrCountryCode:"Veuillez sélectionner votre code pays",
+  valiedPhoneNumber:"Veuillez entrer un numéro de téléphone valide",
 };

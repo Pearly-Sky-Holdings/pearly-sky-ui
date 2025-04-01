@@ -348,10 +348,10 @@ const PersonalInformationForm = ({
               rules={{
                 required: "Phone Number is required",
                 validate: (value) => {
-                  if (!value) return "Phone number is required";
+                  if (!value) return translate("phoneRequired");
                   
                   if (!value.startsWith("+")) {
-                    return "Please select a country code";
+                    return translate("requrCountryCode");
                   }
                   
                   if (!isValidPhoneNumber(value)) {
@@ -360,7 +360,7 @@ const PersonalInformationForm = ({
                     if (country) {
                       return `Please enter a valid ${getCountryName(country)} phone number`;
                     }
-                    return "Please enter a valid phone number";
+                    return translate("valiedPhoneNumber");
                   }
                   
                   return true;

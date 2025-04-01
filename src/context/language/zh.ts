@@ -1635,4 +1635,7 @@ export const zhTranslations = {
    mrs: '夫人', 
    dr: '博士',
 
+   requrCountryCode:"请选择您的国家代码",
+   valiedPhoneNumber:"请输入有效的电话号码",
+
 };

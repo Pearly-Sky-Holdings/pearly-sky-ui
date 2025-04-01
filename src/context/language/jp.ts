@@ -1653,4 +1653,7 @@ export const jpTranslations = {
   ms: '様',
   mrs: '様',
   dr: '博士',
+
+  requrCountryCode:"国コードを選択してください",
+  valiedPhoneNumber:"有効な電話番号を入力してください",
   }

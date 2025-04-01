@@ -1,4 +1,4 @@
-export const esTranslations = {
+export const spTranslations = {
     // TopBar translations ===============================================
     login: 'Iniciar sesión',
     unitedStates: 'Estados Unidos',
@@ -1578,6 +1578,9 @@ export const esTranslations = {
     mr: 'Sr.',
     ms: 'Srta.',
     mrs: 'Sra.', 
-    dr: 'Dr.'
+    dr: 'Dr.',
+
+    requrCountryCode:"Por favor seleccione su código de país",
+    valiedPhoneNumber:"Por favor, introduzca un número de teléfono válido",
 };
 
