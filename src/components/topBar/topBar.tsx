@@ -23,8 +23,7 @@ const countries: Country[] = [
   { code: "jp", nameKey: "Japan" },
   { code: "cn", nameKey: "Chinese" },
   { code: "ar", nameKey: "Arabic" },
- 
-  
+  { code: "fi", nameKey: "Finnish" },
 ];
 
 export default function TopBar() {
