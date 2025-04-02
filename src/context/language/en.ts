@@ -1681,4 +1681,191 @@ export const enTranslations = {
     valiedPhoneNumber:"Please enter a valid phone number",
 
 
+     // Company details
+     "companyName": "Pearly Sky company private Ltd",
+     "updateSoon": "Update soon",
+     
+     // Service cities by country
+     // France
+     "paris": "Paris",
+     "nice": "Nice",
+     "saintTropez": "Saint-Tropez",
+     "antibes": "Antibes",
+     "cannes": "Cannes",
+     "marseille": "Marseille",
+     "lyon": "Lyon",
+     "bordeaux": "Bordeaux",
+     "toulouse": "Toulouse",
+     "toulon": "Toulon",
+     "montpellier": "Montpellier",
+     "monteCarlo": "Monte Carlo",
+     "strasbourg": "Strasbourg",
+     "monaco": "Monaco",
+     "frenchRiviera": "French Riviera",
+     "rouen": "Rouen",
+     "leHavre": "Le Havre",
+     "normandy": "Normandy",
+     "deauville": "Deauville",
+     "dieppe": "Dieppe",
+     "laRochelle": "La Rochelle",
+     "nantes": "Nantes",
+     "narbonne": "Narbonne",
+     
+     // United Kingdom
+     "london": "London",
+     "yake": "Yake",
+     "bristol": "Bristol",
+     "birmingham": "Birmingham",
+     "leicester": "Leicester",
+     "nottingham": "Nottingham",
+     "plymouth": "Plymouth",
+     "bradford": "Bradford",
+     "edinburgh": "Edinburgh",
+     "derby": "Derby",
+     "southampton": "Southampton",
+     "liverpool": "Liverpool",
+     "kingstonUponHull": "Kingston upon Hull",
+     "portsmouth": "Portsmouth",
+     "manchester": "Manchester",
+     "chester": "Chester",
+     "stokeOnTrent": "Stoke-on-Trent",
+     "pererborough": "Pererborough",
+     "conventry": "Conventry",
+     "sheffield": "Sheffield",
+     "norwich": "Norwich",
+     "brighton": "Brighton",
+     "cambridge": "Cambridge",
+     "newcastleUponTyne": "Newcastle upon Tyne",
+     "oxford": "Oxford",
+     "chelmsford": "Chelmsford",
+     "leeds": "Leeds",
+     "luton": "Luton",
+     "miltoKeynes": "Milto Keynes",
+     "gloucester": "Gloucester",
+     "sunderland": "Sunderland",
+     "salisbury": "Salisbury",
+     
+     // Sri Lanka
+     "colombo": "Colombo",
+     "kandy": "Kandy",
+     "negombo": "Negombo",
+     "nuwaraEliya": "Nuwara Eliya",
+     
+     // Scotland
+     "aberdeen": "Aberdeen",
+     "glasgow": "Glasgow",
+     "dundee": "Dundee",
+     "inverness": "Inverness",
+     "feedback": "Feedback",
+     "stirling": "Stirling",
+     
+     // Germany
+     "berlin": "Berlin",
+     "hamburg": "Hamburg",
+     "munich": "Munich",
+     "cologne": "Cologne",
+     "frankfurt": "Frankfurt",
+     
+     // Belgium
+     "bruseels": "Bruseels",
+     
+     // Australia
+     "sydney": "Sydney",
+     "melbourne": "Melbourne",
+     "brisbane": "Brisbane",
+     "perth": "Perth",
+     "adelaide": "Adelaide",
+     
+     // UAE
+     "dubai": "Dubai",
+     "abuDhabi": "Abu Dhabi",
+     "sharjah": "Sharjah",
+     "rasAlkhaimah": "Ras Alkhaimah",
+     "jebelAli": "Jebel Ali",
+     
+     // Canada
+     "toronto": "Toronto",
+     "montreal": "Montreal",
+     "ottawa": "Ottawa",
+     "vancouver": "Vancouver",
+     
+     // Finland
+     "helsinki": "Helsinki",
+     "oulu": "Oulu",
+     "turku": "Turku",
+     "tampere": "Tampere",
+     
+     // Saudi Arabia
+     "riyadh": "Riyadh",
+     "jeddah": "Jeddah",
+     
+     // Italy
+     "rome": "Rome",
+     "venice": "Venice",
+     "florence": "Florence",
+     "milan": "Milan",
+     "naples": "Naples",
+     
+     // Portugal
+     "lisbon": "Lisbon",
+     
+     // USA
+     "newYork": "New York",
+     "losAngeles": "Los Angeles",
+     "philadelphia": "Philadelphia",
+     "houston": "Houston",
+     
+     // Ireland
+     "dublin": "Dublin",
+     "belfast": "Belfast",
+     "cork": "Cork",
+     "limerick": "Limerick",
+     "galway": "Galway",
+     
+     // Austria
+     "vienna": "Vienna",
+     "villach": "Villach",
+     "innsbruck": "Innsbruck",
+     "graz": "Graz",
+     "bregenz": "Bregenz",
+     
+     // Netherlands
+     "amsterdam": "Amsterdam",
+     "utrecht": "Utrecht",
+     "rotterdam": "Rotterdam",
+     "groningen": "Groningen",
+     "theHague": "The Hague",
+     
+     // Switzerland
+     "zurich": "Zurich",
+     "geneva": "Geneva",
+     "basel": "Basel",
+     "bern": "Bern",
+     "lausanne": "Lausanne",
+     
+     // Qatar
+     "alWakrah": "Al Wakrah",
+     "doha": "Doha",
+     "alRayyan": "Al Rayyan",
+     "dukhan": "Dukhan",
+     
+     // New Zealand
+     "auckland": "Auckland",
+     "hamilton": "Hamilton",
+     "wellington": "Wellington",
+     "christchurch": "Christchurch",
+     
+     // Poland
+     "warsaw": "Warsaw",
+     
+     // Luxembourg
+     "luxembourgCity": "Luxembourg City",
+     
+     // Spain
+     "barcelona": "Barcelona",
+     "madrid": "Madrid",
+     "palma": "Palma",
+     "granada": "Granada",
+     serviceCities: "Service Cities",
+
   };

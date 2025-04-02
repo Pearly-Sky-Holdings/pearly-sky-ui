@@ -28,18 +28,25 @@ const countries: Country[] = [
 
 export default function TopBar() {
   const navigate = useNavigate();
-  const [selectedCountry, setSelectedCountry] = useState("us");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   // Get language context
   const { setLanguage, translate } = useLanguage();
+  
+  // Initialize selected country from localStorage or default to "us"
+  const [selectedCountry, setSelectedCountry] = useState(() => {
+    const savedCountry = localStorage.getItem('selectedCountry');
+    return savedCountry || "us";
+  });
 
-  // Update language when country changes
+  // Update language when country changes and save to localStorage
   useEffect(() => {
     const languageCode = countryToLanguage[selectedCountry];
     if (languageCode) {
       setLanguage(languageCode);
+      // Save selected country to localStorage
+      localStorage.setItem('selectedCountry', selectedCountry);
     }
   }, [selectedCountry, setLanguage]);
 

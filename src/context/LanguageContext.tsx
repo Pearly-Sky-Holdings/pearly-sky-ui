@@ -54,6 +54,7 @@ const translations: Record<SupportedLanguage, Record<string, string>> = {
   'nl': nlTranslations,
   'se': svTranslations,
   'ar': arTranslations,
+  'fi': fiTranslations,
 };
 
 // Define the context type

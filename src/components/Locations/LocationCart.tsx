@@ -1,6 +1,8 @@
 import { MapPin, Mail, Building2 } from "lucide-react";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { useLanguage } from "../../context/LanguageContext";
+
 
 type Location = {
   id: string;
@@ -21,6 +23,7 @@ type Location = {
 
 };
 
+
 function LocationCard({
   location,
   isExpanded,
@@ -30,6 +33,8 @@ function LocationCard({
   isExpanded: boolean;
   toggleLocation: (locationId: string) => void;
 }) {
+  const { translate } = useLanguage();
+  
   return (
     <div>
       <div
@@ -133,7 +138,7 @@ function LocationCard({
           {location.serviceCities && (
             <div>
               <h3 className="text-lg font-semibold text-black">
-                Service Cities
+             { translate('serviceCities')}
               </h3>
               <div className="flex flex-wrap gap-2">
                 {location.serviceCities.map((city) => (

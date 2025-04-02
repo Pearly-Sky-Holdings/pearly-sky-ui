@@ -1635,5 +1635,191 @@ export const fiTranslations = {
  
      requrCountryCode:"Valitse maakoodisi",
      valiedPhoneNumber:"Anna kelvollinen puhelinnumero",
+
+     companyName: "Pearly Sky yksityinen osakeyhtiö",
+    updateSoon: "Päivitys pian",
+    
+    // Palvelukaupungit maittain
+    // Ranska
+    paris: "Pariisi",
+    nice: "Nizza",
+    saintTropez: "Saint-Tropez",
+    antibes: "Antibes",
+    cannes: "Cannes",
+    marseille: "Marseille",
+    lyon: "Lyon",
+    bordeaux: "Bordeaux",
+    toulouse: "Toulouse",
+    toulon: "Toulon",
+    montpellier: "Montpellier",
+    monteCarlo: "Monte Carlo",
+    strasbourg: "Strasbourg",
+    monaco: "Monaco",
+    frenchRiviera: "Ranskan Riviera",
+    rouen: "Rouen",
+    leHavre: "Le Havre",
+    normandy: "Normandia",
+    deauville: "Deauville",
+    dieppe: "Dieppe",
+    laRochelle: "La Rochelle",
+    nantes: "Nantes",
+    narbonne: "Narbonne",
+    
+    // Yhdistynyt kuningaskunta
+    london: "Lontoo",
+    yake: "Yake",
+    bristol: "Bristol",
+    birmingham: "Birmingham",
+    leicester: "Leicester",
+    nottingham: "Nottingham",
+    plymouth: "Plymouth",
+    bradford: "Bradford",
+    edinburgh: "Edinburgh",
+    derby: "Derby",
+    southampton: "Southampton",
+    liverpool: "Liverpool",
+    kingstonUponHull: "Kingston upon Hull",
+    portsmouth: "Portsmouth",
+    manchester: "Manchester",
+    chester: "Chester",
+    stokeOnTrent: "Stoke-on-Trent",
+    pererborough: "Pererborough",
+    conventry: "Conventry",
+    sheffield: "Sheffield",
+    norwich: "Norwich",
+    brighton: "Brighton",
+    cambridge: "Cambridge",
+    newcastleUponTyne: "Newcastle upon Tyne",
+    oxford: "Oxford",
+    chelmsford: "Chelmsford",
+    leeds: "Leeds",
+    luton: "Luton",
+    miltoKeynes: "Milto Keynes",
+    gloucester: "Gloucester",
+    sunderland: "Sunderland",
+    salisbury: "Salisbury",
+    
+    // Sri Lanka
+    colombo: "Colombo",
+    kandy: "Kandy",
+    negombo: "Negombo",
+    nuwaraEliya: "Nuwara Eliya",
+    
+    // Skotlanti
+    aberdeen: "Aberdeen",
+    glasgow: "Glasgow",
+    dundee: "Dundee",
+    inverness: "Inverness",
+    feedback: "Palaute",
+    stirling: "Stirling",
+    
+    // Saksa
+    berlin: "Berliini",
+    hamburg: "Hampuri",
+    munich: "München",
+    cologne: "Köln",
+    frankfurt: "Frankfurt",
+    
+    // Belgia
+    bruseels: "Bryssel",
+    
+    // Australia
+    sydney: "Sydney",
+    melbourne: "Melbourne",
+    brisbane: "Brisbane",
+    perth: "Perth",
+    adelaide: "Adelaide",
+    
+    // Yhdistyneet arabiemiirikunnat
+    dubai: "Dubai",
+    abuDhabi: "Abu Dhabi",
+    sharjah: "Sharjah",
+    rasAlkhaimah: "Ras Alkhaimah",
+    jebelAli: "Jebel Ali",
+    
+    // Kanada
+    toronto: "Toronto",
+    montreal: "Montreal",
+    ottawa: "Ottawa",
+    vancouver: "Vancouver",
+    
+    // Suomi
+    helsinki: "Helsinki",
+    oulu: "Oulu",
+    turku: "Turku",
+    tampere: "Tampere",
+    
+    // Saudi-Arabia
+    riyadh: "Riyadh",
+    jeddah: "Jeddah",
+    
+    // Italia
+    rome: "Rooma",
+    venice: "Venetsia",
+    florence: "Firenze",
+    milan: "Milano",
+    naples: "Napoli",
+    
+    // Portugali
+    lisbon: "Lissabon",
+    
+    // Yhdysvallat
+    newYork: "New York",
+    losAngeles: "Los Angeles",
+    philadelphia: "Philadelphia",
+    houston: "Houston",
+    
+    // Irlanti
+    dublin: "Dublin",
+    belfast: "Belfast",
+    cork: "Cork",
+    limerick: "Limerick",
+    galway: "Galway",
+    
+    // Itävalta
+    vienna: "Wien",
+    villach: "Villach",
+    innsbruck: "Innsbruck",
+    graz: "Graz",
+    bregenz: "Bregenz",
+    
+    // Alankomaat
+    amsterdam: "Amsterdam",
+    utrecht: "Utrecht",
+    rotterdam: "Rotterdam",
+    groningen: "Groningen",
+    theHague: "Haag",
+    
+    // Sveitsi
+    zurich: "Zürich",
+    geneva: "Geneve",
+    basel: "Basel",
+    bern: "Bern",
+    lausanne: "Lausanne",
+    
+    // Qatar
+    alWakrah: "Al Wakrah",
+    doha: "Doha",
+    alRayyan: "Al Rayyan",
+    dukhan: "Dukhan",
+    
+    // Uusi-Seelanti
+    auckland: "Auckland",
+    hamilton: "Hamilton",
+    wellington: "Wellington",
+    christchurch: "Christchurch",
+    
+    // Puola
+    warsaw: "Varsova",
+    
+    // Luxemburg
+    luxembourgCity: "Luxemburg",
+    
+    // Espanja
+    barcelona: "Barcelona",
+    madrid: "Madrid",
+    palma: "Palma",
+    granada: "Granada",
+    serviceCities: "Palvelukaupungit",
      
 }

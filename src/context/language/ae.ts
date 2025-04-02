@@ -428,7 +428,6 @@ export const arTranslations = {
     benefit2: 'ساعات عمل مرنة.',
     benefit3: 'فرصة لإحداث تأثير إيجابي على العائلات والأطفال.',
     benefit4: 'بيئة عمل داعمة وشاملة.',
-    benefit4: 'بيئة عمل داعمة وشاملة.',
 
     // Elder Care Worker Career Page Translations
     elderCareJobTitle: 'عامل رعاية المسنين ذكر / أنثى',
@@ -1610,4 +1609,190 @@ export const arTranslations = {
 
     requrCountryCode:"يرجى تحديد رمز بلدك",
     valiedPhoneNumber:"يرجى إدخال رقم هاتف صالح",
+
+    companyName: "شركة بيرلي سكاي المحدودة",
+    updateSoon: "تحديث قريبا",
+    
+    // مدن الخدمة حسب البلد
+    // فرنسا
+    paris: "باريس",
+    nice: "نيس",
+    saintTropez: "سان تروبيه",
+    antibes: "أنتيب",
+    cannes: "كان",
+    marseille: "مرسيليا",
+    lyon: "ليون",
+    bordeaux: "بوردو",
+    toulouse: "تولوز",
+    toulon: "طولون",
+    montpellier: "مونبلييه",
+    monteCarlo: "مونت كارلو",
+    strasbourg: "ستراسبورغ",
+    monaco: "موناكو",
+    frenchRiviera: "الريفيرا الفرنسية",
+    rouen: "روان",
+    leHavre: "لو هافر",
+    normandy: "نورماندي",
+    deauville: "دوفيل",
+    dieppe: "دييب",
+    laRochelle: "لا روشيل",
+    nantes: "نانت",
+    narbonne: "ناربون",
+    
+    // المملكة المتحدة
+    london: "لندن",
+    yake: "ياك",
+    bristol: "بريستول",
+    birmingham: "برمنغهام",
+    leicester: "ليستر",
+    nottingham: "نوتنغهام",
+    plymouth: "بليموث",
+    bradford: "برادفورد",
+    edinburgh: "إدنبرة",
+    derby: "ديربي",
+    southampton: "ساوثهامبتون",
+    liverpool: "ليفربول",
+    kingstonUponHull: "كينغستون أبون هال",
+    portsmouth: "بورتسموث",
+    manchester: "مانشستر",
+    chester: "تشستر",
+    stokeOnTrent: "ستوك أون ترينت",
+    pererborough: "بيربورو",
+    conventry: "كوفنتري",
+    sheffield: "شيفيلد",
+    norwich: "نورويتش",
+    brighton: "برايتون",
+    cambridge: "كامبريدج",
+    newcastleUponTyne: "نيوكاسل أبون تاين",
+    oxford: "أكسفورد",
+    chelmsford: "تشيلمسفورد",
+    leeds: "ليدز",
+    luton: "لوتون",
+    miltoKeynes: "ميلتون كينز",
+    gloucester: "غلوستر",
+    sunderland: "ساندرلاند",
+    salisbury: "سالزبوري",
+    
+    // سريلانكا
+    colombo: "كولومبو",
+    kandy: "كاندي",
+    negombo: "نيغومبو",
+    nuwaraEliya: "نوارا إليا",
+    
+    // اسكتلندا
+    aberdeen: "أبردين",
+    glasgow: "غلاسكو",
+    dundee: "دندي",
+    inverness: "إنفرنيس",
+    feedback: "تعليقات",
+    stirling: "ستيرلينغ",
+    
+    // ألمانيا
+    berlin: "برلين",
+    hamburg: "هامبورغ",
+    munich: "ميونخ",
+    cologne: "كولونيا",
+    frankfurt: "فرانكفورت",
+    
+    // بلجيكا
+    bruseels: "بروكسل",
+    
+    // أستراليا
+    sydney: "سيدني",
+    melbourne: "ملبورن",
+    brisbane: "بريزبان",
+    perth: "بيرث",
+    adelaide: "أديلايد",
+    
+    // الإمارات العربية المتحدة
+    dubai: "دبي",
+    abuDhabi: "أبو ظبي",
+    sharjah: "الشارقة",
+    rasAlkhaimah: "رأس الخيمة",
+    jebelAli: "جبل علي",
+    
+    // كندا
+    toronto: "تورونتو",
+    montreal: "مونتريال",
+    ottawa: "أوتاوا",
+    vancouver: "فانكوفر",
+    
+    // فنلندا
+    helsinki: "هلسنكي",
+    oulu: "أولو",
+    turku: "توركو",
+    tampere: "تامبيري",
+    
+    // السعودية
+    riyadh: "الرياض",
+    jeddah: "جدة",
+    
+    // إيطاليا
+    rome: "روما",
+    venice: "البندقية",
+    florence: "فلورنسا",
+    milan: "ميلانو",
+    naples: "نابولي",
+    
+    // البرتغال
+    lisbon: "لشبونة",
+    
+    // الولايات المتحدة
+    newYork: "نيويورك",
+    losAngeles: "لوس أنجلوس",
+    philadelphia: "فيلادلفيا",
+    houston: "هيوستن",
+    
+    // أيرلندا
+    dublin: "دبلن",
+    belfast: "بلفاست",
+    cork: "كورك",
+    limerick: "ليمريك",
+    galway: "غالواي",
+    
+    // النمسا
+    vienna: "فيينا",
+    villach: "فيلاخ",
+    innsbruck: "إنسبروك",
+    graz: "غراتس",
+    bregenz: "بريغنز",
+    
+    // هولندا
+    amsterdam: "أمستردام",
+    utrecht: "أوتريخت",
+    rotterdam: "روتردام",
+    groningen: "خرونينغن",
+    theHague: "لاهاي",
+    
+    // سويسرا
+    zurich: "زيورخ",
+    geneva: "جنيف",
+    basel: "بازل",
+    bern: "برن",
+    lausanne: "لوزان",
+    
+    // قطر
+    alWakrah: "الوكرة",
+    doha: "الدوحة",
+    alRayyan: "الريان",
+    dukhan: "دخان",
+    
+    // نيوزيلندا
+    auckland: "أوكلاند",
+    hamilton: "هاميلتون",
+    wellington: "ويلينغتون",
+    christchurch: "كرايستشيرش",
+    
+    // بولندا
+    warsaw: "وارسو",
+    
+    // لوكسمبورغ
+    luxembourgCity: "مدينة لوكسمبورغ",
+    
+    // إسبانيا
+    barcelona: "برشلونة",
+    madrid: "مدريد",
+    palma: "بالما",
+    granada: "غرناطة",
+    serviceCities: "مدن الخدمة",
 }
