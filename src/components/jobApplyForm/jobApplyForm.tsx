@@ -11,6 +11,8 @@ import {
   MenuItem,
   Button,
   CircularProgress,
+  Alert,
+  Snackbar,
 } from "@mui/material";
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -30,9 +32,17 @@ interface FormData {
   apartment_type: string;
 }
 
+interface FormErrors {
+  email: string;
+}
+
 const JobApplyForm: React.FC = () => {
   const { translate } = useLanguage();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showSuccess, setShowSuccess] = useState<boolean>(false);
+  const [errors, setErrors] = useState<FormErrors>({
+    email: "",
+  });
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -75,6 +85,14 @@ const JobApplyForm: React.FC = () => {
     { name: translate("countryUS"), code: "US" },
   ];
 
+  // Email validation function
+  const validateEmail = (email: string): boolean => {
+    const generalRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isGmail = email.endsWith('@gmail.com') || email.endsWith('@gmail.lk') || email.endsWith('@yahoo.com');
+    
+    return generalRegex.test(email) && isGmail;
+  };
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -83,6 +101,29 @@ const JobApplyForm: React.FC = () => {
       ...prev,
       [name]: value,
     }));
+
+    // Clear error when user starts typing again
+    if (name === "email") {
+      setErrors((prev) => ({
+        ...prev,
+        email: "",
+      }));
+    }
+  };
+
+  // Email blur handler for validation
+  const handleEmailBlur = () => {
+    if (formData.email && !validateEmail(formData.email)) {
+      setErrors((prev) => ({
+        ...prev,
+        email: translate("invalidEmailError") || "Please enter a valid email address",
+      }));
+    } else {
+      setErrors((prev) => ({
+        ...prev,
+        email: "",
+      }));
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,6 +136,16 @@ const JobApplyForm: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    // Validate email before submission
+    if (!validateEmail(formData.email)) {
+      setErrors((prev) => ({
+        ...prev,
+        email: translate("invalidEmailError") || "Please enter a valid email address",
+      }));
+      return; // Stop submission if email is invalid
+    }
+
     setIsLoading(true); // Start loading
 
     const payload = {
@@ -161,7 +212,8 @@ const JobApplyForm: React.FC = () => {
           apartment_type: "",
         });
 
-        alert(translate("applicationSuccess"));
+        // Show success Snackbar instead of alert
+        setShowSuccess(true);
       } else {
         throw new Error(`Unexpected status code: ${response.status}`);
       }
@@ -256,11 +308,21 @@ const JobApplyForm: React.FC = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
+                onBlur={handleEmailBlur}
                 required
+                error={!!errors.email}
                 InputProps={{
-                  sx: { borderRadius: "12px", border: "1px solid #0D90C8" },
+                  sx: { 
+                    borderRadius: "12px", 
+                    border: errors.email ? "1px solid #d32f2f" : "1px solid #0D90C8" 
+                  },
                 }}
               />
+              {errors.email && (
+                <Typography variant="caption" color="error" sx={{ mt: 0.5, ml: 1 }}>
+                  {errors.email}
+                </Typography>
+              )}
             </FormControl>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -464,6 +526,18 @@ const JobApplyForm: React.FC = () => {
           </Grid>
         </Grid>
       </form>
+
+      {/* Success Snackbar */}
+      <Snackbar
+        open={showSuccess}
+        autoHideDuration={6000}
+        onClose={() => setShowSuccess(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert severity="success" onClose={() => setShowSuccess(false)}>
+          {translate('applicationSuccess')}
+        </Alert>
+      </Snackbar>
     </Paper>
   );
 };

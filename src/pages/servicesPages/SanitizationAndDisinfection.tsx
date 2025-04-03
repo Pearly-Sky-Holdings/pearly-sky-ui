@@ -213,7 +213,7 @@ const validatePhoneNumber = (phone: string): { isValid: boolean; message?: strin
     setDialogMessage(translate('QemailRequired'));
     setOpenDialog(true);
     return;
-  } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|net|org|edu|gov|co\.uk|in|au|ca|io|me|us)$/i.test(formData.email)) {
+  } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|net|org|edu|gov|com\.uk|in|au|ca|io|me|us)$/i.test(formData.email)) {
     setDialogMessage(translate('QinvalidEmail'));
     setOpenDialog(true);
     return;
