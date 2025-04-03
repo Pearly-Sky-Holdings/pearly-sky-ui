@@ -1227,7 +1227,7 @@ export const enTranslations = {
 
 
     // Move In/Out Transport Cleaning Page ===============================================
-    MmoveInOutTransportCleaning: 'Move In and Out Transport Cleaning',
+    MmoveInOutTransportCleaning: 'Move In and Out Transport',
     McleaningServiceAlt: 'Cleaning service showcase',
     MmoveInOutDescription: 'Experience a seamless transition with our Move-In/Out Transport Service, a specialized offering meticulously crafted for individuals relocating to or from properties. Our service caters to those in the midst of house moves, providing comprehensive transportation solutions to ensure a stress-free experience.',
     MselectJobForQuotation: 'Select Your Job to Get Your Quotation',

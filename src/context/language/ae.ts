@@ -1185,7 +1185,7 @@ export const arTranslations = {
     otherCleaning: "أخرى",
 
     // Move In/Out Transport Cleaning Page ===============================================
-    MmoveInOutTransportCleaning: 'تنظيف النقل عند الانتقال إلى/من مكان',
+    MmoveInOutTransportCleaning: 'النقل الداخلي والخارجي',
     McleaningServiceAlt: 'عرض خدمة التنظيف',
     MmoveInOutDescription: 'استمتع بانتقال سلس مع خدمة النقل عند الانتقال إلى/من مكان، وهي خدمة متخصصة تم تصميمها بعناية للأفراد الذين ينتقلون إلى أو من عقارات. تلبي خدمتنا احتياجات أولئك الذين في خضم نقل المنازل، وتوفر حلول نقل شاملة لضمان تجربة خالية من التوتر.',
     MselectJobForQuotation: 'اختر وظيفتك للحصول على عرض الأسعار الخاص بك',

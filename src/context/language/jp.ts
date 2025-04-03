@@ -1218,7 +1218,7 @@ export const jpTranslations = {
   otherCleaning: "その他",
 
   // 引っ越し輸送クリーニングページ ===============================================
-  MmoveInOutTransportCleaning: '引っ越し輸送クリーニング',
+  MmoveInOutTransportCleaning: '引越し輸送',
   McleaningServiceAlt: 'クリーニングサービスの展示',
   MmoveInOutDescription: '引っ越し輸送サービスは、物件への引っ越しや移動中の個人向けに特別に設計された専門的なサービスです。家の移動中の方々に対応し、ストレスのない体験を確保するための包括的な輸送ソリューションを提供します。',
   MselectJobForQuotation: '見積もりを取得するためにジョブを選択してください',

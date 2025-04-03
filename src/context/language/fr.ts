@@ -1239,7 +1239,7 @@ export const frTranslations = {
   otherCleaning: "Autre",
 
   // Move In/Out Transport Cleaning Page  ===============================================
-  MmoveInOutTransportCleaning: 'Nettoyage Transport Déménagement',
+  MmoveInOutTransportCleaning: "Transport d'entrée et de sortie",
   McleaningServiceAlt: 'Service de nettoyage',
   MmoveInOutDescription: 'Déménagez en toute sérénité avec notre service spécialisé de nettoyage transport. Solution complète pour les particuliers en cours de déménagement, garantissant une transition sans stress.',
   MselectJobForQuotation: 'Sélectionnez votre prestation pour obtenir un devis',
