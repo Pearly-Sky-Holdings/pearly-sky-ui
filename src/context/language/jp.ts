@@ -1842,4 +1842,6 @@ export const jpTranslations = {
     palma: "パルマ",
     granada: "グラナダ",
     serviceCities: "サービス都市",
+
+    "NumberOfCleaners2": "清掃員の数",
   }

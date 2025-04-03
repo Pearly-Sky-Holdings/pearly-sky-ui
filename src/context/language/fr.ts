@@ -1870,4 +1870,6 @@ export const frTranslations = {
   palma: "Palma",
   granada: "Grenade",
   serviceCities: "Villes de service",
+
+  "NumberOfCleaners2": "Nombre de nettoyeurs",
 };

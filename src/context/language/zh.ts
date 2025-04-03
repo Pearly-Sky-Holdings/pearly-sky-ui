@@ -1824,4 +1824,6 @@ export const zhTranslations = {
     granada: "格拉纳达",
     serviceCities: "服务城市",
 
+    "NumberOfCleaners2": "清洁工人数",
+
 };

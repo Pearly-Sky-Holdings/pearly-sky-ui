@@ -1795,4 +1795,6 @@ export const arTranslations = {
     palma: "بالما",
     granada: "غرناطة",
     serviceCities: "مدن الخدمة",
+
+    "NumberOfCleaners2": "عدد عمال النظافة",
 }

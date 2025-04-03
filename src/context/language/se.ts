@@ -1792,4 +1792,6 @@ export const svTranslations = {
     palma: "Palma",
     granada: "Granada",
     serviceCities: "Servicestäder",
+
+    "NumberOfCleaners2": "Anzahl der Reinigungskräfte",
 };

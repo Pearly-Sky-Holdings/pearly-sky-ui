@@ -1821,5 +1821,7 @@ export const fiTranslations = {
     palma: "Palma",
     granada: "Granada",
     serviceCities: "Palvelukaupungit",
+
+    "NumberOfCleaners2": "Siivoajien määrä",
      
 }

@@ -1866,6 +1866,8 @@ export const enTranslations = {
      "madrid": "Madrid",
      "palma": "Palma",
      "granada": "Granada",
-     serviceCities: "Service Cities",
+     "serviceCities": "Service Cities",
+
+     "NumberOfCleaners2": "Number of Cleaners",
 
   };

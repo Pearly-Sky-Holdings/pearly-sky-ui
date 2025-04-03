@@ -45,11 +45,22 @@ const MoveInAndOutTransportBookingCart: React.FC<SanitizationBookingCartProps> =
   const { control } = useForm();
 
   const propertyTypeOptions = [
-    { value: "home", label: translate('propertyTypeHome') },
-    { value: "apartment", label: translate('propertyTypeApartment') },
-    { value: "villa", label: translate('propertyTypeVilla') },
-    { value: "commercial property", label: translate('propertyTypeCommercial') },
-    // ... other property types with translations
+    { value: "home", label: translate('home') },
+    { value: "apartment", label: translate('apartment') },
+    { value: "villa", label: translate('villa') },
+    { value: "commercial property", label: translate('commercialProperty') },
+    { value: "government office", label: translate('governmentOffice') },
+    { value: "public office", label: translate('publicOffice') },
+    { value: "private office", label: translate('privateOffice') },
+    { value: "daycare centre", label: translate('daycareCentre') },
+    { value: "elders care centre", label: translate('elderCareCleaning') },
+    { value: "shopping mall", label: translate('shoppingMall') },
+    { value: "government hospital", label: translate('governmentHospital') },
+    { value: "private hospital", label: translate('privateHospital') },
+    { value: "sport centre", label: translate('sportCentre') },
+    { value: "gym", label: translate('gym') },
+    { value: "restaurant", label: translate('restaurant') },
+    { value: "hotel", label: translate('hotel') },
   ];
 
   const propertySizeOptions = [
@@ -472,20 +483,70 @@ const MoveInAndOutTransportBookingCart: React.FC<SanitizationBookingCartProps> =
     { value: "english", label: translate('languageEnglish') },
     { value: "French", label: translate('languageFrench') },
     { value: "Spanish", label: translate('languageSpanish') },
-    // ... other languages with translations
+    { value: "Dutch", label: translate('languageDutch') },
+    { value: "German", label: translate('languageGerman') },
+    { value: "Arabic", label: translate('languageArabic') },
+    { value: "Any", label: translate('languageAny') },
   ];
 
   const timeZoneOptions = [
-    { value: "Pacific/Midway", label: "(UTC-11:00) Pacific/Midway" },
-    { value: "Pacific/Honolulu", label: "(UTC-10:00) Pacific/Honolulu" },
-    // ... other time zones (these don't need translation)
+    { value: "Pacific/Midway", label: `(UTC-11:00) ${translate('pacificMidway')}` },
+    { value: "Pacific/Honolulu", label: `(UTC-10:00) ${translate('pacificHonolulu')}` },
+    { value: "America/Anchorage", label: `(UTC-09:00) ${translate('americaAnchorage')}` },
+    { value: "America/Los_Angeles", label: `(UTC-08:00) ${translate('americaLosAngeles')}` },
+    { value: "America/Denver", label: `(UTC-07:00) ${translate('americaDenver')}` },
+    { value: "America/Chicago", label: `(UTC-06:00) ${translate('americaChicago')}` },
+    { value: "America/New_York", label: `(UTC-05:00) ${translate('americaNewYork')}` },
+    { value: "America/Caracas", label: `(UTC-04:30) ${translate('americaCaracas')}` },
+    { value: "America/Halifax", label: `(UTC-04:00) ${translate('americaHalifax')}` },
+    { value: "America/St_Johns", label: `(UTC-03:30) ${translate('americaStJohns')}` },
+    { value: "America/Buenos_Aires", label: `(UTC-03:00) ${translate('americaBuenosAires')}` },
+    { value: "America/Noronha", label: `(UTC-02:00) ${translate('americaNoronha')}` },
+    { value: "Atlantic/Azores", label: `(UTC-01:00) ${translate('atlanticAzores')}` },
+    { value: "Europe/London", label: `(UTC+00:00) ${translate('europeLondon')}` },
+    { value: "Europe/Paris", label: `(UTC+01:00) ${translate('europeParis')}` },
+    { value: "Europe/Istanbul", label: `(UTC+03:00) ${translate('europeIstanbul')}` },
+    { value: "Africa/Cairo", label: `(UTC+02:00) ${translate('africaCairo')}` },
+    { value: "Africa/Nairobi", label: `(UTC+03:00) ${translate('africaNairobi')}` },
+    { value: "Asia/Dubai", label: `(UTC+04:00) ${translate('asiaDubai')}` },
+    { value: "Asia/Kabul", label: `(UTC+04:30) ${translate('asiaKabul')}` },
+    { value: "Asia/Tehran", label: `(UTC+03:30) ${translate('asiaTehran')}` },
+    { value: "Asia/Kolkata", label: `(UTC+05:30) ${translate('asiaKolkata')}` },
+    { value: "Asia/Kathmandu", label: `(UTC+05:45) ${translate('asiaKathmandu')}` },
+    { value: "Asia/Dhaka", label: `(UTC+06:00) ${translate('asiaDhaka')}` },
+    { value: "Asia/Bangkok", label: `(UTC+07:00) ${translate('asiaBangkok')}` },
+    { value: "Asia/Singapore", label: `(UTC+08:00) ${translate('asiaSingapore')}` },
+    { value: "Asia/Shanghai", label: `(UTC+08:00) ${translate('asiaShanghai')}` },
+    { value: "Asia/Tokyo", label: `(UTC+09:00) ${translate('asiaTokyo')}` },
+    { value: "Australia/Sydney", label: `(UTC+10:00) ${translate('australiaSydney')}` },
+    { value: "Pacific/Auckland", label: `(UTC+12:00) ${translate('pacificAuckland')}` },  
   ];
 
   const countries = [
-    { name: translate('countryAustralia'), code: "AU" },
-    { name: translate('countryAustria'), code: "AT" },
-    { name: translate('countryBelgium'), code: "BE" },
-    // ... other countries with translations
+    { name: translate("countryAustralia"), code: "AU" },
+    { name: translate("countryAustria"), code: "AT" },
+    { name: translate("countryBelgium"), code: "BE" },
+    { name: translate("countryCanada"), code: "CA" },
+    { name: translate("countryDenmark"), code: "DK" },
+    { name: translate("countryFinland"), code: "FI" },
+    { name: translate("countryFrance"), code: "FR" },
+    { name: translate("countryGermany"), code: "DE" },
+    { name: translate("countryIreland"), code: "IE" },
+    { name: translate("countryItaly"), code: "IT" },
+    { name: translate("countryLuxembourg"), code: "LU" },
+    { name: translate("countryNetherlands"), code: "NL" },
+    { name: translate("countryNewZealand"), code: "NZ" },
+    { name: translate("countryPoland"), code: "PL" },
+    { name: translate("countryPortugal"), code: "PT" },
+    { name: translate("countryQatar"), code: "QA" },
+    { name: translate("countrySaudiArabia"), code: "SA" },
+    { name: translate("countryScotland"), code: "GB-SCT" },
+    { name: translate("countrySpain"), code: "ES" },
+    { name: translate("countrySriLanka"), code: "LK" },
+    { name: translate("countrySwitzerland"), code: "CH" },
+    { name: translate("countryUAE"), code: "AE" },
+    { name: translate("countryUK"), code: "GB" },
+    { name: translate("countryUS"), code: "US" },
   ];
 
   return (

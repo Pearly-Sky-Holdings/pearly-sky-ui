@@ -1797,5 +1797,7 @@ export const nlTranslations = {
     palma: "Palma",
     granada: "Granada",
     serviceCities: "Service Steden",
+
+    "NumberOfCleaners2": "Aantal schoonmakers",
       
 };
