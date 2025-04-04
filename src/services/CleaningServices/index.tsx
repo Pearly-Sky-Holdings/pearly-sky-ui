@@ -4,7 +4,10 @@ import instance from "../AxiosOrder";
 
 export const getPackege = createAsyncThunk('getPackeges', async (id: string, { rejectWithValue }) => {
     try {
-        const { data } = await instance.get(`service_with_packages/${id}`);      
+        const selectedCountry = localStorage.getItem('selectedCountry');
+        const { data } = await instance.get(`service_with_packages/${id}`,{
+            params: { country: selectedCountry }
+          });
         return data;
     } catch (error) {
         if (error instanceof Error) {
@@ -31,7 +34,9 @@ export const getServices = createAsyncThunk('searchService', async (id: string, 
 
 export const getRestockList = createAsyncThunk('getItems', async (_, { rejectWithValue }) => {
     try {
-        const { data } = await instance.get(`re_stocking_checklists`);        
+        const { data } = await instance.get(`re_stocking_checklists`,{
+            params: { country: localStorage.getItem('selectedCountry') }
+          });     
         return data;
     } catch (error) {
         if (error instanceof Error) {
@@ -44,7 +49,10 @@ export const getRestockList = createAsyncThunk('getItems', async (_, { rejectWit
 
 export const getFeedbackList = createAsyncThunk('getFeedback', async (_, { rejectWithValue }) => {
     try {
-        const { data } = await instance.get(`getFeedback`);        
+        const selectedCountry = localStorage.getItem('selectedCountry');
+        const { data } = await instance.get(`getFeedback`,{
+            params: { country: selectedCountry }
+        });        
         return data;
     } catch (error) {
         if (error instanceof Error) {
@@ -57,7 +65,9 @@ export const getFeedbackList = createAsyncThunk('getFeedback', async (_, { rejec
 
 export const getCustomerDetails = createAsyncThunk('getCustomer', async (id: string, { rejectWithValue }) => {
     try {
-        const { data } = await instance.get(`searchCustomer/${id}`);        
+        const { data } = await instance.get(`searchCustomer/${id}`,{
+            params: { country: localStorage.getItem('selectedCountry') }
+        });        
         return data;
     } catch (error) {
         if (error instanceof Error) {
