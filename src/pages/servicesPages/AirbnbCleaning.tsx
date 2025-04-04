@@ -120,11 +120,28 @@ function AirbnbAndShortService() {
 
   useEffect(() => {
     if (items.data.length > 0) {
+      // Group items by category, handling both English and Japanese categories
       const grouped = items.data.reduce((acc: any, item: any) => {
-        if (!acc[item.category]) {
-          acc[item.category] = [];
+        // Map Japanese categories to English for consistent grouping
+        let categoryKey = item.category;
+        
+        // Special handling for Japanese categories to map them to expected UI sections
+        if (item.category === "バスルーム" || item.category === "الحمامات" || item.category === "Kylpyhuoneet" || item.category === "浴室" || item.category === "Badrum" || item.category === "Bäder" || item.category === "Badkamers" || item.category === "Salles de bains") {
+          categoryKey = "Bathrooms";
+        } else if (item.category === "キッチン" || item.category === "المطبخ" || item.category === "Keittiö" || item.category === "厨房" || item.category === "Kök" || item.category === "Köket" || item.category === "Keuken" || item.category === "Cuisine") {
+          categoryKey = "Kitchen";
+        } else if (item.category === "ベッドルーム" || item.category === "غرف النوم"  || item.category === "Makuuhuoneet" || item.category === "卧室" || item.category === "SängRum" || item.category === "Sovrum" || item.category === "Schlafzimmer" || item.category === "Slaapkamers" || item.category === "Chambres à coucher") {
+          categoryKey = "BedRooms";
+        } else if (item.category === "その他" || item.category === "متنوع" || item.category === "Sekalaiset" || item.category === "杂项" || item.category === "Övrigt" || item.category === "Sonstiges" || item.category === "Woonkamer" || item.category === "Divers") {
+          categoryKey = "Miscellaneous";
+        } else if (item.category === "リビングルーム" || item.category === "غرفة المعيشة" || item.category === "Olohuoneet" || item.category === "客厅" || item.category === "Hushållsapparater" || item.category === "Vardagsrum" || item.category === "Wohnzimmer" || item.category === "Huishoudelijke" || item.category === "Appareils ménagers") {
+          categoryKey = "Living_Room";
         }
-        acc[item.category].push(item);
+        
+        if (!acc[categoryKey]) {
+          acc[categoryKey] = [];
+        }
+        acc[categoryKey].push(item);
         return acc;
       }, {});
       setGroupedItems(grouped);
