@@ -44,8 +44,8 @@ export const arTranslations = {
     nmoveInOutCleaning: 'تنظيف الانتقال/المغادرة',
     npostConstructionCleaning: 'تنظيف ما بعد البناء',
     nairbnbCleaning: 'تنظيف Airbnb والإيجار قصير الأجل',
-    nchildCareCleaning: 'تنظيف رعاية الأطفال',
-    nelderCareCleaning: 'تنظيف رعاية المسنين',
+    nchildCareCleaning: ' خدمة رعاية الأطفال',
+    nelderCareCleaning: 'خدمة رعاية المسنين  ',
     nsanitizationDisinfection: 'التعقيم والتطهير',
     ncommercialOfficeCleaning: 'تنظيف المكاتب التجارية',
     ncarpetCleaning: 'تنظيف السجاد',
@@ -1614,187 +1614,187 @@ export const arTranslations = {
     updateSoon: "تحديث قريبا",
     
     // مدن الخدمة حسب البلد
-    // فرنسا
-    paris: "باريس",
-    nice: "نيس",
-    saintTropez: "سان تروبيه",
-    antibes: "أنتيب",
-    cannes: "كان",
-    marseille: "مرسيليا",
-    lyon: "ليون",
-    bordeaux: "بوردو",
-    toulouse: "تولوز",
-    toulon: "طولون",
-    montpellier: "مونبلييه",
-    monteCarlo: "مونت كارلو",
-    strasbourg: "ستراسبورغ",
-    monaco: "موناكو",
-    frenchRiviera: "الريفيرا الفرنسية",
-    rouen: "روان",
-    leHavre: "لو هافر",
-    normandy: "نورماندي",
-    deauville: "دوفيل",
-    dieppe: "دييب",
-    laRochelle: "لا روشيل",
-    nantes: "نانت",
-    narbonne: "ناربون",
-    
-    // المملكة المتحدة
-    london: "لندن",
-    yake: "ياك",
-    bristol: "بريستول",
-    birmingham: "برمنغهام",
-    leicester: "ليستر",
-    nottingham: "نوتنغهام",
-    plymouth: "بليموث",
-    bradford: "برادفورد",
-    edinburgh: "إدنبرة",
-    derby: "ديربي",
-    southampton: "ساوثهامبتون",
-    liverpool: "ليفربول",
-    kingstonUponHull: "كينغستون أبون هال",
-    portsmouth: "بورتسموث",
-    manchester: "مانشستر",
-    chester: "تشستر",
-    stokeOnTrent: "ستوك أون ترينت",
-    pererborough: "بيربورو",
-    conventry: "كوفنتري",
-    sheffield: "شيفيلد",
-    norwich: "نورويتش",
-    brighton: "برايتون",
-    cambridge: "كامبريدج",
-    newcastleUponTyne: "نيوكاسل أبون تاين",
-    oxford: "أكسفورد",
-    chelmsford: "تشيلمسفورد",
-    leeds: "ليدز",
-    luton: "لوتون",
-    miltoKeynes: "ميلتون كينز",
-    gloucester: "غلوستر",
-    sunderland: "ساندرلاند",
-    salisbury: "سالزبوري",
-    
-    // سريلانكا
-    colombo: "كولومبو",
-    kandy: "كاندي",
-    negombo: "نيغومبو",
-    nuwaraEliya: "نوارا إليا",
-    
-    // اسكتلندا
-    aberdeen: "أبردين",
-    glasgow: "غلاسكو",
-    dundee: "دندي",
-    inverness: "إنفرنيس",
-    feedback: "تعليقات",
-    stirling: "ستيرلينغ",
-    
-    // ألمانيا
-    berlin: "برلين",
-    hamburg: "هامبورغ",
-    munich: "ميونخ",
-    cologne: "كولونيا",
-    frankfurt: "فرانكفورت",
-    
-    // بلجيكا
-    bruseels: "بروكسل",
-    
-    // أستراليا
-    sydney: "سيدني",
-    melbourne: "ملبورن",
-    brisbane: "بريزبان",
-    perth: "بيرث",
-    adelaide: "أديلايد",
-    
-    // الإمارات العربية المتحدة
-    dubai: "دبي",
-    abuDhabi: "أبو ظبي",
-    sharjah: "الشارقة",
-    rasAlkhaimah: "رأس الخيمة",
-    jebelAli: "جبل علي",
-    
-    // كندا
-    toronto: "تورونتو",
-    montreal: "مونتريال",
-    ottawa: "أوتاوا",
-    vancouver: "فانكوفر",
-    
-    // فنلندا
-    helsinki: "هلسنكي",
-    oulu: "أولو",
-    turku: "توركو",
-    tampere: "تامبيري",
-    
-    // السعودية
-    riyadh: "الرياض",
-    jeddah: "جدة",
-    
-    // إيطاليا
-    rome: "روما",
-    venice: "البندقية",
-    florence: "فلورنسا",
-    milan: "ميلانو",
-    naples: "نابولي",
-    
-    // البرتغال
-    lisbon: "لشبونة",
-    
-    // الولايات المتحدة
-    newYork: "نيويورك",
-    losAngeles: "لوس أنجلوس",
-    philadelphia: "فيلادلفيا",
-    houston: "هيوستن",
-    
-    // أيرلندا
-    dublin: "دبلن",
-    belfast: "بلفاست",
-    cork: "كورك",
-    limerick: "ليمريك",
-    galway: "غالواي",
-    
-    // النمسا
-    vienna: "فيينا",
-    villach: "فيلاخ",
-    innsbruck: "إنسبروك",
-    graz: "غراتس",
-    bregenz: "بريغنز",
-    
-    // هولندا
-    amsterdam: "أمستردام",
-    utrecht: "أوتريخت",
-    rotterdam: "روتردام",
-    groningen: "خرونينغن",
-    theHague: "لاهاي",
-    
-    // سويسرا
-    zurich: "زيورخ",
-    geneva: "جنيف",
-    basel: "بازل",
-    bern: "برن",
-    lausanne: "لوزان",
-    
-    // قطر
-    alWakrah: "الوكرة",
-    doha: "الدوحة",
-    alRayyan: "الريان",
-    dukhan: "دخان",
-    
-    // نيوزيلندا
-    auckland: "أوكلاند",
-    hamilton: "هاميلتون",
-    wellington: "ويلينغتون",
-    christchurch: "كرايستشيرش",
-    
-    // بولندا
-    warsaw: "وارسو",
-    
-    // لوكسمبورغ
-    luxembourgCity: "مدينة لوكسمبورغ",
-    
-    // إسبانيا
-    barcelona: "برشلونة",
-    madrid: "مدريد",
-    palma: "بالما",
-    granada: "غرناطة",
-    serviceCities: "مدن الخدمة",
+   // فرنسا
+   "paris": "باريس",
+   "nice": "نيس",
+   "saintTropez": "سان تروبيه",
+   "antibes": "أنتيب",
+   "cannes": "كان",
+   "marseille": "مارسيليا",
+   "lyon": "ليون",
+   "bordeaux": "بوردو",
+   "toulouse": "تولوز",
+   "toulon": "طولون",
+   "montpellier": "مونبلييه",
+//    "monteCarlo": "مونت كارلو",  // (موناكو، ليست فرنسا)
+   "strasbourg": "ستراسبورغ",
+//    "monaco": "موناكو",           // (دولة مستقلة)
+   "frenchRiviera": "الريفييرا الفرنسية", // منطقة
+   "rouen": "روان",
+   "leHavre": "لو هافر",
+   "normandy": "نورماندي",      // منطقة
+   "deauville": "دوفيل",
+   "dieppe": "دييب",
+   "laRochelle": "لا روشيل",
+   "nantes": "نانت",
+   "narbonne": "ناربون",
+   
+   // المملكة المتحدة
+   "london": "لندن",
+   "yake": "يورك",               // (تم التصحيح)
+   "bristol": "بريستول",
+   "birmingham": "برمنغهام",
+   "leicester": "ليستر",
+   "nottingham": "نوتنغهام",
+   "plymouth": "بليموث",
+   "bradford": "برادفورد",
+   "edinburgh": "إدنبرة",
+   "derby": "ديربي",
+   "southampton": "ساوثهامبتون",
+   "liverpool": "ليفربول",
+   "kingstonUponHull": "كينغستون أبون هال", // (الاسم الرسمي)
+   "portsmouth": "بورتسموث",
+   "manchester": "مانشستر",
+   "chester": "تشستر",
+   "stokeOnTrent": "ستوك أون ترينت",
+   "pererborough": "بيتربورو", // (تم التصحيح)
+   "conventry": "كوفنتري",       // (تم التصحيح)
+   "sheffield": "شيفيلد",
+   "norwich": "نورويتش",
+   "brighton": "برايتون",
+   "cambridge": "كامبريدج",
+   "newcastleUponTyne": "نيوكاسل أبون تاين",
+   "oxford": "أكسفورد",
+   "chelmsford": "تشيلمسفورد",
+   "leeds": "ليدز",
+   "luton": "لوتون",
+   "miltoKeynes": "ميلتون كينز", // (تم التصحيح)
+   "gloucester": "غلوستر",
+   "sunderland": "ساندرلاند",
+   "salisbury": "سالزبوري",
+   
+   // سريلانكا
+   "colombo": "كولومبو",
+   "kandy": "كاندي",
+   "negombo": "نيغومبو",
+   "nuwaraEliya": "نوارا إليا",
+   
+   // اسكتلندا
+   "aberdeen": "أبردين",
+   "glasgow": "غلاسكو",
+   "dundee": "دندي",
+   "inverness": "إنفرنس",
+   "feedback": "ملاحظات",       // (غير ذي صلة)
+   "stirling": "ستيرلينغ",
+   
+   // ألمانيا
+   "berlin": "برلين",
+   "hamburg": "هامبورغ",
+   "munich": "ميونخ",          // الألمانية
+   "cologne": "كولونيا",            // "كولونيا" العربية
+   "frankfurt": "فرانكفورت",
+   
+   // بلجيكا
+   "bruseels": "بروكسل",        // (تم التصحيح)
+   
+   // أستراليا
+   "sydney": "سيدني",
+   "melbourne": "ملبورن",
+   "brisbane": "بريزبان",
+   "perth": "بيرث",
+   "adelaide": "أديلايد",
+   
+   // الإمارات
+   "dubai": "دبي",
+   "abuDhabi": "أبو ظبي",
+   "sharjah": "الشارقة",
+   "rasAlkhaimah": "رأس الخيمة", // (تم التصحيح)
+   "jebelAli": "جبل علي",
+   
+   // كندا
+   "toronto": "تورونتو",
+   "montreal": "مونتريال",      
+   "ottawa": "أوتاوا",
+   "vancouver": "فانكوفر",
+   
+   // فنلندا
+   "helsinki": "هلسنكي",
+   "oulu": "أولو",
+   "turku": "توركو",
+   "tampere": "تامبيري",
+   
+   // السعودية
+   "riyadh": "الرياض",
+   "jeddah": "جدة",
+   
+   // إيطاليا
+   "rome": "روما",
+   "venice": "البندقية",
+   "florence": "فلورنسا",      
+   "milan": "ميلانو",            
+   "naples": "نابولي",          
+   
+   // البرتغال
+   "lisbon": "لشبونة",        
+   
+   // الولايات المتحدة
+   "newYork": "نيويورك",
+   "losAngeles": "لوس أنجلوس",
+   "philadelphia": "فيلادلفيا",
+   "houston": "هيوستن",
+   
+   // أيرلندا
+   "dublin": "دبلن",
+   "belfast": "بلفاست",        // (أيرلندا الشمالية/المملكة المتحدة)
+   "cork": "كورك",
+   "limerick": "ليمريك",
+   "galway": "غالواي",
+   
+   // النمسا
+   "vienna": "فيينا",          
+   "villach": "فيلاخ",
+   "innsbruck": "إنسبروك",
+   "graz": "غراتس",
+   "bregenz": "بريغنز",
+   
+   // هولندا
+   "amsterdam": "أمستردام",
+   "utrecht": "أوتريخت",
+   "rotterdam": "روتردام",
+   "groningen": "خرونينغن",
+   "theHague": "لاهاي",
+   
+   // سويسرا
+   "zurich": "زيورخ",          
+   "geneva": "جنيف",
+   "basel": "بازل",
+   "bern": "برن",
+   "lausanne": "لوزان",
+   
+   // قطر
+   "alWakrah": "الوكرة",
+   "doha": "الدوحة",
+   "alRayyan": "الريان",
+   "dukhan": "دخان",
+   
+   // نيوزيلندا
+   "auckland": "أوكلاند",
+   "hamilton": "هاميلتون",
+   "wellington": "ويلينغتون",
+   "christchurch": "كرايستشيرش",
+   
+   // بولندا
+   "warsaw": "وارسو",        
+   
+   // لوكسمبورغ
+   "luxembourgCity": "مدينة لوكسمبورغ", 
+   
+   // إسبانيا
+   "barcelona": "برشلونة",
+   "madrid": "مدريد",
+   "palma": "بالما", 
+   "granada": "غرناطة"          ,
+   serviceCities: "مدن الخدمة",
 
     "NumberOfCleaners2": "عدد عمال النظافة",
 }

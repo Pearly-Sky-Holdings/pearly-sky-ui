@@ -21,8 +21,8 @@ const TeamOfExpertsPage: React.FC = () => {
       email: "anushatan@pearlyskyplc.com",
     },
     {
-      nameKey: "nipunaPiyumal",
-      titleKey: "technicalSupport",
+      nameKey: " ",
+      titleKey: "Customer Support Manager",
       image: nipuna,
       email: "nipunapiyumal@pearlyskyplc.com",
     },

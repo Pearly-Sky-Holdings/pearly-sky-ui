@@ -52,15 +52,15 @@ export default function NavigationBar() {
     { labelKey: "npostConstructionCleaning", path: "/post_constructor_cleaning" },
     { labelKey: "nairbnbCleaning", path: "/airbnb_and_short_service" },
     { labelKey: "nchildCareCleaning", path: "/child_care_cleaning" },
-    { labelKey: "nelderCareCleaning", path: "/elder_care_cleaning" },
-    { labelKey: "nsanitizationDisinfection", path: "/sanitization_cleaning" },
+    { labelKey: "nelderCareCleaning", path: "/elder_care_cleaning" },   
     { labelKey: "ncommercialOfficeCleaning", path: "/commercial_cleaning" },
+    { labelKey: "nsanitizationDisinfection", path: "/sanitization_cleaning" },
     { labelKey: "ncarpetCleaning", path: "/carpet_cleaning" },
     { labelKey: "nmoveInOutTransportService", path: "/move_in_out_and_transport_cleaning" },
     { labelKey: "nsteamCleaning", path: "/steam_cleaning" },
-    { labelKey: "npressureWashing", path: "/pressure_washing" },
     { labelKey: "neventCleaning", path: "/special_event_cleaning" },
     { labelKey: "npoolCleaning", path: "/pool_cleaning" },
+    { labelKey: "npressureWashing", path: "/pressure_washing" },
     { labelKey: "nlaundryServices", path: "/upcomming" },
   ];
 
