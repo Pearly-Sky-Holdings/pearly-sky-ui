@@ -139,7 +139,7 @@ export const deTranslations = {
   shakilaBandara: 'Herr Shakila Bandara',
   operationsManager: 'Betriebsleiter',
   salesDirector: 'Verkaufsdirektor',
-  technicalSupport: 'Technischer Support',
+  CustomerSupportManager: 'Kundensupport-Manager',
 
   // Our Showcase ===============================================
   ourShowcaseTitle: 'Unsere Präsentation',

@@ -142,7 +142,7 @@ export const enTranslations = {
     shakilaBandara: 'Mr Shakila Bandara',
     operationsManager: 'Operations Manager',
     salesDirector: 'Sales Director',
-    technicalSupport: 'Technical Support',
+    CustomerSupportManager: 'Customer Support Manager',
 
     // Our Showcase ===============================================
     ourShowcaseTitle: 'Our Showcase',

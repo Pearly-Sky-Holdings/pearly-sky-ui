@@ -140,7 +140,7 @@ export const arTranslations = {
     shakilaBandara: 'السيد شاكيلا باندارا',
     operationsManager: 'مدير العمليات',
     salesDirector: 'مدير المبيعات',
-    technicalSupport: 'الدعم الفني',
+    CustomerSupportManager: 'مدير دعم العملاء',
 
     // Our Showcase ===============================================
     ourShowcaseTitle: 'عرضنا',

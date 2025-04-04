@@ -170,7 +170,7 @@ export const frTranslations = {
   shakilaBandara: 'M. Shakila Bandara',
   operationsManager: 'Directeur des Opérations',
   salesDirector: 'Directeur Commercial',
-  technicalSupport: 'Support Technique',
+  CustomerSupportManager: 'Responsable du support client',
 
   // Notre Vitrine ===============================================
   ourShowcaseTitle: 'Notre Vitrine',

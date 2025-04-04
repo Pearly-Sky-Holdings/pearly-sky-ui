@@ -139,7 +139,7 @@ export const svTranslations = {
     shakilaBandara: 'Herr Shakila Bandara',
     operationsManager: 'Verksamhetschef',
     salesDirector: 'Försäljningsdirektör',
-    technicalSupport: 'Teknisk support',
+    CustomerSupportManager: 'Kundsupportchef',
 
     // Our Showcase ===============================================
     ourShowcaseTitle: 'Vår uppvisning',

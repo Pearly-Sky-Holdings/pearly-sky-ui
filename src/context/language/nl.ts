@@ -140,7 +140,7 @@ export const nlTranslations = {
     shakilaBandara: 'Dhr. Shakila Bandara',
     operationsManager: 'Operations Manager',
     salesDirector: 'Sales Director',
-    technicalSupport: 'Technische Ondersteuning',
+    CustomerSupportManager: 'Klantenservicemanager',
 
     // Onze Showcase ===============================================
     ourShowcaseTitle: 'Onze Showcase',

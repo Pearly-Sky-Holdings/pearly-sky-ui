@@ -142,7 +142,7 @@ export const zhTranslations = {
         shakilaBandara: 'Shakila Bandara先生',
         operationsManager: '运营经理',
         salesDirector: '销售总监',
-        technicalSupport: '技术支持',
+        CustomerSupportManager: '客户支持经理',
     
         // Our Showcase ===============================================
         ourShowcaseTitle: '我们的展示',

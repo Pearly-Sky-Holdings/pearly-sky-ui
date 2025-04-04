@@ -141,7 +141,7 @@ export const jpTranslations = {
     shakilaBandara: 'シャキラ・バンダラ氏',
     operationsManager: 'オペレーションマネージャー',
     salesDirector: '営業ディレクター',
-    technicalSupport: 'テクニカルサポート',
+    CustomerSupportManager: 'カスタマーサポートマネージャー',
 
     // Our Showcase ===============================================
     ourShowcaseTitle: '私たちのショーケース',

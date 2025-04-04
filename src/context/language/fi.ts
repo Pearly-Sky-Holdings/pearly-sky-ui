@@ -140,7 +140,7 @@ export const fiTranslations = {
     shakilaBandara: 'Herra Shakila Bandara',
     operationsManager: 'Toimintapäällikkö',
     salesDirector: 'Myyntijohtaja',
-    technicalSupport: 'Tekninen tuki',
+    CustomerSupportManager: 'Asiakastukipäällikkö',
 
     // Our Showcase ===============================================
     ourShowcaseTitle: 'Esittelymme',

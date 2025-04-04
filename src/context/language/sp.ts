@@ -141,7 +141,7 @@ export const spTranslations = {
     shakilaBandara: 'Sr. Shakila Bandara',
     operationsManager: 'Gerente de Operaciones',
     salesDirector: 'Director de Ventas',
-    technicalSupport: 'Soporte Técnico',
+    CustomerSupportManager: 'Gerente de Atención al Cliente',
 
     // Our Showcase ===============================================
     ourShowcaseTitle: 'Nuestra Exhibición',
