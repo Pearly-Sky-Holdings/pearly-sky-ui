@@ -21,6 +21,7 @@ import { useLanguage } from "../../context/LanguageContext";
 
 const Gallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [progressValues, setProgressValues] = useState([0, 0, 0]);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { translate } = useLanguage();
@@ -60,6 +61,35 @@ const Gallery = () => {
     return () => clearInterval(interval); // Clear interval on unmount
   }, [images.length]);
 
+  // Progress animation effect
+  useEffect(() => {
+    // Animation duration in milliseconds
+    const animationDuration = 1500;
+    // Number of steps for the animation
+    const steps = 60;
+    // Time between steps in milliseconds
+    const stepDuration = animationDuration / steps;
+
+    let currentStep = 0;
+    
+    const animationInterval = setInterval(() => {
+      currentStep++;
+      
+      if (currentStep <= steps) {
+        // Calculate progress based on current step
+        setProgressValues(progressData.map((item) => {
+          return Math.round((item.value * currentStep) / steps);
+        }));
+      } else {
+        // Animation complete
+        clearInterval(animationInterval);
+        setProgressValues(progressData.map(item => item.value));
+      }
+    }, stepDuration);
+
+    return () => clearInterval(animationInterval);
+  }, []);
+
   const nextSlide = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex + 5 >= images.length ? 0 : prevIndex + 5
@@ -84,7 +114,7 @@ const Gallery = () => {
         {isMobile ? (
           // Mobile Progress Section with separate boxes
           <Box display="flex" flexDirection="column" alignItems="center" mb={8}>
-            {progressData.map((item) => (
+            {progressData.map((item, index) => (
               <Box
                 key={item.labelKey}
                 textAlign="center"
@@ -96,7 +126,7 @@ const Gallery = () => {
                 boxShadow="0px 4px 10px rgba(37, 150, 190, 0.5)"
               >
                 <Typography variant="h6" color="#008CDA" fontWeight="bold">
-                  {item.value}%
+                  {progressValues[index]}%
                 </Typography>
                 <Typography variant="body2" color="black">
                   {translate(item.labelKey)}
@@ -118,10 +148,10 @@ const Gallery = () => {
               width="75%"
               boxShadow="0px 4px 10px rgba(37, 150, 190, 0.5)"
             >
-              {progressData.map((item) => (
+              {progressData.map((item, index) => (
                 <Box key={item.labelKey} textAlign="center">
                   <Typography variant="h6" color="#008CDA" fontWeight="bold">
-                    {item.value}%
+                    {progressValues[index]}%
                   </Typography>
                   <Typography variant="body2" color="black">
                     {translate(item.labelKey)}

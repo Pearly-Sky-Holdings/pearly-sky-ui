@@ -7,6 +7,7 @@ export { spTranslations } from './sp';
 export { nlTranslations } from './nl';
 export { svTranslations } from './se';
 export { arTranslations } from './ae';
+export { fiTranslations } from './fi';
 
-export type SupportedLanguage = 'en' | 'fr' | 'de' | 'jp' | 'cn' | 'sp' | 'nl' | 'se';
+export type SupportedLanguage = 'en' | 'fr' | 'de' | 'jp' | 'cn' | 'sp' | 'nl' | 'se' | 'ar' | 'fi';
 export type Translations = Record<string, string>;

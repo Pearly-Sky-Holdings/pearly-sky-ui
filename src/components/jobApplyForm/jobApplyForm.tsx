@@ -1,5 +1,5 @@
 import React, { useState, FormEvent } from "react";
-import instance from "../../services/AxiosOrder"; 
+import instance from "../../services/AxiosOrder";
 import {
   Grid,
   TextField,
@@ -10,6 +10,9 @@ import {
   Select,
   MenuItem,
   Button,
+  CircularProgress,
+  Alert,
+  Snackbar,
 } from "@mui/material";
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -25,10 +28,21 @@ interface FormData {
   zipPostal: string;
   country: string;
   resume: File | null;
+  company: string;
+  apartment_type: string;
+}
+
+interface FormErrors {
+  email: string;
 }
 
 const JobApplyForm: React.FC = () => {
   const { translate } = useLanguage();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showSuccess, setShowSuccess] = useState<boolean>(false);
+  const [errors, setErrors] = useState<FormErrors>({
+    email: "",
+  });
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -40,33 +54,44 @@ const JobApplyForm: React.FC = () => {
     zipPostal: "",
     country: "",
     resume: null,
+    company: "",
+    apartment_type: "",
   });
 
   const countries = [
-    { name: translate('france'), code: "FR" },
-    { name: translate('unitedKingdom'), code: "GB" },
-    { name: translate('sriLanka'), code: "LK" },
-    { name: "Scotland", code: "GB-SCT" },
-    { name: translate('germany'), code: "DE" },
-    { name: "Australia", code: "AU" },
-    { name: "United Arab Emirates", code: "AE" },
-    { name: "Canada", code: "CA" },
-    { name: "Finland", code: "FI" },
-    { name: "Saudi Arabia", code: "SA" },
-    { name: "Italy", code: "IT" },
-    { name: translate('unitedStates'), code: "US" },
-    { name: "Ireland", code: "IE" },
-    { name: "Austria", code: "AT" },
-    { name: "Netherlands", code: "NL" },
-    { name: "Switzerland", code: "CH" },
-    { name: "Qatar", code: "QA" },
-    { name: "Denmark", code: "DK" },
-    { name: "New Zealand", code: "NZ" },
-    { name: "Poland", code: "PL" },
-    { name: "Portugal", code: "PT" },
-    { name: "Spain", code: "ES" },
-    { name: "Belgium", code: "BE" },
+    { name: translate("countryAustralia"), code: "AU" },
+    { name: translate("countryAustria"), code: "AT" },
+    { name: translate("countryBelgium"), code: "BE" },
+    { name: translate("countryCanada"), code: "CA" },
+    { name: translate("countryDenmark"), code: "DK" },
+    { name: translate("countryFinland"), code: "FI" },
+    { name: translate("countryFrance"), code: "FR" },
+    { name: translate("countryGermany"), code: "DE" },
+    { name: translate("countryIreland"), code: "IE" },
+    { name: translate("countryItaly"), code: "IT" },
+    { name: translate("countryLuxembourg"), code: "LU" },
+    { name: translate("countryNetherlands"), code: "NL" },
+    { name: translate("countryNewZealand"), code: "NZ" },
+    { name: translate("countryPoland"), code: "PL" },
+    { name: translate("countryPortugal"), code: "PT" },
+    { name: translate("countryQatar"), code: "QA" },
+    { name: translate("countrySaudiArabia"), code: "SA" },
+    { name: translate("countryScotland"), code: "GB-SCT" },
+    { name: translate("countrySpain"), code: "ES" },
+    { name: translate("countrySriLanka"), code: "LK" },
+    { name: translate("countrySwitzerland"), code: "CH" },
+    { name: translate("countryUAE"), code: "AE" },
+    { name: translate("countryUK"), code: "GB" },
+    { name: translate("countryUS"), code: "US" },
   ];
+
+  // Email validation function
+  const validateEmail = (email: string): boolean => {
+    const generalRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isGmail = email.endsWith('@gmail.com') || email.endsWith('@gmail.lk') || email.endsWith('@yahoo.com');
+    
+    return generalRegex.test(email) && isGmail;
+  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -76,6 +101,29 @@ const JobApplyForm: React.FC = () => {
       ...prev,
       [name]: value,
     }));
+
+    // Clear error when user starts typing again
+    if (name === "email") {
+      setErrors((prev) => ({
+        ...prev,
+        email: "",
+      }));
+    }
+  };
+
+  // Email blur handler for validation
+  const handleEmailBlur = () => {
+    if (formData.email && !validateEmail(formData.email)) {
+      setErrors((prev) => ({
+        ...prev,
+        email: translate("invalidEmailError") || "Please enter a valid email address",
+      }));
+    } else {
+      setErrors((prev) => ({
+        ...prev,
+        email: "",
+      }));
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,29 +136,67 @@ const JobApplyForm: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-  
+
+    // Validate email before submission
+    if (!validateEmail(formData.email)) {
+      setErrors((prev) => ({
+        ...prev,
+        email: translate("invalidEmailError") || "Please enter a valid email address",
+      }));
+      return; // Stop submission if email is invalid
+    }
+
+    setIsLoading(true); // Start loading
+
     const payload = {
       first_name: formData.firstName,
       last_name: formData.lastName,
-      company: "Pearly Sky PLC",
       country: formData.country,
       city: formData.city,
       province: formData.stateProvince,
-      apartment_type: formData.address,
+      apartment_type: formData.apartment_type,
       street_address: formData.address,
       postal_code: formData.zipPostal,
       contact: formData.phone,
       email: formData.email,
+      pdf: formData.resume,
+      company: formData.company
     };
-  
+
     try {
-      const response = await instance.post("saveJobApplication", payload);
-  
+      // Create a new FormData object
+      const formData = new FormData();
+
+      // Add all form fields to the FormData
+      formData.append("first_name", payload.first_name);
+      formData.append("last_name", payload.last_name);
+      formData.append("email", payload.email);
+      formData.append("contact", payload.contact);
+      formData.append("street_address", payload.street_address);
+      formData.append("city", payload.city);
+      formData.append("stateProvince", payload.province);
+      formData.append("postal_code", payload.postal_code);
+      formData.append("country", payload.country);
+      formData.append("company", payload.company);
+      formData.append("apartment_type", payload.apartment_type);
+
+      // Add the resume file if it exists
+      if (payload.pdf) {
+        formData.append("pdf", payload.pdf);
+      }
+
+      // Make the API call with FormData
+      const response = await instance.post("saveJobApplication", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
       console.log("API Response:", response);
-  
+
       if (response.status === 200 || response.status === 201) {
         console.log("Application submitted successfully:", response.data);
-  
+
         setFormData({
           firstName: "",
           lastName: "",
@@ -122,35 +208,40 @@ const JobApplyForm: React.FC = () => {
           zipPostal: "",
           country: "",
           resume: null,
+          company: "",
+          apartment_type: "",
         });
-  
-        alert(translate('applicationSuccess'));
+
+        // Show success Snackbar instead of alert
+        setShowSuccess(true);
       } else {
         throw new Error(`Unexpected status code: ${response.status}`);
       }
     } catch (error: any) {
       console.error("Error submitting application:", error);
-  
+
       if (error?.response) {
         const status = error.response.status;
-        let errorMessage = translate('submitError');
-  
+        let errorMessage = translate("submitError");
+
         if (status === 400) {
-          errorMessage = translate('invalidDataError');
+          errorMessage = translate("invalidDataError");
         } else if (status === 401 || status === 403) {
-          errorMessage = translate('unauthorizedError');
+          errorMessage = translate("unauthorizedError");
         } else if (status === 404) {
-          errorMessage = translate('resourceNotFoundError');
+          errorMessage = translate("resourceNotFoundError");
         } else if (status === 500) {
-          errorMessage = translate('serverError');
+          errorMessage = translate("serverError");
         }
-  
+
         alert(errorMessage);
       } else if (error?.request) {
-        alert(translate('noServerResponse'));
+        alert(translate("noServerResponse"));
       } else {
-        alert(translate('unexpectedError'));
+        alert(translate("unexpectedError"));
       }
+    } finally {
+      setIsLoading(false); // Stop loading regardless of success or failure
     }
   };
 
@@ -161,7 +252,7 @@ const JobApplyForm: React.FC = () => {
         fontWeight="bold"
         sx={{ mb: 2, color: "#003370" }}
       >
-        {translate('cleanerJobTitle')}
+        {translate("cleanerJobTitle")}
       </Typography>
 
       <form onSubmit={handleSubmit}>
@@ -169,10 +260,10 @@ const JobApplyForm: React.FC = () => {
           {/* First Name & Last Name */}
           <Grid item xs={12} md={6}>
             <FormControl fullWidth size="small">
-              <FormLabel>{translate('firstNameLabel')}*</FormLabel>
+              <FormLabel>{translate("firstNameLabel")}*</FormLabel>
               <TextField
                 fullWidth
-                placeholder={translate('firstNamePlaceholder')}
+                placeholder={translate("firstNamePlaceholder")}
                 variant="outlined"
                 size="small"
                 name="firstName"
@@ -187,10 +278,10 @@ const JobApplyForm: React.FC = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <FormControl fullWidth size="small">
-              <FormLabel>{translate('lastNameLabel')}*</FormLabel>
+              <FormLabel>{translate("lastNameLabel")}*</FormLabel>
               <TextField
                 fullWidth
-                placeholder={translate('lastNamePlaceholder')}
+                placeholder={translate("lastNamePlaceholder")}
                 variant="outlined"
                 size="small"
                 name="lastName"
@@ -207,29 +298,39 @@ const JobApplyForm: React.FC = () => {
           {/* Email & Phone */}
           <Grid item xs={12} md={6}>
             <FormControl fullWidth size="small">
-              <FormLabel>{translate('emailLabel')}*</FormLabel>
+              <FormLabel>{translate("emailLabel")}*</FormLabel>
               <TextField
                 fullWidth
-                placeholder={translate('emailPlaceholder')}
+                placeholder={translate("emailPlaceholder")}
                 variant="outlined"
                 size="small"
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
+                onBlur={handleEmailBlur}
                 required
+                error={!!errors.email}
                 InputProps={{
-                  sx: { borderRadius: "12px", border: "1px solid #0D90C8" },
+                  sx: { 
+                    borderRadius: "12px", 
+                    border: errors.email ? "1px solid #d32f2f" : "1px solid #0D90C8" 
+                  },
                 }}
               />
+              {errors.email && (
+                <Typography variant="caption" color="error" sx={{ mt: 0.5, ml: 1 }}>
+                  {errors.email}
+                </Typography>
+              )}
             </FormControl>
           </Grid>
           <Grid item xs={12} md={6}>
             <FormControl fullWidth size="small">
-              <FormLabel>{translate('phoneLabel')}*</FormLabel>
+              <FormLabel>{translate("phoneLabel")}*</FormLabel>
               <TextField
                 fullWidth
-                placeholder={translate('phonePlaceholder')}
+                placeholder={translate("phonePlaceholder")}
                 variant="outlined"
                 size="small"
                 type="tel"
@@ -247,10 +348,10 @@ const JobApplyForm: React.FC = () => {
           {/* Address */}
           <Grid item xs={12}>
             <FormControl fullWidth size="small">
-              <FormLabel>{translate('addressLabel')}*</FormLabel>
+              <FormLabel>{translate("addressLabel")}*</FormLabel>
               <TextField
                 fullWidth
-                placeholder={translate('addressPlaceholder')}
+                placeholder={translate("addressPlaceholder")}
                 variant="outlined"
                 size="small"
                 name="address"
@@ -265,14 +366,14 @@ const JobApplyForm: React.FC = () => {
           </Grid>
           <Grid item xs={12}>
             <FormControl fullWidth size="small">
-              <FormLabel>{translate('apartmentLabel')}</FormLabel>
+              <FormLabel>{translate("apartmentLabel")}</FormLabel>
               <TextField
                 fullWidth
-                placeholder={translate('apartmentPlaceholder')}
+                placeholder={translate("apartmentPlaceholder")}
                 variant="outlined"
                 size="small"
-                name="address"
-                value={formData.address}
+                name="apartment_type"
+                value={formData.apartment_type}
                 onChange={handleInputChange}
                 required
                 InputProps={{
@@ -285,10 +386,10 @@ const JobApplyForm: React.FC = () => {
           {/* City & State/Province */}
           <Grid item xs={12} md={6}>
             <FormControl fullWidth size="small">
-              <FormLabel>{translate('cityLabel')}*</FormLabel>
+              <FormLabel>{translate("cityLabel")}*</FormLabel>
               <TextField
                 fullWidth
-                placeholder={translate('cityPlaceholder')}
+                placeholder={translate("cityPlaceholder")}
                 variant="outlined"
                 size="small"
                 name="city"
@@ -303,10 +404,10 @@ const JobApplyForm: React.FC = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <FormControl fullWidth size="small">
-              <FormLabel>{translate('stateLabel')}*</FormLabel>
+              <FormLabel>{translate("stateLabel")}*</FormLabel>
               <TextField
                 fullWidth
-                placeholder={translate('statePlaceholder')}
+                placeholder={translate("statePlaceholder")}
                 variant="outlined"
                 size="small"
                 name="stateProvince"
@@ -323,10 +424,10 @@ const JobApplyForm: React.FC = () => {
           {/* Zip/Postal Code & Country */}
           <Grid item xs={12} md={6}>
             <FormControl fullWidth size="small">
-              <FormLabel>{translate('zipLabel')}*</FormLabel>
+              <FormLabel>{translate("zipLabel")}*</FormLabel>
               <TextField
                 fullWidth
-                placeholder={translate('zipPlaceholder')}
+                placeholder={translate("zipPlaceholder")}
                 variant="outlined"
                 size="small"
                 name="zipPostal"
@@ -341,7 +442,7 @@ const JobApplyForm: React.FC = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <FormControl fullWidth size="small">
-              <FormLabel>{translate('countryLabel')}*</FormLabel>
+              <FormLabel>{translate("countryLabel")}*</FormLabel>
               <Select
                 sx={{ borderRadius: "12px", border: "1px solid #0D90C8" }}
                 displayEmpty
@@ -354,10 +455,10 @@ const JobApplyForm: React.FC = () => {
                   }))
                 }
                 required
-                inputProps={{ "aria-label": translate('selectCountryLabel') }}
+                inputProps={{ "aria-label": translate("selectCountryLabel") }}
               >
                 <MenuItem value="" disabled>
-                  {translate('selectCountryPlaceholder')}
+                  {translate("selectCountryPlaceholder")}
                 </MenuItem>
                 {countries.map((country) => (
                   <MenuItem key={country.code} value={country.code}>
@@ -371,7 +472,7 @@ const JobApplyForm: React.FC = () => {
           {/* Resume Upload */}
           <Grid item xs={12}>
             <FormControl fullWidth size="small">
-              <FormLabel>{translate('resumeLabel')}*</FormLabel>
+              <FormLabel>{translate("resumeLabel")}*</FormLabel>
               <input
                 type="file"
                 id="resume"
@@ -392,10 +493,12 @@ const JobApplyForm: React.FC = () => {
                     textTransform: "none",
                   }}
                 >
-                  {translate('uploadResumeButton')}
+                  {translate("uploadResumeButton")}
                 </Button>
                 <Typography variant="body2" sx={{ mt: 1 }}>
-                  {formData.resume ? formData.resume.name : translate('noFileSelected')}
+                  {formData.resume
+                    ? formData.resume.name
+                    : translate("noFileSelected")}
                 </Typography>
               </label>
             </FormControl>
@@ -407,17 +510,34 @@ const JobApplyForm: React.FC = () => {
               type="submit"
               fullWidth
               variant="contained"
+              disabled={isLoading}
               sx={{
                 borderRadius: "12px",
                 backgroundColor: "#002F6D",
                 "&:hover": { backgroundColor: "#0A72A3" },
               }}
             >
-              {translate('submitApplicationButton')}
+              {isLoading ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                translate("submitApplicationButton")
+              )}
             </Button>
           </Grid>
         </Grid>
       </form>
+
+      {/* Success Snackbar */}
+      <Snackbar
+        open={showSuccess}
+        autoHideDuration={6000}
+        onClose={() => setShowSuccess(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert severity="success" onClose={() => setShowSuccess(false)}>
+          {translate('applicationSuccess')}
+        </Alert>
+      </Snackbar>
     </Paper>
   );
 };

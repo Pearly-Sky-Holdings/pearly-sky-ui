@@ -1638,4 +1638,192 @@ export const zhTranslations = {
    requrCountryCode:"请选择您的国家代码",
    valiedPhoneNumber:"请输入有效的电话号码",
 
+   companyName: "明珠天空私人有限公司",
+    updateSoon: "即将更新",
+    
+    // 按国家/地区划分的服务城市
+    // 法国
+    paris: "巴黎",
+    nice: "尼斯",
+    saintTropez: "圣特罗佩",
+    antibes: "昂蒂布",
+    cannes: "戛纳",
+    marseille: "马赛",
+    lyon: "里昂",
+    bordeaux: "波尔多",
+    toulouse: "图卢兹",
+    toulon: "土伦",
+    montpellier: "蒙彼利埃",
+    monteCarlo: "蒙特卡洛",
+    strasbourg: "斯特拉斯堡",
+    monaco: "摩纳哥",
+    frenchRiviera: "法国里维埃拉",
+    rouen: "鲁昂",
+    leHavre: "勒阿弗尔",
+    normandy: "诺曼底",
+    deauville: "多维尔",
+    dieppe: "迪耶普",
+    laRochelle: "拉罗谢尔",
+    nantes: "南特",
+    narbonne: "纳博讷",
+    
+    // 英国
+    london: "伦敦",
+    yake: "雅克",
+    bristol: "布里斯托尔",
+    birmingham: "伯明翰",
+    leicester: "莱斯特",
+    nottingham: "诺丁汉",
+    plymouth: "普利茅斯",
+    bradford: "布拉德福德",
+    edinburgh: "爱丁堡",
+    derby: "德比",
+    southampton: "南安普敦",
+    liverpool: "利物浦",
+    kingstonUponHull: "赫尔河畔金斯顿",
+    portsmouth: "朴次茅斯",
+    manchester: "曼彻斯特",
+    chester: "切斯特",
+    stokeOnTrent: "特伦特河畔斯托克",
+    pererborough: "佩雷伯勒",
+    conventry: "考文垂",
+    sheffield: "谢菲尔德",
+    norwich: "诺里奇",
+    brighton: "布莱顿",
+    cambridge: "剑桥",
+    newcastleUponTyne: "泰恩河畔纽卡斯尔",
+    oxford: "牛津",
+    chelmsford: "切姆斯福德",
+    leeds: "利兹",
+    luton: "卢顿",
+    miltoKeynes: "米尔顿凯恩斯",
+    gloucester: "格洛斯特",
+    sunderland: "桑德兰",
+    salisbury: "索尔兹伯里",
+    
+    // 斯里兰卡
+    colombo: "科伦坡",
+    kandy: "康提",
+    negombo: "尼甘布",
+    nuwaraEliya: "努沃勒埃利耶",
+    
+    // 苏格兰
+    aberdeen: "阿伯丁",
+    glasgow: "格拉斯哥",
+    dundee: "邓迪",
+    inverness: "因弗内斯",
+    feedback: "反馈",
+    stirling: "斯特灵",
+    
+    // 德国
+    berlin: "柏林",
+    hamburg: "汉堡",
+    munich: "慕尼黑",
+    cologne: "科隆",
+    frankfurt: "法兰克福",
+    
+    // 比利时
+    bruseels: "布鲁塞尔",
+    
+    // 澳大利亚
+    sydney: "悉尼",
+    melbourne: "墨尔本",
+    brisbane: "布里斯班",
+    perth: "珀斯",
+    adelaide: "阿德莱德",
+    
+    // 阿联酋
+    dubai: "迪拜",
+    abuDhabi: "阿布扎比",
+    sharjah: "沙迦",
+    rasAlkhaimah: "哈伊马角",
+    jebelAli: "杰贝阿里",
+    
+    // 加拿大
+    toronto: "多伦多",
+    montreal: "蒙特利尔",
+    ottawa: "渥太华",
+    vancouver: "温哥华",
+    
+    // 芬兰
+    helsinki: "赫尔辛基",
+    oulu: "奥卢",
+    turku: "图尔库",
+    tampere: "坦佩雷",
+    
+    // 沙特阿拉伯
+    riyadh: "利雅得",
+    jeddah: "吉达",
+    
+    // 意大利
+    rome: "罗马",
+    venice: "威尼斯",
+    florence: "佛罗伦萨",
+    milan: "米兰",
+    naples: "那不勒斯",
+    
+    // 葡萄牙
+    lisbon: "里斯本",
+    
+    // 美国
+    newYork: "纽约",
+    losAngeles: "洛杉矶",
+    philadelphia: "费城",
+    houston: "休斯顿",
+    
+    // 爱尔兰
+    dublin: "都柏林",
+    belfast: "贝尔法斯特",
+    cork: "科克",
+    limerick: "利默里克",
+    galway: "戈尔韦",
+    
+    // 奥地利
+    vienna: "维也纳",
+    villach: "菲拉赫",
+    innsbruck: "因斯布鲁克",
+    graz: "格拉茨",
+    bregenz: "布雷根茨",
+    
+    // 荷兰
+    amsterdam: "阿姆斯特丹",
+    utrecht: "乌得勒支",
+    rotterdam: "鹿特丹",
+    groningen: "格罗宁根",
+    theHague: "海牙",
+    
+    // 瑞士
+    zurich: "苏黎世",
+    geneva: "日内瓦",
+    basel: "巴塞尔",
+    bern: "伯尔尼",
+    lausanne: "洛桑",
+    
+    // 卡塔尔
+    alWakrah: "沃克拉",
+    doha: "多哈",
+    alRayyan: "赖扬",
+    dukhan: "杜汉",
+    
+    // 新西兰
+    auckland: "奥克兰",
+    hamilton: "汉密尔顿",
+    wellington: "惠灵顿",
+    christchurch: "基督城",
+    
+    // 波兰
+    warsaw: "华沙",
+    
+    // 卢森堡
+    luxembourgCity: "卢森堡市",
+    
+    // 西班牙
+    barcelona: "巴塞罗那",
+    madrid: "马德里",
+    palma: "帕尔马",
+    granada: "格拉纳达",
+    serviceCities: "服务城市",
+
+    "NumberOfCleaners2": "清洁工人数",
+
 };

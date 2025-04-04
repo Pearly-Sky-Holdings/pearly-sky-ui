@@ -126,7 +126,7 @@ const SanitizationBookingCart: React.FC<SanitizationBookingCartProps> = ({
 
       <div>
         <label className="block mb-2 text-blue-900">
-          {translate('numberOfCleaners')}
+          {translate('NumberOfCleaners2')}
         </label>
         <div className="flex items-center gap-2">
           <input

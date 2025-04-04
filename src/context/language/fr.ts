@@ -1239,7 +1239,7 @@ export const frTranslations = {
   otherCleaning: "Autre",
 
   // Move In/Out Transport Cleaning Page  ===============================================
-  MmoveInOutTransportCleaning: 'Nettoyage Transport Déménagement',
+  MmoveInOutTransportCleaning: "Transport d'entrée et de sortie",
   McleaningServiceAlt: 'Service de nettoyage',
   MmoveInOutDescription: 'Déménagez en toute sérénité avec notre service spécialisé de nettoyage transport. Solution complète pour les particuliers en cours de déménagement, garantissant une transition sans stress.',
   MselectJobForQuotation: 'Sélectionnez votre prestation pour obtenir un devis',
@@ -1683,4 +1683,193 @@ export const frTranslations = {
 
   requrCountryCode:"Veuillez sélectionner votre code pays",
   valiedPhoneNumber:"Veuillez entrer un numéro de téléphone valide",
+
+
+  companyName: "Pearly Sky société privée à responsabilité limitée",
+  updateSoon: "Mise à jour bientôt",
+  
+  // Villes de service par pays
+  // France
+  paris: "Paris",
+  nice: "Nice",
+  saintTropez: "Saint-Tropez",
+  antibes: "Antibes",
+  cannes: "Cannes",
+  marseille: "Marseille",
+  lyon: "Lyon",
+  bordeaux: "Bordeaux",
+  toulouse: "Toulouse",
+  toulon: "Toulon",
+  montpellier: "Montpellier",
+  monteCarlo: "Monte Carlo",
+  strasbourg: "Strasbourg",
+  monaco: "Monaco",
+  frenchRiviera: "Côte d'Azur",
+  rouen: "Rouen",
+  leHavre: "Le Havre",
+  normandy: "Normandie",
+  deauville: "Deauville",
+  dieppe: "Dieppe",
+  laRochelle: "La Rochelle",
+  nantes: "Nantes",
+  narbonne: "Narbonne",
+  
+  // Royaume-Uni
+  london: "Londres",
+  yake: "Yake",
+  bristol: "Bristol",
+  birmingham: "Birmingham",
+  leicester: "Leicester",
+  nottingham: "Nottingham",
+  plymouth: "Plymouth",
+  bradford: "Bradford",
+  edinburgh: "Édimbourg",
+  derby: "Derby",
+  southampton: "Southampton",
+  liverpool: "Liverpool",
+  kingstonUponHull: "Kingston upon Hull",
+  portsmouth: "Portsmouth",
+  manchester: "Manchester",
+  chester: "Chester",
+  stokeOnTrent: "Stoke-on-Trent",
+  pererborough: "Pererborough",
+  conventry: "Conventry",
+  sheffield: "Sheffield",
+  norwich: "Norwich",
+  brighton: "Brighton",
+  cambridge: "Cambridge",
+  newcastleUponTyne: "Newcastle upon Tyne",
+  oxford: "Oxford",
+  chelmsford: "Chelmsford",
+  leeds: "Leeds",
+  luton: "Luton",
+  miltoKeynes: "Milto Keynes",
+  gloucester: "Gloucester",
+  sunderland: "Sunderland",
+  salisbury: "Salisbury",
+  
+  // Sri Lanka
+  colombo: "Colombo",
+  kandy: "Kandy",
+  negombo: "Negombo",
+  nuwaraEliya: "Nuwara Eliya",
+  
+  // Écosse
+  aberdeen: "Aberdeen",
+  glasgow: "Glasgow",
+  dundee: "Dundee",
+  inverness: "Inverness",
+  feedback: "Retour d'information",
+  stirling: "Stirling",
+  
+  // Allemagne
+  berlin: "Berlin",
+  hamburg: "Hambourg",
+  munich: "Munich",
+  cologne: "Cologne",
+  frankfurt: "Francfort",
+  
+  // Belgique
+  bruseels: "Bruxelles",
+  
+  // Australie
+  sydney: "Sydney",
+  melbourne: "Melbourne",
+  brisbane: "Brisbane",
+  perth: "Perth",
+  adelaide: "Adélaïde",
+  
+  // Émirats arabes unis
+  dubai: "Dubaï",
+  abuDhabi: "Abou Dabi",
+  sharjah: "Sharjah",
+  rasAlkhaimah: "Ras Al Khaimah",
+  jebelAli: "Jebel Ali",
+  
+  // Canada
+  toronto: "Toronto",
+  montreal: "Montréal",
+  ottawa: "Ottawa",
+  vancouver: "Vancouver",
+  
+  // Finlande
+  helsinki: "Helsinki",
+  oulu: "Oulu",
+  turku: "Turku",
+  tampere: "Tampere",
+  
+  // Arabie saoudite
+  riyadh: "Riyad",
+  jeddah: "Djedda",
+  
+  // Italie
+  rome: "Rome",
+  venice: "Venise",
+  florence: "Florence",
+  milan: "Milan",
+  naples: "Naples",
+  
+  // Portugal
+  lisbon: "Lisbonne",
+  
+  // États-Unis
+  newYork: "New York",
+  losAngeles: "Los Angeles",
+  philadelphia: "Philadelphie",
+  houston: "Houston",
+  
+  // Irlande
+  dublin: "Dublin",
+  belfast: "Belfast",
+  cork: "Cork",
+  limerick: "Limerick",
+  galway: "Galway",
+  
+  // Autriche
+  vienna: "Vienne",
+  villach: "Villach",
+  innsbruck: "Innsbruck",
+  graz: "Graz",
+  bregenz: "Bregenz",
+  
+  // Pays-Bas
+  amsterdam: "Amsterdam",
+  utrecht: "Utrecht",
+  rotterdam: "Rotterdam",
+  groningen: "Groningue",
+  theHague: "La Haye",
+  
+  // Suisse
+  zurich: "Zurich",
+  geneva: "Genève",
+  basel: "Bâle",
+  bern: "Berne",
+  lausanne: "Lausanne",
+  
+  // Qatar
+  alWakrah: "Al Wakrah",
+  doha: "Doha",
+  alRayyan: "Al Rayyan",
+  dukhan: "Dukhan",
+  
+  // Nouvelle-Zélande
+  auckland: "Auckland",
+  hamilton: "Hamilton",
+  wellington: "Wellington",
+  christchurch: "Christchurch",
+  
+  // Pologne
+  warsaw: "Varsovie",
+  
+  // Luxembourg
+  luxembourgCity: "Luxembourg",
+  
+  // Espagne
+  barcelona: "Barcelone",
+  madrid: "Madrid",
+  palma: "Palma",
+  granada: "Grenade",
+  serviceCities: "Villes de service",
+
+  "NumberOfCleaners2": "Nombre de nettoyeurs",
 };
