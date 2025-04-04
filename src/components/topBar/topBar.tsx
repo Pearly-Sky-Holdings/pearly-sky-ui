@@ -14,13 +14,13 @@ interface Country {
 }
 
 const countries: Country[] = [
-  { code: "us", nameKey: "US" },
-  { code: "fr", nameKey: "France" },
+  { code: "us", nameKey: "English" },
+  { code: "fr", nameKey: "French" },
   { code: "nl", nameKey: "Dutch" },
-  { code: "de", nameKey: "Germany" },
+  { code: "de", nameKey: "German" },
   { code: "es", nameKey: "Spanish" },
   { code: "se", nameKey: "Swedish" },
-  { code: "jp", nameKey: "Japan" },
+  { code: "jp", nameKey: "Japanese" },
   { code: "cn", nameKey: "Chinese" },
   { code: "ar", nameKey: "Arabic" },
   { code: "fi", nameKey: "Finnish" },

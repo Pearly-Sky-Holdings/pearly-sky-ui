@@ -45,8 +45,8 @@ export const enTranslations = {
     nmoveInOutCleaning: 'Move In/Out Cleaning',
     npostConstructionCleaning: 'Post Construction Cleaning',
     nairbnbCleaning: 'Airbnb & Short-term Rental Cleaning',
-    nchildCareCleaning: 'Child Care Cleaning',
-    nelderCareCleaning: 'Elder Care Cleaning',
+    nchildCareCleaning: 'Child Care Service',
+    nelderCareCleaning: 'Elder Care Service',
     nsanitizationDisinfection: 'Sanitization & Disinfection',
     ncommercialOfficeCleaning: 'Commercial & Office Cleaning',
     ncarpetCleaning: 'Carpet Cleaning',
@@ -1698,13 +1698,13 @@ export const enTranslations = {
      "toulouse": "Toulouse",
      "toulon": "Toulon",
      "montpellier": "Montpellier",
-     "monteCarlo": "Monte Carlo",
+    //  "monteCarlo": "Monte Carlo", // (Note: In Monaco)
      "strasbourg": "Strasbourg",
-     "monaco": "Monaco",
-     "frenchRiviera": "French Riviera",
+    //  "monaco": "Monaco", // (Note: Separate country)
+     "frenchRiviera": "French Riviera", // (Region)
      "rouen": "Rouen",
      "leHavre": "Le Havre",
-     "normandy": "Normandy",
+     "normandy": "Normandy", // (Region)
      "deauville": "Deauville",
      "dieppe": "Dieppe",
      "laRochelle": "La Rochelle",
@@ -1713,7 +1713,7 @@ export const enTranslations = {
      
      // United Kingdom
      "london": "London",
-     "yake": "Yake",
+     "yake": "York", // Corrected right side
      "bristol": "Bristol",
      "birmingham": "Birmingham",
      "leicester": "Leicester",
@@ -1729,8 +1729,8 @@ export const enTranslations = {
      "manchester": "Manchester",
      "chester": "Chester",
      "stokeOnTrent": "Stoke-on-Trent",
-     "pererborough": "Pererborough",
-     "conventry": "Conventry",
+     "pererborough": "Peterborough", // Corrected right side
+     "conventry": "Coventry", // Corrected right side
      "sheffield": "Sheffield",
      "norwich": "Norwich",
      "brighton": "Brighton",
@@ -1740,7 +1740,7 @@ export const enTranslations = {
      "chelmsford": "Chelmsford",
      "leeds": "Leeds",
      "luton": "Luton",
-     "miltoKeynes": "Milto Keynes",
+     "miltoKeynes": "Milton Keynes", // Corrected right side
      "gloucester": "Gloucester",
      "sunderland": "Sunderland",
      "salisbury": "Salisbury",
@@ -1756,7 +1756,7 @@ export const enTranslations = {
      "glasgow": "Glasgow",
      "dundee": "Dundee",
      "inverness": "Inverness",
-     "feedback": "Feedback",
+     "feedback": "Feedback", // (Irrelevant, but unchanged)
      "stirling": "Stirling",
      
      // Germany
@@ -1767,7 +1767,7 @@ export const enTranslations = {
      "frankfurt": "Frankfurt",
      
      // Belgium
-     "bruseels": "Bruseels",
+     "bruseels": "Brussels", // Corrected right side
      
      // Australia
      "sydney": "Sydney",
@@ -1780,7 +1780,7 @@ export const enTranslations = {
      "dubai": "Dubai",
      "abuDhabi": "Abu Dhabi",
      "sharjah": "Sharjah",
-     "rasAlkhaimah": "Ras Alkhaimah",
+     "rasAlkhaimah": "Ras Al Khaimah", // Corrected right side
      "jebelAli": "Jebel Ali",
      
      // Canada
@@ -1817,7 +1817,7 @@ export const enTranslations = {
      
      // Ireland
      "dublin": "Dublin",
-     "belfast": "Belfast",
+     "belfast": "Belfast", // (Note: In Northern Ireland/UK)
      "cork": "Cork",
      "limerick": "Limerick",
      "galway": "Galway",
@@ -1864,7 +1864,7 @@ export const enTranslations = {
      // Spain
      "barcelona": "Barcelona",
      "madrid": "Madrid",
-     "palma": "Palma",
+     "palma": "Palma de Mallorca", // Corrected right side
      "granada": "Granada",
      "serviceCities": "Service Cities",
 

@@ -44,8 +44,8 @@ export const deTranslations = {
   nmoveInOutCleaning: 'Ein-/Auszugsreinigung',
   npostConstructionCleaning: 'Nachbaureinigung',
   nairbnbCleaning: 'Airbnb- und Kurzzeitmietreinigung',
-  nchildCareCleaning: 'Kinderbetreuungsreinigung',
-  nelderCareCleaning: 'Altenpflegereinigung',
+  nchildCareCleaning: 'Kinderbetreuungsdienst',
+  nelderCareCleaning: 'Seniorenbetreuungsdienst',
   nsanitizationDisinfection: 'Sanitisation & Desinfektion',
   ncommercialOfficeCleaning: 'Gewerbe- und Büroreinigung',
   ncarpetCleaning: 'Teppichreinigung',
@@ -1561,185 +1561,185 @@ export const deTranslations = {
     
     // Service-Städte nach Ländern
     // Frankreich
-    paris: "Paris",
-    nice: "Nizza",
-    saintTropez: "Saint-Tropez",
-    antibes: "Antibes",
-    cannes: "Cannes",
-    marseille: "Marseille",
-    lyon: "Lyon",
-    bordeaux: "Bordeaux",
-    toulouse: "Toulouse",
-    toulon: "Toulon",
-    montpellier: "Montpellier",
-    monteCarlo: "Monte Carlo",
-    strasbourg: "Straßburg",
-    monaco: "Monaco",
-    frenchRiviera: "Französische Riviera",
-    rouen: "Rouen",
-    leHavre: "Le Havre",
-    normandy: "Normandie",
-    deauville: "Deauville",
-    dieppe: "Dieppe",
-    laRochelle: "La Rochelle",
-    nantes: "Nantes",
-    narbonne: "Narbonne",
+    "paris": "Paris",
+    "nice": "Nizza",
+    "saintTropez": "Saint-Tropez",
+    "antibes": "Antibes",
+    "cannes": "Cannes",
+    "marseille": "Marseille",
+    "lyon": "Lyon",
+    "bordeaux": "Bordeaux",
+    "toulouse": "Toulouse",
+    "toulon": "Toulon",
+    "montpellier": "Montpellier",
+    // "monteCarlo": "Monte Carlo",  // (Monaco, nicht Frankreich)
+    "strasbourg": "Straßburg",
+    // "monaco": "Monaco",           // (Unabhängiges Land)
+    "frenchRiviera": "Côte d'Azur", // Region
+    "rouen": "Rouen",
+    "leHavre": "Le Havre",
+    "normandy": "Normandie",      // Region
+    "deauville": "Deauville",
+    "dieppe": "Dieppe",
+    "laRochelle": "La Rochelle",
+    "nantes": "Nantes",
+    "narbonne": "Narbonne",
     
     // Vereinigtes Königreich
-    london: "London",
-    yake: "Yake",
-    bristol: "Bristol",
-    birmingham: "Birmingham",
-    leicester: "Leicester",
-    nottingham: "Nottingham",
-    plymouth: "Plymouth",
-    bradford: "Bradford",
-    edinburgh: "Edinburgh",
-    derby: "Derby",
-    southampton: "Southampton",
-    liverpool: "Liverpool",
-    kingstonUponHull: "Kingston upon Hull",
-    portsmouth: "Portsmouth",
-    manchester: "Manchester",
-    chester: "Chester",
-    stokeOnTrent: "Stoke-on-Trent",
-    pererborough: "Pererborough",
-    conventry: "Conventry",
-    sheffield: "Sheffield",
-    norwich: "Norwich",
-    brighton: "Brighton",
-    cambridge: "Cambridge",
-    newcastleUponTyne: "Newcastle upon Tyne",
-    oxford: "Oxford",
-    chelmsford: "Chelmsford",
-    leeds: "Leeds",
-    luton: "Luton",
-    miltoKeynes: "Milto Keynes",
-    gloucester: "Gloucester",
-    sunderland: "Sunderland",
-    salisbury: "Salisbury",
+    "london": "London",
+    "yake": "York",               // (Korrigiert)
+    "bristol": "Bristol",
+    "birmingham": "Birmingham",
+    "leicester": "Leicester",
+    "nottingham": "Nottingham",
+    "plymouth": "Plymouth",
+    "bradford": "Bradford",
+    "edinburgh": "Edinburgh",
+    "derby": "Derby",
+    "southampton": "Southampton",
+    "liverpool": "Liverpool",
+    "kingstonUponHull": "Kingston upon Hull", // (Offizieller Name)
+    "portsmouth": "Portsmouth",
+    "manchester": "Manchester",
+    "chester": "Chester",
+    "stokeOnTrent": "Stoke-on-Trent",
+    "pererborough": "Peterborough", // (Korrigiert)
+    "conventry": "Coventry",       // (Korrigiert)
+    "sheffield": "Sheffield",
+    "norwich": "Norwich",
+    "brighton": "Brighton",
+    "cambridge": "Cambridge",
+    "newcastleUponTyne": "Newcastle upon Tyne",
+    "oxford": "Oxford",
+    "chelmsford": "Chelmsford",
+    "leeds": "Leeds",
+    "luton": "Luton",
+    "miltoKeynes": "Milton Keynes", // (Korrigiert)
+    "gloucester": "Gloucester",
+    "sunderland": "Sunderland",
+    "salisbury": "Salisbury",
     
     // Sri Lanka
-    colombo: "Colombo",
-    kandy: "Kandy",
-    negombo: "Negombo",
-    nuwaraEliya: "Nuwara Eliya",
+    "colombo": "Colombo",
+    "kandy": "Kandy",
+    "negombo": "Negombo",
+    "nuwaraEliya": "Nuwara Eliya",
     
     // Schottland
-    aberdeen: "Aberdeen",
-    glasgow: "Glasgow",
-    dundee: "Dundee",
-    inverness: "Inverness",
-    feedback: "Feedback",
-    stirling: "Stirling",
+    "aberdeen": "Aberdeen",
+    "glasgow": "Glasgow",
+    "dundee": "Dundee",
+    "inverness": "Inverness",
+    "feedback": "Feedback",       // (Nicht relevant)
+    "stirling": "Stirling",
     
     // Deutschland
-    berlin: "Berlin",
-    hamburg: "Hamburg",
-    munich: "München",
-    cologne: "Köln",
-    frankfurt: "Frankfurt",
+    "berlin": "Berlin",
+    "hamburg": "Hamburg",
+    "munich": "München",          // Deutsche Schreibweise
+    "cologne": "Köln",            // "Köln" auf Deutsch
+    "frankfurt": "Frankfurt",
     
     // Belgien
-    bruseels: "Brüssel",
+    "bruseels": "Brüssel",        // (Korrigiert)
     
     // Australien
-    sydney: "Sydney",
-    melbourne: "Melbourne",
-    brisbane: "Brisbane",
-    perth: "Perth",
-    adelaide: "Adelaide",
+    "sydney": "Sydney",
+    "melbourne": "Melbourne",
+    "brisbane": "Brisbane",
+    "perth": "Perth",
+    "adelaide": "Adelaide",
     
-    // VAE
-    dubai: "Dubai",
-    abuDhabi: "Abu Dhabi",
-    sharjah: "Sharjah",
-    rasAlkhaimah: "Ras Al Khaimah",
-    jebelAli: "Jebel Ali",
+    // VAE (Vereinigte Arabische Emirate)
+    "dubai": "Dubai",
+    "abuDhabi": "Abu Dhabi",
+    "sharjah": "Sharjah",
+    "rasAlkhaimah": "Ras al-Chaima", // (Korrigiert)
+    "jebelAli": "Jebel Ali",
     
     // Kanada
-    toronto: "Toronto",
-    montreal: "Montreal",
-    ottawa: "Ottawa",
-    vancouver: "Vancouver",
+    "toronto": "Toronto",
+    "montreal": "Montreal",      
+    "ottawa": "Ottawa",
+    "vancouver": "Vancouver",
     
     // Finnland
-    helsinki: "Helsinki",
-    oulu: "Oulu",
-    turku: "Turku",
-    tampere: "Tampere",
+    "helsinki": "Helsinki",
+    "oulu": "Oulu",
+    "turku": "Turku",
+    "tampere": "Tampere",
     
     // Saudi-Arabien
-    riyadh: "Riad",
-    jeddah: "Dschidda",
+    "riyadh": "Riad",
+    "jeddah": "Dschidda",
     
     // Italien
-    rome: "Rom",
-    venice: "Venedig",
-    florence: "Florenz",
-    milan: "Mailand",
-    naples: "Neapel",
+    "rome": "Rom",
+    "venice": "Venedig",
+    "florence": "Florenz",      
+    "milan": "Mailand",            
+    "naples": "Neapel",          
     
     // Portugal
-    lisbon: "Lissabon",
+    "lisbon": "Lissabon",        
     
-    // USA
-    newYork: "New York",
-    losAngeles: "Los Angeles",
-    philadelphia: "Philadelphia",
-    houston: "Houston",
+    // USA (Vereinigte Staaten)
+    "newYork": "New York",
+    "losAngeles": "Los Angeles",
+    "philadelphia": "Philadelphia",
+    "houston": "Houston",
     
     // Irland
-    dublin: "Dublin",
-    belfast: "Belfast",
-    cork: "Cork",
-    limerick: "Limerick",
-    galway: "Galway",
+    "dublin": "Dublin",
+    "belfast": "Belfast",        // (Nordirland/UK)
+    "cork": "Cork",
+    "limerick": "Limerick",
+    "galway": "Galway",
     
     // Österreich
-    vienna: "Wien",
-    villach: "Villach",
-    innsbruck: "Innsbruck",
-    graz: "Graz",
-    bregenz: "Bregenz",
+    "vienna": "Wien",          
+    "villach": "Villach",
+    "innsbruck": "Innsbruck",
+    "graz": "Graz",
+    "bregenz": "Bregenz",
     
     // Niederlande
-    amsterdam: "Amsterdam",
-    utrecht: "Utrecht",
-    rotterdam: "Rotterdam",
-    groningen: "Groningen",
-    theHague: "Den Haag",
+    "amsterdam": "Amsterdam",
+    "utrecht": "Utrecht",
+    "rotterdam": "Rotterdam",
+    "groningen": "Groningen",
+    "theHague": "Den Haag",
     
     // Schweiz
-    zurich: "Zürich",
-    geneva: "Genf",
-    basel: "Basel",
-    bern: "Bern",
-    lausanne: "Lausanne",
+    "zurich": "Zürich",          
+    "geneva": "Genf",
+    "basel": "Basel",
+    "bern": "Bern",
+    "lausanne": "Lausanne",
     
     // Katar
-    alWakrah: "Al Wakrah",
-    doha: "Doha",
-    alRayyan: "Al Rayyan",
-    dukhan: "Dukhan",
+    "alWakrah": "Al Wakrah",
+    "doha": "Doha",
+    "alRayyan": "Al Rayyan",
+    "dukhan": "Dukhan",
     
     // Neuseeland
-    auckland: "Auckland",
-    hamilton: "Hamilton",
-    wellington: "Wellington",
-    christchurch: "Christchurch",
+    "auckland": "Auckland",
+    "hamilton": "Hamilton",
+    "wellington": "Wellington",
+    "christchurch": "Christchurch",
     
     // Polen
-    warsaw: "Warschau",
+    "warsaw": "Warschau",        
     
     // Luxemburg
-    luxembourgCity: "Luxemburg Stadt",
+    "luxembourgCity": "Luxemburg", 
     
     // Spanien
-    barcelona: "Barcelona",
-    madrid: "Madrid",
-    palma: "Palma",
-    granada: "Granada",
+    "barcelona": "Barcelona",
+    "madrid": "Madrid",
+    "palma": "Palma de Mallorca", 
+    "granada": "Granada"          ,
     serviceCities: "Service-Städte",
 
     "NumberOfCleaners2": "Anzahl der Reinigungskräfte",

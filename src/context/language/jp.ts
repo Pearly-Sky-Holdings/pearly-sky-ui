@@ -44,8 +44,8 @@ export const jpTranslations = {
     nmoveInOutCleaning: '引っ越し前後清掃',
     npostConstructionCleaning: '建設後清掃',
     nairbnbCleaning: 'エアビーアンドビー & 短期賃貸清掃',
-    nchildCareCleaning: 'チャイルドケア清掃',
-    nelderCareCleaning: 'エルダーケア清掃',
+    nchildCareCleaning: 'チャイルドケアサービス',
+    nelderCareCleaning: 'エルダーケアサービス',
     nsanitizationDisinfection: '消毒・除菌',
     ncommercialOfficeCleaning: '商業施設・オフィス清掃',
     ncarpetCleaning: 'カーペット清掃',
@@ -1661,186 +1661,186 @@ export const jpTranslations = {
     updateSoon: "近日中に更新",
     
     // 国別サービス都市
-    // フランス
-    paris: "パリ",
-    nice: "ニース",
-    saintTropez: "サントロペ",
-    antibes: "アンティーブ",
-    cannes: "カンヌ",
-    marseille: "マルセイユ",
-    lyon: "リヨン",
-    bordeaux: "ボルドー",
-    toulouse: "トゥールーズ",
-    toulon: "トゥーロン",
-    montpellier: "モンペリエ",
-    monteCarlo: "モンテカルロ",
-    strasbourg: "ストラスブール",
-    monaco: "モナコ",
-    frenchRiviera: "フレンチリビエラ",
-    rouen: "ルーアン",
-    leHavre: "ル・アーヴル",
-    normandy: "ノルマンディー",
-    deauville: "ドーヴィル",
-    dieppe: "ディエップ",
-    laRochelle: "ラ・ロシェル",
-    nantes: "ナント",
-    narbonne: "ナルボンヌ",
-    
-    // イギリス
-    london: "ロンドン",
-    yake: "ヤケ",
-    bristol: "ブリストル",
-    birmingham: "バーミンガム",
-    leicester: "レスター",
-    nottingham: "ノッティンガム",
-    plymouth: "プリマス",
-    bradford: "ブラッドフォード",
-    edinburgh: "エディンバラ",
-    derby: "ダービー",
-    southampton: "サウサンプトン",
-    liverpool: "リバプール",
-    kingstonUponHull: "キングストン・アポン・ハル",
-    portsmouth: "ポーツマス",
-    manchester: "マンチェスター",
-    chester: "チェスター",
-    stokeOnTrent: "ストーク・オン・トレント",
-    pererborough: "ペターバラ",
-    conventry: "コベントリー",
-    sheffield: "シェフィールド",
-    norwich: "ノリッジ",
-    brighton: "ブライトン",
-    cambridge: "ケンブリッジ",
-    newcastleUponTyne: "ニューカッスル・アポン・タイン",
-    oxford: "オックスフォード",
-    chelmsford: "チェルムスフォード",
-    leeds: "リーズ",
-    luton: "ルートン",
-    miltoKeynes: "ミルトン・キーンズ",
-    gloucester: "グロスター",
-    sunderland: "サンダーランド",
-    salisbury: "ソールズベリー",
-    
-    // スリランカ
-    colombo: "コロンボ",
-    kandy: "キャンディ",
-    negombo: "ネゴンボ",
-    nuwaraEliya: "ヌワラエリヤ",
-    
-    // スコットランド
-    aberdeen: "アバディーン",
-    glasgow: "グラスゴー",
-    dundee: "ダンディー",
-    inverness: "インバネス",
-    feedback: "フィードバック",
-    stirling: "スターリング",
-    
-    // ドイツ
-    berlin: "ベルリン",
-    hamburg: "ハンブルク",
-    munich: "ミュンヘン",
-    cologne: "ケルン",
-    frankfurt: "フランクフルト",
-    
-    // ベルギー
-    bruseels: "ブリュッセル",
-    
-    // オーストラリア
-    sydney: "シドニー",
-    melbourne: "メルボルン",
-    brisbane: "ブリスベン",
-    perth: "パース",
-    adelaide: "アデレード",
-    
-    // アラブ首長国連邦
-    dubai: "ドバイ",
-    abuDhabi: "アブダビ",
-    sharjah: "シャルジャ",
-    rasAlkhaimah: "ラス・アル＝ハイマ",
-    jebelAli: "ジェベル・アリ",
-    
-    // カナダ
-    toronto: "トロント",
-    montreal: "モントリオール",
-    ottawa: "オタワ",
-    vancouver: "バンクーバー",
-    
-    // フィンランド
-    helsinki: "ヘルシンキ",
-    oulu: "オウル",
-    turku: "トゥルク",
-    tampere: "タンペレ",
-    
-    // サウジアラビア
-    riyadh: "リヤド",
-    jeddah: "ジェッダ",
-    
-    // イタリア
-    rome: "ローマ",
-    venice: "ベネチア",
-    florence: "フィレンツェ",
-    milan: "ミラノ",
-    naples: "ナポリ",
-    
-    // ポルトガル
-    lisbon: "リスボン",
-    
-    // アメリカ
-    newYork: "ニューヨーク",
-    losAngeles: "ロサンゼルス",
-    philadelphia: "フィラデルフィア",
-    houston: "ヒューストン",
-    
-    // アイルランド
-    dublin: "ダブリン",
-    belfast: "ベルファスト",
-    cork: "コーク",
-    limerick: "リムリック",
-    galway: "ゴールウェイ",
-    
-    // オーストリア
-    vienna: "ウィーン",
-    villach: "フィラッハ",
-    innsbruck: "インスブルック",
-    graz: "グラーツ",
-    bregenz: "ブレゲンツ",
-    
-    // オランダ
-    amsterdam: "アムステルダム",
-    utrecht: "ユトレヒト",
-    rotterdam: "ロッテルダム",
-    groningen: "フローニンゲン",
-    theHague: "ハーグ",
-    
-    // スイス
-    zurich: "チューリッヒ",
-    geneva: "ジュネーブ",
-    basel: "バーゼル",
-    bern: "ベルン",
-    lausanne: "ローザンヌ",
-    
-    // カタール
-    alWakrah: "アルワクラ",
-    doha: "ドーハ",
-    alRayyan: "アルライヤン",
-    dukhan: "ドゥハーン",
-    
-    // ニュージーランド
-    auckland: "オークランド",
-    hamilton: "ハミルトン",
-    wellington: "ウェリントン",
-    christchurch: "クライストチャーチ",
-    
-    // ポーランド
-    warsaw: "ワルシャワ",
-    
-    // ルクセンブルク
-    luxembourgCity: "ルクセンブルク市",
-    
-    // スペイン
-    barcelona: "バルセロナ",
-    madrid: "マドリード",
-    palma: "パルマ",
-    granada: "グラナダ",
+   // フランス
+   "paris": "パリ",
+   "nice": "ニース",
+   "saintTropez": "サントロペ",
+   "antibes": "アンティーブ",
+   "cannes": "カンヌ",
+   "marseille": "マルセイユ",
+   "lyon": "リヨン",
+   "bordeaux": "ボルドー",
+   "toulouse": "トゥールーズ",
+   "toulon": "トゥーロン",
+   "montpellier": "モンペリエ",
+  //  "monteCarlo": "モンテカルロ",  // (モナコ、フランスではありません)
+   "strasbourg": "ストラスブール",
+  //  "monaco": "モナコ",           // (独立国)
+   "frenchRiviera": "フレンチリビエラ", // 地域
+   "rouen": "ルーアン",
+   "leHavre": "ル・アーヴル",
+   "normandy": "ノルマンディー",      // 地域
+   "deauville": "ドーヴィル",
+   "dieppe": "ディエップ",
+   "laRochelle": "ラ・ロシェル",
+   "nantes": "ナント",
+   "narbonne": "ナルボンヌ",
+   
+   // イギリス
+   "london": "ロンドン",
+   "yake": "ヨーク",               // (修正済み)
+   "bristol": "ブリストル",
+   "birmingham": "バーミンガム",
+   "leicester": "レスター",
+   "nottingham": "ノッティンガム",
+   "plymouth": "プリマス",
+   "bradford": "ブラッドフォード",
+   "edinburgh": "エディンバラ",
+   "derby": "ダービー",
+   "southampton": "サウサンプトン",
+   "liverpool": "リバプール",
+   "kingstonUponHull": "キングストン・アポン・ハル", // (正式名称)
+   "portsmouth": "ポーツマス",
+   "manchester": "マンチェスター",
+   "chester": "チェスター",
+   "stokeOnTrent": "ストーク＝オン＝トレント",
+   "pererborough": "ピーターバラ", // (修正済み)
+   "conventry": "コヴェントリー",       // (修正済み)
+   "sheffield": "シェフィールド",
+   "norwich": "ノリッジ",
+   "brighton": "ブライトン",
+   "cambridge": "ケンブリッジ",
+   "newcastleUponTyne": "ニューカッスル・アポン・タイン",
+   "oxford": "オックスフォード",
+   "chelmsford": "チェルムスフォード",
+   "leeds": "リーズ",
+   "luton": "ルートン",
+   "miltoKeynes": "ミルトン・キーンズ", // (修正済み)
+   "gloucester": "グロスター",
+   "sunderland": "サンダーランド",
+   "salisbury": "ソールズベリー",
+   
+   // スリランカ
+   "colombo": "コロンボ",
+   "kandy": "キャンディ",
+   "negombo": "ネゴンボ",
+   "nuwaraEliya": "ヌワラ・エリヤ",
+   
+   // スコットランド
+   "aberdeen": "アバディーン",
+   "glasgow": "グラスゴー",
+   "dundee": "ダンディー",
+   "inverness": "インヴァネス",
+   "feedback": "フィードバック",       // (無関係)
+   "stirling": "スターリング",
+   
+   // ドイツ
+   "berlin": "ベルリン",
+   "hamburg": "ハンブルク",
+   "munich": "ミュンヘン",          // ドイツ語表記
+   "cologne": "ケルン",            // "ケルン" 日本語表記
+   "frankfurt": "フランクフルト",
+   
+   // ベルギー
+   "bruseels": "ブリュッセル",        // (修正済み)
+   
+   // オーストラリア
+   "sydney": "シドニー",
+   "melbourne": "メルボルン",
+   "brisbane": "ブリスベン",
+   "perth": "パース",
+   "adelaide": "アデレード",
+   
+   // アラブ首長国連邦
+   "dubai": "ドバイ",
+   "abuDhabi": "アブダビ",
+   "sharjah": "シャルジャ",
+   "rasAlkhaimah": "ラス・アル＝ハイマ", // (修正済み)
+   "jebelAli": "ジェベル・アリ",
+   
+   // カナダ
+   "toronto": "トロント",
+   "montreal": "モントリオール",      
+   "ottawa": "オタワ",
+   "vancouver": "バンクーバー",
+   
+   // フィンランド
+   "helsinki": "ヘルシンキ",
+   "oulu": "オウル",
+   "turku": "トゥルク",
+   "tampere": "タンペレ",
+   
+   // サウジアラビア
+   "riyadh": "リヤド",
+   "jeddah": "ジェッダ",
+   
+   // イタリア
+   "rome": "ローマ",
+   "venice": "ヴェネツィア",
+   "florence": "フィレンツェ",      
+   "milan": "ミラノ",            
+   "naples": "ナポリ",          
+   
+   // ポルトガル
+   "lisbon": "リスボン",        
+   
+   // アメリカ
+   "newYork": "ニューヨーク",
+   "losAngeles": "ロサンゼルス",
+   "philadelphia": "フィラデルフィア",
+   "houston": "ヒューストン",
+   
+   // アイルランド
+   "dublin": "ダブリン",
+   "belfast": "ベルファスト",        // (北アイルランド/イギリス)
+   "cork": "コーク",
+   "limerick": "リムリック",
+   "galway": "ゴールウェイ",
+   
+   // オーストリア
+   "vienna": "ウィーン",          
+   "villach": "フィラッハ",
+   "innsbruck": "インスブルック",
+   "graz": "グラーツ",
+   "bregenz": "ブレゲンツ",
+   
+   // オランダ
+   "amsterdam": "アムステルダム",
+   "utrecht": "ユトレヒト",
+   "rotterdam": "ロッテルダム",
+   "groningen": "フローニンゲン",
+   "theHague": "ハーグ",
+   
+   // スイス
+   "zurich": "チューリッヒ",          
+   "geneva": "ジュネーヴ",
+   "basel": "バーゼル",
+   "bern": "ベルン",
+   "lausanne": "ローザンヌ",
+   
+   // カタール
+   "alWakrah": "アル・ワクラ",
+   "doha": "ドーハ",
+   "alRayyan": "アル・ライヤン",
+   "dukhan": "ドゥーハン",
+   
+   // ニュージーランド
+   "auckland": "オークランド",
+   "hamilton": "ハミルトン",
+   "wellington": "ウェリントン",
+   "christchurch": "クライストチャーチ",
+   
+   // ポーランド
+   "warsaw": "ワルシャワ",        
+   
+   // ルクセンブルク
+   "luxembourgCity": "ルクセンブルク", 
+   
+   // スペイン
+   "barcelona": "バルセロナ",
+   "madrid": "マドリード",
+   "palma": "パルマ・デ・マヨルカ", 
+   "granada": "グラナダ"          ,
     serviceCities: "サービス都市",
 
     "NumberOfCleaners2": "清掃員の数",
