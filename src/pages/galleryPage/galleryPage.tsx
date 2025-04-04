@@ -77,7 +77,7 @@ const Gallery = () => {
       
       if (currentStep <= steps) {
         // Calculate progress based on current step
-        setProgressValues(progressData.map((item, index) => {
+        setProgressValues(progressData.map((item) => {
           return Math.round((item.value * currentStep) / steps);
         }));
       } else {

@@ -4,7 +4,7 @@ import { FaFacebookF, FaYoutube } from "react-icons/fa";
 import { AiFillInstagram, AiFillTikTok } from "react-icons/ai";
 import { FaXTwitter } from "react-icons/fa6";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useLanguage, countryToLanguage } from "../../context/LanguageContext";
 
 // Define the country interface for better type safety
@@ -28,17 +28,21 @@ const countries: Country[] = [
 
 export default function TopBar() {
   const navigate = useNavigate();
+  useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   // Get language context
-  const { setLanguage, translate } = useLanguage();
+  const { setLanguage, translate, currentLanguage } = useLanguage();
   
   // Initialize selected country from localStorage or default to "us"
   const [selectedCountry, setSelectedCountry] = useState(() => {
     const savedCountry = localStorage.getItem('selectedCountry');
     return savedCountry || "us";
   });
+
+  // Force page re-render when language changes
+  const [_key, setKey] = useState(0);
 
   // Update language when country changes and save to localStorage
   useEffect(() => {
@@ -50,8 +54,25 @@ export default function TopBar() {
     }
   }, [selectedCountry, setLanguage]);
 
+  // Force re-render when language changes
+  useEffect(() => {
+    // This will force a re-render of the entire component when the language changes
+    setKey(prevKey => prevKey + 1);
+    
+    // Optional: You can also force a refresh of the entire application
+    // window.location.reload();
+    
+    // Alternative: Use React Router to refresh the current route
+    // navigate(0);
+  }, [currentLanguage]);
+
   const handleCountryChange = (code: string) => {
     setSelectedCountry(code);
+    // Force page refresh after country/language change
+    // Using setTimeout to ensure state updates happen before the refresh
+    setTimeout(() => {
+      navigate(0); // This is equivalent to refreshing the current page
+    }, 100);
   };
 
   const socialIcons = [
@@ -116,7 +137,7 @@ export default function TopBar() {
             >
               {countries.map((country) => (
                 <MenuItem key={country.code} value={country.code}>
-                 {country.nameKey}
+                  {translate(country.nameKey)}
                 </MenuItem>
               ))}
             </Select>

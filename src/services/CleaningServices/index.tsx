@@ -16,7 +16,10 @@ export const getPackege = createAsyncThunk('getPackeges', async (id: string, { r
 
 export const getServices = createAsyncThunk('searchService', async (id: string, { rejectWithValue }) => {
     try {
-        const { data } = await instance.get(`searchService/${id}`);
+        const selectedCountry = localStorage.getItem('selectedCountry');
+        const { data } = await instance.get(`searchService/${id}`, {
+            params: { country: selectedCountry }
+          });
         return data;
     } catch (error) {
         if (error instanceof Error) {
