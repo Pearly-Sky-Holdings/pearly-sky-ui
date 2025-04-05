@@ -21,7 +21,7 @@ const TeamCard: React.FC<TeamCardProps> = ({ name, title, image, emailIcon, emai
     >
       {/* Image  */}
       <motion.div
-        className="lg:w-[200px] lg:h-[200px] md:w-[100px] md:h-[100px] w-[200px] h-[200px] bg-white rounded-full flex items-center justify-center overflow-hidden mt-5"
+        className="lg:w-[150px] lg:h-[150px] md:w-[150px] md:h-[150px] w-[150px] h-[150px] bg-white rounded-full flex items-center justify-center overflow-hidden mt-2"
         whileHover={{ scale: 1.1 }}
         transition={{ duration: 0.3 }}
       >
@@ -30,12 +30,12 @@ const TeamCard: React.FC<TeamCardProps> = ({ name, title, image, emailIcon, emai
 
       {/* Name */}
       <div className="mt-5">
-        <h3 className="text-lg font-semibold text-center">{name}</h3>
+        <h3 className="text-md font-semibold text-center">{name}</h3>
       </div>
 
       {/* title */}
       <div className="mt-2">
-        <h3 className="text-lg font-semibold text-center">{title}</h3>
+        <h3 className="text-md font-semibold text-center">{title}</h3>
       </div>
 
      

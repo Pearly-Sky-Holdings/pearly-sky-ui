@@ -38,24 +38,24 @@ export const spTranslations = {
     
     // Services translations ===============================================
     nregularBasicCleaning: 'Limpieza básica regular',
-    noneTimeCleaning: 'Limpieza única',
+    noneTimeCleaning: 'Limpieza básica puntual',
     nlastMinuteCleaning: 'Limpieza de última hora',
     ndeepCleaning: 'Limpieza profunda',
-    nmoveInOutCleaning: 'Limpieza de mudanza',
-    npostConstructionCleaning: 'Limpieza post construcción',
-    nairbnbCleaning: 'Limpieza para Airbnb y alquileres a corto plazo',
-    nchildCareCleaning: 'Servicio de Cuidado de Niños',
-    nelderCareCleaning: 'Servicio de Cuidado de Ancianos',
+    nmoveInOutCleaning: 'Limpieza para mudanzas',
+    npostConstructionCleaning: 'Limpieza post-construcción/renovación',
+    nairbnbCleaning: 'Limpieza para Airbnb/alquileres cortos',
+    nchildCareCleaning: 'Servicio de cuidado infantil',
+    nelderCareCleaning: 'Servicio de cuidado de ancianos',
     nsanitizationDisinfection: 'Sanitización y desinfección',
     ncommercialOfficeCleaning: 'Limpieza comercial y de oficinas',
-    ncarpetCleaning: 'Limpieza de alfombras',
+    ncarpetCleaning: 'Limpieza de alfombras y tapicería',
     nmoveInOutTransportService: 'Servicio de transporte para mudanzas',
-    nsteamCleaning: 'Limpieza con vapor',
-    npressureWashing: 'Lavado a presión',
+    nsteamCleaning: 'Limpieza a vapor',
+    npressureWashing: 'Limpieza a presión',
     neventCleaning: 'Limpieza de eventos',
     npoolCleaning: 'Limpieza de piscinas',
     nlaundryServices: 'Servicios de lavandería',
-
+    
     ourServices: 'Nuestros Servicios',
     regularBasicCleaningDesc: 'Mantenga un ambiente limpio y cómodo con nuestros servicios de limpieza programados. Elija planes diarios, semanales o mensuales que se adapten a su rutina.',
     oneTimeCleaningDesc: 'Disfrute de un espacio impecable con nuestro servicio de limpieza único, adaptado a sus necesidades. Perfecto para ocasiones especiales o limpieza estacional.',
@@ -211,7 +211,8 @@ export const spTranslations = {
         unitedArabEmirates: 'Emiratos Árabes Unidos',
         canada: 'Canadá',
         finland: 'Finlandia',
-        saudiArabia: 'Arabia Saudita',
+        // saudiArabia: 'Arabia Saudita',
+        monaco: 'Mónaco',
         italy: 'Italia',
         cunitedStates: 'Estados Unidos',
         ireland: 'Irlanda',
@@ -1599,7 +1600,7 @@ export const spTranslations = {
    "toulouse": "Toulouse",
    "toulon": "Toulon",
    "montpellier": "Montpellier",
-//    "monteCarlo": "Monte Carlo",  // (Mónaco, no Francia)
+   "monteCarlo": "Monte Carlo",  // (Mónaco, no Francia)
    "strasbourg": "Estrasburgo",
 //    "monaco": "Mónaco",           // (País independiente)
    "frenchRiviera": "Costa Azul", // Región

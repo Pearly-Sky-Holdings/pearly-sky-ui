@@ -22,29 +22,32 @@ const ContactUsPage: React.FC = () => {
 
   const countries = useMemo(() => [
     {
-      name: translate('france'),
+      name: translate('cfrance'),
       hasOffice: true,
       mapSrc: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.8965731406633!2d2.3461149!3d48.860182599999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66f6025fd8697%3A0xe4968cc599a43374!2sPearly%20Sky%20Cleaning%20Service%20Private%20Ltd!5e0!3m2!1sen!2slk!4v1740018065562!5m2!1sen!2slk",
     },
     {
-      name: translate('unitedKingdom'),
+      name: translate('cunitedKingdom'),
       hasOffice: true,
-      mapSrc: "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d5085732.981617449!2d-0.141364!3d51.508298!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48760529dc531585%3A0xa9fbeb809edb727d!2s45%20Albemarle%20St%2C%20London%20W1S%204JL%2C%20UK!5e0!3m2!1sen!2slk!4v1740018343718!5m2!1sen!2slk",
+      mapSrc: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.2680519800388!2d-0.14136389999999996!3d51.5082981!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487605f3a642a9c1%3A0x7b739a1a3f9ba4!2sPEARLY%20SKY%20CLEANING%20AND%20FACILITY%20MAINTENANCE%20COMPANY%20PRIVATE%20LTD!5e0!3m2!1sen!2slk!4v1743831274206!5m2!1sen!2slk" ,
     },
     {
-      name: translate('sriLanka'),
+      name: translate('csriLanka'),
       hasOffice: true,
       mapSrc: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.716918665806!2d79.9947566!3d7.042516200000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2f9000149518b%3A0x4f4b14f553e8f46c!2sPearly%20Sky%20Company%20Private%20LTD!5e0!3m2!1sen!2slk!4v1740018531225!5m2!1sen!2slk",
     },
     { name: translate('scotland'), hasOffice: false },
-    { name: translate('uae'), hasOffice: false },
-    { name: translate('germany'), hasOffice: false },
+    { name: translate('unitedArabEmirates'), hasOffice: false },
+    { name: translate('cgermany'), hasOffice: false },
     { name: translate('belgium'), hasOffice: false },
     { name: translate('canada'), hasOffice: false },
     { name: translate('finland'), hasOffice: false },
-    { name: translate('saudiArabia'), hasOffice: false },
+    // { name: translate('saudiArabia'), hasOffice: false },
+    { name: translate('monaco'), hasOffice: false },
     { name: translate('italy'), hasOffice: false },
-    { name: translate('usa'), hasOffice: false },
+    { name: translate('cunitedStates'), hasOffice: false },
+    { name: translate('spain'), hasOffice: false }, 
+    { name: translate('australia'), hasOffice: false },
     { name: translate('austria'), hasOffice: false },
     { name: translate('switzerland'), hasOffice: false },
     { name: translate('denmark'), hasOffice: false },
@@ -179,7 +182,7 @@ const ContactUsPage: React.FC = () => {
           {/* Hotline */}
           <Box
             component="a"
-            href="tel:+94775678335"
+            href="tel:+33635508169"
             sx={{
               textDecoration: "none",
               color: "inherit",
@@ -213,7 +216,7 @@ const ContactUsPage: React.FC = () => {
               {translate('hotlineNumber')}
             </Typography>
             <Typography variant="body2" color="black">
-              +94775678335
+              +33635508169
             </Typography>
           </Box>
 
@@ -255,9 +258,9 @@ const ContactUsPage: React.FC = () => {
             <Typography variant="body1" fontWeight="bold" color="#002F6D">
               {translate('whatsappNumber')}
             </Typography>
-            <Typography variant="body2" color="black">
-              +94775678335
-            </Typography>
+            {/* <Typography variant="body2" color="black">
+            +33635508169
+            </Typography> */}
           </Box>
         </Grid>
       </Grid>         

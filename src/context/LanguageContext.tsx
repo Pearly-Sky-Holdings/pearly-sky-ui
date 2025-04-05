@@ -25,7 +25,7 @@ export const countryToLanguage: Record<string, SupportedLanguage> = {
   'es': 'sp',
   'nl': 'nl',
   'se': 'se',
-  'ar': 'ar',
+  'sa': 'ar',
   'fi': 'fi',
 };
 
