@@ -22,7 +22,7 @@ const countries: Country[] = [
   { code: "se", nameKey: "Swedish" },
   { code: "jp", nameKey: "Japanese" },
   { code: "cn", nameKey: "Chinese" },
-  { code: "ar", nameKey: "Arabic" },
+  { code: "sa", nameKey: "Arabic" },
   { code: "fi", nameKey: "Finnish" },
 ];
 

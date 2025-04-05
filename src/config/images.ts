@@ -105,6 +105,7 @@ export const flagPortugal: string = "/images/flag/flagPortugal.jpeg";
 export const flagQatar: string = "/images/flag/flagQatar.jpeg";
 export const flagSwitzerland: string = "/images/flag/flagSwitzerlands.jpeg";
 export const flagSpain: string = "/images/flag/flagSpain.jpeg";
+export const flagMonaco: string = "/images/flag/flagMonaco.png";
 
 //Regular Service
 export const regularService1: string = "/images/service/regularBasic/regularService-1.png";

@@ -39,17 +39,17 @@ export const enTranslations = {
     
     // Services translations ===============================================
     nregularBasicCleaning: 'Regular Basic Cleaning',
-    noneTimeCleaning: 'One Time Cleaning',
+    noneTimeCleaning: 'One Time  Basic Cleaning ',
     nlastMinuteCleaning: 'Last Minute Cleaning',
     ndeepCleaning: 'Deep Cleaning',
-    nmoveInOutCleaning: 'Move In/Out Cleaning',
-    npostConstructionCleaning: 'Post Construction Cleaning',
-    nairbnbCleaning: 'Airbnb & Short-term Rental Cleaning',
+    nmoveInOutCleaning: 'Move In And Out Cleaning',
+    npostConstructionCleaning: 'Post Construction & Renovation Cleaning ',
+    nairbnbCleaning: 'Airbnb And Short Term Rental Cleaning ',
     nchildCareCleaning: 'Child Care Service',
     nelderCareCleaning: 'Elder Care Service',
     nsanitizationDisinfection: 'Sanitization & Disinfection',
     ncommercialOfficeCleaning: 'Commercial & Office Cleaning',
-    ncarpetCleaning: 'Carpet Cleaning',
+    ncarpetCleaning: 'Carpet & Upholstery Cleaning ',
     nmoveInOutTransportService: 'Move In/Out Transport Service',
     nsteamCleaning: 'Steam Cleaning',
     npressureWashing: 'Pressure Washing',
@@ -212,7 +212,8 @@ export const enTranslations = {
     unitedArabEmirates: 'United Arab Emirates',
     canada: 'Canada',
     finland: 'Finland',
-    saudiArabia: 'Saudi Arabia',
+    // saudiArabia: 'Saudi Arabia',
+    monaco:'Monaco',
     italy: 'Italy',
     cunitedStates: 'United States',
     ireland: 'Ireland',
@@ -1698,7 +1699,7 @@ export const enTranslations = {
      "toulouse": "Toulouse",
      "toulon": "Toulon",
      "montpellier": "Montpellier",
-    //  "monteCarlo": "Monte Carlo", // (Note: In Monaco)
+     "monteCarlo": "Monte Carlo", // (Note: In Monaco)
      "strasbourg": "Strasbourg",
     //  "monaco": "Monaco", // (Note: Separate country)
      "frenchRiviera": "French Riviera", // (Region)
